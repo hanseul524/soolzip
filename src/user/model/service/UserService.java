@@ -29,4 +29,25 @@ public class UserService {
 		}
 		return user;
 	}
+	//회원정보 수정
+	public int modifyUser(User user) {
+		int result = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = new UserDAO().updateUser(conn,user);
+			
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
 }

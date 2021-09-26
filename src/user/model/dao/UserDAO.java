@@ -35,5 +35,24 @@ public class UserDAO {
 		}
 		return user;
 	}
+	//회원정보 수정
+	public int updateUser(Connection conn, User user) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE USERS SET USER_PWD = ?, USER_EMAIL =?, USER_PHONE=? WHERE USER_ID=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, user.getUserPwd());
+			pstmt.setString(2, user.getUserEmail());
+			pstmt.setString(3, user.getUserPhone());
+			pstmt.setString(4, user.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 
 }

@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: rgba(0,0,0,0.1);
+}
+.wrapper{
+    width: 1400px;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 50px;
+    border: solid 1px black;
+}
+main{
+    width: 75%;
+    height: 900px;
+    border: solid 1px black;
+}
+/*프로필*/
+#profile{
+    float: right;
+}
+    #profile-img{
+        border: 1px solid black;
+        width: 300px;
+        height: 300px;
+        margin-top: 100px;
+        margin-right: 25px;
+    }
+    #profile img{
+        width: 100%;
+        height: 100%;
+    }
+    #profile-name{
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    #profile-count{
+        margin-top: 30px;
+        padding: 60px;
+    }
+    #update-btn{
+        margin-left: 30px;
+        width: 250px;
+        height: 50px;
+        border-radius: 15px;
+    }
+.list{
+    display: flex;
+}
+/* 마이페이지 카테고리 */
+#kategori>li{
+    float: left;
+    flex: 1;
+    line-height: 50px;
+    list-style: none;
+    display: block;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    margin-top: -1px;
+}
+    #kategori li:hover{
+        background-color: red;
+    }
+
+
+
+/*레시피 콘텐츠*/
+.myPage-con{
+    /* 레시피 콘텐츠 공통 */
+    width: 1000px;
+    height: 730px;
+    border: 1px solid black;
+    margin-top: 132px;
+    margin-left: 23px; 
+    display: none;
+}
+    .con-kategori>li{
+        /*컨텐츠 카테고리 li세팅*/
+        list-style: none;
+        text-decoration: none;
+        float: left;
+        line-height: 50px;
+        display: block;
+        border: 1px solid black;
+        width: 200px;
+        text-align: center;
+        margin-top: 30px;
+        display: none;
+    }
+        .con-kategori li:hover{
+            background-color: red;
+        }
+        #cache-recipe-kategori,#get-reply-kategori,#messaage-con-kategori{
+            margin-left: 23px;
+        }
+
+/*받은쪽지 상세 */
+#get-message-detail{
+    margin: auto;
+    width: 900px;
+    height: 700px;
+    border: 1px solid black;
+    padding: 30px;
+    margin-top: 60px;
+    }
+    #get-message-detail h3{
+        float: left;
+    }
+#detail-btn{
+    float: right;
+}
