@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="user.model.vo.User"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
             <h2>회원정보 수정</h2>
             <div class="login_id">
                 <h4>아이디</h4>
-                <input type="text" name="userId" id="userid">
+                <input type="text" name="userId" id="userid" value=${user.userId }>
             </div>
             <div class="login_pw">
                 <h4>비밀번호</h4>
@@ -29,11 +30,11 @@
             </div>
             <div class="login_name">
                 <h4>이메일</h4>
-                <input type="text" name="userEmail" id="han" placeholder="이메일을 입력해주세요">
+                <input type="text" name="userEmail" id="han" placeholder="이메일을 입력해주세요" value=${user.userEmail }>
             </div>
             <div class="login_addr">
                 <h4>휴대폰</h4>
-                <input type="text" name="userPhone" id="useraddr" placeholder="휴대폰 번호를 입력해주세요">
+                <input type="text" name="userPhone" id="useraddr"placeholder="휴대폰 번호를 입력해주세요" value=${user.userPhone }>
             </div>
 
                 <div class="submit">
@@ -41,9 +42,9 @@
                     <br><br><input type="reset" value="취소">
                 </div>
             <!-- </form> -->
-            </form>
-        </div>
-    </div>
+	        </div>
+	    </div>
+    </form>
     <script>
         
     </script>

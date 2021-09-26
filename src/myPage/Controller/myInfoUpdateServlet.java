@@ -32,14 +32,13 @@ public class myInfoUpdateServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		String userEmail = request.getParameter("userEmail");
-		String userPhone = request.getParameter("userPhone");
-		
+		String userPhone = request.getParameter("userPhone");	
 		User user = new User(userId, userPwd, userEmail, userPhone);
+		request.setAttribute("user",user);
 		result = new UserService().modifyUser(user);
 		if(result>0) {
-			response.sendRedirect("/html/myPage/succes.html");
 			session.invalidate();
-			response.sendRedirect("/index.jsp");
+			response.sendRedirect("/html/myPage/succes.html");
 			//세션파괴
 		}else {
 			System.out.println("다시해");

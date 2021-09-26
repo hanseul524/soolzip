@@ -54,5 +54,35 @@ public class UserDAO {
 		}
 		return result;
 	}
+	//마이페이지 입장시 유저vo에 유저 정보담기
+	public User addUser(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User user = null;
+		String query = "SELECT USER_NO, USER_ID, USER_PWD, USER_NICKNAME, USER_EMAIL, USER_PHONE FROM USERS WHERE USER_ID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				user = new User();
+				user.setUserNo(rset.getInt("USER_NO"));
+				user.setUserId(rset.getString("USER_ID"));
+				user.setUserPwd(rset.getString("USER_PWD"));
+				user.setUserNickName(rset.getString("USER_NICKNAME"));
+				user.setUserEmail(rset.getString("USER_EMAIL"));
+				user.setUserPhone(rset.getString("USER_PHONE"));
+				System.out.println(user.toString());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return user;
+	}
 
 }

@@ -1,5 +1,5 @@
 <%@page import="recipe.model.vo.Recipe"%>
-<%@page import="java.util.List"%>
+<%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -31,16 +31,18 @@
                 <div id="profile-img">
                     <img src="../webapp/img/mainLogo.png" alt="">
                 <div id="profile-name">
-                    <span>${userNickName }</span> 닉네임변경아이콘
+                    <span>${user.userNickName }</span> 닉네임변경아이콘
                 </div>
             </div>
             <div id="profile-count">
                 <span>레시피 : </span><br><br>
                 <span>스토리 : </span>
             </div>
-            	<form action="" method="">
-                <a href="/html/myPage/myInfoUpdate.html"><input type="button" value="회원 정보 수정" id="update-btn"></a>
-                <input type="text" value=${userId }>
+            	<form action="/html/myPage/myInfoUpdate.jsp" method="POST">
+	                <input type="submit" value="회원 정보 수정" id="update-btn">
+	                <input type="hidden" name="userId"value=${user.userId }>
+	                <input type="hidden" name="userEmail"value=${user.userEmail }>
+	                <input type="hidden" name="userPhone"value=${user.userPhone }>
                 </form>
         </aside>
         <main>
