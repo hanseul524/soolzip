@@ -32,16 +32,15 @@ public class RecipeRegisterServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public RecipeRegisterServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+    	
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.getRequestDispatcher("/html/recipe/recipeReg.html").forward(request, response);
-//	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.getRequestDispatcher("/html/recipe/recipeReg.html").forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -131,6 +130,7 @@ public class RecipeRegisterServlet extends HttpServlet {
 		
 		if(result > Integer.MIN_VALUE) {
 			System.out.println("등록성공");
+			response.sendRedirect("/recipe/list");
 		}else {
 			response.sendRedirect("/html/recipe/recipeError.html");
 		}

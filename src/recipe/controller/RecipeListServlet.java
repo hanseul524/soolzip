@@ -31,7 +31,8 @@ public class RecipeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int currentPage = 0;
+//		String getCurrentPage 
 		List<Recipe> rList = new RecipeService().printAllRecipe();
 		
 		for(Recipe recipe : rList) {

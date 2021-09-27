@@ -55,6 +55,7 @@
         }
         
         .box li{
+         border:1px solid black; 
             width: 282px;
             list-style: none;
             padding: 0;
@@ -144,18 +145,18 @@
         <li>
             <div class="box-thumb">
                 <a href="#">
-                    <img src="/upload/${rOne.getFileName }" alt="" >
+                    <img style="width:100%; height:100%;" src="/upload/${rOne.fileName }" alt="" >
                 </a>
             </div>
             <div class="box-caption">
-                <div class="box-title">${rOne.getRecipeTitle }</div>
+                <div class="box-title">${rOne.recipeTitle }</div>
                 <div class="box-name"  style="overflow: hidden;">
                     <a href="#"> 
                         <img src="./img/myPageLogo.png" alt="">
-                        ${rOne.getRecipeName }
+                        ${rOne.userId }
                     </a>
                     <br>
-                <span>조회수 : ${rOne.getRecipeReplyCount } </span> <span>좋아요수 : ${rOne.getRecipeLikeCount } </span>
+                <span>조회수 : ${rOne.recipeReplyCount } </span> <span>좋아요수 : ${rOne.recipeLikeCount } </span>
                 </div>
             </div>
         </li>
