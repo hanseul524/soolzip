@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Recipe {
 	private int recipeNo;
-	private int userNo;
+	private String userId;
 	private String recipeContents;
 	private String recipeTitle;
 	private String recipeMainDrink;
@@ -16,12 +16,15 @@ public class Recipe {
 	private Date recipeEnrollDate;
 	private int recipeReplyCount;
 	private int recipeLikeCount;
+	private String fileNo; // 대표사진 id
+	private RecipeFile recipeFile; // 레시피 대표사진 파일id를 넣기위한 맴버
 	
 	public Recipe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	public Recipe(String recipeContents, String recipeTitle, String recipeMainDrink, int recipeAlcohol,
 			String recipeTag) {
 		super();
@@ -32,12 +35,17 @@ public class Recipe {
 		this.recipeTag = recipeTag;
 	}
 
-	public Recipe(int recipeNo, int userNo, String recipeContents, String recipeTitle, String recipeMainDrink,
+
+	
+
+	
+
+	public Recipe(int recipeNo, String userId, String recipeContents, String recipeTitle, String recipeMainDrink,
 			int recipeAlcohol, String recipeTag, int recipeSaveState, int recipeLegendState, int recipeViewCount,
-			Date recipeEnrollDate, int recipeReplyCount, int recipeLikeCount) {
+			Date recipeEnrollDate, int recipeReplyCount, int recipeLikeCount, String fileNo, RecipeFile recipeFile) {
 		super();
 		this.recipeNo = recipeNo;
-		this.userNo = userNo;
+		this.userId = userId;
 		this.recipeContents = recipeContents;
 		this.recipeTitle = recipeTitle;
 		this.recipeMainDrink = recipeMainDrink;
@@ -49,7 +57,20 @@ public class Recipe {
 		this.recipeEnrollDate = recipeEnrollDate;
 		this.recipeReplyCount = recipeReplyCount;
 		this.recipeLikeCount = recipeLikeCount;
+		this.fileNo = fileNo;
+		this.recipeFile = recipeFile;
 	}
+
+
+	public String getFileNo() {
+		return fileNo;
+	}
+
+
+	public void setFileNo(String fileNo) {
+		this.fileNo = fileNo;
+	}
+
 
 	public int getRecipeNo() {
 		return recipeNo;
@@ -59,12 +80,12 @@ public class Recipe {
 		this.recipeNo = recipeNo;
 	}
 
-	public int getUserNo() {
-		return userNo;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getRecipeContents() {
@@ -155,15 +176,26 @@ public class Recipe {
 		this.recipeLikeCount = recipeLikeCount;
 	}
 
+	public RecipeFile getRecipeFile() {
+		return recipeFile;
+	}
+
+	public void setRecipeFile(RecipeFile recipeFile) {
+		this.recipeFile = recipeFile;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Recipe [recipeNo=" + recipeNo + ", userNo=" + userNo + ", recipeContents=" + recipeContents
+		return "Recipe [recipeNo=" + recipeNo + ", userId=" + userId + ", recipeContents=" + recipeContents
 				+ ", recipeTitle=" + recipeTitle + ", recipeMainDrink=" + recipeMainDrink + ", recipeAlcohol="
 				+ recipeAlcohol + ", recipeTag=" + recipeTag + ", recipeSaveState=" + recipeSaveState
 				+ ", recipeLegendState=" + recipeLegendState + ", recipeViewCount=" + recipeViewCount
 				+ ", recipeEnrollDate=" + recipeEnrollDate + ", recipeReplyCount=" + recipeReplyCount
-				+ ", recipeLikeCount=" + recipeLikeCount + "]";
+				+ ", recipeLikeCount=" + recipeLikeCount + ", fileNo=" + fileNo + ", recipeFile=" + recipeFile + "]";
 	}
+	
+	
 	
 	
 	

@@ -1,9 +1,7 @@
 package recipe.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,6 +18,8 @@ import recipe.model.service.RecipeService;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeFile;
 import recipe.model.vo.RecipeIngredient;
+import recipe.model.vo.RecipeMakeProcess;
+import user.model.vo.User;
 
 /**
  * Servlet implementation class RecipeRegisterServlet
@@ -47,11 +47,22 @@ public class RecipeRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//로그인 완성 시 삭제 start
+		HttpSession session = request.getSession();
+		User user = new User();
+		user.setUserId("user01");
+		session.setAttribute("user", user);
+		//로그인 완성 시 삭제 end
+		String userId = ((User)session.getAttribute("user")).getUserId();
+		
+		//session ID값이 null이면 로그인페이지로 넘어간다.
+		
+		if(userId == null) {
+			response.sendRedirect("/user/login");
+		}
+		
 		request.setCharacterEncoding("UTF-8");
-
 		
-		
-		// 제조과정 파일 
 		// 1. upload 폴더에 실제 파일을 저장하는 작업
 		// MultpartRequest 객체 생성을 하면 파일 저장됨 -> 편리함
 		String uploadFilePath = request.getServletContext().getRealPath("upload");
@@ -59,23 +70,29 @@ public class RecipeRegisterServlet extends HttpServlet {
 		String encType = "UTF-8";
 		MultipartRequest multi = new MultipartRequest(request, uploadFilePath, uploadFileLimit, encType, new DefaultFileRenamePolicy());
 		//upload 폴더에 저장한 파일에 대한 정보
-		String mFileName = multi.getFilesystemName("mainFile");
-		File mUploadFile = multi.getFile("mainFile");
-		String mfilePath = mUploadFile.getPath();
-		long mfileSize = mUploadFile.length();
 		
 		//레시피 기본 정보 담기
-		// 세션유저아이디 필요함 같이 넘겨줘야함 등록을 하려면 유저 아이디 필요
-//		HttpSession session = request.getSession();
-//		String userId = (String)session.getAttribute("userId");
 		String recipeTitle = multi.getParameter("recipe-title");
 		String recipeContents = multi.getParameter("recipe-contents");
 		String recipeMainDrink = multi.getParameter("recipe-mainDrink");
 		int recipeAlcohol= Integer.parseInt(multi.getParameter("recipe-alcohol"));
 		String recipeTag=multi.getParameter("recipe-tag");
-		Recipe recipe = new Recipe(recipeContents,recipeTitle,recipeMainDrink,recipeAlcohol,recipeTag);
 		
-		//재료 항목 리스트
+		// 레시피 대표 사진 파일 정보 넣기
+		RecipeFile mainFile = new RecipeFile();
+		if(multi.getFile("mainFile") != null) {
+			mainFile.setFileName(multi.getFile("mainFile").getName());
+			mainFile.setFilePath(multi.getFile("mainFile").getPath());
+			mainFile.setFileSize(multi.getFile("mainFile").length());
+			mainFile.setRegName(userId);
+		}
+		Recipe recipe = new Recipe(recipeContents,recipeTitle,recipeMainDrink,recipeAlcohol,recipeTag);
+		recipe.setRecipeFile(mainFile);
+		recipe.setUserId(userId);
+		
+		
+		
+		//재료항목 리스트 저장
 		String[] ingredientNames = multi.getParameter("ingredientName").split(",");
 		String[] ingredientGrams = multi.getParameter("ingredientGram").split(",");
 		List<RecipeIngredient> ingredList = new ArrayList();
@@ -87,49 +104,37 @@ public class RecipeRegisterServlet extends HttpServlet {
 			ingredList.add(ingred);
 		}
 		
-		// 제조과정 리스트
-		List<RecipeFile> rFileList = new ArrayList();
+		//제조과정 리스트 저장
+		String [] fileContents = multi.getParameterValues("fileContents");
+		// fileContents[0] 1 2 ~
+		
+	
 		
 		
-		RecipeFile recipeFile= new RecipeFile();
-		recipeFile.setFileName(mFileName);
-		recipeFile.setFilePath(mfilePath);
-		recipeFile.setFileSize(mfileSize);
-		recipeFile.setFileOrder(1);
+		List<RecipeMakeProcess> makeList = new ArrayList();
 		
-		System.out.println(mFileName);
-		System.out.println(mfilePath);
+		for(int i = 0; i< fileContents.length; i++) {
+			RecipeMakeProcess makeProcess = new RecipeMakeProcess();
+			RecipeFile file = new RecipeFile();
+			if(multi.getFile("processFile" + (i+1)) != null) {
+				file.setFileName(multi.getFile("processFile" + (i+1)).getName());
+				file.setFilePath(multi.getFile("processFile" + (i+1)).getPath());
+				file.setFileSize(multi.getFile("processFile" + (i+1)).length());
+				file.setRegName(userId);
+			};
+			makeProcess.setRecipeFile(file);
+			makeProcess.setMakeContents(fileContents[i]);
+			makeList.add(makeProcess);
+ 		}
 		
-		rFileList.add(recipeFile);
-		
-		
-//		다중파일 업로드 다시 한번확인
-		Enumeration files = multi.getFileNames();
-		int i = 2;
-		while(files.hasMoreElements()){
-			recipeFile = new RecipeFile();
-		    String file = (String) files.nextElement();
-		    String file_name = multi.getFilesystemName(file);
-		    String file_path = multi.getFile(file).getPath();
-		    long file_size = multi.getFile(file).length();
-		    recipeFile.setFileName(file_name);
-		    recipeFile.setFilePath(file_path);
-		    recipeFile.setFileSize(file_size);
-		    recipeFile.setFileOrder(i++);
-		    rFileList.add(recipeFile);
-		    System.out.println("@@@@@@@@@@@@@: "+ file_name); 
-		    System.out.println("@@@@@@@@@@@@@: "+ file_path); 
-		}
-		
-		
-		
-		int result = new RecipeService().registerRecipe(recipe,ingredList,rFileList);
+		int result = new RecipeService().registerRecipe(recipe,ingredList,makeList);
 		
 		if(result > Integer.MIN_VALUE) {
 			System.out.println("등록성공");
 		}else {
 			response.sendRedirect("/html/recipe/recipeError.html");
 		}
+
 	}
 
 }
