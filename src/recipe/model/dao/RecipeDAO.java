@@ -32,9 +32,9 @@ public class RecipeDAO {
 			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, seqRecipe);
-			pstmt.setString(2,recipe.getUserId());
-			pstmt.setString(3, recipe.getRecipeTitle());
-			pstmt.setString(4, recipe.getFileNo());
+			pstmt.setString(2,recipe.getUserId()); 
+			pstmt.setString(3, recipe.getRecipeTitle()); 
+			pstmt.setString(4, recipe.getFileNo()); 
 			pstmt.setString(5, recipe.getRecipeContents());
 			pstmt.setString(6, recipe.getRecipeMainDrink());
 			pstmt.setInt(7, recipe.getRecipeAlcohol());
@@ -121,7 +121,8 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select user_id, recipe_title, F.file_name, recipe_contents, recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null order by recipe_no";
+
+		String query = "select user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount from recipe r,recipe_file f where  R.file_no = F.file_no and r.file_no is not null order by recipe_no";
 		try {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
@@ -130,10 +131,11 @@ public class RecipeDAO {
 				Recipe recipe= new Recipe();
 				recipe.setUserId(rset.getString("USER_ID"));
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
-				recipe.setFileName(rset.getString(" F.file_name"));
+				recipe.setFileName(rset.getString("file_name"));
 				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
 				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
 				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
+				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
 				rList.add(recipe);
 			}
 			

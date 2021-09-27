@@ -140,25 +140,26 @@
     
     <!-- 레시피 리스트 -->
     <ul class="box">
-    
+    	<c:forEach items="${requestScope.rList }" var="rOne" varStatus="index">
         <li>
             <div class="box-thumb">
                 <a href="#">
-                    <img src="https://recipe1.ezmember.co.kr/cache/recipe/2019/05/25/39ac1e73e998e88da300d38663242f0a1_m.jpg" alt="" >
+                    <img src="/upload/${rOne.getFileName }" alt="" >
                 </a>
             </div>
             <div class="box-caption">
-                <div class="box-title">제목 영역입니다!!</div>
+                <div class="box-title">${rOne.getRecipeTitle }</div>
                 <div class="box-name"  style="overflow: hidden;">
                     <a href="#"> 
                         <img src="./img/myPageLogo.png" alt="">
-                        작성자명
+                        ${rOne.getRecipeName }
                     </a>
                     <br>
-                <span>조회수 :  </span> <span>좋아요수 : </span>
+                <span>조회수 : ${rOne.getRecipeReplyCount } </span> <span>좋아요수 : ${rOne.getRecipeLikeCount } </span>
                 </div>
             </div>
         </li>
+    	</c:forEach>
     
         
     </ul>

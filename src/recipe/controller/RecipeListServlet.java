@@ -34,6 +34,9 @@ public class RecipeListServlet extends HttpServlet {
 		
 		List<Recipe> rList = new RecipeService().printAllRecipe();
 		
+		for(Recipe recipe : rList) {
+			System.out.println(recipe.toString());
+		}
 		if(!rList.isEmpty()) {
 			request.setAttribute("rList", rList);
 			request.getRequestDispatcher("/html/recipe/recipeList.jsp").forward(request, response);	
