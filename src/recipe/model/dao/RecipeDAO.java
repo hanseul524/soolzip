@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import common.JDBCTemplate;
 import recipe.model.vo.Recipe;
@@ -113,6 +115,41 @@ public class RecipeDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return result1;
+	}
+
+	public List<Recipe> selectAllRecipe(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Recipe> rList = null;
+		String query = "select user_id, recipe_title, F.file_name, recipe_contents, recipe_replycount, recipe_LikeCount\r\n"
+				+ "from recipe r,recipe_file f\r\n"
+				+ "where \r\n"
+				+ "R.file_no = F.file_no and\r\n"
+				+ "r.file_no is not null\r\n"
+				+ "order by recipe_no";
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			rList = new ArrayList<Recipe>();
+			while(rset.next()) {
+				Recipe recipe= new Recipe();
+				recipe.setUserId(rset.getString("USER_ID"));
+				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				recipe.setFileName(rset.getString(" F.file_name"));
+				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
+				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
+				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
+				rList.add(recipe);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return rList;
 	}
 
 }

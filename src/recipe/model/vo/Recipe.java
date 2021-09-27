@@ -17,6 +17,7 @@ public class Recipe {
 	private int recipeReplyCount;
 	private int recipeLikeCount;
 	private String fileNo; // 대표사진 id
+	private String fileName;// -> 대표사진 파일을 불러오기위한 맴버 
 	private RecipeFile recipeFile; // 레시피 대표사진 파일id를 넣기위한 맴버
 	
 	public Recipe() {
@@ -35,14 +36,10 @@ public class Recipe {
 		this.recipeTag = recipeTag;
 	}
 
-
-	
-
-	
-
 	public Recipe(int recipeNo, String userId, String recipeContents, String recipeTitle, String recipeMainDrink,
 			int recipeAlcohol, String recipeTag, int recipeSaveState, int recipeLegendState, int recipeViewCount,
-			Date recipeEnrollDate, int recipeReplyCount, int recipeLikeCount, String fileNo, RecipeFile recipeFile) {
+			Date recipeEnrollDate, int recipeReplyCount, int recipeLikeCount, String fileNo, String fileName,
+			RecipeFile recipeFile) {
 		super();
 		this.recipeNo = recipeNo;
 		this.userId = userId;
@@ -58,6 +55,7 @@ public class Recipe {
 		this.recipeReplyCount = recipeReplyCount;
 		this.recipeLikeCount = recipeLikeCount;
 		this.fileNo = fileNo;
+		this.fileName = fileName;
 		this.recipeFile = recipeFile;
 	}
 
@@ -182,6 +180,16 @@ public class Recipe {
 
 	public void setRecipeFile(RecipeFile recipeFile) {
 		this.recipeFile = recipeFile;
+	}
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 

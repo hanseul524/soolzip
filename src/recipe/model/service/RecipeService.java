@@ -57,6 +57,23 @@ public class RecipeService {
 		}
 		return result;
 	}
+	public List<Recipe> printAllRecipe() {
+		List<Recipe> rList = null;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			rList = rDao.selectAllRecipe(conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return rList;
+	}
+	
 	
 	
 
