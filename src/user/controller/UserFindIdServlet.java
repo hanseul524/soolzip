@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.model.service.UserService;
+import user.model.vo.User;
+
 /**
  * Servlet implementation class UserFindIdServlet
  */
@@ -32,5 +35,14 @@ public class UserFindIdServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	String userName = request.getParameter("user-name");
+	String userEmail = request.getParameter("user-email");
+	User user = new UserService().findUserId(userName, userEmail);
+	
+	if(user != null) {
+		System.out.println("아이디찾기 성공");
+	}else {
+		System.out.println("아이디찾기 실패");
+		}
 	}
 }

@@ -50,4 +50,19 @@ public class UserService {
 		}
 		return result;
 	}
+
+	public User findUserId(String userName, String userEmail) {
+		User user = null;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			user = new UserDAO().selectOneById(conn, userName, userEmail);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return user;
+	}
 }

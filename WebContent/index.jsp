@@ -21,7 +21,7 @@
           </div>
           <div class="login_etc">
             <div class="forgot_id">
-            <a href="findinfo.html">아이디 찾기&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a href="./html/userinfo/findinfo.jsp">아이디 찾기&nbsp;&nbsp;&nbsp;&nbsp;</a>
             </div>
             <div class="forgot_pwd">
               <a href="findinfo.html">비밀번호 찾기</a>

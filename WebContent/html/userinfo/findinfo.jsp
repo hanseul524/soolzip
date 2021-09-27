@@ -5,17 +5,30 @@
 <head>
 <meta charset="UTF-8">
 <title>findinfo</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/findinfo.css"/>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+  $(document).ready(function(){
+	$('ul.tabs li').click(function(){
+		var tab_id = $(this).attr('data-tab');
+		$('ul.tabs li').removeClass('current');
+		$('.tab-content').removeClass('current');
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	});
+});
+</script>
 </head>
 <body>
-	  <div id="content" class="contents">
+  <div id="content" class="contents">
     <div class="loginbox" style="text-align: center;">
       <div class="login" >
-        <h2 id="find-id">아이디 찾기</h2>
+        <h2 id="find-id">아이디 찾기</h2><h2 id="find-pwd" style="display: none;">비밀번호 찾기</h2>
         <ul class="tabs">
           <li class="tab-link current" data-tab="tab-1">아이디 찾기</li>
           <li class="tab-link" data-tab="tab-2">비밀번호 찾기</li>
         </ul>
-        <form action="/user/findid" method="post">
+        <form action="" method="post">
           <div id="tab-1" class="tab-content current">
             <div class="login_id">
               <input type="text" name="user-name" placeholder="이름">
@@ -26,13 +39,12 @@
             <div class="submit">
               <input type="submit" value="아이디 찾기">
             </div>
-            </div>
           </form>
           <div>
-            <span>회원 가입시 입력한 이름과 이메일을 입력해주세요.</span>
+            <span>회원 가입시 입력한 닉네임과 이메일을 입력해주세요.</span>
           </div>
           </div>
-        <form action="/user/findpwd" method="post">
+        <form action="" method="post">
         <div id="tab-2" class="tab-content">
           <div class="login_id">
             <input type="text" name="user-id" placeholder="아이디">
@@ -43,7 +55,6 @@
           <div class="submit">
             <input type="submit" value="임시비밀번호 발송">
           </div>
-          </div>
         </form>
         <div>
           <span>회원 가입시 입력한 닉네임과 이메일을 확인 후 <br> 
@@ -51,5 +62,8 @@
         </div>
         </div>
     </div>
+    </div>
+  </div>
+
 </body>
 </html>

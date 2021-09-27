@@ -56,4 +56,9 @@ public class UserDAO {
 		}
 		return result;
 	}
+
+	public User selectOneById(Connection conn, String userName, String userEmail) {
+		
+		return null;
+	}
 }
