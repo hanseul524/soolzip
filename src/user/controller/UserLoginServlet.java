@@ -44,6 +44,7 @@ public class UserLoginServlet extends HttpServlet {
 		if(user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", user.getUserId());//세션에 저장
+//			session.setAttribute("user", user);
 			System.out.println("로그인 성공");
 		}else {
 			System.out.println("로그인 실패");

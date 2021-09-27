@@ -100,8 +100,8 @@ table td input {
 		//추가할 html 태그 만들기
 		var addHtml = "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
 		addHtml += "<b>step" + size +"</b>&nbsp;";
-		addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" style=\"resize:none;vertical-align: middle; width: 500px; height: 150px;\"></textarea>&nbsp;";	
-		addHtml += "<input style=\"display: none;\" type=\"file\" name=\"processFile\" accept=\"image/*\" onchange=\"readURL(this, 'processImg"+size+"')\" />&nbsp;";
+		addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\" style=\"resize:none;vertical-align: middle; width: 500px; height: 150px;\"></textarea>&nbsp;";	
+		addHtml += "<input style=\"display: none;\" type=\"file\" name=\"processFile"+size+"\" accept=\"image/*\" onchange=\"readURL(this, 'processImg"+size+"')\" />&nbsp;";
 		addHtml += "<img id=\"processImg"+size+"\" style=\"width: 200px; height: 150px; vertical-align: middle;\" src=\"/img/photoImg.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
 		addHtml += "<button type=\"button\" onclick=\"rmRow2(this)\" >삭제</button>";
 		addHtml += "</div>";
@@ -162,7 +162,7 @@ table td input {
 </head>
 <body>
 	<div id="headerMain"></div>
-	<form action="/recipe/register" method="POST" id="test" style="margin: 0 auto; width: 1000px;" enctype="multipart/form-data">
+	<form action="/recipe/register" method="post" id="test" style="margin: 0 auto; width: 1000px;" enctype="multipart/form-data">
 		<input type="hidden" name="ingredientName" />
 		<input type="hidden" name="ingredientGram" />
 		<h1 align="center" style="margin-top: 2em;">레시피 등록</h1>
@@ -185,10 +185,7 @@ table td input {
 					<th>레시피 한줄설명</th>
 					<td><input type="text" placeholder="내용을 입력하세요." name="recipe-contents"/></td>
 				</tr>
-<!-- 				<tr> -->
-<!-- 					<th>동영상</th> -->
-<!-- 					<td><input type="text" id="videoText" placeholder="동영상 URL을 입력해주세요." /></td> -->
-<!-- 				</tr> -->
+
 				<tr>
 					<th>메인 주류 정보</th>
 					<td>
@@ -233,13 +230,13 @@ table td input {
 						<div id="process">
 							<div id="process1" style="height: 150px; margin-bottom: 1em;">
 								<b>step1</b>
-								<textarea placeholder="내용을 입력해주세요." style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
+								<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
 								<input style="display: none;" type="file" name="processFile1" accept="image/*" onchange="readURL(this, 'processImg1')" />
 								<img id="processImg1" style="width: 200px; height: 150px; vertical-align: middle;" src="/img/photoImg.png" onclick="fnFileChange(this);">
 							</div>
 							<div id="process2" style="height: 150px; margin-bottom: 1em;">
 								<b>step2</b>
-								<textarea placeholder="내용을 입력해주세요." style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
+								<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
 								<input style="display: none;" type="file" name="processFile2" accept="image/*" onchange="readURL(this, 'processImg2')" />	
 								<img id="processImg2" style="width: 200px; height: 150px;vertical-align: middle;" src="/img/photoImg.png" onclick="fnFileChange(this);" >
 							</div>
