@@ -49,6 +49,143 @@
     color: red;
   }
 </style>
+<script>
+var idCheckFlag = "N";
+$(document).ready(function () {
+  $("#user_id").keyup(function () {
+    idCheckFlag = "N";
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#user_id_error").html("아이디 중복확인이 필요합니다.");
+  });
+});
+
+function fnCheck() {
+  //유효성 체크
+
+  //1. 아이디
+  var regx = /^[a-z|A-Z|0-9]{4,16}$/;
+  var txt = "user_id";
+  var el = $("#" + txt);
+  if (el.val() == "") {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#" + txt + "_error").html("아이디를 입력하세요.");
+    el.focus();
+    return;
+  } else if (idCheckFlag == "N") {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#user_id_error").html("아이디 중복확인이 필요합니다.");
+    el.focus();
+    return;
+  } else if (!regx.test(el.val())) {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#" + txt + "_error").html("아이디를 확인하세요.");
+    el.focus();
+    return;
+  }
+
+  //2. 비밀번호
+  txt = "pw";
+  el = $("#" + txt);
+  var num = el.val().search(/[0-9]/g);
+  var eng = el.val().search(/[a-z]/ig);
+  var spe = el.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+  if (el.val() == "") {
+    $("#" + txt + "_error").html("비밀번호를 입력하세요.");
+    el.focus();
+    return;
+  } else if (el.val().length < 8 || el.val().length > 16) {
+    $("#" + txt + "_error").html("8자~16자 이내로 입력하세요.");
+    el.focus();
+    return;
+  } else if (el.val().search(/\s/) != -1) {
+    $("#" + txt + "_error").html("비밀번호는 공백 없이 입력하세요.");
+    el.focus();
+    return;
+  } else if ((num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0)) {
+    $("#" + txt + "_error").html("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력하세요.");
+    el.focus();
+    return;
+  }
+  $("#" + txt + "_error").html("");
+
+  //3. 비밀번호확인
+  var txt2 = "pw_re";
+  var el2 = $("#" + txt2);
+  if (el2.val() == "") {
+    $("#" + txt2 + "_error").html("비밀번호 확인을 입력하세요.");
+    el2.focus();
+    return;
+  }
+  if (el.val() != el2.val()) {
+    $("#" + txt2 + "_error").html("비밀번호와 일치하지 않습니다.");
+    el2.focus();
+    return;
+  }
+  $("#" + txt2 + "_error").html("");
+
+  //4.이름
+  regx = /^[가-힣]+$/;
+  txt = "user_name"
+  el = $("#" + txt);
+  if (el.val() == "") {
+    $("#" + txt + "_error").html("이름을 입력하세요.")
+    el.focus();
+    return;
+  } else if (!regx.test(el.val())) {
+    $("#" + txt + "_error").html("한글만 입력하세요.")
+    el.focus();
+    return;
+  }
+  $("#" + txt + "_error").html("");
+
+  //5.휴대전화
+  el = $("#tel1");
+  el2 = $("#tel2");
+  var el3 = $("#tel3");
+
+  if (el.val() == "" || el2.val() == "" || el3.val() == "" || el2.val().length < 3 || el3.val().length != 4) {
+    $("#tel1_error").html("휴대전화를 확인해주세요.");
+    el.focus();
+    return;
+  }
+  $("#tel1_error").html("");
+  alert("회원가입이 완료되었습니다.");
+  $("#loginfrm").submit();
+  
+
+  //6.이메일
+  regx = /^[a-zA-z0-9]{4,12}@/
+  el = $("#email");
+  if (el.val() == "") {
+    $("#email_error").html("이메일을 입력하세요.");
+    el.focus();
+    return;
+  } else if (!regx.test(el.val())) {
+    $("#email_error").html("이메일을 확인해주세요.(@앞에가 영문자,숫자로 4~12글자 )");
+    el.focus();
+    return;
+  }
+  $("#email_error").html("");
+}
+
+function fnIdCheck() {
+  if ($("#user_id").val() != "") {
+    idCheckFlag = "Y";
+    $("#user_id_error").hide();
+    $("#user_id_succ").show();
+  } else {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#user_id_error").html("아이디를 입력하세요.");
+    $("#user_id").focus();
+  }
+
+}
+</script>
 </head>
 <body>
 <div class="container">
@@ -119,7 +256,7 @@
       line-height: 18px;font-weight: normal;text-decoration: none;vertical-align: middle;
       word-spacing: -0.5px;letter-spacing: 0;text-align: center;white-space: nowrap;padding: 10px 16px; 
       color: #fff;background-color: #000;">회원가입</a>  -->
-	<input type="submit" value="회원가입"> 
+	<input type="button" onclick="fnCheck();" value="회원가입"> 
   </form>
   </div>
 </body>
