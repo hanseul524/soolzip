@@ -14,10 +14,11 @@ import recipe.model.vo.RecipeMakeProcess;
 public class RecipeService {
 
 	private JDBCTemplate jdbcTemplate;
-	
+
 	public RecipeService() {
 		jdbcTemplate = JDBCTemplate.getConnection();
 	}
+
 	public int registerRecipe(Recipe recipe, List<RecipeIngredient> ingredList, List<RecipeMakeProcess> makeList) {
 		int result = Integer.MIN_VALUE;
 		Connection conn = null;
@@ -25,56 +26,70 @@ public class RecipeService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			// 레시피의 파일id의 (대표사진) 파일name 존재할시 file 인서트(대표사진)
-			if(recipe.getRecipeFile().getFileName() != null) {
+			if (recipe.getRecipeFile().getFileName() != null) {
 				recipe.setFileNo(String.valueOf(recipeDAO.inserRecipeFile(conn, recipe.getRecipeFile())));
 			}
-			//result는 등록된 레시피 번호 (시퀀스 번호)
-			result = recipeDAO.insertRecipe(conn,recipe);
-			
-			if(result > Integer.MIN_VALUE) {
-				
-				for(RecipeMakeProcess tmp : makeList) {
-					if(tmp.getRecipeFile().getFileName() != null) {
+			// result는 등록된 레시피 번호 (시퀀스 번호)
+			result = recipeDAO.insertRecipe(conn, recipe);
+
+			if (result > Integer.MIN_VALUE) {
+
+				for (RecipeMakeProcess tmp : makeList) {
+					if (tmp.getRecipeFile().getFileName() != null) {
 						tmp.setFileNo(String.valueOf(recipeDAO.inserRecipeFile(conn, tmp.getRecipeFile())));
 					}
-					if(recipeDAO.insertRecipeMakeProcess(conn,tmp, result) <=0)
+					if (recipeDAO.insertRecipeMakeProcess(conn, tmp, result) <= 0)
 						throw new SQLException("error");
 				}
-					
-				for(RecipeIngredient tmp : ingredList) {
-					if(recipeDAO.insertRecipeIngred(conn, tmp ,result) <= 0) 
+
+				for (RecipeIngredient tmp : ingredList) {
+					if (recipeDAO.insertRecipeIngred(conn, tmp, result) <= 0)
 						throw new SQLException("error");
 				}
 				JDBCTemplate.commit(conn);
-			}else {
+			} else {
 				JDBCTemplate.rollback(conn);
 			}
 		} catch (SQLException e) {
 			JDBCTemplate.rollback(conn);
-			//e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
 		return result;
 	}
+
 	public List<Recipe> printAllRecipe() {
 		List<Recipe> rList = null;
 		Connection conn = null;
 		RecipeDAO rDao = new RecipeDAO();
-		
+
 		try {
 			conn = jdbcTemplate.createConnection();
 			rList = rDao.selectAllRecipe(conn);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
 		return rList;
 	}
-	
-	
-	
+
+	// 마이페이지 내 레시피 조회
+	public List<Recipe> myPagePrintAllRecipe(String userId) {
+		List<Recipe> rList = null;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+
+		try {
+			conn = jdbcTemplate.createConnection();
+			rList = rDao.myPageSelectAllRecipe(conn, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return rList;
+	}
 
 }

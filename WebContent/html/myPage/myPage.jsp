@@ -60,6 +60,11 @@
                     <li id="open-recipe-kategori">공개된 레시피</li>
                 </ul>
                 <div class="myPage-con" id="cache-recipe">
+					<c:forEach var="rList" items="${rList }">
+						<ul>
+							<li>${rList.file_name }</li>
+						</ul>
+					</c:forEach>
 					
                 </div>
                 <div class="myPage-con" id="open-recipe">
