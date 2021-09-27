@@ -119,19 +119,19 @@
     <!-- 카테고리 -->
     <ul class="kategoire" style="border:solid 1px gray; padding: 20px 0 0 20px;">
         <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
+        <li><a href="#"><span>소주</span></a></li>
+        <li><a href="#"><span>맥주</span></a></li>
+        <li><a href="#"><span>막걸리</span></a></li>
+        <li><a href="#"><span>와인</span></a></li>
+        <li><a href="#"><span>보드카</span></a></li>
+        <li><a href="#"><span>럼</span></a></li>
+        <li><a href="#"><span>진</span></a></li>
+        <li><a href="#"><span>데킬라</span></a></li>
+        <li><a href="#"><span>위스키</span></a></li>
+        <li><a href="#"><span>브랜디</span></a></li>
+        <li><a href="#"><span>전통주</span></a></li>
+        <li><a href="#"><span>명예의전당</span></a></li>
+        <li><a href="#"><span>기타</span></a></li>
     </ul>
     <br>
     <br>
@@ -149,7 +149,7 @@
                 </a>
             </div>
             <div class="box-caption">
-                <div class="box-title">${rOne.recipeTitle }</div>
+                <div class="box-title">${rOne.recipeTitle }[${rOne.recipeReplyCount }]</div>
                 <div class="box-name"  style="overflow: hidden;">
                     <a href="#"> 
                         <img src="./img/myPageLogo.png" alt="">
@@ -179,12 +179,7 @@
 		<!-- 내비게이션 바 -->
 		<tr>
 			<td colspan="4" align="center">
-			<%-- 	${requestScope.pageNavi} --%>
-				<a href="#">[이전]</a>
-				<a href="/reicipe/list?currentPage=1">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">[다음]</a>
+				${requestScope.pageNavi}
 			</td>
 		</tr>
     </table>

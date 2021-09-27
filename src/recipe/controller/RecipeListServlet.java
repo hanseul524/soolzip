@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import recipe.model.service.RecipeService;
+import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
 
 /**
@@ -32,14 +33,23 @@ public class RecipeListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage = 0;
-//		String getCurrentPage 
-		List<Recipe> rList = new RecipeService().printAllRecipe();
+		String getCurrentPage = request.getParameter("currentPage");
+		
+		if(getCurrentPage == null) {
+			currentPage = 1;
+		}else {
+			currentPage =  Integer.parseInt(getCurrentPage);
+		} 
+		
+		PageData pageData = new RecipeService().printAllRecipe(currentPage);
+		List<Recipe> rList = pageData.getRecipeList();
 		
 		for(Recipe recipe : rList) {
 			System.out.println(recipe.toString());
 		}
 		if(!rList.isEmpty()) {
 			request.setAttribute("rList", rList);
+			request.setAttribute("pageNavi", pageData.getPageNavi());
 			request.getRequestDispatcher("/html/recipe/recipeList.jsp").forward(request, response);	
 		}else {
 			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
