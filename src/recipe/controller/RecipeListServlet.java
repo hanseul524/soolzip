@@ -1,27 +1,28 @@
-package user.controller;
+package recipe.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import user.model.service.UserService;
-import user.model.vo.User;
+import recipe.model.service.RecipeService;
+import recipe.model.vo.Recipe;
 
 /**
- * Servlet implementation class UserLoginServlet
+ * Servlet implementation class RecipeListServlet
  */
-@WebServlet("/user/login")
-public class UserLoginServlet extends HttpServlet {
+@WebServlet("/recipe/list")
+public class RecipeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserLoginServlet() {
+    public RecipeListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,23 +32,23 @@ public class UserLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		List<Recipe> rList = new RecipeService().printAllRecipe();
+		
+		if(!rList.isEmpty()) {
+			request.setAttribute("rList", rList);
+			request.getRequestDispatcher("/html/recipe/recipeList.jsp").forward(request, response);	
+		}else {
+			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
+		}
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("user-id"); //jsp에서 input값 넘겨받기
-		String userPwd = request.getParameter("user-pwd");
-		System.out.println("서블릿에 넘어옴");
-		User user = new UserService().selectLogin(userId, userPwd);
-		if(user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", user.getUserId());//세션에 저장
-//			session.setAttribute("user", user);
-			System.out.println("로그인 성공");
-		}else {
-			System.out.println("로그인 실패");
-		}
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
+
 }

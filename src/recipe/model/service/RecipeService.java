@@ -9,6 +9,7 @@ import recipe.model.dao.RecipeDAO;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeFile;
 import recipe.model.vo.RecipeIngredient;
+import recipe.model.vo.RecipeMakeProcess;
 
 public class RecipeService {
 
@@ -17,19 +18,26 @@ public class RecipeService {
 	public RecipeService() {
 		jdbcTemplate = JDBCTemplate.getConnection();
 	}
-	public int registerRecipe(Recipe recipe, List<RecipeIngredient> ingredList, List<RecipeFile> rFileList) {
+	public int registerRecipe(Recipe recipe, List<RecipeIngredient> ingredList, List<RecipeMakeProcess> makeList) {
 		int result = Integer.MIN_VALUE;
 		Connection conn = null;
 		RecipeDAO recipeDAO = new RecipeDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
-			//result는 등록된 레시피 번호
+			// 레시피의 파일id의 (대표사진) 파일name 존재할시 file 인서트(대표사진)
+			if(recipe.getRecipeFile().getFileName() != null) {
+				recipe.setFileNo(String.valueOf(recipeDAO.inserRecipeFile(conn, recipe.getRecipeFile())));
+			}
+			//result는 등록된 레시피 번호 (시퀀스 번호)
 			result = recipeDAO.insertRecipe(conn,recipe);
 			
 			if(result > Integer.MIN_VALUE) {
 				
-				for(RecipeFile tmp : rFileList) {
-					if(recipeDAO.insertRecipeFile(conn, tmp, result) <= 0) 
+				for(RecipeMakeProcess tmp : makeList) {
+					if(tmp.getRecipeFile().getFileName() != null) {
+						tmp.setFileNo(String.valueOf(recipeDAO.inserRecipeFile(conn, tmp.getRecipeFile())));
+					}
+					if(recipeDAO.insertRecipeMakeProcess(conn,tmp, result) <=0)
 						throw new SQLException("error");
 				}
 					
@@ -49,6 +57,23 @@ public class RecipeService {
 		}
 		return result;
 	}
+	public List<Recipe> printAllRecipe() {
+		List<Recipe> rList = null;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			rList = rDao.selectAllRecipe(conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return rList;
+	}
+	
 	
 	
 
