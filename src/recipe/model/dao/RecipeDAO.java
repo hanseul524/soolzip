@@ -122,8 +122,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount FROM recipe r,recipe_file f where  R.file_no = F.file_no) where NUM BETWEEN ? AND ?";
-				
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount FROM recipe r,recipe_file f where  R.file_no = F.file_no) where NUM BETWEEN ? AND ?";			
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
@@ -146,12 +145,42 @@ public class RecipeDAO {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
 			JDBCTemplate.close(rset);
 		}
+		return rList;
+	}
+	//마이페이지 전체공개 레시피 리스트
+	public List<Recipe> myPageSelectAllRecipe(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Recipe> rList = null;
+		String query = "select user_id, recipe_title, F.file_name, recipe_contents, recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? order by recipe_no;";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset=pstmt.executeQuery();
+			rList = new ArrayList<Recipe>();
+			while(rset.next()) {
+				Recipe recipe= new Recipe();
+				recipe.setUserId(rset.getString("USER_ID"));
+				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				recipe.setFileName(rset.getString(" F.file_name"));
+				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
+				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
+				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
+				rList.add(recipe);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
 		return rList;
 	}
 

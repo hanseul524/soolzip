@@ -1,0 +1,228 @@
+@import "reset.css";
+@import "storyList.css";
+.contents{
+    width: 900px;
+    position: relative;
+    min-height: 1px;
+    float: left;
+    min-height: 800px;
+}
+/* 스토리 틀 */
+.two_list{
+    padding: 0 0 20px 0;
+}
+.story_view{
+    padding: 35px 40px 0;
+}
+/* 스토리 탑 */
+.story_view_top{
+    padding: 0 10px;
+}
+.story_view_top_name{
+    font-size: 22px;
+    font-weight: 400;
+    color: #666;
+    display: inline-block;
+    width: 50%;
+}
+.story_view_top_name img {
+    width: 50px;
+    border-radius: 40%;
+    margin-right: 15px;
+    float: left;
+    margin-top: -6px;
+}
+.story_view_top_date{
+    color: #999;
+    font-size: 16px;
+    display: block;
+    font-weight: 300;
+    padding-top: 4px;
+}
+/* 수정삭제버튼 */
+.story_view_top_button{
+    float: right;
+    color: #999;
+    font-size: 16px;
+    font-weight: 300;
+    vertical-align: top;
+    margin-right: 0px;
+    position: relative;
+    width: 30%;
+    
+}
+.story_view_top_button input{
+    margin-left: 15px;
+    color: #918c00;
+    font-weight: 400;
+    width: 70px;
+    height: 45px;
+}
+/* 스토리 이미지 */
+.story_view_contents{
+    padding: 25px 0;
+    width: 650px;
+    margin: 0 auto;
+}
+.story_view_contents_img{
+    margin-bottom: 8px;
+}
+.story_view_contents_img img{
+    max-width: 100%;
+    max-height: 100%;
+    width: 50%;
+    border-radius: 6px;
+}
+/* 스토리 내용 */
+.story_view_contents_txt{
+    font-size: 20px;
+    padding: 10px 4px 60px;
+    line-height: 1.8;
+}
+/* 태그 */
+.story_view_tags{
+    padding: 10px 5px 30px;
+}
+.story_tag_list_txt{
+    font-size: 20px;
+    padding: 10px 4px 30px;
+    line-height: 1.8;
+}
+/* 댓글 입력 */
+.reply_write{
+    display: block;
+    height: 116px;
+    margin-left: 20px;
+}
+.reply_write .input_reply{
+    width: 730px;
+    float: left;
+}
+.input_reply{
+    display: table;
+    border-collapse: separate;
+}
+.reply_form{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: table-cell;
+    position: relative;
+    z-index: 2;
+    float: left;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.input-btn{
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+    width: auto;
+    float: left;
+}
+/* 좋아요 */
+.btn_like{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.btn{
+    display: inline-block;
+    padding: 6px 10px;
+    margin: 0 2px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 3px;
+}
+.btn{
+    float: left;
+    position: relative;
+    width: 120px;
+
+}
+.btn img{
+    width: 80%;
+}
+.like .btn {
+    border: none;
+    margin: 0px;
+    padding: 0;
+    background: none;
+}
+/* 댓글 */
+.view_reply{
+    padding: 40px 50px 10px;
+}
+.reply_title{
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e6e7e8;
+    margin-bottom: 10px;
+}
+.reply_title span{
+    color: #918c00;
+    font-weight: normal;
+}
+.other_left{
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 10px;
+}
+.reply_list{
+    border-bottom: 1px solid #e6e7e8;
+    padding-bottom: 20px;
+    padding-top: 5px;
+    line-height: 22px;
+}
+.other{
+    zoom: 1;
+}
+.reply_list .other_left img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 50px;
+}
+.other_object{
+    display: block;
+}
+/* 댓글 중간 */
+.other_mid{
+    line-height: 22px;
+    display: table-cell;
+    vertical-align: top;
+    width: 10000px;
+    word-break: break-all;
+    zoom: 1;
+}
+/* 댓글 작성자,작성일 */
+.reply_list .mid-title{
+    color: #999;
+    font-size: 14px;
+    position: relative;
+}
+.mid-title{
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.reply_list .mid-title b {
+    font-size: 17px;
+    margin-right: 10px;
+    font-weight: normal;
+}
+.info_name{
+    color: black;
+}
