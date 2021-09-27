@@ -26,12 +26,19 @@ public class MyPageServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
+		//유저 정보 저장
 		User user = new UserService().addUser(userId);
+		//공개된 레시피 갯수 카운트
+		int recipeCount = new UserService().recipeCount(userId);
+		//내가쓴 스토리 갯수 카운트
+		int storyCount = new UserService().storyCount(userId);
 		if(user !=null) {
+		request.setAttribute("storyCount", storyCount);
+		request.setAttribute("recipeCount", recipeCount);
 		request.setAttribute("user", user);
 		request.getRequestDispatcher("/html/myPage/myPage.jsp").forward(request, response);
 		}else {
-			System.out.println("ㅁㄴㅇ");
+			System.out.println("retry");
 		}
 	}
 

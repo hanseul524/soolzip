@@ -65,4 +65,34 @@ public class UserService {
 		}
 		return user;
 	}
+	//마이페이지 내가쓴 공개레시피 갯수 조회
+	public int recipeCount(String userId) {
+		int count = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			count = new UserDAO().countRecipe(conn, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return count;
+	}
+	//마이페이지 내가쓴 스토리 카운트 조회
+	public int storyCount(String userId) {
+		int count = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			count = new UserDAO().countStory(conn, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return count;
+	}
 }

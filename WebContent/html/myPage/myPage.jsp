@@ -11,6 +11,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SULZIP</title>
+<link rel="stylesheet" href="/css/comm.css">
 <link rel="stylesheet" href="/html/myPage/css/myPage.css">
 <!-- 헤더 푸터 css파일넣기 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -18,8 +19,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
-       $("#header").load("../webapp/header.html");
-       $("#footer").load("../webapp/footer.html");
+       $("#header").load("/html/comm/header.html");
+       $("#footer").load("/html/comm/footer.html");
     });
 </script>
 <title>sulzip-mypage</title>
@@ -29,20 +30,20 @@
     <div class="wrapper">
         <aside id="profile">
                 <div id="profile-img">
-                    <img src="../webapp/img/mainLogo.png" alt="">
+                    <img src="/img/mainLogo.png" alt="">
                 <div id="profile-name">
-                    <span>${user.userNickName }</span> 닉네임변경아이콘
+                    <span>${user.userId }</span>
                 </div>
             </div>
             <div id="profile-count">
-                <span>레시피 : </span><br><br>
-                <span>스토리 : </span>
+                <span>레시피 : ${recipeCount }개 </span><br><br>
+                <span>스토리 : ${storyCount }개</span>
             </div>
             	<form action="/html/myPage/myInfoUpdate.jsp" method="POST">
 	                <input type="submit" value="회원 정보 수정" id="update-btn">
-	                <input type="hidden" name="userId"value=${user.userId }>
-	                <input type="hidden" name="userEmail"value=${user.userEmail }>
-	                <input type="hidden" name="userPhone"value=${user.userPhone }>
+	                <input type="hidden" name="userId"value="${user.userId }">
+	                <input type="hidden" name="userEmail"value="${user.userEmail }">
+	                <input type="hidden" name="userPhone"value="${user.userPhone }">
                 </form>
         </aside>
         <main>

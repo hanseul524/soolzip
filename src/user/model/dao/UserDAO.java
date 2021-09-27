@@ -59,7 +59,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		User user = null;
-		String query = "SELECT USER_NO, USER_ID, USER_PWD, USER_NICKNAME, USER_EMAIL, USER_PHONE FROM USERS WHERE USER_ID=?";
+		String query = "SELECT USER_NO, USER_ID, USER_PWD, USER_EMAIL, USER_PHONE FROM USERS WHERE USER_ID=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -71,7 +71,6 @@ public class UserDAO {
 				user.setUserNo(rset.getInt("USER_NO"));
 				user.setUserId(rset.getString("USER_ID"));
 				user.setUserPwd(rset.getString("USER_PWD"));
-				user.setUserNickName(rset.getString("USER_NICKNAME"));
 				user.setUserEmail(rset.getString("USER_EMAIL"));
 				user.setUserPhone(rset.getString("USER_PHONE"));
 				System.out.println(user.toString());
@@ -83,6 +82,51 @@ public class UserDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return user;
+	}
+	//마이페이지 내가쓴 공개 레시피 갯수
+	public int countRecipe(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		ResultSet rset=null;
+		String query = "SELECT COUNT(*) FROM RECIPE WHERE USER_ID=? AND RECIPE_SAVESTATE='1'";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return count;
+	}
+	//마이페이지 내가쓴 스토리 갯수
+	public int countStory(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		String query = "SELECT COUNT(*) FROM STORY WHERE USER_NO = (SELECT USER_NO FROM USERS WHERE USER_ID = ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count=rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return count;
 	}
 
 }

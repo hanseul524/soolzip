@@ -28,14 +28,12 @@ public class myInfoUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		int result = 0;
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		String userEmail = request.getParameter("userEmail");
 		String userPhone = request.getParameter("userPhone");	
 		User user = new User(userId, userPwd, userEmail, userPhone);
-		request.setAttribute("user",user);
-		result = new UserService().modifyUser(user);
+		int result = new UserService().modifyUser(user);
 		if(result>0) {
 			session.invalidate();
 			response.sendRedirect("/html/myPage/succes.html");
