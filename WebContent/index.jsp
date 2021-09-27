@@ -31,7 +31,7 @@
             <input type="submit" value="login">
           </div>
           <div class="signup">
-            <a href="#">signup</a>
+            <a href="register.html">signup</a>
        </div>
        <ul id="sns-login">
          <li class="boxlist"><a href="#"><img src="./img/ico_member_naver.png" alt=""><span class="boxtext">네이버</span></a></li>

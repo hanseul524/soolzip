@@ -36,4 +36,24 @@ public class UserDAO {
 		return user;
 	}
 
+	public int insertUser(Connection conn, User user) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO USERS VALUES(SEQ_USER_NO.NEXTVAL,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserPwd());
+			pstmt.setString(3, user.getUserEmail());
+			pstmt.setString(4, user.getUserName());
+			pstmt.setString(5, user.getUserPhone());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }
