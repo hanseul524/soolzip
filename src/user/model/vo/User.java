@@ -11,6 +11,8 @@ public class User {
 	
 	public User() {}
 	
+	
+	
 	public User(String userId, String userPwd, String userName, String userEmail, String userPhone) {
 		super();
 		this.userId = userId;
@@ -19,6 +21,18 @@ public class User {
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
 	}
+
+	
+	
+	public User(String userId, String userPwd, String userEmail, String userPhone) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+	}
+
+
 
 	public int getUserNo() {
 		return userNo;
