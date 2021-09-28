@@ -122,7 +122,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount FROM recipe r,recipe_file f where  R.file_no = F.file_no) where NUM BETWEEN ? AND ?";			
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount FROM recipe r,recipe_file f where  R.file_no = F.file_no) where NUM BETWEEN ? AND ?";			
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
@@ -134,6 +134,7 @@ public class RecipeDAO {
 			rList = new ArrayList<Recipe>();
 			while(rset.next()) {
 				Recipe recipe= new Recipe();
+				recipe.setRecipeNo(rset.getInt("recipe_no"));
 				recipe.setUserId(rset.getString("USER_ID"));
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
 				recipe.setFileName(rset.getString("file_name"));
@@ -254,5 +255,29 @@ public class RecipeDAO {
 				JDBCTemplate.close(rset);
 			}
 			return totalValue;
+		}
+
+		public Recipe selectOneRecipe(Connection conn, int recipeNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String query = "select * from recipe where recipe_no = ?";
+			
+			return null;
+		}
+
+		public List<RecipeIngredient> selectOneRecipeIngr(Connection conn, int recipeNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String query = "select * from recipe where recipe_no = ?";
+			
+			return null;
+		}
+
+		public List<RecipeMakeProcess> selectOneRecipeMkProcess(Connection conn, int recipeNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String query = "select * from recipe where recipe_no = ?";
+			
+			return null;
 		}
 }

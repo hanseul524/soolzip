@@ -59,7 +59,7 @@
             width: 282px;
             list-style: none;
             padding: 0;
-            margin: 0 12px 40px 0;
+            margin: 0 37px 40px 0;
             display: inline-block;
             vertical-align: top;
             position: relative;
@@ -67,11 +67,14 @@
         
         .box-caption{
             padding: 10px 2px;
+            text-align: center;
         }
         .box-thumb{
             position: relative;
             border-radius: 4px;
             overflow: hidden;
+            text-align: center;
+            margin: 15px 0 15px 0;
         }
         .box-title{
             overflow: hidden;
@@ -144,15 +147,15 @@
     	<c:forEach items="${requestScope.rList }" var="rOne" varStatus="index">
         <li>
             <div class="box-thumb">
-                <a href="#">
-                    <img style="width:100%; height:100%;" src="/upload/${rOne.fileName }" alt="" >
+                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
+                    <img style="width:250px; height:200px;" src="/upload/${rOne.fileName }" alt="" >
                 </a>
             </div>
             <div class="box-caption">
                 <div class="box-title">${rOne.recipeTitle }[${rOne.recipeReplyCount }]</div>
                 <div class="box-name"  style="overflow: hidden;">
                     <a href="#"> 
-                        <img src="./img/myPageLogo.png" alt="">
+                        <img src="/img/myPageLogo.png" alt="">
                         ${rOne.userId }
                     </a>
                     <br>
