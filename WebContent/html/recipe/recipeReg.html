@@ -137,13 +137,15 @@ table td input {
 // 			el.focus();
 // 			return true;
 // 		}
-		return false;
+		
+ 		return false;
 	}
 	
 	//저장
 	function fnSave(type){
 		//제출일 경우 필수값 체크필요
 		if(type=='A'){
+			$("input[name='recipeSaveState']").val("1"); 
 			if(fnValidate()) return;
 		}
 		var ingredientName = [];
@@ -165,6 +167,7 @@ table td input {
 	<form action="/recipe/register" method="post" id="test" style="margin: 0 auto; width: 1000px;" enctype="multipart/form-data">
 		<input type="hidden" name="ingredientName" />
 		<input type="hidden" name="ingredientGram" />
+		<input type="hidden" name="recipeSaveState" value="0"/>
 		<h1 align="center" style="margin-top: 2em;">레시피 등록</h1>
 		<table>
 

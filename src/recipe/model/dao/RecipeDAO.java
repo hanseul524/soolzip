@@ -21,7 +21,7 @@ public class RecipeDAO {
 		ResultSet rset = null;
 		int result =0;
 		String querySeq = "SELECT SEQ_RECIPE.NEXTVAL AS SEQ_RECIPE FROM DUAL";
-		String query = "INSERT INTO RECIPE VALUES(?,?,?,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		String query = "INSERT INTO RECIPE VALUES(?,?,?,?,?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		try {
 			pstmt= conn.prepareStatement(querySeq);
 			rset = pstmt.executeQuery();
@@ -40,6 +40,7 @@ public class RecipeDAO {
 			pstmt.setString(6, recipe.getRecipeMainDrink());
 			pstmt.setInt(7, recipe.getRecipeAlcohol());
 			pstmt.setString(8, recipe.getRecipeTag());
+			pstmt.setInt(9,recipe.getRecipeSaveState());
 			pstmt.executeUpdate();
 			result = seqRecipe;
 		} catch (SQLException e) {
@@ -102,6 +103,7 @@ public class RecipeDAO {
 				fileNo = rset.getInt("file_no");
 			}
 			result1 = fileNo;
+			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, fileNo);
 			pstmt.setString(2, tmp.getFilePath());
@@ -122,7 +124,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount FROM recipe r,recipe_file f where  R.file_no = F.file_no) where NUM BETWEEN ? AND ?";			
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount,recipe_savestate FROM recipe r,recipe_file f where  R.file_no = F.file_no AND RECIPE_SAVEstate = 1) where NUM BETWEEN ? AND ?";			
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
@@ -134,6 +136,7 @@ public class RecipeDAO {
 			rList = new ArrayList<Recipe>();
 			while(rset.next()) {
 				Recipe recipe= new Recipe();
+				recipe.setRecipeSaveState(rset.getInt("recipe_savestate"));
 				recipe.setRecipeNo(rset.getInt("recipe_no"));
 				recipe.setUserId(rset.getString("USER_ID"));
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
@@ -261,6 +264,20 @@ public class RecipeDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			String query = "select * from recipe where recipe_no = ?";
+			Recipe recipeOne = null;
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1,recipeNo);
+				rset = pstmt.executeQuery();
+				while(rset.next()){
+					recipeOne = new Recipe();
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			return null;
 		}
