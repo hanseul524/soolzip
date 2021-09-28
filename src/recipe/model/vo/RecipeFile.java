@@ -1,41 +1,34 @@
 package recipe.model.vo;
 
+import java.sql.Date;
+
 public class RecipeFile {
 	private int fileNo;
-	private int recipeNo;
 	private String filePath;
 	private String fileName;
 	private long fileSize;
-	private String fileContents;
-	private int fileOrder;
+	private Date regDate;
+	private String regName;
 	
-	public RecipeFile(int fileNo, int recipeNo, String filePath, String fileName, long fileSize, String fileContents,
-			int fileOrder) {
-		super();
-		this.fileNo = fileNo;
-		this.recipeNo = recipeNo;
-		this.filePath = filePath;
-		this.fileName = fileName;
-		this.fileSize = fileSize;
-		this.fileContents = fileContents;
-		this.fileOrder = fileOrder;
-	}
 	
 	public RecipeFile() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public RecipeFile(int fileNo, String filePath, String fileName, long fileSize, Date regDate, String regName) {
+		super();
+		this.fileNo = fileNo;
+		this.filePath = filePath;
+		this.fileName = fileName;
+		this.fileSize = fileSize;
+		this.regDate = regDate;
+		this.regName = regName;
 	}
 	public int getFileNo() {
 		return fileNo;
 	}
 	public void setFileNo(int fileNo) {
 		this.fileNo = fileNo;
-	}
-	public int getRecipeNo() {
-		return recipeNo;
-	}
-	public void setRecipeNo(int recipeNo) {
-		this.recipeNo = recipeNo;
 	}
 	public String getFilePath() {
 		return filePath;
@@ -55,24 +48,23 @@ public class RecipeFile {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-	public String getFileContents() {
-		return fileContents;
+	public Date getRegDate() {
+		return regDate;
 	}
-	public void setFileContents(String fileContents) {
-		this.fileContents = fileContents;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
-	public int getFileOrder() {
-		return fileOrder;
+	public String getRegName() {
+		return regName;
 	}
-	public void setFileOrder(int fileOrder) {
-		this.fileOrder = fileOrder;
+	public void setRegName(String regName) {
+		this.regName = regName;
 	}
-	
 	@Override
 	public String toString() {
-		return "RecipeFile [fileNo=" + fileNo + ", recipeNo=" + recipeNo + ", filePath=" + filePath + ", fileName="
-				+ fileName + ", fileSize=" + fileSize + ", fileContents=" + fileContents + ", fileOrder=" + fileOrder
-				+ "]";
+		return "RecipeFile [fileNo=" + fileNo + ", filePath=" + filePath + ", fileName=" + fileName + ", fileSize="
+				+ fileSize + ", regDate=" + regDate + ", regName=" + regName + "]";
 	}
+	
 	
 }

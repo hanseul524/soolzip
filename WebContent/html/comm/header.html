@@ -43,20 +43,21 @@ ul.myMenu>li ul.submenu>li:hover {
 	background: #fff;
 }
 </style>
-<div id="wrap">
+<link rel="stylesheet" href="/css/comm.css">
+<div id="wrap" style="position: relative;">
 	<!-- 사용자 nav -->
 	<div class="user-area">
 		<ul class="user-area-menu">
 			<li><a href="#"> <img style="width: 70px;"
-					src="../../img/suggestion.png" alt="">
+					src="/img/suggestion.png" alt="">
 			</a></li>
 			<li>
-				<a href="#"> 
-					<img style="width: 70px;" src="../../img/enrollRecipe.png" alt="">
+				<a href="/recipe/register"> 
+					<img style="width: 70px;" src="/img/enrollRecipe.png" alt="">
 				</a>
 			</li>
 			<li><a href="#"> <img style="width: 70px;"
-					src="../../img/myPageLogo.png" alt="">
+					src="/img/myPageLogo.png" alt="">
 			</a> <!-- <ul class="">
                         <li><a href="#">마이페이지</a></li>
                         <li><a href="#">로그아웃</a></li>
@@ -67,21 +68,22 @@ ul.myMenu>li ul.submenu>li:hover {
 	<!-- 메인 로고 -->
 	<div class="header">
 		<a href="#"> <img style="width: 400px; height: 300px;"
-			src="../../img/mainLogo.png" alt="">
+			src="/img/mainLogo.png" alt="">
 		</a>
+		
 	</div>
-
+	
 	<!-- 메인 nav -->
 	<div class="nav" id="main-nav">
 		<ul class="myMenu">
-			<li class="menu1"><a href="#">레시피</a>
+			<li class="menu1"><a href="/recipe/list">레시피</a>
 				<ul class="menu1_s submenu">
-					<li><a href="#">레시피</a></li>
+					<li><a href="/recipe/list">레시피</a></li>
 					<li><a href="#">명예의전당</a></li>
 					<li><a href="#">투표하기</a></li>
 				</ul></li>
 			<li class="menu2"><a href="#">정보게시판</a></li>
-			<li class="menu3"><a href="#">스토리</a></li>
+			<li class="menu3"><a href="../story/storyList.html">스토리</a></li>
 			<li class="menu4"><a href="#">화상채팅</a></li>
 			<li class="menu5"><a href="#">공지사항</a></li>
 			<li class="menu6"><a href="#">고객센터</a></li>
