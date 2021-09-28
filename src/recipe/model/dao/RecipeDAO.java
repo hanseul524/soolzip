@@ -263,7 +263,7 @@ public class RecipeDAO {
 		public Recipe selectOneRecipe(Connection conn, int recipeNo) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
-			String query = "select * from recipe where recipe_no = ?";
+			String query = "select recipe_no, user_id,recipe_title, file_no, file_name, recipe_contents, recipe_maindrink,recipe_alcohol, recipe_Tag, recipe_savestate,recipe_viewcount,recipe_enrolldate, recipe_replycount, recipe_likecount,recipe_LegendState from recipe r join recipe_file f using(file_no) where recipe_no = ?";
 			Recipe recipeOne = null;
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -271,30 +271,82 @@ public class RecipeDAO {
 				rset = pstmt.executeQuery();
 				while(rset.next()){
 					recipeOne = new Recipe();
-					
+					recipeOne.setRecipeNo(recipeNo);
+					recipeOne.setUserId(rset.getString("user_id"));
+					recipeOne.setRecipeTitle(rset.getString("recipe_title"));
+					recipeOne.setRecipeContents(rset.getString("recipe_contents"));
+					recipeOne.setRecipeMainDrink(rset.getString("recipe_maindrink"));
+					recipeOne.setRecipeAlcohol(rset.getInt("recipe_alcohol"));
+					recipeOne.setRecipeTag(rset.getString("recipe_Tag"));
+					recipeOne.setRecipeSaveState(rset.getInt("recipe_savestate"));
+					recipeOne.setFileName(rset.getString("file_name"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
 			}
-			
-			
-			return null;
+			return recipeOne;
 		}
 
 		public List<RecipeIngredient> selectOneRecipeIngr(Connection conn, int recipeNo) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
-			String query = "select * from recipe where recipe_no = ?";
+			List<RecipeIngredient> iList = null;
+			RecipeIngredient recipeIngr = null;
+			String query = "select * from recipe_ingredient where recipe_no = ? order by 1";
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, recipeNo);
+				rset = pstmt.executeQuery();
+				iList = new ArrayList();
+				while(rset.next()) {
+					recipeIngr = new RecipeIngredient();
+					recipeIngr.setIngredientNo(rset.getInt("ingredient_no"));
+					recipeIngr.setIngredientName(rset.getString("ingredient_name"));
+					recipeIngr.setIngredientGram(rset.getString("ingredient_gram"));
+					iList.add(recipeIngr);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
 			
-			return null;
+			
+			return iList;
 		}
 
 		public List<RecipeMakeProcess> selectOneRecipeMkProcess(Connection conn, int recipeNo) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
-			String query = "select * from recipe where recipe_no = ?";
-			
-			return null;
+			List<RecipeMakeProcess> mList = null;
+			RecipeMakeProcess recipeMkProcess = null;
+			String query = "select make_no, recipe_no, File_no, Make_contents, file_name from recipe_make_process join recipe_file using(file_no) where recipe_no = ? order by 1";
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, recipeNo);
+				rset = pstmt.executeQuery();
+				mList = new ArrayList();
+				while(rset.next()) {
+					recipeMkProcess = new RecipeMakeProcess();
+					recipeMkProcess.setMakeNo(rset.getInt("make_no"));
+					recipeMkProcess.setRecipeNo(rset.getInt("recipe_no"));
+					recipeMkProcess.setMakeContents(rset.getString("Make_contents"));
+					recipeMkProcess.setFileName(rset.getString("file_name"));
+					mList.add(recipeMkProcess);
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			return mList;
 		}
 }

@@ -2,8 +2,9 @@ package recipe.model.vo;
 
 public class RecipeMakeProcess {
 	private int makeNo; // 제조 번호
-	private int recipeNo; //
+	private int recipeNo; 
 	private String fileNo;
+	private String fileName;
 	private String makeContents;
 	private RecipeFile recipeFile;
 	
@@ -11,15 +12,27 @@ public class RecipeMakeProcess {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public RecipeMakeProcess(int makeNo, int recipeNo, String fileNo, String makeContents, RecipeFile recipeFile) {
+
+	public RecipeMakeProcess(int makeNo, int recipeNo, String fileNo, String fileName, String makeContents,
+			RecipeFile recipeFile) {
 		super();
 		this.makeNo = makeNo;
 		this.recipeNo = recipeNo;
 		this.fileNo = fileNo;
+		this.fileName = fileName;
 		this.makeContents = makeContents;
 		this.recipeFile = recipeFile;
 	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
 
 	public RecipeFile getRecipeFile() {
 		return recipeFile;
@@ -53,13 +66,11 @@ public class RecipeMakeProcess {
 	public void setMakeContents(String makeContents) {
 		this.makeContents = makeContents;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "RecipeMakeProcess [makeNo=" + makeNo + ", recipeNo=" + recipeNo + ", fileNo=" + fileNo
-				+ ", makeContents=" + makeContents + "]";
+		return "RecipeMakeProcess [makeNo=" + makeNo + ", recipeNo=" + recipeNo + ", fileNo=" + fileNo + ", fileName="
+				+ fileName + ", makeContents=" + makeContents + ", recipeFile=" + recipeFile + "]";
 	}
-	
-	
 	
 }
