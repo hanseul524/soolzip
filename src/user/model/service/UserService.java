@@ -53,15 +53,31 @@ public class UserService {
 
 	public User findUserId(String userName, String userEmail) {
 		Connection conn = null;
-		User user = null;
+		User userOne = null;
 		try {
 			conn = jdbcTemplate.createConnection();
-			user = new UserDAO().selectOneById(conn, userName, userEmail);
+			userOne = new UserDAO().selectOneById(conn, userName, userEmail);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
-		return user;
+		return userOne;
+	}
+
+	public User findUserPwd(String userId, String userEmail) {
+		Connection conn = null;
+		User userOne = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			userOne = new UserDAO().selectOneByPwd(conn, userId, userEmail);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return userOne;
 	}
 }

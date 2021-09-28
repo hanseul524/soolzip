@@ -79,4 +79,11 @@ public class UserDAO {
 		}
 		return userOne;
 	}
+
+	public User selectOneByPwd(Connection conn, String userId, String userEmail) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		return null;
+	}
 }

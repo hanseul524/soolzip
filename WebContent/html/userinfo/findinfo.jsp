@@ -48,10 +48,10 @@
           </form>
           <div>
             <span id="searchid">회원 가입시 입력한 이름과 이메일을 입력해주세요.</span>
-            <span id="findid" style="display: none;">회원님의 아이디는 ${userOne.userId}입니다.</span>
+            <span id="findid">회원님의 아이디는 ${userOne.userId}입니다.</span>
           </div>
           </div>
-        <form action="" method="post">
+        <form action="/user/findpwd" method="get">
         <div id="tab-2" class="tab-content">
           <div class="login_id">
             <input type="text" name="user-id" placeholder="아이디">
