@@ -6,6 +6,7 @@ import java.util.List;
 
 import common.JDBCTemplate;
 import recipe.model.dao.RecipeDAO;
+import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeFile;
 import recipe.model.vo.RecipeIngredient;
@@ -59,20 +60,24 @@ public class RecipeService {
 		return result;
 	}
 
-	public List<Recipe> printAllRecipe() {
-		List<Recipe> rList = null;
+	public PageData printAllRecipe(int currentPage) {
+//		List<Recipe> rList = null;
+		PageData pd = new PageData();
+
 		Connection conn = null;
 		RecipeDAO rDao = new RecipeDAO();
 
 		try {
 			conn = jdbcTemplate.createConnection();
-			rList = rDao.selectAllRecipe(conn);
+			pd.setRecipeList(rDao.selectAllRecipe(conn, currentPage));
+			pd.setPageNavi(rDao.getPageNavi(conn, currentPage));
+//			rList = rDao.selectAllRecipe(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
-		return rList;
+		return pd;
 	}
 
 	// 마이페이지 내 레시피 조회

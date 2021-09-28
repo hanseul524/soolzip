@@ -1,0 +1,229 @@
+@import "reset.css";
+.h1text{
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+img{
+    vertical-align: middle;
+    border: 0;
+}
+::after ::before{
+    box-sizing: border-box;
+}
+*{
+    box-sizing: border-box;
+}
+body{
+    font-size: 14px;
+    color: #333;
+}
+/* 콘테이너 */
+.container{
+    width: 1240px;
+    max-width: none !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+/* 콘텐츠 */
+.contents{
+    float: right;
+    width: 1200px;
+    min-height: 800px;
+    border: 1px solid #e6e7e8;
+    padding: 0 0 20px 0;
+    background: #fff;
+}
+/* 리스트 폼 */
+.list_form{
+    margin-top: 30px;
+    padding: 0 22px;
+}
+/* 리스트 네비게이션 */
+.nav1{
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.list_form_nav{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 60px;
+    font-size: 17px;
+}
+/* 네비게이션 버튼 */
+.list_form_nav>li{
+    float: left;
+    margin-bottom: -1px;
+    background: #fff;
+    color: #666;
+}
+.nav>li{
+    position: relative;
+    display: block;
+}
+/* 전체 링크 */
+.list_form_nav>li>a{
+    cursor: default;
+    background-color: #fff;
+    margin-bottom: -2px;
+    color: #000;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #fff;
+    font-weight: 500;
+}
+.list_form_nav>li>a{
+    line-height: 1.4;
+    border: 1px solid transparent;
+    padding: 14px 38px;
+    border-bottom: none;
+}
+.nav>li>a{
+    position: relative;
+    display: block;
+}
+/* 등록버튼 */
+.pull-right{
+    float: right!important;
+}
+.btn-info{
+    color: #fff;
+    background-color: #918c00;
+}
+/* 버튼 */
+.btn{
+    display: inline-block;
+    padding: 6px 20px;
+    margin: 0 2px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+/* 스토리 태그 */
+.story_tag{
+    padding: 4px 0 0 12px;
+}
+
+.story_tag_search{
+    position: relative;
+    padding: 0;
+    border: 2px solid #918c00;
+    /* border-radius: 15px; */
+    width: 200px;
+    height: 50px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.story_tag_search:focus{
+    font-size: 120%;
+}
+/* 스토리 태그 검색 이미지 */
+.story_search_img{
+    padding: 4px 0 0 12px;
+    width: 50px;
+    height: 40px;
+}
+/* 스토리 리스트 */
+.story_List{
+    margin: 0 -4px 0 -4px;
+}
+.story_num1{
+    width: 25%;
+    float: left;
+}
+/* 썸네일 */
+.thumbnail{
+    border-radius: 0;
+    padding: 0;
+    height: 400px;
+    width: 277px;
+}
+.thumbnail{
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    transition: border .2s ease-in-out;
+    box-shadow: 0 2px 3px #eee;
+}
+.story_List_thumb{
+    width: 275px;
+    height: 275px;
+}
+/* 스토리 콘텐츠(내용/좋아요/댓글/이름) */
+.story_List_contents{
+    padding: 10px 20px;
+}
+.story_List_contents_title{
+    /* 글자가 틀을 넘어가면 숨김 */
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    /* 웹키트 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 140%;
+    font-size: 16px;
+    margin-bottom: 8px;
+    padding-bottom: 1px;
+}
+/* 스토리 좋아요/댓글 */
+.story_List_contents_l{
+    display: inline-block;
+    color: #777;
+    font-weight: 300;
+    /* float: right;
+    color: #999;
+    font-size: 14px;
+    vertical-align: top;
+    margin-right: 2px; */
+}
+.story_List_contents_l span{
+    padding-left: 6px;
+    color: #918c00;
+    font-weight: 400;
+}
+/* 좋아요/댓글 이미지 사이즈 */
+.story_List_contents_l img{
+    width: 15px;
+    height: 15px;
+    margin: -2px 3px 0 0;
+    border-bottom: 0!important;
+}
+
+/* 작성자 */
+.story_List_contents_r{
+    float: right;
+    color: #999;
+    font-size: 14px;
+    vertical-align: top;
+    margin-right: 2px;
+    /* display: inline-block;
+    font-weight: 300; */
+}
+.thumbnail img {
+    border-bottom: 1px solid #e6e7e8;
+    max-width: 100%;
+    height: auto;
+}
+.story_List_contents_r img{
+    border-radius: 50%;
+    width: 28px;
+    margin: 0 6px 0 0!important;
+    display: inline-block!important;
+}
+a:-webkit-any-link{
+    cursor: pointer;
+}

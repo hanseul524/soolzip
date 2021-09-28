@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,14 +118,18 @@ public class RecipeDAO {
 		return result1;
 	}
 
-	public List<Recipe> selectAllRecipe(Connection conn) {
+	public List<Recipe> selectAllRecipe(Connection conn, int currentPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-
-		String query = "select user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount from recipe r,recipe_file f where  R.file_no = F.file_no and r.file_no is not null order by recipe_no";
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount FROM recipe r,recipe_file f where  R.file_no = F.file_no) where NUM BETWEEN ? AND ?";			
 		try {
 			pstmt = conn.prepareStatement(query);
+			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
+			int start = currentPage*viewCountPerPage - (viewCountPerPage-1);
+			int end = currentPage*viewCountPerPage;
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
 			rList = new ArrayList<Recipe>();
 			while(rset.next()) {
@@ -179,4 +184,75 @@ public class RecipeDAO {
 		return rList;
 	}
 
+	public String getPageNavi(Connection conn, int currentPage) {
+		// 1페이지당 10개씩 보여주는데 총 125개의 개시물이있으면 13개의 페이지가 있어야함
+				int pageCountPerView = 5;// [1,2,3,4,5] , [6,7,8,9,10] 페이지번호는 5개 씩 짤라서 보여줌
+				int viewTotalCount = totalCount(conn); // 총 게시물 수 
+				int viewCountPerPage = 12; // 한 페이지에 들어가는 게시물수 
+				int pageTotalCount = 0; // 페이지 총 개수 
+				
+				int pageTotalCountMod= viewTotalCount % viewCountPerPage ; // 총게시물 갯수를 페이지카운트로 나눈 나머지 
+				
+				if(pageTotalCountMod>0) {
+					pageTotalCount = viewTotalCount / viewCountPerPage + 1; // 나머지가 0보다 크면 페이지를 하나 추가한다
+				}else {
+					pageTotalCount = viewTotalCount / viewCountPerPage;
+				}
+				
+				int startNavi = ((currentPage-1)/pageCountPerView) * pageCountPerView + 1;
+				int endNavi = startNavi + pageCountPerView - 1;
+				
+				// 7페이지까지 게시물 존재하는데 8,9,10 페이지까지 보여지는것을 방지
+				if(endNavi>pageTotalCount) { 
+					endNavi = pageTotalCount;
+				}
+				
+				boolean needPrev = true;
+				boolean needNext = true;
+				if(startNavi==1) {
+					needPrev=false;
+				}
+				if(endNavi == pageTotalCount){
+					needNext = false;
+				}
+				StringBuilder sb = new StringBuilder();
+				
+				if(needPrev) {
+					sb.append("<a href='/recipe/list?currentPage="+(startNavi-1)+"'>[이전]</a>");
+				}
+				for(int i = startNavi; i <= endNavi; i++) {
+					if(i==currentPage) {
+						sb.append(i);
+					}else {
+						sb.append("<a href='/recipe/list?currentPage="+i+"'>" + i + "</a>");
+					}
+				}
+				if(needNext) {
+					sb.append("<a href='/recipe/list?currentPage="+(endNavi+1)+"'>[다음]</a>");
+				}
+				
+				return sb.toString();
+	}
+
+	//페이지 토탈 갯수 가져오는 메소드
+		public int totalCount(Connection conn) {
+			int totalValue = 0;
+			Statement stmt = null;
+			ResultSet rset = null;
+			String query = "SELECT COUNT(*) AS TOTALCOUNT FROM recipe";
+			try {
+				stmt=conn.createStatement();
+				rset= stmt.executeQuery(query);
+				if(rset.next()) {
+					totalValue = rset.getInt("TOTALCOUNT");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(stmt);
+				JDBCTemplate.close(rset);
+			}
+			return totalValue;
+		}
 }

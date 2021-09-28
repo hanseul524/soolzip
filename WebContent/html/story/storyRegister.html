@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스토리 등록</title>
+    <link rel="stylesheet" href="../../css/story/storyRegister.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#filename").on('change', function(){
+                readURL(this);
+            });
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+               var reader = new FileReader();
+               reader.onload = function (e) {
+                  $('#preImage').attr('src', e.target.result);
+               }
+               reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    </script>
+    <script>
+        $(document).ready(function(){
+        $("#headerMain").load("/html/comm/header.html");
+        $("#footerMain").load("/html/comm/footer.html");
+    });
+    </script>
+</head>
+
+<body>
+    <div id="headerMain"></div>
+    <div class="container">
+        <div class="contents">
+            <h1 class="h1text" style="text-align: center;">스토리 등록</h1>
+            <form action="${pageContext.request.contextPath}/updatetNoticePro.do" method="post" enctype="multipart/form-data" name="noticeForm">
+                <div class="poto">
+                    <div class="img_title">
+                        <img class="preview" id="preImage" src="${pageContext.request.contextPath}/saveFile/${noticeVO.filename}" alt="image_title" onerror='this.src="${pageContext.request.contextPath}/images/no_img.jpg"'/><br><br>
+                        <input class="fileupload" type='file' id="filename" name="filename"/>
+                        <table>
+                            <form action="">
+                                <dd class="info_tag">
+                                    <h3>스토리 내용</h3><input class="hash" type="text" name="storyContents" placeholder="내용을 입력해주세요"><br>
+                                    <h3>태그</h3><input class="hash" type="text" name="storyTag" placeholder="태그를 입력해주세요"><br>
+                                    <div class="dd-chunk"></div>
+                                </dd>
+                                <div class="btn_area">
+                                    <a href="./storyList.html"><input type="submit" class="btn_color" value="등록"></a>
+                                    <a href="./storyList.html"><input class="btn_color" type="button" value="취소"></a>
+                                </div>
+                            </form>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+    <div id="footerMain"></div>
+</body>
+</html>
