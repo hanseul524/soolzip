@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import myPage.service.MyPageService;
 import recipe.model.service.RecipeService;
 import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
-import user.model.service.UserService;
 import user.model.vo.User;
 
 
@@ -33,26 +33,17 @@ public class MyPageServlet extends HttpServlet {
 		
 		String userId = (String)session.getAttribute("userId");
 		//유저 정보 저장
-		User user = new UserService().addUser(userId);
+		User user = new MyPageService().addUser(userId);
 		
 		//공개된 레시피 갯수 카운트
-		int recipeCount = new UserService().recipeCount(userId);
+		int recipeCount = new MyPageService().recipeCount(userId);
 		
 		//내가쓴 스토리 갯수 카운트
-		int storyCount = new UserService().storyCount(userId);
+		int storyCount = new MyPageService().storyCount(userId);
 		
-		//임시저장 페이징
-		int currentPage = 0;
-		String getCurrentPage = request.getParameter("currentPage");
-		if(getCurrentPage == null) {
-			currentPage = 1;
-		}else {
-			currentPage = Integer.parseInt(getCurrentPage);
-		}
-		PageData pageData = new RecipeService().myPagePrintAllRecipe(currentPage,userId);
-		List<Recipe> rList = pageData.getRecipeList();
+		//전체공개리스트
+		List<Recipe> rList = new MyPageService().myPagePrintAllRecipe(userId);
 		if(user !=null) {
-			request.setAttribute("pageNavi", pageData.getPageNavi());
 			request.setAttribute("rList", rList);
 			request.setAttribute("storyCount", storyCount);
 			request.setAttribute("recipeCount", recipeCount);
