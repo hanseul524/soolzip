@@ -98,4 +98,53 @@ public class RecipeService {
 		return pd;
 	}
 
+	public Recipe printOneRecipe(int recipeNo) {
+		Recipe recipeOne = null;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+		
+		try {
+			conn= jdbcTemplate.createConnection();
+			recipeOne= rDao.selectOneRecipe(conn, recipeNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return recipeOne;
+	}
+
+	public List<RecipeIngredient> printOneRecipeIngr(int recipeNo) {
+		List<RecipeIngredient> iList = null;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+
+		try {
+			conn = jdbcTemplate.createConnection();
+			iList = rDao.selectOneRecipeIngr(conn, recipeNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return iList;
+	}
+
+	public List<RecipeMakeProcess> printOneRecipeMkProcess(int recipeNo) {
+		List<RecipeMakeProcess> mList = null;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+
+		try {
+			conn = jdbcTemplate.createConnection();
+			mList = rDao.selectOneRecipeMkProcess(conn, recipeNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return mList;
+	}
+
 }
