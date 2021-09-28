@@ -16,6 +16,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import story.model.service.StoryService;
 import story.model.vo.Story;
 import story.model.vo.StoryFile;
+import user.model.vo.User;
 
 
 /**
@@ -47,17 +48,17 @@ public class storyRegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//로그인 완성시 삭제 start
 		HttpSession session = request.getSession();
-//		User user = new User();
-//		user.setUserId("user01");
-//		session.setAttribute("user", user);
+		User user = new User();
+		user.setUserId("user01");
+		session.setAttribute("user", user);
 		//로그인 완성시 삭제 end
-		String userId = "user01";
+		String userId = ((User)session.getAttribute("user")).getUserId();
 		
 		//session ID 값이 null이면 로그인 페이지로 넘어간다.
 		
-//		if(userId == null) {
-//			response.sendRedirect("/user/login");
-//		}
+		if(userId == null) {
+			response.sendRedirect("/user/login");
+		}
 		
 		//첨부 사진 저장
 		String uploadFilePath = request.getServletContext().getRealPath("upload");
