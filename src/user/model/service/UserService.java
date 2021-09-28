@@ -52,9 +52,8 @@ public class UserService {
 	}
 
 	public User findUserId(String userName, String userEmail) {
-		User user = null;
 		Connection conn = null;
-		
+		User user = null;
 		try {
 			conn = jdbcTemplate.createConnection();
 			user = new UserDAO().selectOneById(conn, userName, userEmail);

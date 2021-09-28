@@ -58,7 +58,25 @@ public class UserDAO {
 	}
 
 	public User selectOneById(Connection conn, String userName, String userEmail) {
-		
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User userOne = null;
+		String query = "SELECT USER_ID FROM USERS WHERE USER_NAME = ? AND USER_EMAIL = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, userEmail);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				userOne = new User();
+				userOne.setUserId(rset.getString("USER_ID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return userOne;
 	}
 }

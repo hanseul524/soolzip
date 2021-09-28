@@ -6,18 +6,34 @@
 <meta charset="UTF-8">
 <title>userLogin</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css"/>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+$(document).ready(function)() {
+	$('#frm').on("submit", function() {
+	    if($('#user-id').val() == "") {
+	      alert("아이디를 입력해주세요.");
+	      return false;
+	    }else if($('#user-pwd').val() == "") {
+	      alert("패스워드를 입력해주세요.");
+	      return false;
+	    }
+	    return true;
+	  });
+});
+
+</script>
 </head>
 <body>
   <div id="content" class="contents">
     <div class="loginbox" style="text-align: center;">
       <div class="login">
         <h2>Login</h2>
-        <form action="/user/login" name="loginForm" method="post">
+        <form action="/user/login" name="loginForm" id="frm" method="post">
           <div class="login_id">
             <input type="text" name="user-id" placeholder="아이디">
           </div>
           <div class="login_pw">
-            <input type="password" name="user-pwd" placeholder="비밀번호">
+            <input type="password" name="user-pwd" placeholder="패스워드">
           </div>
           <div class="login_etc">
             <div class="forgot_id">

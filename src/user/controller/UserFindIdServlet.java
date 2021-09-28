@@ -29,20 +29,23 @@ public class UserFindIdServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
+		String userName = request.getParameter("user-name");
+		String userEmail = request.getParameter("user-email");
+		User userOne = new UserService().findUserId(userName, userEmail);
+		
+		if(userOne != null) {
+			request.setAttribute("userOne", userOne);
+//			System.out.println(user + "아이디 찾기 성공");
+			request.getRequestDispatcher("/html/userinfo/findinfo.jsp").forward(request, response);
+//			response.sendRedirect("/html/userinfo/findinfo.jsp");
+		}else {
+			System.out.println("아이디찾기 실패");
+			}
+		}	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	String userName = request.getParameter("user-name");
-	String userEmail = request.getParameter("user-email");
-	User user = new UserService().findUserId(userName, userEmail);
-	
-	if(user != null) {
-		System.out.println("아이디찾기 성공");
-	}else {
-		System.out.println("아이디찾기 실패");
-		}
+
 	}
 }
