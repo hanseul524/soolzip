@@ -152,38 +152,7 @@ public class RecipeDAO {
 		}
 		return rList;
 	}
-	//마이페이지 전체공개 레시피 리스트
-	public List<Recipe> myPageSelectAllRecipe(Connection conn, String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<Recipe> rList = null;
-		String query = "select user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount,r.RECIPE_ENROLLDATE from recipe r,recipe_file f where  R.file_no = F.file_no and r.file_no is not null and USER_ID='user01' order by recipe_no";
-		try {
-			pstmt = conn.prepareStatement(query);
-			rset = pstmt.executeQuery();
-			rList = new ArrayList<Recipe>();
-			while(rset.next()) {
-				Recipe recipe= new Recipe();
-				recipe.setUserId(rset.getString("USER_ID"));
-				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
-				recipe.setFileName(rset.getString("file_name"));
-				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
-				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
-				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
-				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
-				recipe.setRecipeEnrollDate(rset.getDate("RECIPE_ENROLLDATE"));
-				rList.add(recipe);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
-		}
-		
-		return rList;
-	}
-
+	
 	public String getPageNavi(Connection conn, int currentPage) {
 		// 1페이지당 10개씩 보여주는데 총 125개의 개시물이있으면 13개의 페이지가 있어야함
 				int pageCountPerView = 5;// [1,2,3,4,5] , [6,7,8,9,10] 페이지번호는 5개 씩 짤라서 보여줌
@@ -251,6 +220,120 @@ public class RecipeDAO {
 				e.printStackTrace();
 			} finally {
 				JDBCTemplate.close(stmt);
+				JDBCTemplate.close(rset);
+			}
+			return totalValue;
+		}
+		
+		
+		
+		
+		//마이페이지 전체공개 레시피 리스트
+		public List<Recipe> myPageSelectAllRecipe(Connection conn, int currentPage, String userId) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			List<Recipe> rList = null;
+			String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount, recipe_enrollDate FROM recipe r,recipe_file f where  R.file_no = F.file_no) where USER_ID=? and NUM BETWEEN ? AND ?";
+			try {
+				pstmt = conn.prepareStatement(query);
+				int viewCountPerPage = 8;
+				int start = currentPage*viewCountPerPage - (viewCountPerPage-1);
+				int end = currentPage*viewCountPerPage;
+				pstmt.setString(1, userId);
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				rset = pstmt.executeQuery();
+				rList = new ArrayList<Recipe>();
+				while(rset.next()) {
+					Recipe recipe= new Recipe();
+					recipe.setUserId(rset.getString("USER_ID"));
+					recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+					recipe.setFileName(rset.getString("file_name"));
+					recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
+					recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
+					recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
+					recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
+					recipe.setRecipeEnrollDate(rset.getDate("RECIPE_ENROLLDATE"));
+					rList.add(recipe);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(rset);
+				JDBCTemplate.close(pstmt);
+			}
+			
+			return rList;
+		}
+
+		
+		//마이페이지 페이징처리
+		public String getmyPageNavi(Connection conn, int currentPage, String userId) {
+			int pageCountPerView = 5;// [1,2,3,4,5] , [6,7,8,9,10] 페이지번호는 5개 씩 짤라서 보여줌
+			int viewTotalCount = mytotalCount(conn,userId); // 총 게시물 수 
+			int viewCountPerPage = 8; // 한 페이지에 들어가는 게시물수 
+			int pageTotalCount = 0; // 페이지 총 개수 
+			
+			int pageTotalCountMod= viewTotalCount % viewCountPerPage ; // 총게시물 갯수를 페이지카운트로 나눈 나머지 
+			
+			if(pageTotalCountMod>0) {
+				pageTotalCount = viewTotalCount / viewCountPerPage + 1; // 나머지가 0보다 크면 페이지를 하나 추가한다
+			}else {
+				pageTotalCount = viewTotalCount / viewCountPerPage;
+			}
+			
+			int startNavi = ((currentPage-1)/pageCountPerView) * pageCountPerView + 1;
+			int endNavi = startNavi + pageCountPerView - 1;
+			
+			// 7페이지까지 게시물 존재하는데 8,9,10 페이지까지 보여지는것을 방지
+			if(endNavi>pageTotalCount) { 
+				endNavi = pageTotalCount;
+			}
+			
+			boolean needPrev = true;
+			boolean needNext = true;
+			if(startNavi==1) {
+				needPrev=false;
+			}
+			if(endNavi == pageTotalCount){
+				needNext = false;
+			}
+			StringBuilder sb = new StringBuilder();
+			
+			if(needPrev) {
+				sb.append("<a href='/myPage/myPage?currentPage="+(startNavi-1)+"'>[이전]</a>");
+			}
+			for(int i = startNavi; i <= endNavi; i++) {
+				if(i==currentPage) {
+					sb.append(i);
+				}else {
+					sb.append("<a href='/myPage/myPage?currentPage="+i+"'>" + i + "</a>");
+				}
+			}
+			if(needNext) {
+				sb.append("<a href='/myPage/myPage?currentPage="+(endNavi+1)+"'>[다음]</a>");
+			}
+			
+			return sb.toString();
+		}
+
+		private int mytotalCount(Connection conn,String userId) {
+			int totalValue = 0;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			String query = "SELECT COUNT(*) AS TOTALCOUNT FROM recipe WHERE USER_ID=?";
+			try {
+				pstmt=conn.prepareStatement(query);
+				pstmt.setString(1, userId);
+				rset= pstmt.executeQuery();
+				if(rset.next()) {
+					totalValue = rset.getInt("TOTALCOUNT");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				JDBCTemplate.close(pstmt);
 				JDBCTemplate.close(rset);
 			}
 			return totalValue;
