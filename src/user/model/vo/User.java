@@ -5,28 +5,20 @@ public class User {
 	private int userNo;
 	private String userId;
 	private String userPwd;
+	private String userName;
 	private String userEmail;
 	private String userPhone;
 	
 	public User() {}
 	
-		public User(int userNo, String userId, String userPwd,String userEmail, String userPhone) {
+	public User(String userId, String userPwd, String userName, String userEmail, String userPhone) {
 		super();
-		this.userNo = userNo;
 		this.userId = userId;
 		this.userPwd = userPwd;
+		this.userName = userName;
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
 	}
-		
-		//회원정보 수정
-	public User(String userId, String userPwd, String userEmail, String userPhone) {
-			super();
-			this.userId = userId;
-			this.userPwd = userPwd;
-			this.userEmail = userEmail;
-			this.userPhone = userPhone;
-		}
 
 	public int getUserNo() {
 		return userNo;
@@ -52,6 +44,14 @@ public class User {
 		this.userPwd = userPwd;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -70,7 +70,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd 
-				+  ", userEmail=" + userEmail + ", userPhone=" + userPhone + "]";
+		return "User [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName="
+				+ userName + ", userEmail=" + userEmail + ", userPhone=" + userPhone + "]";
 	}	
 }
