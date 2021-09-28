@@ -22,7 +22,7 @@ body {
 
 .header a img {
 	position: relative;
-	/* left: 100px; */
+	left: 19px;
 }
 
 .user-area {
@@ -33,6 +33,8 @@ body {
 	padding: 0;
 	margin: 0;
 	list-style-type: none;
+	position: relative;
+	top : 50px;
 }
 
 .user-area-menu li {

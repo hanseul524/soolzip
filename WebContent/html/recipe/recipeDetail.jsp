@@ -1,5 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,31 +57,30 @@
 			<div id="contents_area" align="center" >
 				<!-- 헤더 -->
 				<div>
-					<img src="https://recipe1.ezmember.co.kr/cache/recipe/2017/11/14/a2d4839b5743d121d4d2b46fdbc9aa5b1.jpg" alt="">
-					<h1>레시피 제목</h1>
-					<p>신랑 생일날 생생정보통 잡채 레시피로 만들어봤어요 간단하면서도 맛있어서 배불리 잘먹었네요 ^^
-						http://blog.naver.com/qw3859</p>
+					<img src="/upload/${requestScope.recipeOne.fileName }" alt="">
+					<h1>${requestScope.recipeOne.recipeTitle }</h1>
+					<p>${requestScope.recipeOne.recipeContents }</p>
 				</div>
+				
+				
 				<!-- 제조과정 -->
 				<div>
-					<img src="https://recipe1.ezmember.co.kr/cache/recipe/2017/11/14/a2d4839b5743d121d4d2b46fdbc9aa5b1.jpg" alt="">
-					<h1>레시피 제목</h1>
-					<p>신랑 생일날 생생정보통 잡채 레시피로 만들어봤어요 간단하면서도 맛있어서 배불리 잘먹었네요 ^^
-						http://blog.naver.com/qw3859</p>
-				</div>
-				<div>
 					<h1>제조과정</h1>
-					<img style="width: 700px; height: 500px; border-radius: 10px;"
-					src="https://recipe1.ezmember.co.kr/cache/recipe/2017/11/14/a2d4839b5743d121d4d2b46fdbc9aa5b1.jpg"
-					alt="">
-					<p>제조과정 설명</p>
+					<c:forEach  items="${requestScope.mList }" var="mOne" varStatus="index">
+						<img style="width: 700px; height: 500px; border-radius: 10px;"
+							src="/upload/${mOne.fileName }"
+							alt="">
+						<p>${mOne.makeContents }</p>
+					</c:forEach>
 				</div>
 				<div>
 					<h2>한줄 댓글</h2>
-					<form class="box_write" id="new_comment" action="/recipes/5978/comments" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="Q44k9DCat631eYMfXaua/sW1VBpPFLRLl+oZmclI93qcA8sFhcs0q8A4yfhkk35Y5pRdDAGwKhylslprz1H+MQ==">
-						<textarea placeholder="한 줄 댓글을 남겨주세요." name="comment[comment]" id="comment_comment"></textarea>
+					<form class="box_write"  action="/recipeReply/write" method="post">
+						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents"></textarea>
+						<input type="hidden" name="noticeNo" value="${requestScope.recipeOne.recipeNo}">
 						<button name="button" type="submit">댓글남기기</button>
 					</form>
+					
 					<!-- 댓글 리스트 -->
 					<ul>
 						<li>
@@ -109,10 +111,12 @@
 							</tr>
 						</thead>
 						<tbody>
+						<c:forEach  items="${requestScope.iList }" var="iOne" varStatus="index">
 							<tr>
-								<td>소주</td>
-								<td>100ml</td>
+								<td>${iOne.ingredientName }</td>
+								<td>${iOne.ingredientGram }</td>
 							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
  				</div>

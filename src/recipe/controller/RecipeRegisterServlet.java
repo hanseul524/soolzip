@@ -71,6 +71,7 @@ public class RecipeRegisterServlet extends HttpServlet {
 		//upload 폴더에 저장한 파일에 대한 정보
 		
 		//레시피 기본 정보 담기
+		int recipeSaveState = Integer.parseInt(multi.getParameter("recipeSaveState"));
 		String recipeTitle = multi.getParameter("recipe-title");
 		String recipeContents = multi.getParameter("recipe-contents");
 		String recipeMainDrink = multi.getParameter("recipe-mainDrink");
@@ -88,6 +89,7 @@ public class RecipeRegisterServlet extends HttpServlet {
 		Recipe recipe = new Recipe(recipeContents,recipeTitle,recipeMainDrink,recipeAlcohol,recipeTag);
 		recipe.setRecipeFile(mainFile);
 		recipe.setUserId(userId);
+		recipe.setRecipeSaveState(recipeSaveState);
 		
 		
 		

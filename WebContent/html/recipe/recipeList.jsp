@@ -59,7 +59,7 @@
             width: 282px;
             list-style: none;
             padding: 0;
-            margin: 0 12px 40px 0;
+            margin: 0 37px 40px 0;
             display: inline-block;
             vertical-align: top;
             position: relative;
@@ -67,11 +67,14 @@
         
         .box-caption{
             padding: 10px 2px;
+            text-align: center;
         }
         .box-thumb{
             position: relative;
             border-radius: 4px;
             overflow: hidden;
+            text-align: center;
+            margin: 15px 0 15px 0;
         }
         .box-title{
             overflow: hidden;
@@ -119,19 +122,19 @@
     <!-- 카테고리 -->
     <ul class="kategoire" style="border:solid 1px gray; padding: 20px 0 0 20px;">
         <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>전체</span></a></li>
+        <li><a href="#"><span>소주</span></a></li>
+        <li><a href="#"><span>맥주</span></a></li>
+        <li><a href="#"><span>막걸리</span></a></li>
+        <li><a href="#"><span>와인</span></a></li>
+        <li><a href="#"><span>보드카</span></a></li>
+        <li><a href="#"><span>럼</span></a></li>
+        <li><a href="#"><span>진</span></a></li>
+        <li><a href="#"><span>데킬라</span></a></li>
+        <li><a href="#"><span>위스키</span></a></li>
+        <li><a href="#"><span>브랜디</span></a></li>
+        <li><a href="#"><span>전통주</span></a></li>
+        <li><a href="#"><span>명예의전당</span></a></li>
+        <li><a href="#"><span>기타</span></a></li>
     </ul>
     <br>
     <br>
@@ -144,15 +147,15 @@
     	<c:forEach items="${requestScope.rList }" var="rOne" varStatus="index">
         <li>
             <div class="box-thumb">
-                <a href="#">
-                    <img style="width:100%; height:100%;" src="/upload/${rOne.fileName }" alt="" >
+                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
+                    <img style="width:250px; height:200px;" src="/upload/${rOne.fileName }" alt="" >
                 </a>
             </div>
             <div class="box-caption">
-                <div class="box-title">${rOne.recipeTitle }</div>
+                <div class="box-title">${rOne.recipeTitle }[${rOne.recipeReplyCount }]</div>
                 <div class="box-name"  style="overflow: hidden;">
                     <a href="#"> 
-                        <img src="./img/myPageLogo.png" alt="">
+                        <img src="/img/myPageLogo.png" alt="">
                         ${rOne.userId }
                     </a>
                     <br>
@@ -179,12 +182,7 @@
 		<!-- 내비게이션 바 -->
 		<tr>
 			<td colspan="4" align="center">
-			<%-- 	${requestScope.pageNavi} --%>
-				<a href="#">[이전]</a>
-				<a href="/reicipe/list?currentPage=1">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">[다음]</a>
+				${requestScope.pageNavi}
 			</td>
 		</tr>
     </table>
