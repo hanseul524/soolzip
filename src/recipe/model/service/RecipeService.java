@@ -75,26 +75,26 @@ public class RecipeService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(conn);
+			JDBCTemplate.close(conn); 
 		}
 		return pd;
 	}
 
 	// 마이페이지 내 레시피 조회
-	public List<Recipe> myPagePrintAllRecipe(String userId) {
-		List<Recipe> rList = null;
+	public PageData myPagePrintAllRecipe(int currentPage,String userId) {
+		PageData pd = new PageData();
 		Connection conn = null;
 		RecipeDAO rDao = new RecipeDAO();
 
 		try {
 			conn = jdbcTemplate.createConnection();
-			rList = rDao.myPageSelectAllRecipe(conn, userId);
+			pd.setRecipeList(rDao.myPageSelectAllRecipe(conn, currentPage, userId));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
-		return rList;
+		return pd;
 	}
 
 	public Recipe printOneRecipe(int recipeNo) {
