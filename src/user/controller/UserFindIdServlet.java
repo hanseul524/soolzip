@@ -10,18 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import user.model.service.UserService;
 import user.model.vo.User;
 
-
 /**
- * Servlet implementation class UserRegisterServlet
+ * Servlet implementation class UserFindIdServlet
  */
-@WebServlet("/user/register")
-public class UserRegisterServlet extends HttpServlet {
+@WebServlet("/user/findid")
+public class UserFindIdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserRegisterServlet() {
+    public UserFindIdServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,30 +29,23 @@ public class UserRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String userId = request.getParameter("user-id");
-		String userPwd = request.getParameter("user-pwd");
-		String userEmail = request.getParameter("user-email");
 		String userName = request.getParameter("user-name");
-		String [] phoneStr = request.getParameterValues("user-phone");
+		String userEmail = request.getParameter("user-email");
+		User userOne = new UserService().findUserId(userName, userEmail);
 		
-		String userPhone = "";
-		for(int i=0; i<phoneStr.length; i++){
-			userPhone += phoneStr[i];
-		} //배열 변수에 담기
-		User user = new User(userId, userPwd, userName, userEmail, userPhone);
-		int result = new UserService().registerUser(user);
-		
-		if(result > 0) {
-			response.sendRedirect("/index.jsp");
+		if(userOne != null) {
+			request.setAttribute("userOne", userOne);
+//			System.out.println(user + "아이디 찾기 성공");
+			request.getRequestDispatcher("/html/userinfo/findinfo.jsp").forward(request, response);
+//			response.sendRedirect("/html/userinfo/findinfo.jsp");
 		}else {
-			System.out.println("회원가입 실패");
-		}
-	}
-		
+			System.out.println("아이디찾기 실패");
+			}
+		}	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	}
 }

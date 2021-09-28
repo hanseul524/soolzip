@@ -1,8 +1,14 @@
 @charset "UTF-8";
-a {
-  text-decoration: none;
-  color: black;
-  text-align: center;
+.loginbox {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+}
+form {
+  width: 100%;
 }
 .login {
   width: 30%;
@@ -18,6 +24,7 @@ a {
 h2 {
   color: black;
   font-size: 2em;
+  margin-bottom: 50px;
 }
 .login_id {
   margin: 0 auto;
@@ -47,20 +54,12 @@ h2 {
   outline: none;
 }
 
-.login_etc {
-  padding: 10px;
-  padding-left: 70px;
-  margin: 0 auto;
-  width: 80%;
-  font-size: 14px;
-  display: flex;
-}
-
 .submit {
   width: 80%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px;
 }
+
 .submit input {
   width: 100%;
   height: 50px;
@@ -71,39 +70,23 @@ h2 {
   font-size: 1.2em;
   letter-spacing: 2px;
 }
-.signup {
-  width: 80%;
-  margin: 0 auto;
-  height: 50px;
-  border: 1px solid lightgray;
-  border-radius: 40px;
-  background: white;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-}
-.signup a {
-  color: gray;
-  font-size: 1.2em;
-  letter-spacing: 2px;
-  margin: 0 auto;
-}
-.icon {
-  width: 90%;
-  margin: 0 auto;
-  float: left;
-  padding: 20px;
-}
-#sns-login {
-  display: block;
-  margin-top: 20px;
-}
-.boxlist {
+
+ul.tabs li {
+  background: none;
   display: inline-block;
-  margin-left: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
 }
-.boxtext {
-  display: block;
-  margin-top: 10px;
+ul.tabs li.current {
+  border: 1px solid lightgray;
+  border-radius: 20px;
+}
+
+.tab-content {
+  display: none;
+  padding: 15px;
+}
+
+.tab-content.current {
+  display: inherit;
 }
