@@ -75,8 +75,9 @@
 				</div>
 				<div>
 					<h2>한줄 댓글</h2>
-					<form class="box_write" id="new_comment" action="/recipes/5978/comments" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="Q44k9DCat631eYMfXaua/sW1VBpPFLRLl+oZmclI93qcA8sFhcs0q8A4yfhkk35Y5pRdDAGwKhylslprz1H+MQ==">
-						<textarea placeholder="한 줄 댓글을 남겨주세요." name="comment[comment]" id="comment_comment"></textarea>
+					<form class="box_write"  action="/recipeReply/write" method="post">
+						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents"></textarea>
+						<input type="hidden" name="noticeNo" value="${requestScope.recipeOne.recipeNo}">
 						<button name="button" type="submit">댓글남기기</button>
 					</form>
 					
