@@ -152,21 +152,21 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select user_id, recipe_title, F.file_name, recipe_contents, recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? order by recipe_no;";
-		
+		String query = "select user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount,r.RECIPE_ENROLLDATE from recipe r,recipe_file f where  R.file_no = F.file_no and r.file_no is not null and USER_ID='user01' order by recipe_no";
 		try {
-			pstmt=conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			rset=pstmt.executeQuery();
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
 			rList = new ArrayList<Recipe>();
 			while(rset.next()) {
 				Recipe recipe= new Recipe();
 				recipe.setUserId(rset.getString("USER_ID"));
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
-				recipe.setFileName(rset.getString(" F.file_name"));
+				recipe.setFileName(rset.getString("file_name"));
 				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
 				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
 				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
+				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
+				recipe.setRecipeEnrollDate(rset.getDate("RECIPE_ENROLLDATE"));
 				rList.add(recipe);
 			}
 		} catch (SQLException e) {
