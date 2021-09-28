@@ -89,7 +89,6 @@ public class RecipeService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			pd.setRecipeList(rDao.myPageSelectAllRecipe(conn, currentPage, userId));
-			pd.setPageNavi(rDao.getmyPageNavi(conn, currentPage, userId));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

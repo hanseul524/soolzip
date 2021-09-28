@@ -33,6 +33,8 @@ public class myInfoUpdateServlet extends HttpServlet {
 		String userEmail = request.getParameter("userEmail");
 		String userPhone = request.getParameter("userPhone");	
 		User user = new User(userId, userPwd, userEmail, userPhone);
+		
+		
 		int result = new UserService().modifyUser(user);
 		if(result>0) {
 			session.invalidate();

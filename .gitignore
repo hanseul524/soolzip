@@ -1,4 +1,6 @@
 /build/
+.metadata
 .classpath
 .settings
 .project
+bin
