@@ -1,6 +1,7 @@
 package recipe.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Recipe {
 	private int recipeNo;
@@ -19,6 +20,9 @@ public class Recipe {
 	private String fileNo; // 대표사진 id
 	private String fileName;// -> 대표사진 파일을 불러오기위한 맴버 
 	private RecipeFile recipeFile; // 레시피 대표사진 파일id를 넣기위한 맴버
+	
+	private List<RecipeReply> replies; // 댓글 리스트
+	
 	
 	public Recipe() {
 		super();
@@ -57,6 +61,18 @@ public class Recipe {
 		this.fileNo = fileNo;
 		this.fileName = fileName;
 		this.recipeFile = recipeFile;
+	}
+
+	
+	
+
+	public List<RecipeReply> getReplies() {
+		return replies;
+	}
+
+
+	public void setReplies(List<RecipeReply> replies) {
+		this.replies = replies;
 	}
 
 

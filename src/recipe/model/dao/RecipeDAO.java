@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeFile;
 import recipe.model.vo.RecipeIngredient;
 import recipe.model.vo.RecipeMakeProcess;
+import recipe.model.vo.RecipeReply;
 
 public class RecipeDAO {
 
@@ -315,6 +317,72 @@ public class RecipeDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return mList;
+	}
+
+
+	//레시피 댓글 등록
+	public int insertRecipeReply(Connection conn, String userId, int recipeNo, String replyContents,Timestamp uploadTime) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "INSERT INTO RECIPE_REPLY VALUES(SEQ_RECIPE_REPLY.NEXTVAL,?,?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			pstmt.setString(2,userId);
+			pstmt.setString(3, replyContents);
+			pstmt.setTimestamp(4, uploadTime);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public List<RecipeReply> selectAllRecipeReply(Connection conn, int recipeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<RecipeReply> List = null;
+		RecipeReply recipeReply = null;
+		String query = "select * from recipe_reply where recipe_no = ? order by 1";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			rset = pstmt.executeQuery();
+			List = new ArrayList();
+			while (rset.next()) {
+				recipeReply = new RecipeReply();
+				recipeReply.setReplyNo(rset.getInt("reply_no"));
+				recipeReply.setRecipeNo(rset.getInt("recipe_no"));
+				recipeReply.setReplyContents(rset.getString("CONTENTS"));
+				recipeReply.setReplyUserId(rset.getString("REPLY_NAME"));
+				recipeReply.setReplyDate(rset.getTimestamp("ENROLLDATE"));
+				List.add(recipeReply);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return List;
+	}
+
+	public int deleteRecipeReplyOne(Connection conn, int replyNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "DELETE FROM RECIPE_REPLY WHERE REPLY_NO=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, replyNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 }
