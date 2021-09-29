@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import myPage.service.MyPageService;
 import user.model.service.UserService;
 import user.model.vo.User;
 
@@ -35,7 +36,7 @@ public class myInfoUpdateServlet extends HttpServlet {
 		User user = new User(userId, userPwd, userEmail, userPhone);
 		
 		
-		int result = new UserService().modifyUser(user);
+		int result = new MyPageService().modifyUser(user);
 		if(result>0) {
 			session.invalidate();
 			response.sendRedirect("/html/myPage/succes.html");

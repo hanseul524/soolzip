@@ -319,7 +319,7 @@ public class RecipeDAO {
 		return mList;
 	}
 
-	
+
 	//레시피 댓글 등록
 	public int insertRecipeReply(Connection conn, String userId, int recipeNo, String replyContents,Timestamp uploadTime) {
 		PreparedStatement pstmt = null;
@@ -389,6 +389,5 @@ public class RecipeDAO {
 		
 		return 0;
 	}
-
 
 }

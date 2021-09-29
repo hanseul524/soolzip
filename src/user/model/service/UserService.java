@@ -14,7 +14,7 @@ public class UserService {
 	public UserService() {
 		jdbcTemplate = JDBCTemplate.getConnection();
 	}
-
+	//로그인
 	public User selectLogin(String userId, String userPwd) {
 		User user = null;
 		Connection conn = null;
@@ -29,7 +29,7 @@ public class UserService {
 		}
 		return user;
 	}
-
+	//회원정보 수정
 	public int registerUser(User user) {
 		int result = 0;
 		Connection conn = null;
@@ -50,7 +50,7 @@ public class UserService {
 		}
 		return result;
 	}
-
+	//아이디 찾기
 	public User findUserId(String userName, String userEmail) {
 		Connection conn = null;
 		User userOne = null;
@@ -64,7 +64,7 @@ public class UserService {
 		}
 		return userOne;
 	}
-
+	//비밀번호 찾기
 	public User findUserPwd(String userId, String userEmail) {
 		Connection conn = null;
 		User userOne = null;
@@ -79,76 +79,22 @@ public class UserService {
 			JDBCTemplate.close(conn);
 		}
 		return userOne;
-	}
-
-	// 회원정보 수정
-	public int modifyUser(User user) {
+	}	
+	
+	//비밀번호 변경
+	public int changePwd(String userId, String authenticationKey) {
 		int result = 0;
 		Connection conn = null;
-
+		
 		try {
 			conn = jdbcTemplate.createConnection();
-			result = new UserDAO().updateUser(conn, user);
-
-			if (result > 0) {
-				JDBCTemplate.commit(conn);
-			} else {
-				JDBCTemplate.rollback(conn);
-			}
+			result = new UserDAO().updateUserPwd(userId, authenticationKey, conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
 		return result;
-	}
-
-	// 마이페이지 입장시 유저vo에 유저 정보담기
-	public User addUser(String userId) {
-		User user = null;
-		Connection conn = null;
-
-		try {
-			conn = jdbcTemplate.createConnection();
-			user = new UserDAO().addUser(conn, userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return user;
-	}
-
-	// 마이페이지 내가쓴 공개레시피 갯수 조회
-	public int recipeCount(String userId) {
-		int count = 0;
-		Connection conn = null;
-
-		try {
-			conn = jdbcTemplate.createConnection();
-			count = new UserDAO().countRecipe(conn, userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return count;
-	}
-
-	// 마이페이지 내가쓴 스토리 카운트 조회
-	public int storyCount(String userId) {
-		int count = 0;
-		Connection conn = null;
-
-		try {
-			conn = jdbcTemplate.createConnection();
-			count = new UserDAO().countStory(conn, userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return count;
 	}
 
 }

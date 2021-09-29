@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import myPage.service.MyPageService;
 import recipe.model.service.RecipeService;
 import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
-import user.model.service.UserService;
+import story.model.vo.Story;
 import user.model.vo.User;
 
 
@@ -28,7 +29,38 @@ public class MyPageServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 		
+		String userId = (String)session.getAttribute("userId");
+		//유저 정보 저장
+		User user = new MyPageService().addUser(userId);
+		//공개된 레시피 갯수 카운트
+		int recipeCount = new MyPageService().recipeCount(userId);
+		//내가쓴 스토리 갯수 카운트
+		int storyCount = new MyPageService().storyCount(userId);
+		//전체공개리스트
+		List<Recipe> rList = new MyPageService().myPagePrintAllRecipe(userId);
+		//임시공개 리스트
+		List<Recipe> cList = new MyPageService().myCacheRecipe(userId);
+		//스토리 리스트
+		List<Story> sList = new MyPageService().myStory(userId);
+		//스크랩 리스트
+		List<Recipe> scList = new MyPageService().myScrap(userId);
+		//레시피 내가쓴 댓글 리스트
+		
+		if(user !=null) {
+			request.setAttribute("scList", scList);
+			request.setAttribute("sList", sList);
+			request.setAttribute("cList", cList);
+			request.setAttribute("rList", rList);
+			request.setAttribute("storyCount", storyCount);
+			request.setAttribute("recipeCount", recipeCount);
+			request.setAttribute("user", user);
+			request.getRequestDispatcher("/html/myPage/myPage.jsp").forward(request, response);
+		}else {
+			System.out.println("retry");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

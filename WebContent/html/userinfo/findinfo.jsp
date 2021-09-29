@@ -8,9 +8,12 @@
 <meta charset="UTF-8">
 <title>findinfo</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/findinfo.css"/>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function(){
+	$("#headerMain").load("/html/comm/header.html");
+	$("#footerMain").load("/html/comm/footer.html");
+	  
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
 		$('ul.tabs li').removeClass('current');
@@ -26,6 +29,7 @@
 </script>
 </head>
 <body>
+<div id="headerMain"></div>
   <div id="content" class="contents">
     <div class="loginbox" style="text-align: center;">
       <div class="login" >
@@ -71,5 +75,6 @@
     </div>
     </div>
   </div>
+<div id="footerMain"></div>
 </body>
 </html>
