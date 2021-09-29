@@ -2,6 +2,7 @@ package recipe.model.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import common.JDBCTemplate;
@@ -11,6 +12,7 @@ import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeFile;
 import recipe.model.vo.RecipeIngredient;
 import recipe.model.vo.RecipeMakeProcess;
+import recipe.model.vo.RecipeReply;
 
 public class RecipeService {
 
@@ -80,31 +82,17 @@ public class RecipeService {
 		return pd;
 	}
 
-	// 마이페이지 내 레시피 조회
-	public PageData myPagePrintAllRecipe(int currentPage,String userId) {
-		PageData pd = new PageData();
-		Connection conn = null;
-		RecipeDAO rDao = new RecipeDAO();
-
-		try {
-			conn = jdbcTemplate.createConnection();
-			pd.setRecipeList(rDao.myPageSelectAllRecipe(conn, currentPage, userId));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return pd;
-	}
-
 	public Recipe printOneRecipe(int recipeNo) {
 		Recipe recipeOne = null;
 		Connection conn = null;
+		List<RecipeReply> list = null;
 		RecipeDAO rDao = new RecipeDAO();
-		
 		try {
 			conn= jdbcTemplate.createConnection();
 			recipeOne= rDao.selectOneRecipe(conn, recipeNo);
+			//RecipeReply불러옴 // 댓글
+			list = rDao.selectAllRecipeReply(conn,recipeNo);
+			recipeOne.setReplies(list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,6 +132,52 @@ public class RecipeService {
 			JDBCTemplate.close(conn);
 		}
 		return mList;
+	}
+
+	public int registerRecipeReply(String userId, int recipeNo, String replyContents, Timestamp uploadTime) {
+		int result = 0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.insertRecipeReply(conn, userId, recipeNo, replyContents, uploadTime);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		
+		return result;
+	}
+
+	public int removeNoiceReplyOne(int replyNo) {
+		int result = 0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.deleteRecipeReplyOne(conn, replyNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
+	public int modifyRecipeReplyOne(int replyNo, String replyContents) {
+		int result = 0;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
