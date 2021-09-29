@@ -80,22 +80,7 @@ public class RecipeService {
 		return pd;
 	}
 
-	// 마이페이지 내 레시피 조회
-	public PageData myPagePrintAllRecipe(int currentPage,String userId) {
-		PageData pd = new PageData();
-		Connection conn = null;
-		RecipeDAO rDao = new RecipeDAO();
-
-		try {
-			conn = jdbcTemplate.createConnection();
-			pd.setRecipeList(rDao.myPageSelectAllRecipe(conn, currentPage, userId));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return pd;
-	}
+	
 
 	public Recipe printOneRecipe(int recipeNo) {
 		Recipe recipeOne = null;
