@@ -9,7 +9,7 @@ import common.JDBCTemplate;
 import user.model.vo.User;
 
 public class UserDAO {
-
+	//로그인
 	public User selectLogin(Connection conn, String userId, String userPwd) {
 		User user = null;
 		PreparedStatement pstmt =null;
@@ -127,7 +127,7 @@ public class UserDAO {
 		
 		return count;
 	}
-
+	// 회원가입
 	public int insertUser(Connection conn, User user) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -148,7 +148,7 @@ public class UserDAO {
 		}
 		return result;
 	}
-
+	// 아이디 찾기
 	public User selectOneById(Connection conn, String userName, String userEmail) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -171,12 +171,46 @@ public class UserDAO {
 		}
 		return userOne;
 	}
-
+	// 비밀번호 찾기
 	public User selectOneByPwd(Connection conn, String userId, String userEmail) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		User userOne = null;
+		String query = "SELECT USER_PWD FROM USERS WHERE USER_ID = ? AND USER_EMAIL = ?";
 		
-		return null;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userEmail);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				userOne = new User();
+				userOne.setUserPwd(rset.getString("USER_PWD"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return userOne;
 	}
-	
+	// 비밀번호 변경
+	public int updateUserPwd(String userId, String authenticationKey, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE USERS SET USER_PWD = ? WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, authenticationKey);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

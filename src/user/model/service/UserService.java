@@ -14,7 +14,7 @@ public class UserService {
 	public UserService() {
 		jdbcTemplate = JDBCTemplate.getConnection();
 	}
-
+	//로그인
 	public User selectLogin(String userId, String userPwd) {
 		User user = null;
 		Connection conn = null;
@@ -29,7 +29,7 @@ public class UserService {
 		}
 		return user;
 	}
-
+	//회원정보 수정
 	public int registerUser(User user) {
 		int result = 0;
 		Connection conn = null;
@@ -50,7 +50,7 @@ public class UserService {
 		}
 		return result;
 	}
-
+	//아이디 찾기
 	public User findUserId(String userName, String userEmail) {
 		Connection conn = null;
 		User userOne = null;
@@ -64,7 +64,7 @@ public class UserService {
 		}
 		return userOne;
 	}
-
+	//비밀번호 찾기
 	public User findUserPwd(String userId, String userEmail) {
 		Connection conn = null;
 		User userOne = null;
@@ -79,6 +79,21 @@ public class UserService {
 			JDBCTemplate.close(conn);
 		}
 		return userOne;
+	}
+	//비밀번호 변경
+	public int changePwd(String userId, String authenticationKey) {
+		int result = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = new UserDAO().updateUserPwd(userId, authenticationKey, conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
 	}
 
 	// 회원정보 수정
@@ -150,5 +165,6 @@ public class UserService {
 		}
 		return count;
 	}
+
 
 }
