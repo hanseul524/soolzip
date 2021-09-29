@@ -9,6 +9,7 @@ import myPage.dao.MyPageDAO;
 import recipe.model.dao.RecipeDAO;
 import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
+import story.model.vo.Story;
 import user.model.vo.User;
 
 public class MyPageService {
@@ -89,7 +90,7 @@ public class MyPageService {
 		return result;
 	}
 
-	// 마이페이지 내 레시피 조회
+	// 마이페이지 내 공개 레시피 조회
 	public List<Recipe> myPagePrintAllRecipe(String userId) {
 		Connection conn = null;
 		MyPageDAO mDao = new MyPageDAO();
@@ -103,6 +104,54 @@ public class MyPageService {
 			JDBCTemplate.close(conn);
 		}
 		return rList;
+	}
+	//마이페이지 내 임시 레시피 조회
+	public List<Recipe> myCacheRecipe(String userId) {
+		Connection conn = null;
+		List<Recipe> cList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			cList = mDao.myCacheRecipe(conn,userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return cList;
+	}
+	//마이페이지 스토리 조회
+	public List<Story> myStory(String userId) {
+		Connection conn = null;
+		List<Story> sList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			sList = mDao.myStory(conn, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return sList;
+	}
+	//스크랩리스트
+	public List<Recipe> myScrap(String userId) {
+		Connection conn = null;
+		List<Recipe> scList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn=jdbcTemplate.createConnection();
+			scList = mDao.myScrap(conn, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return scList;
 	}
 
 }
