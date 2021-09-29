@@ -80,7 +80,8 @@ public class storyRegisterServlet extends HttpServlet {
 		story.setStoryFile(storyFile);
 		story.setUserId(userId);
 		
-		int result = new StoryService().registerStory(story);
+		
+		int result = new StoryService().registerStory(story, storyFile);
 		if(result>Integer.MIN_VALUE) {
 			System.out.println("등록성공");
 			response.sendRedirect("/story/list");
