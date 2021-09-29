@@ -173,6 +173,7 @@ public class RecipeService {
 		RecipeDAO rDao = new RecipeDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
+			result = rDao.updateRecipeReplyOne(conn, replyNo, replyContents);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
