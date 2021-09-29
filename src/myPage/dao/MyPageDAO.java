@@ -92,7 +92,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int count = 0;
-		String query = "SELECT COUNT(*) FROM STORY WHERE USER_NO = (SELECT USER_NO FROM USERS WHERE USER_ID = ?)";
+		String query = "SELECT COUNT(*) FROM STORY WHERE USER_ID = ?";
 
 		try {
 			pstmt = conn.prepareStatement(query);
