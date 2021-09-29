@@ -385,4 +385,9 @@ public class RecipeDAO {
 		return result;
 	}
 
+	public int updateRecipeReplyOne(Connection conn, int replyNo, String replyContents) {
+		
+		return 0;
+	}
+
 }
