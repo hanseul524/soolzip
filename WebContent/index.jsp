@@ -40,10 +40,7 @@ $(document).ready(function () {
           </div>
           <div class="login_etc">
             <div class="forgot_id">
-            <a href="./html/userinfo/findinfo.jsp">아이디 찾기&nbsp;&nbsp;&nbsp;&nbsp;</a>
-            </div>
-            <div class="forgot_pwd">
-              <a href="./html/userinfo/findinfo.jsp">비밀번호 찾기</a>
+            <a href="./html/userinfo/findinfo.jsp">아이디/비밀번호 찾기</a>
             </div>
           </div>
           <div class="submit">
