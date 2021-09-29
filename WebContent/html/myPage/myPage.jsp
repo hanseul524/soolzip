@@ -76,7 +76,7 @@
            <ul class="list" id="kategori">
                <li class="list" id="recipe" data-tab="tab-0">레시피</li>
                <li class="list" id="story" data-tab="tab-2">스토리</li>
-               <li class="list" id="reply" data-tab="tab-3">댓글</li>
+               <li class="list" id="reply" data-tab="tab-3">작성한댓글</li>
                <li class="list" id="scrap" data-tab="tab-4">스크랩</li>
                <li class="list" id="message" data-tab="tab-5">쪽지함</li>
            </ul>
@@ -89,8 +89,8 @@
        </div>
        <div class="sub-tab tab-8 tab-3">          
            <ul class="con-kategori" id="reply-con-kategori">
-               <li id="get-reply-kategori" data-tab="tab-3">받은 댓글</li>
-               <li id="send-reply-kategori" data-tab="tab-8">내가 쓴 댓글</li>
+               <li id="get-reply-kategori" data-tab="tab-3">레시피</li>
+               <li id="send-reply-kategori" data-tab="tab-8">스토리</li>
            </ul>
        </div>
        <div class="sub-tab tab-9 tab-5">
@@ -100,7 +100,35 @@
            </ul>
        </div>
        <!-- 레시피 콘텐츠 -->
-       <div class="myPage-con tab-0 active">a</div>
+       <div class="myPage-con tab-0 active" style="overflow:hidden;">
+       		<c:if test ="${empty cList }">
+       			<center>
+                   <img style="margin-top: 250px;" src="/upload/story_none.png"
+                       alt="">
+               </center>
+       		</c:if>
+       		<c:if test="${!empty cList }">
+               <c:forEach items="${requestScope.cList }" var="cList"
+                   varStatus="index">
+                   <div style="float: left; margin: 10px;">
+                       <div class="box-thumb" style="width: 200px; height: 200px;">
+                           <a href="#"> <img style="width: 100%; height: 100%;"
+                               src="/upload/${cList.fileName }" alt="">
+                           </a>
+                       </div>
+                       <div class="box-caption" style="margin: 10px;">
+                           <div class="box-title">
+                               <a href="#" style="text-decoration: none; color: black;">${cList.recipeTitle }</a>
+                           </div>
+                           <div class="box-name" style="overflow: hidden;">
+                              <span style="font-size: 0.6em;">작성일 :
+                                   ${cList.recipeEnrollDate }</span>
+                           </div>
+                       </div>
+                   </div>
+               </c:forEach>
+           </c:if>
+       </div>
        <div class="myPage-con tab-1">
            <c:if test="${empty rList }">
                <center>
@@ -113,13 +141,13 @@
                    varStatus="index">
                    <div style="float: left; margin: 10px;">
                        <div class="box-thumb" style="width: 200px; height: 200px;">
-                           <a href="#"> <img style="width: 100%; height: 100%;"
+                           <a href="/recipe/detail?recipeNo=${rList.recipeNo }"> <img style="width: 100%; height: 100%;"
                                src="/upload/${rList.fileName }" alt="">
                            </a>
                        </div>
                        <div class="box-caption" style="margin: 10px;">
                            <div class="box-title">
-                               <a href="#" style="text-decoration: none; color: black;">${rList.recipeTitle }</a>
+                               <a href="/recipe/detail?recipeNo=${rList.recipeNo }" style="text-decoration: none; color: black;">${rList.recipeTitle }</a>
                            </div>
                            <div class="box-name" style="overflow: hidden;">
                                <span style="font-size: 0.6em;">댓글수 :
@@ -131,20 +159,76 @@
                    </div>
                </c:forEach>
            </c:if>
-                   ${requestScope.pageNavi}
-
         </div>
         <div class="myPage-con tab-2">
-            <h1>스토리</h1>
+            <c:if test ="${empty sList }">
+       			<center>
+                   <img style="margin-top: 250px;" src="/upload/story_none.png"
+                       alt="">
+               </center>
+       		</c:if>
+       		<c:forEach items="${requestScope.sList }" var="sList"
+                   varStatus="index">
+	       		<c:if test ="${!empty sList }">
+	       			<center>
+	                   <div style="float: left; margin: 10px;">
+	                       <div class="box-thumb" style="width: 200px; height: 200px;">
+	                           <a href="#"> <img style="width: 100%; height: 100%;"
+	                               src="/upload/${sList.filename }" alt="">
+	                           </a>
+	                       </div>
+	                       <div class="box-caption" style="margin: 10px;">
+	                           <div class="box-title">
+	                               <a href="#" style="text-decoration: none; color: black;">${sList.storyContents }</a>
+	                           </div>
+	                           <div class="box-name" style="overflow: hidden;">
+	                               <span style="font-size: 0.6em;">댓글수 :
+	                                   ${sList.replyCount }</span><br> <span
+	                                   style="font-size: 0.6em;">작성일 :
+	                                   ${sList.storyEnrollDate }</span>
+	                           </div>
+	                       </div>
+	                   </div>
+	               </center>
+	       		</c:if>
+       		</c:forEach>
         </div>
         <div class="myPage-con tab-3">
-            <h1>받은댓글</h1>
+            <h1>레시피</h1>
         </div>
         <div class="myPage-con tab-8">
-            <h1>보낸댓글</h1>
+            <h1>스토리</h1>
         </div>
         <div class="myPage-con tab-4">
-            <h1>스크랩</h1>
+            <c:if test ="${empty scList }">
+       			<center>
+                   <img style="margin-top: 250px;" src="/upload/story_none.png"
+                       alt="">
+               </center>
+       		</c:if>
+       		<c:if test="${!empty scList }">
+               <c:forEach items="${requestScope.scList }" var="scList"
+                   varStatus="index">
+                   <div style="float: left; margin: 10px;">
+                       <div class="box-thumb" style="width: 200px; height: 200px;">
+                           <a href="/recipe/detail?recipeNo=${scList.recipeNo }"> <img style="width: 100%; height: 100%;"
+                               src="/upload/${scList.fileName }" alt="">
+                           </a>
+                       </div>
+                       <div class="box-caption" style="margin: 10px;">
+                           <div class="box-title">
+                               <a href="/recipe/detail?recipeNo=${scList.recipeNo }" style="text-decoration: none; color: black;">${scList.recipeTitle }</a>
+                           </div>
+                           <div class="box-name" style="overflow: hidden;">
+                               <span style="font-size: 0.6em;">댓글수 :
+                                   ${scList.recipeReplyCount }</span><br> <span
+                                   style="font-size: 0.6em;">작성일 :
+                                   ${scList.recipeEnrollDate }</span>
+                           </div>
+                       </div>
+                   </div>
+               </c:forEach>
+           </c:if>
         </div>
         
         <div class="myPage-con tab-5">
@@ -175,7 +259,6 @@
                 </tr>
             </table>
         </div>
-</div>
 </main>
 </div>
 <div id="footer"></div>

@@ -77,25 +77,68 @@
 					<h2>한줄 댓글</h2>
 					<form class="box_write"  action="/recipeReply/write" method="post">
 						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents"></textarea>
-						<input type="hidden" name="noticeNo" value="${requestScope.recipeOne.recipeNo}">
+						<input type="hidden" name="recipeNo" value="${requestScope.recipeOne.recipeNo}">
 						<button name="button" type="submit">댓글남기기</button>
 					</form>
 					
 					<!-- 댓글 리스트 -->
-					<ul>
-						<li>
-							<img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px">
-							<strong>이태욱</strong>
-							<time>2021-09-22</time>
-							<p>맛있어요!</p>
-						</li>
-						<li>
-							<img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px">
-							<strong>이태욱</strong>
-							<time>2021-09-22</time>
-							<p>맛있어요!</p>
-						</li>
-					</ul>
+					<table>
+						<tr>
+							<th>이미지</th>
+							<th>아이디</th>
+							<th>댓글</th>
+							<th>작성날짜</th>
+							<th>수정/삭제</th>
+						</tr>
+						<c:forEach items="${recipeOne.replies}" var="reply" varStatus="index">
+						<tr>
+							<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
+							<td>${reply.replyUserId }</td>
+							<td>${reply.replyContents }</td>
+							<td>${reply.replyDate }</td>
+<%-- 							<c:if test="${sessionScope.userId eq reply.replyUserId} "> --%>
+							<td>
+								<a href="javascript:void(0)" onclick="showModifyReply(this)">수정</a>
+								/
+								<a href="/recipeReply/delete?recipeNo=${reply.recipeNo }&replyNo=${reply.replyNo }">삭제</a>
+							</td>
+<%-- 							</c:if>						 --%>
+						</tr>
+						<tr style="display:none;">
+							<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
+							<td>${reply.replyUserId }</td>
+							<td><input type="text" size="40" value="${reply.replyContents }" id="modifyReply"></td>
+							<td>${reply.replyDate }</td>
+							<td>
+								<a href="javascript:void(0)" onclick="modifyReply(this,${reply.replyNo},${reply.recipeNo })">수정완료</a>
+								/
+								<a href="javascript:void(0)" onclick="hideModifyReply(this)">취소</a>
+							</td>			
+						</tr>
+						</c:forEach>
+					</table>
+					<form action="/recipeReply/modify" method="post" id="modifyForm">
+						<input type="hidden" name="replyContents" id="modifyReplyContents">
+						<input type="hidden" name="replyNo" id="modifyReplyNo">
+						<input type="hidden" name="recipeNo" id="modifyRecipeNo">
+					</form>
+					<script>
+						function modifyReply(obj, replyNo , recipeNo){
+							var contents = $(obj).parent().prev().find("input").val(); // obj를 이용하여 값 찾기
+							$("#modifyReplyContents").val(contents);
+							$("#modifyReplyNo").val(replyNo);
+							$("#modifyRecipeNo").val(recipeNo);
+							$("#modifyForm").submit();
+						}
+						function showModifyReply(obj) {
+							$(obj).parents("tr").next().show();
+							$(obj).parents("tr").hide();
+						}
+						function hideModifyReply(obj) {
+							$(obj).parents("tr").prev().show();
+							$(obj).parents("tr").hide();
+						}
+					</script>
 				</div>
 			</div>
 			<!-- navi -->
