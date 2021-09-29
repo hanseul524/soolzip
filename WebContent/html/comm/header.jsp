@@ -50,7 +50,7 @@ ul.myMenu>li ul.submenu>li:hover {
 	<!-- 사용자 nav -->
 	<div class="user-area">
 		<ul class="user-area-menu">
-			<li><a href="#"> <img style="width: 50px; margin: 5px;"
+			<li><a href="main.html"> <img style="width: 50px; margin: 5px;"
 					src="/img/suggestion.png" alt="">
 			</a></li>
 			<li>
@@ -65,14 +65,15 @@ ul.myMenu>li ul.submenu>li:hover {
 			</c:if>
 			
 			<c:if test="${sessionScope.userId ne null and userId ne ''}">
-			<li><a href="index.jsp"> <img style="width: 50px; margin: 5px;"
-					src="/img/myPageLogo.png" alt=""></a>
-				<ul class="">
-                        <li><a href="#">마이페이지</a></li>
-                        <li><a href="#">로그아웃</a></li>
-                        <li><a href="#">투표하기</a></li>
-                </ul>
-			</li>
+    			<li class="loginok">
+        			<a href="index.jsp"><img style="width: 50px; margin: 5px;"
+        			src="img/myPageLogo.png" alt=""></a>
+      				<ul class="mypage">
+        				<li><a href="#">마이페이지</a></li>
+        				<li><a href="/user/logout">로그아웃</a></li>
+        				<li><a href="#">투표하기</a></li>
+      				</ul>
+  				</li>
 			</c:if>
 		</ul>
 	</div>

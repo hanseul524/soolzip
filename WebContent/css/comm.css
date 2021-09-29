@@ -108,7 +108,26 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 }
-
+.user-area-menu>.loginok {
+    position: relative;
+}
+.user-area-menu>.loginok:hover .mypage {
+    display: block;
+}
+.loginok .mypage {
+  display: none;
+  position: absolute;
+}
+.mypage {
+  display: inline-block;
+  background: #eee;
+  width: 60px;
+  border: 1px solid #eee;
+}
+.mypage a {
+  font-size: 10px;
+  
+}
 #footer {
 	position: relative;
 	width: 100%;
