@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.model.service.UserService;
+import user.model.vo.User;
+
 /**
  * Servlet implementation class UserRegisterServlet
  */
@@ -26,7 +29,25 @@ public class UserRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+		String userId = request.getParameter("user-id");
+		String userPwd = request.getParameter("user-pwd");
+		String userEmail = request.getParameter("user-email");
+		String userName = request.getParameter("user-name");
+		String [] phoneStr = request.getParameterValues("user-phone");
+		
+		String userPhone = "";
+		for(int i=0; i<phoneStr.length; i++){
+			userPhone += phoneStr[i];
+		} //핸드폰번호 배열에 저장
+		User user = new User(userId, userPwd, userName, userEmail, userPhone);
+		int result = new UserService().registerUser(user);
+		
+		if(result > 0) {
+			response.sendRedirect("/index.jsp");
+		}else {
+			System.out.println("회원가입 실패");
+		}
 	}
 
 	/**

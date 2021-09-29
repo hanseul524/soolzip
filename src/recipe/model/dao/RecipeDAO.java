@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeFile;
 import recipe.model.vo.RecipeIngredient;
 import recipe.model.vo.RecipeMakeProcess;
+import recipe.model.vo.RecipeReply;
 
 public class RecipeDAO {
 
@@ -317,33 +319,46 @@ public class RecipeDAO {
 		return mList;
 	}
 
-	// 마이페이지 전체공개 레시피 리스트
-	public List<Recipe> myPageSelectAllRecipe(Connection conn, int currentPage, String userId) {
+
+	//레시피 댓글 등록
+	public int insertRecipeReply(Connection conn, String userId, int recipeNo, String replyContents,Timestamp uploadTime) {
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount, recipe_enrollDate FROM recipe r,recipe_file f where  R.file_no = F.file_no) where USER_ID=? and NUM BETWEEN ? AND ?";
+		int result = 0;
+		String query = "INSERT INTO RECIPE_REPLY VALUES(SEQ_RECIPE_REPLY.NEXTVAL,?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(query);
-			int viewCountPerPage = 8;
-			int start = currentPage * viewCountPerPage - (viewCountPerPage - 1);
-			int end = currentPage * viewCountPerPage;
-			pstmt.setString(1, userId);
-			pstmt.setInt(2, start);
-			pstmt.setInt(3, end);
+			pstmt.setInt(1, recipeNo);
+			pstmt.setString(2,userId);
+			pstmt.setString(3, replyContents);
+			pstmt.setTimestamp(4, uploadTime);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public List<RecipeReply> selectAllRecipeReply(Connection conn, int recipeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<RecipeReply> List = null;
+		RecipeReply recipeReply = null;
+		String query = "select * from recipe_reply where recipe_no = ? order by 1";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
 			rset = pstmt.executeQuery();
-			rList = new ArrayList<Recipe>();
+			List = new ArrayList();
 			while (rset.next()) {
-				Recipe recipe = new Recipe();
-				recipe.setUserId(rset.getString("USER_ID"));
-				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
-				recipe.setFileName(rset.getString("file_name"));
-				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
-				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
-				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
-				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
-				recipe.setRecipeEnrollDate(rset.getDate("RECIPE_ENROLLDATE"));
-				rList.add(recipe);
+				recipeReply = new RecipeReply();
+				recipeReply.setReplyNo(rset.getInt("reply_no"));
+				recipeReply.setRecipeNo(rset.getInt("recipe_no"));
+				recipeReply.setReplyContents(rset.getString("CONTENTS"));
+				recipeReply.setReplyUserId(rset.getString("REPLY_NAME"));
+				recipeReply.setReplyDate(rset.getTimestamp("ENROLLDATE"));
+				List.add(recipeReply);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -351,7 +366,28 @@ public class RecipeDAO {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
-		return rList;
+		return List;
+	}
+
+	public int deleteRecipeReplyOne(Connection conn, int replyNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "DELETE FROM RECIPE_REPLY WHERE REPLY_NO=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, replyNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateRecipeReplyOne(Connection conn, int replyNo, String replyContents) {
+		
+		return 0;
 	}
 
 }

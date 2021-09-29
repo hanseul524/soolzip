@@ -1,4 +1,4 @@
-package user.controller;
+package recipe.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,22 +6,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import user.model.service.UserService;
-import user.model.vo.User;
+import recipe.model.service.RecipeService;
 
 /**
- * Servlet implementation class UserLoginServlet
+ * Servlet implementation class RecipeReplyModifyServlet
  */
-@WebServlet("/user/login")
-public class UserLoginServlet extends HttpServlet {
+@WebServlet("/recipeReply/modify")
+public class RecipeReplyModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserLoginServlet() {
+    public RecipeReplyModifyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,18 +35,16 @@ public class UserLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("user-id"); //jsp에서 input값 넘겨받기
-		String userPwd = request.getParameter("user-pwd");
-		System.out.println("서블릿에 넘어옴");
-		User user = new UserService().selectLogin(userId, userPwd);
-		if(user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", user.getUserId());//세션에 저장
-//			session.setAttribute("user", user);
-			System.out.println("로그인 성공");
-			response.sendRedirect("/main.html");
+		request.setCharacterEncoding("UTF-8");
+		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
+		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
+		String replyContents = request.getParameter("replyContents");
+		int result = new RecipeService().modifyRecipeReplyOne(replyNo,replyContents);
+		if(result>0) {
+			response.sendRedirect("/notice/detail?recipeNo="+recipeNo);
 		}else {
-			System.out.println("로그인 실패");
+			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
 		}
 	}
+
 }

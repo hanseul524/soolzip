@@ -3,153 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  /* 회원가입 틀 */
+  .container {
+    text-align: center;
+  }
+
+  #joinTb>tbody>tr {
+    line-height: 4;
+    font-size: 13px;
+
+  }
+
+  #joinTb>tbody>tr>td {
+    border-top: 1px solid #dfdfdf;
+  }
+
+  #joinTb>tbody>tr>td>div {
+    font-size: 12px;
+    line-height: 2;
+  }
+
+
+  .check {
+    width: 150px;
+  }
+
+  .input {
+    width: 250px;
+    height: 28px;
+    border: 1px solid #d5d5d5;
+  }
+
+  .input2 {
+    width: 65px;
+    margin-right: 5px;
+    margin-left: 5px;
+    height: 28px;
+    border: 1px solid #d5d5d5;
+  }
+
+  .error {
+    color: red;
+  }
+</style>
+<script>
+var idCheckFlag = "N";
+$(document).ready(function () {
+	$("#headerMain").load("/html/comm/header.html");
+	$("#footerMain").load("/html/comm/footer.html");
+	
+  $("#user_id").keyup(function () {
+    idCheckFlag = "N";
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#user_id_error").html("아이디 중복확인이 필요합니다.");
+  });
+});
+
+function fnCheck() {
+  //유효성 체크
+
+  //1. 아이디
+  var regx = /^[a-z|A-Z|0-9]{4,16}$/;
+  var txt = "user_id";
+  var el = $("#" + txt);
+  if (el.val() == "") {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#" + txt + "_error").html("아이디를 입력하세요.");
+    el.focus();
+    return;
+  } else if (idCheckFlag == "N") {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#user_id_error").html("아이디 중복확인이 필요합니다.");
+    el.focus();
+    return;
+  } else if (!regx.test(el.val())) {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#" + txt + "_error").html("아이디를 확인하세요.");
+    el.focus();
+    return;
+  }
+
+  //2. 비밀번호
+  txt = "pw";
+  el = $("#" + txt);
+  var num = el.val().search(/[0-9]/g);
+  var eng = el.val().search(/[a-z]/ig);
+  var spe = el.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+  if (el.val() == "") {
+    $("#" + txt + "_error").html("비밀번호를 입력하세요.");
+    el.focus();
+    return;
+  } else if (el.val().length < 8 || el.val().length > 16) {
+    $("#" + txt + "_error").html("8자~16자 이내로 입력하세요.");
+    el.focus();
+    return;
+  } else if (el.val().search(/\s/) != -1) {
+    $("#" + txt + "_error").html("비밀번호는 공백 없이 입력하세요.");
+    el.focus();
+    return;
+  } else if ((num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0)) {
+    $("#" + txt + "_error").html("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력하세요.");
+    el.focus();
+    return;
+  }
+  $("#" + txt + "_error").html("");
+
+  //3. 비밀번호확인
+  var txt2 = "pw_re";
+  var el2 = $("#" + txt2);
+  if (el2.val() == "") {
+    $("#" + txt2 + "_error").html("비밀번호 확인을 입력하세요.");
+    el2.focus();
+    return;
+  }
+  if (el.val() != el2.val()) {
+    $("#" + txt2 + "_error").html("비밀번호와 일치하지 않습니다.");
+    el2.focus();
+    return;
+  }
+  $("#" + txt2 + "_error").html("");
+
+  //4.이름
+  regx = /^[가-힣]+$/;
+  txt = "user_name"
+  el = $("#" + txt);
+  if (el.val() == "") {
+    $("#" + txt + "_error").html("이름을 입력하세요.")
+    el.focus();
+    return;
+  } else if (!regx.test(el.val())) {
+    $("#" + txt + "_error").html("한글만 입력하세요.")
+    el.focus();
+    return;
+  }
+  $("#" + txt + "_error").html("");
+
+  //5.휴대전화
+  el = $("#tel1");
+  el2 = $("#tel2");
+  var el3 = $("#tel3");
+
+  if (el.val() == "" || el2.val() == "" || el3.val() == "" || el2.val().length < 3 || el3.val().length != 4) {
+    $("#tel1_error").html("휴대전화를 확인해주세요.");
+    el.focus();
+    return;
+  }
+  $("#tel1_error").html("");
+  alert("회원가입이 완료되었습니다.");
+  $("#loginfrm").submit();
+  
+
+  //6.이메일
+  regx = /^[a-zA-z0-9]{4,12}@/
+  el = $("#email");
+  if (el.val() == "") {
+    $("#email_error").html("이메일을 입력하세요.");
+    el.focus();
+    return;
+  } else if (!regx.test(el.val())) {
+    $("#email_error").html("이메일을 확인해주세요.(@앞에가 영문자,숫자로 4~12글자 )");
+    el.focus();
+    return;
+  }
+  $("#email_error").html("");
+}
+
+function fnIdCheck() {
+  if ($("#user_id").val() != "") {
+    idCheckFlag = "Y";
+    $("#user_id_error").hide();
+    $("#user_id_succ").show();
+  } else {
+    $("#user_id_error").show();
+    $("#user_id_succ").hide();
+    $("#user_id_error").html("아이디를 입력하세요.");
+    $("#user_id").focus();
+  }
+}
+</script>
 </head>
 <body>
-<script>
-  var idCheckFlag = "N";
-  $(document).ready(function () {
-    $("#user_id").keyup(function () {
-      idCheckFlag = "N";
-      $("#user_id_error").show();
-      $("#user_id_succ").hide();
-      $("#user_id_error").html("아이디 중복확인이 필요합니다.");
-    });
-  });
-
-  function fnCheck() {
-    //유효성 체크
-
-    //1. 아이디
-    var regx = /^[a-z|A-Z|0-9]{4,16}$/;
-    var txt = "user_id";
-    var el = $("#" + txt);
-    if (el.val() == "") {
-      $("#user_id_error").show();
-      $("#user_id_succ").hide();
-      $("#" + txt + "_error").html("아이디를 입력하세요.");
-      el.focus();
-      return;
-    } else if (idCheckFlag == "N") {
-      $("#user_id_error").show();
-      $("#user_id_succ").hide();
-      $("#user_id_error").html("아이디 중복확인이 필요합니다.");
-      el.focus();
-      return;
-    } else if (!regx.test(el.val())) {
-      $("#user_id_error").show();
-      $("#user_id_succ").hide();
-      $("#" + txt + "_error").html("아이디를 확인하세요.");
-      el.focus();
-      return;
-    }
-
-    //2. 비밀번호
-    txt = "pw";
-    el = $("#" + txt);
-    var num = el.val().search(/[0-9]/g);
-    var eng = el.val().search(/[a-z]/ig);
-    var spe = el.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    if (el.val() == "") {
-      $("#" + txt + "_error").html("비밀번호를 입력하세요.");
-      el.focus();
-      return;
-    } else if (el.val().length < 10 || el.val().length > 16) {
-      $("#" + txt + "_error").html("10자~16자 이내로 입력하세요.");
-      el.focus();
-      return;
-    } else if (el.val().search(/\s/) != -1) {
-      $("#" + txt + "_error").html("비밀번호는 공백 없이 입력하세요.");
-      el.focus();
-      return;
-    } else if ((num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0)) {
-      $("#" + txt + "_error").html("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력하세요.");
-      el.focus();
-      return;
-    }
-    $("#" + txt + "_error").html("");
-
-    //3. 비밀번호확인
-    var txt2 = "pw_re";
-    var el2 = $("#" + txt2);
-    if (el2.val() == "") {
-      $("#" + txt2 + "_error").html("비밀번호 확인을 입력하세요.");
-      el2.focus();
-      return;
-    }
-    if (el.val() != el2.val()) {
-      $("#" + txt2 + "_error").html("비밀번호와 일치하지 않습니다.");
-      el2.focus();
-      return;
-    }
-    $("#" + txt2 + "_error").html("");
-
-    //4.닉네임
-    regx = /^[가-힣]+$/;
-    txt = "user_name"
-    el = $("#" + txt);
-    if (el.val() == "") {
-      $("#" + txt + "_error").html("닉네임을 입력하세요.")
-      el.focus();
-      return;
-    } else if (!regx.test(el.val())) {
-      $("#" + txt + "_error").html("한글만 입력하세요.")
-      el.focus();
-      return;
-    }
-    $("#" + txt + "_error").html("");
-
-    //5.휴대전화
-    el = $("#tel1");
-    el2 = $("#tel2");
-    var el3 = $("#tel3");
-
-    if (el.val() == "" || el2.val() == "" || el3.val() == "" || el2.val().length < 3 || el3.val().length != 4) {
-      $("#tel1_error").html("휴대전화를 확인해주세요.");
-      el.focus();
-      return;
-    }
-    $("#tel1_error").html("");
-
-    //6.이메일
-    regx = /^[a-zA-z0-9]{4,12}@/
-    el = $("#email");
-    if (el.val() == "") {
-      $("#email_error").html("이메일을 입력하세요.");
-      el.focus();
-      return;
-    } else if (!regx.test(el.val())) {
-      $("#email_error").html("이메일을 확인해주세요.(@앞에가 영문자,숫자로 4~12글자 )");
-      el.focus();
-      return;
-    }
-    $("#email_error").html("");
-
-    alert("회원가입이 완료되었습니다.");
-    location.href = "./login.html";
-
-  }
-
-  function fnIdCheck() {
-    if ($("#user_id").val() != "") {
-      idCheckFlag = "Y";
-      $("#user_id_error").hide();
-      $("#user_id_succ").show();
-    } else {
-      $("#user_id_error").show();
-      $("#user_id_succ").hide();
-      $("#user_id_error").html("아이디를 입력하세요.");
-      $("#user_id").focus();
-    }
-
-  }
-</script>
+<div id="headerMain"></div>
 <div class="container">
   <div class="titleArea" style="display:inline;">
     <h2 style="margin : 40px 0 40px 0">회원 가입</h2>
   </div>
-  <form action="/user/register" method="post" style="width: 60%; margin: 0 auto;">
-    <table id="joinTb" style="text-align: left; width: 100%; margin : 40px 0 40px 0;">
+  <form action="/user/register" method="get" id="loginfrm" style="width: 60%; margin: 0 auto;">
+	  <table id="joinTb" style="text-align: left; width: 100%; margin : 40px 0 40px 0;">
       <colgroup>
         <col width="15%">
         <col width="33%">
@@ -157,7 +203,7 @@
       </colgroup>
       <tbody>
         <tr>
-          <td class="check">아이디&nbsp;<img src="img/ico_required_blue.gif" alt="필수"></td>
+          <td class="check">아이디&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
           <td><input class="input" type="text" id="user_id" name="user-id"></td>
           <td>
             <div>(영문소문자/숫자, 4~16자) <button type="button" onclick="fnIdCheck();">중복확인</button></div>
@@ -166,58 +212,55 @@
           </td>
         </tr>
         <tr>
-          <td class="check">비밀번호&nbsp;<img src="img/ico_required_blue.gif" alt="필수"></td>
+          <td class="check">비밀번호&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
           <td><input class="input" type="password" id="pw" name="user-pwd"></td>
           <td>
-            <div>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)</div>
+            <div>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자)</div>
             <div class="error" id="pw_error"></div>
           </td>
         </tr>
         <tr>
-          <td class="check">비밀번호 확인&nbsp;<img src="img/ico_required_blue.gif" alt="필수"></td>
+          <td class="check">비밀번호 확인&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
           <td><input class="input" type="password" id="pw_re"></td>
           <td class="error" id="pw_re_error"></td>
         </tr>
         <tr>
-          <td class="check">닉네임&nbsp;<img src="img/ico_required_blue.gif" alt="필수"></td>
-          <td><input class="input" type="text" id="user_name" name="user-nickname"></td>
-          <td class="error" id="user_name_error"></td>
-
+          <td class="check">이메일&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
+          <td><input class="input" type="text" id="email" name="user-email"></td>
+          <td class="error" id="email_error"></td>
         </tr>
         <tr>
-          <td class="check">휴대전화&nbsp;<img src="img/ico_required_blue.gif" alt="필수"></td>
+          <td class="check">이름&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
+          <td><input class="input" type="text" id="user_name" name="user-name"></td>
+          <td class="error" id="user_name_error"></td>
+        </tr>
+        <tr>
+          <td class="check">휴대전화&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
           <td>
-            <select class="input2" style="margin-left : 0px;" id="tel1" name="user-phone1">
+            <select class="input2" style="margin-left : 0px;" id="tel1" name="user-phone">
               <option value="">선택</option>
               <option selected value="010">010</option>
               <option value="011">011</option>
               <option value="015">015</option>
               <option value="016">016</option>
               <option value="080">080</option>
-            </select>
-            -
-            <input class="input2" type="text" id="tel2" name="user-phnoe2" size="2" maxlength="4" />-
-            <input class="input2" type="text" id="tel3" name="user-phone3" size="2" maxlength="4" />
+            </select>-
+            <input class="input2" type="text" id="tel2" name="user-phone" size="2" maxlength="4" />-
+            <input class="input2" type="text" id="tel3" name="user-phone" size="2" maxlength="4" />
           </td>
           <td class="error" id="tel1_error"></td>
-
-        </tr>
-        <tr>
-          <td class="check" style="border-bottom: 1px solid #dfdfdf;">이메일&nbsp;<img src="img/ico_required_blue.gif"
-              alt="필수"></td>
-          <td style="border-bottom: 1px solid #dfdfdf;"><input class="input" type="text" id="email" name="user-email">
-          </td>
-          <td style="border-bottom: 1px solid #dfdfdf;" class="error" id="email_error"></td>
-
         </tr>
       </tbody>
     </table>
-    <a href="javascript:fnCheck();" onclick=""
+<!--	<a href="javascript:void(0);" onclick="fnCheck()" id="btn"
       style="width: 120px; margin-bottom: 30px; display: inline-block; box-sizing: border-box; 
       padding: 2px 8px;border: 1px solid transparent;border-radius: 2px;font-size: 13px;
       line-height: 18px;font-weight: normal;text-decoration: none;vertical-align: middle;
       word-spacing: -0.5px;letter-spacing: 0;text-align: center;white-space: nowrap;padding: 10px 16px; 
-      color: #fff;background-color: #000;">회원가입</a>
+      color: #fff;background-color: #000;">회원가입</a>  -->
+	<input type="button" onclick="fnCheck();" value="회원가입"> 
   </form>
+  </div>
+<div id="footerMain"></div> 
 </body>
 </html>
