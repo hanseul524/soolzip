@@ -2,12 +2,14 @@ package story.model.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import common.JDBCTemplate;
 import story.model.dao.StoryDAO;
 import story.model.vo.PageData;
 import story.model.vo.Story;
 import story.model.vo.StoryFile;
+import story.model.vo.StoryReply;
 
 public class StoryService {
 	private JDBCTemplate jdbcTemplate;
@@ -15,7 +17,7 @@ public class StoryService {
 	public StoryService() {
 		jdbcTemplate = JDBCTemplate.getConnection();
 	}
-	
+	// 스토리 등록
 	public int registerStory(Story story, StoryFile storyFile) {
 		int result = Integer.MIN_VALUE;
 		Connection conn = null;
@@ -40,7 +42,7 @@ public class StoryService {
 		}
 		return result;
 	}
-
+	//전체 리스트 조회
 	public PageData printAllStory(int currentPage) {
 		PageData page = new PageData();
 		Connection conn = null;
@@ -56,5 +58,25 @@ public class StoryService {
 			JDBCTemplate.close(conn);
 		}
 		return page;
+	}
+	//상세 조회
+	public Story pintOneStroy(int storyNo) {
+		Story storyOne = null;
+		Connection conn = null;
+		List<StoryReply> list = null;
+		StoryDAO sDAO = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			storyOne = sDAO.selectOneStroy(conn, storyNo);
+			//댓글 storyReply
+//			list = sDAO.selectAllStoryReply(conn, storyNo);
+//			storyOne.setReplies(list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return null;
 	}
 }
