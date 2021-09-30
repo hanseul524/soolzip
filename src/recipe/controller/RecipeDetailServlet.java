@@ -40,17 +40,26 @@ public class RecipeDetailServlet extends HttpServlet {
 		
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		//레시피정보
-		Recipe recipeOne = new RecipeService().printOneRecipe(recipeNo);
+		Recipe recipeOne = new RecipeService().printOneRecipe(userId,recipeNo);
 		// 레시피1에 대한 재료 여러개
 		List<RecipeIngredient> iList = new RecipeService().printOneRecipeIngr(recipeNo);
 		// 레시피2에 대한 제조과정 여러개 
 		List<RecipeMakeProcess> mList = new RecipeService().printOneRecipeMkProcess(recipeNo); 
 		
-		if(recipeOne !=null) {
+		
+		if(recipeOne !=null) {	
 			request.setAttribute("iList", iList);
 			request.setAttribute("mList", mList);
 			request.setAttribute("recipeOne", recipeOne);
 			request.getRequestDispatcher("/html/recipe/recipeDetail.jsp").forward(request,response);
+			int viewCount = new RecipeService().RecipeViewCount(recipeNo);
+			
+			if(viewCount>0) {
+				System.out.println("조회수 성공");
+			}else {
+				System.out.println("조회수 실패");
+			}
+			
 		}else {
 			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request,response);
 		}

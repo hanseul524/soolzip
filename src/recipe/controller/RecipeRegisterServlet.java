@@ -1,6 +1,7 @@
 package recipe.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,27 +40,29 @@ public class RecipeRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("/html/recipe/recipeReg.html").forward(request, response);
+    	String userId = "";
+    	HttpSession session = null;
+    	session = request.getSession();
+		userId =(String)session.getAttribute("userId");
+    	if(session.getAttribute("userId") == null) {
+    		response.setContentType("text/html; charset=utf-8");
+    		PrintWriter out = response.getWriter();
+    		out.println("<script>");
+    		out.println("alert('레시피 등록은 로그인이 필요합니다.!!!');");
+    		out.println("history.back(-1);");
+    		out.println("</script>");
+    	}else {
+    		request.getRequestDispatcher("/html/recipe/recipeReg.html").forward(request, response);    		
+    	}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//로그인 완성 시 삭제 start
+
 		HttpSession session = request.getSession();
-		User user = new User();
-		user.setUserId("user01");
-		session.setAttribute("user", user);
-		//로그인 완성 시 삭제 end
-		String userId = ((User)session.getAttribute("user")).getUserId();
-		
-		//session ID값이 null이면 로그인페이지로 넘어간다.
-		
-		if(userId == null) {
-			response.sendRedirect("/user/login");
-		}
-		
+		String userId = (String)session.getAttribute("userId");
 		request.setCharacterEncoding("UTF-8");
 		
 		// 1. upload 폴더에 실제 파일을 저장하는 작업

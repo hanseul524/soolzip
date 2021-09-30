@@ -126,7 +126,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id, recipe_title, file_name, recipe_contents, recipe_replycount, recipe_LikeCount,recipe_viewCount,recipe_savestate FROM recipe r,recipe_file f where  R.file_no = F.file_no AND RECIPE_SAVEstate = 1) where NUM BETWEEN ? AND ?";
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1) where NUM BETWEEN ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
@@ -144,8 +144,8 @@ public class RecipeDAO {
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
 				recipe.setFileName(rset.getString("file_name"));
 				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
-				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
-				recipe.setRecipeLikeCount(rset.getInt("recipe_LikeCount"));
+				recipe.setRecipeReplyCount(rset.getInt("reply_cnt"));
+				recipe.setRecipeLikeCount(rset.getInt("like_cnt"));
 				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
 				rList.add(recipe);
 			}
@@ -214,7 +214,7 @@ public class RecipeDAO {
 		int totalValue = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
-		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM recipe";
+		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM recipe where recipe_savestate = 1";
 		try {
 			stmt = conn.createStatement();
 			rset = stmt.executeQuery(query);
@@ -232,18 +232,22 @@ public class RecipeDAO {
 	}
 
 	// 레시피 리스트
-	public Recipe selectOneRecipe(Connection conn, int recipeNo) {
+	public Recipe selectOneRecipe(Connection conn,String sessionId, int recipeNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select recipe_no, user_id,recipe_title, file_no, file_name, recipe_contents, recipe_maindrink,recipe_alcohol, recipe_Tag, recipe_savestate,recipe_viewcount,recipe_enrolldate, recipe_replycount, recipe_likecount,recipe_LegendState from recipe r join recipe_file f using(file_no) where recipe_no = ?";
+		String query = "select recipe_no,(select nvl(count(user_id),0) from recipe_like b where b.recipe_no = r.recipe_no and b.user_id = ?) as like_check, (select nvl(count(s.user_id),0) from recipe_scrap s where s.recipe_no = r.recipe_no and s.user_id = ?) as scrap_check, user_id,recipe_title, file_no, file_name, recipe_contents, recipe_maindrink,recipe_alcohol, recipe_Tag, recipe_savestate,recipe_viewcount,recipe_enrolldate, recipe_replycount, recipe_likecount,recipe_LegendState from recipe r join recipe_file f using(file_no) where recipe_no = ?";
 		Recipe recipeOne = null;
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, recipeNo);
+			pstmt.setString(1, sessionId);
+			pstmt.setString(2, sessionId);
+			pstmt.setInt(3, recipeNo);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				recipeOne = new Recipe();
 				recipeOne.setRecipeNo(recipeNo);
+				recipeOne.setLikeCheck(rset.getInt("like_check"));
+				recipeOne.setScrapCheck(rset.getInt("scrap_check"));
 				recipeOne.setUserId(rset.getString("user_id"));
 				recipeOne.setRecipeTitle(rset.getString("recipe_title"));
 				recipeOne.setRecipeContents(rset.getString("recipe_contents"));
@@ -340,6 +344,7 @@ public class RecipeDAO {
 		return result;
 	}
 
+	//레시피 댓글 리스트
 	public List<RecipeReply> selectAllRecipeReply(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -368,7 +373,8 @@ public class RecipeDAO {
 		}
 		return List;
 	}
-
+	
+	//레시피 댓글 삭제
 	public int deleteRecipeReplyOne(Connection conn, int replyNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -384,7 +390,8 @@ public class RecipeDAO {
 		}
 		return result;
 	}
-
+	
+	//레시피 댓글 수정
 	public int updateRecipeReplyOne(Connection conn, int replyNo, String replyContents) {
 		
 		PreparedStatement pstmt = null;
@@ -402,6 +409,93 @@ public class RecipeDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		
+		return result;
+	}
+
+	//레시피 좋아요 취소
+	public int deleteRecipeLike(Connection conn, int recipeNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "DELETE FROM recipe_like WHERE recipe_NO=? and user_id=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	//레시피 좋아요
+	public int insertRecipeLike(Connection conn, int recipeNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into recipe_like values(SEQ_RECIPE_LIKE.NEXTVAL,?,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	// 레시피 조회수
+	public int updateRecipeViewCount(Connection conn, int recipeNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update recipe set recipe_viewcount = recipe_viewcount+1 where recipe_no=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteRecipeScrap(Connection conn, int recipeNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "DELETE FROM recipe_scrap WHERE recipe_NO=? and user_id=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertRecipeScrap(Connection conn, int recipeNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into recipe_scrap values(seq_recipe_scrap.NEXTVAL,?,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
 		return result;
 	}
 

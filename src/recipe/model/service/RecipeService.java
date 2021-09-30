@@ -82,14 +82,14 @@ public class RecipeService {
 	}
 
 	//레시피 selectOne By RecipeDetailServlet
-	public Recipe printOneRecipe(int recipeNo) {
+	public Recipe printOneRecipe(String sessionId, int recipeNo ) {
 		Recipe recipeOne = null;
 		Connection conn = null;
 		List<RecipeReply> list = null;
 		RecipeDAO rDao = new RecipeDAO();
 		try {
 			conn= jdbcTemplate.createConnection();
-			recipeOne= rDao.selectOneRecipe(conn, recipeNo);
+			recipeOne= rDao.selectOneRecipe(conn,sessionId,recipeNo);
 			//RecipeReply불러옴 // 댓글
 			list = rDao.selectAllRecipeReply(conn,recipeNo);
 			recipeOne.setReplies(list);
@@ -157,7 +157,7 @@ public class RecipeService {
 		return result;
 	}
 	//레시피 댓글 delete by RecipeReplyDeleteServlet
-	public int removeNoiceReplyOne(int replyNo) {
+	public int removeRecipeReplyOne(int replyNo) {
 		int result = 0;
 		Connection conn =null;
 		RecipeDAO rDao = new RecipeDAO();
@@ -193,6 +193,111 @@ public class RecipeService {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	// 좋아요 취소
+	public int removeRecipeLike(int recipeNo, String userId) {
+		int result = 0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.deleteRecipeLike(conn, recipeNo, userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	
+	//좋아요인서트
+	public int insertRecipeLike(int recipeNo, String userId) {
+		int result = 0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.insertRecipeLike(conn, recipeNo, userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	// 조회수 1업
+	public int RecipeViewCount(int recipeNo) {
+		int result = 0;
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.updateRecipeViewCount(conn, recipeNo);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	
+	// 스크랩 취소
+	public int removeRecipeScrap(int recipeNo, String userId) {
+		int result = 0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.deleteRecipeScrap(conn, recipeNo, userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
+	//스크랩 인서트
+	public int insertRecipeScrap(int recipeNo, String userId) {
+		int result = 0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.insertRecipeScrap(conn, recipeNo, userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
 		}
 		return result;
 	}
