@@ -345,7 +345,7 @@ public class RecipeDAO {
 		ResultSet rset = null;
 		List<RecipeReply> List = null;
 		RecipeReply recipeReply = null;
-		String query = "select * from recipe_reply where recipe_no = ? order by 1";
+		String query = "select * from recipe_reply where recipe_no = ? order by 1 desc";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, recipeNo);
@@ -387,7 +387,22 @@ public class RecipeDAO {
 
 	public int updateRecipeReplyOne(Connection conn, int replyNo, String replyContents) {
 		
-		return 0;
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query="UPDATE recipe_reply SET CONTENTS=? WHERE REPLY_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, replyContents);
+			pstmt.setInt(2, replyNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

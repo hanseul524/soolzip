@@ -21,7 +21,8 @@ public class RecipeService {
 	public RecipeService() {
 		jdbcTemplate = JDBCTemplate.getConnection();
 	}
-
+	
+	// 레시피 등록 서비스
 	public int registerRecipe(Recipe recipe, List<RecipeIngredient> ingredList, List<RecipeMakeProcess> makeList) {
 		int result = Integer.MIN_VALUE;
 		Connection conn = null;
@@ -61,9 +62,8 @@ public class RecipeService {
 		}
 		return result;
 	}
-
+	// 레시피 selectAll by RecipeListServlet
 	public PageData printAllRecipe(int currentPage) {
-//		List<Recipe> rList = null;
 		PageData pd = new PageData();
 
 		Connection conn = null;
@@ -73,7 +73,6 @@ public class RecipeService {
 			conn = jdbcTemplate.createConnection();
 			pd.setRecipeList(rDao.selectAllRecipe(conn, currentPage));
 			pd.setPageNavi(rDao.getPageNavi(conn, currentPage));
-//			rList = rDao.selectAllRecipe(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -82,6 +81,7 @@ public class RecipeService {
 		return pd;
 	}
 
+	//레시피 selectOne By RecipeDetailServlet
 	public Recipe printOneRecipe(int recipeNo) {
 		Recipe recipeOne = null;
 		Connection conn = null;
@@ -101,7 +101,8 @@ public class RecipeService {
 		}
 		return recipeOne;
 	}
-
+	
+	//레시피 재료 select By RecipeDetailServlet
 	public List<RecipeIngredient> printOneRecipeIngr(int recipeNo) {
 		List<RecipeIngredient> iList = null;
 		Connection conn = null;
@@ -117,7 +118,7 @@ public class RecipeService {
 		}
 		return iList;
 	}
-
+	// 레시피 제조과정 select By RecipeDetailServlet
 	public List<RecipeMakeProcess> printOneRecipeMkProcess(int recipeNo) {
 		List<RecipeMakeProcess> mList = null;
 		Connection conn = null;
@@ -134,6 +135,7 @@ public class RecipeService {
 		return mList;
 	}
 
+	//레시피 댓글 insert by RecipeReplyWriteServlet
 	public int registerRecipeReply(String userId, int recipeNo, String replyContents, Timestamp uploadTime) {
 		int result = 0;
 		Connection conn =null;
@@ -141,8 +143,12 @@ public class RecipeService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = rDao.insertRecipeReply(conn, userId, recipeNo, replyContents, uploadTime);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
@@ -150,7 +156,7 @@ public class RecipeService {
 		
 		return result;
 	}
-
+	//레시피 댓글 delete by RecipeReplyDeleteServlet
 	public int removeNoiceReplyOne(int replyNo) {
 		int result = 0;
 		Connection conn =null;
@@ -158,6 +164,11 @@ public class RecipeService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = rDao.deleteRecipeReplyOne(conn, replyNo);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,6 +178,7 @@ public class RecipeService {
 		return result;
 	}
 
+	//레시피 댓글 update by RecipeReplyModifyServlet
 	public int modifyRecipeReplyOne(int replyNo, String replyContents) {
 		int result = 0;
 		Connection conn = null;
@@ -174,8 +186,12 @@ public class RecipeService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = rDao.updateRecipeReplyOne(conn, replyNo, replyContents);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;

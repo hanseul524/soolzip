@@ -48,8 +48,8 @@ public class UserFindPwdServlet extends HttpServlet {
 		//입력한 id와email 값이 있으면 인증메일 보내기
 		if(userOne != null) {
 			String host = "smtp.gmail.com"; //서버명
-			String user = "hanseul56524@gmail.com";
-			String password = "baekhyun0506!";
+			final String user = "hanseul56524@gmail.com";
+			final String password = "baekhyun0506!";
 			
 			//인증 메일을 보낼 메일 주소 -> 회원이 입력한 메일값 가져오기
 			String toEmail = userOne.getUserEmail();
@@ -121,9 +121,9 @@ public class UserFindPwdServlet extends HttpServlet {
 			response.sendRedirect("/html/userinfo/findinfo.jsp");
 		}
 	}
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 }

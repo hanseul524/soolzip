@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import recipe.model.service.RecipeService;
 import recipe.model.vo.Recipe;
@@ -33,6 +34,10 @@ public class RecipeDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		//레시피정보
 		Recipe recipeOne = new RecipeService().printOneRecipe(recipeNo);
@@ -45,7 +50,6 @@ public class RecipeDetailServlet extends HttpServlet {
 			request.setAttribute("iList", iList);
 			request.setAttribute("mList", mList);
 			request.setAttribute("recipeOne", recipeOne);
-			//
 			request.getRequestDispatcher("/html/recipe/recipeDetail.jsp").forward(request,response);
 		}else {
 			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request,response);
