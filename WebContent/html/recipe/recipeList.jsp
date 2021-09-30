@@ -111,7 +111,7 @@
     </style>
      <script>
   	$(document).ready(function() {
-  		$("#headerMain").load("/html/comm/header.html");
+  		$("#headerMain").load("/html/comm/header.jsp");
   		$("#footerMain").load("/html/comm/footer.html");
   	});
      </script>
@@ -159,7 +159,7 @@
                         ${rOne.userId }
                     </a>
                     <br>
-                <span>조회수 : ${rOne.recipeReplyCount } </span> <span>좋아요수 : ${rOne.recipeLikeCount } </span>
+                <span>조회수 : ${rOne.recipeViewCount } </span> <span>좋아요수 : ${rOne.recipeLikeCount } </span>
                 </div>
             </div>
         </li>
