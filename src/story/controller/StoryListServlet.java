@@ -1,11 +1,17 @@
 package story.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import story.model.service.StoryService;
+import story.model.vo.PageData;
+import story.model.vo.Story;
 
 /**
  * Servlet implementation class StoryListServlet
@@ -26,8 +32,30 @@ public class StoryListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int currentPage = 0;
+		String getCurrentPage = request.getParameter("currentPage");
+		
+		if(getCurrentPage ==null) {
+			currentPage = 1;
+			
+		}else {
+			currentPage = Integer.parseInt(getCurrentPage);
+		}
+		
+		PageData pageData = new StoryService().printAllStory(currentPage);
+		List<Story> storyList = pageData.getStoryList();
+		
+		for(Story story : storyList) {
+			System.out.println(story.toString());
+		}
+		if(!storyList.isEmpty()) {
+			request.setAttribute("storyList", storyList);
+			request.setAttribute("pageNavie", pageData.getPageNavi());
+			request.getRequestDispatcher("/html/story/storyList.jsp").forward(request,response);
+		}
+		else {
+			request.getRequestDispatcher("/html/story/storyError.html").forward(request, response);
+		}
 	}
 
 	/**

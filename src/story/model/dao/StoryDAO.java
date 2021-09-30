@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import common.JDBCTemplate;
 import story.model.vo.Story;
@@ -71,6 +72,16 @@ public class StoryDAO {
 			
 		}
 		return result;
+	}
+
+	public List<Story> selectAllStory(Connection conn, int currentPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getPageNavi(Connection conn, int currentPage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

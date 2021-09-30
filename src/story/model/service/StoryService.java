@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import common.JDBCTemplate;
 import story.model.dao.StoryDAO;
+import story.model.vo.PageData;
 import story.model.vo.Story;
 import story.model.vo.StoryFile;
 
@@ -38,5 +39,22 @@ public class StoryService {
 			JDBCTemplate.close(conn);
 		}
 		return result;
+	}
+
+	public PageData printAllStory(int currentPage) {
+		PageData page = new PageData();
+		Connection conn = null;
+		StoryDAO sDAO = new StoryDAO();
+		try {
+			conn=jdbcTemplate.createConnection();
+			page.setStoryList(sDAO.selectAllStory(conn,currentPage));
+			page.setPageNavi(sDAO.getPageNavi(conn,currentPage));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return page;
 	}
 }

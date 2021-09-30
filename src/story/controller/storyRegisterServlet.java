@@ -59,7 +59,7 @@ public class storyRegisterServlet extends HttpServlet {
 //		}
 		
 		//첨부 사진 저장
-		String uploadFilePath = request.getServletContext().getRealPath("upload");
+		String uploadFilePath = request.getServletContext().getRealPath("story-upload");
 		int uploadFileLimit = 5*1024*1024; //5MB , M -> 10^6
 		String encType = "UTF-8";
 		MultipartRequest multi = new MultipartRequest(request, uploadFilePath, uploadFileLimit, encType, new DefaultFileRenamePolicy());
@@ -74,7 +74,7 @@ public class storyRegisterServlet extends HttpServlet {
 			storyFile.setFileName(multi.getFile("storyFile").getName());
 			storyFile.setFilePath(multi.getFile("storyFile").getPath());
 			storyFile.setFileSize(multi.getFile("storyFile").length());
-			storyFile.setFileName(userId);
+//			storyFile.setFileName(userId); 파일 이름을 유저 아이디로 받는거
 		}
 		Story story = new Story(storyContents, storyTag);
 		story.setStoryFile(storyFile);
