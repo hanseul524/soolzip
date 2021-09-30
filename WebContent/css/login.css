@@ -5,7 +5,7 @@ a {
   text-align: center;
 }
 .loginbox {
-  width: 100%;
+  width: 90%;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -63,6 +63,10 @@ h2 {
   width: 80%;
   font-size: 14px;
   display: flex;
+}
+.forget_id {
+	margin:0 auto;
+	width: 100%
 }
 
 .submit {

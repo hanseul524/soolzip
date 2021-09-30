@@ -29,7 +29,7 @@ public class UserService {
 		}
 		return user;
 	}
-	//회원정보 수정
+	//회원가입
 	public int registerUser(User user) {
 		int result = 0;
 		Connection conn = null;

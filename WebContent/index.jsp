@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function () {
-	$("#headerMain").load("/html/comm/header.html");
+	$("#headerMain").load("/html/comm/header.jsp");
 	$("#footerMain").load("/html/comm/footer.html");
 	
 	$('#frm').on("submit", function() {
@@ -39,7 +39,7 @@ $(document).ready(function () {
             <input type="password" name="user-pwd" placeholder="패스워드">
           </div>
           <div class="login_etc">
-            <div class="forgot_id">
+            <div class="forget_id">
             <a href="./html/userinfo/findinfo.jsp">아이디/비밀번호 찾기</a>
             </div>
           </div>
