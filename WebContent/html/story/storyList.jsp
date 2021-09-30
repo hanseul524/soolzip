@@ -24,7 +24,7 @@
 </style>
 <script>
     $(document).ready(function(){
-        $("#headerMain").load("/html/comm/header.html");
+        $("#headerMain").load("/html/comm/header.jsp");
         $("#footerMain").load("/html/comm/footer.html");
     });
 </script>
@@ -43,20 +43,23 @@
                             <a href="">MY</a>
                         </li>
                         <div class="pull-right">
-                            <a href="./storyRegister.html"><button  class="btn btn-info" style="font-size: 20px;">스토리 등록</button></a>
+                            <a href="/html/story/storyRegister.html"><button  class="btn btn-info" style="font-size: 20px;">스토리 등록</button></a>
                         </div>
                     </ul>
                     <div class="story_tag">
                         <form action="">
                             <!-- <img class="story_search_img" src="./최지현_포트폴리오_수정[JH.GG]/img/그웬.PNG" alt=""> --> <input class="story_tag_search" type="search" placeholder="#아침 #00 🔍">
+                            <div align="center">${requestScope.pageNavi }</div>
                         </form>
                     </div>
                     <!-- 스토리 썸네일 타이틀 등등 -->
-                    <c:forEach items="${requestScope.sList}" var="sOne" varStatus="index">
                     <div class="story_List" style="padding-top: 20px;">
+                    <c:forEach items="${requestScope.storyList}" var="sOne" varStatus="index">
                         <div class="story_num1">
                             <div class="thumbnail">
-                                <a href="/story/detail?storyNo=${sOne.storyNo }"><div class="story_List_thumb" style="background: url(<img src="/story-upload/${sOne.fileName }">) center no-repeat; background-size: cover;"></div></a>
+                                <a href="/story/detail?storyNo=${sOne.storyNo }">
+                                	<div class="story_List_thumb" style="background: url(/story-upload/${sOne.fileName }) center no-repeat; background-size: cover;"></div>
+                                </a>
                                 <!-- 스토리 내용 틀-->
                                 <div class="story_List_contents">
                                     <!-- 스토리 내용 -->
@@ -85,7 +88,7 @@
                         </div>
                     </c:forEach>
                         <!--2번째 스토리 -->
-                        
+             
                         <!-- n번째 스토리 -->
                     </div>
                 </div>
