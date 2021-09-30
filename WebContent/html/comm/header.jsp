@@ -67,7 +67,7 @@ ul.myMenu>li ul.submenu>li:hover {
 			<c:if test="${sessionScope.userId ne null and userId ne ''}">
     			<li class="loginok">
         			<a href="index.jsp"><img style="width: 50px; margin: 5px;"
-        			src="img/myPageLogo.png" alt=""></a>
+        			src="/img/myPageLogo.png" alt=""></a>
       				<ul class="mypage">
         				<li><a href="#">마이페이지</a></li>
         				<li><a href="/user/logout">로그아웃</a></li>
@@ -79,8 +79,8 @@ ul.myMenu>li ul.submenu>li:hover {
 	</div>
 	<!-- 메인 로고 -->
 	<div class="header">
-		<a href="#"> <img style="width: 370px; height: 80px;"
-			src="/img/mainlogo.png" alt="">
+		<a href="#"><img style="width: 370px; height: 80px;"
+			src="/img/mainLogo.png" alt="">
 		</a>
 		
 	</div>
