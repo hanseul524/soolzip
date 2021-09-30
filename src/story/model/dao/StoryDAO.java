@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import common.JDBCTemplate;
 import story.model.vo.Story;
@@ -15,8 +16,8 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result=0;
-		String query ="SELECT SEQ_STORY.NEXTVAL AS SEQ_STORY FROM DAUL";
-		String sql ="INSERT INTO STORY VALUES(?,?,?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		String query ="SELECT SEQ_STORY.NEXTVAL AS SEQ_STORY FROM DUAL";
+		String sql ="INSERT INTO STORY VALUES(?,?,?,DEFAULT,?,DEFAULT,DEFAULT,DEFAULT,?)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
@@ -27,9 +28,9 @@ public class StoryDAO {
 			}
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1,seqStory);
-			pstmt.setString(2,story.getUserId());
-			pstmt.setString(3,story.getStoryContents()); //스토리 내용
-			pstmt.setString(4, story.getStoryTag()); // 스토리 태그
+			pstmt.setString(2,story.getStoryContents()); //스토리 내용
+			pstmt.setString(3,story.getStoryTag()); // 스토리 태그
+			pstmt.setString(4,story.getUserId());
 			pstmt.setString(5,story.getFileNo()); //첨부파일
 			pstmt.executeUpdate();
 			result=seqStory;
@@ -48,14 +49,14 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
-		String query="select seq_file.NEXTVAL as file_no from dula";
+		String query="SELECT SEQ_STORY_FILE.NEXTVAL AS FILE_NO from DUAL";
 		String sql="INSERT INTO STORY_FILE VALUES(?,?,?,?)";
 		try {
 			pstmt=conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			int fileNo = Integer.MIN_VALUE;
 			while(rset.next()) {
-				fileNo=rset.getInt("file_no");
+				fileNo=rset.getInt("FILE_NO");
 			}
 			result =fileNo;
 			pstmt = conn.prepareStatement(sql);
@@ -71,6 +72,16 @@ public class StoryDAO {
 			
 		}
 		return result;
+	}
+
+	public List<Story> selectAllStory(Connection conn, int currentPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getPageNavi(Connection conn, int currentPage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

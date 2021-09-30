@@ -1,54 +1,50 @@
-@import "reset.css";
-@import "storyList.css";
-/* .container { */
-/*     width: 1080px; */
-/*     margin: 0 auto; */
-/*   } */
+/* @import "storyList.css"; */
+.container{
+    width: 1240px;
+    max-width: none !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+/* 콘텐츠 */
 .contents{
-	float: right;
+    float: right;
     width: 1200px;
     min-height: 800px;
     border: 1px solid #e6e7e8;
     padding: 0 0 20px 0;
     background: #fff;
 }
-  .preview{
+.preview{
     width: 100%;
     height: 100%;
 
 }
 .img_title{
     vertical-align: top;
-    width: 300px;
-    height: 300px;
-    background-color: gray;
+    width: 500px;
+    height: 500px;
+    /* background-color: fff; */
 }
 .poto {
     display: flex;
     justify-content: center;
 }
 
-.info_tag {
-    margin-right: 26px;
-    margin-bottom: 0;
-}
-.dd-chunk {
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-.hash{
-    width: 300px;
-    height: 60px;
-    text-align: left;
+.tag {
+    width: 200px; 
+    height: 200px; 
+    margin-left: 251px;
+    margin-top: 50px;
 }
 .btn_area {
     position: absolute;
     margin: 30px auto 0;
     text-align: center;
-    float: right;
+    float:right;
     padding-left: 210px;
 }
 .btn_color {
+    cursor: pointer;
     background: #918c00;
     color: black;
     display: inline-block;
@@ -57,4 +53,25 @@
     border-radius: 5px;
     border: 1px solid #e1e1e1;
     font-size: 16px;
+}
+.filebox label {
+    display: block;
+    padding: .5em .75em;
+    color: #fff;
+    font-size: inherit;
+    line-height: normal;
+    background-color: #918c00;
+    cursor: pointer;
+    border: 1px solid #918c00;
+    border-radius: .25em;
+}
+
+.filebox input[type="file"] {
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }

@@ -6,73 +6,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스토리 등록</title>
     <link rel="stylesheet" href="../../css/story/storyRegister.css">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $("#filename").on('change', function(){
-                readURL(this);
-            });
-        });
-        function readURL(input) {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       <style>
+        img:hover {
+            cursor: pointer;
+        }
+
+        table tr {
+            line-height: 3em;
+        }
+
+        table th {
+            font-size: 20px;
+            text-align: left;
+            margin-right: 30px;
+        }
+
+        table td input {
+            width: 170px;
+            height: 30px;
+        }
+    </style>
+    <script>
+        //선택 input:file 태그 연결
+        function fnFileChange(input) {
+            $(input).closest('div').find('input:file').click();
+        }
+
+        //파일읽어서 등록이미지 뿌려줌
+        function readURL(input, id) {
             if (input.files && input.files[0]) {
-               var reader = new FileReader();
-               reader.onload = function (e) {
-                  $('#preImage').attr('src', e.target.result);
-               }
-               reader.readAsDataURL(input.files[0]);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#" + id).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
             }
         }
-    </script>
+        function fnValidate() {
+            //무엇이 값이 ''일때
+            // 		var el = $("#test");
+            // 		if(el.val() == ''){
+            // 			el.focus();
+            // 			return true;
+            // 		}
+
+            return false;
+        }
+        //등록
+        function fnSave(type) {
+            //제출일 경우 필수값 체크필요
+            if (type == 'A') {
+                $("input[name='StorySaveState']").val("1");
+                if (fnValidate()) return;
+            }
+            $("#test").submit();
+        }
     </script>
     <script>
-        $(document).ready(function(){
-        $("#headerMain").load("/html/comm/header.html");
-        $("#footerMain").load("/html/comm/footer.html");
-    });
-        //파일 태그 선택
-        function fnFileChange(input){
-        	$(input).closest('div').find('input:file').click();
-        }
-        function readURL(input,id){
-        	if(input.files && input.files[0]){
-        		var reader = new fileReader();
-        		reader.onload = function(e){
-        			$("#"+id).attr('src',e.target.result);
-        		}
-        		reader.readAsDataURL(input.files[0]);
-        	}
-        }
+        $(document).ready(function () {
+        	$("#headerMain").load("/html/comm/header.html");
+            $("#footerMain").load("/html/comm/footer.html");
+        });
     </script>
 </head>
 
 <body>
-    <div id="headerMain"></div>
+        <div id="headerMain"></div>
     <div class="container">
         <div class="contents">
-            <h1 class="h1text" style="text-align: center;">스토리 등록</h1>
-            <form action="${pageContext.request.contextPath}/updatetNoticePro.do" method="post" enctype="multipart/form-data" name="noticeForm">
-                <div class="poto">
-                    <div class="img_title">
-                        <img class="preview" id="preImage" src="${pageContext.request.contextPath}/saveFile/${noticeVO.filename}" alt="image_title" onerror='this.src="${pageContext.request.contextPath}/images/no_img.jpg"'/><br><br>
-                        <input class="fileupload" type='file' id="filename" name="filename"/>
-                        <table>
-                            <form action="">
-                                <dd class="info_tag">
-                                    <h3>스토리 내용</h3><input class="hash" type="text" name="storyContents" placeholder="내용을 입력해주세요"><br>
-                                    <h3>태그</h3><input class="hash" type="text" name="storyTag" placeholder="태그를 입력해주세요"><br>
-                                    <div class="dd-chunk"></div>
-                                </dd>
-                                <div class="btn_area">
-                                    <a href="./storyList.html"><input type="submit" class="btn_color" value="등록"></a>
-                                    <a href="./storyList.html"><input class="btn_color" type="button" value="취소"></a>
+            <form action="/story/register" method="post" id="test" style="margin: 0 auto; width: 1000px;"enctype="multipart/form-data">
+                <input type="hidden" name="StorySaveState" value="0" />
+                <h1 class="h1text" align="center" style="margin-top: 2em;">스토리 등록</h1>
+                <table style="margin-left: 250px;">
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+
+                            <div>
+                                <td width="200px" align="center">
+                                    <div class="img_title">
+                                        <input id="storyFile" name="storyFile" type="file" style="display: none;"onchange="readURL(this, 'mainImg')">
+                                        <img class="preview" id="mainImg" src="/img/photoImg.png"onclick="javascript: $('#storyFile').click();">
+                                    </div>
+                                    <center><b>POTO</b></center>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div id="process">
+                                    <div id="process1" style="height: 150px; margin-bottom: 1em;">
+                                        <b>내용</b>
+                                        <textarea placeholder="내용을 입력해주세요." name="story-Contents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
+                                    </div>
                                 </div>
-                            </form>
-                        </table>
-                    </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="tag">
+                    <h4>태그</h4>
+                    <input type="text" name="story-Tag" placeholder="태그를 입력해주세요.(#ㅈㅈ)"style="width: 300px; height: 40px;" />
+                </div>
+                <div id="buttonArea" align="center">
+                    <!-- <input type="button" value="삭제"> -->
+                    <input class="btn_color" type="reset" value="취소">
+                    <input class="btn_color" type="button" onclick="fnSave('A');" value="등록">
+                    <!-- <input type="button" onclick="fnSave('B');" value="임시저장">
+                    <div class="btn_area">
+                        <a href="./storyList.html"><input type="submit" class="btn_color" value="등록"></a>
+                        <a href="./storyList.html"><input class="btn_color" type="button" value="취소"></a>
+                    </div> -->
+                    <!-- <input type="submit" value="저장후 공개" id="test1"> -->
                 </div>
             </form>
         </div>
-        </div>
+    </div>
     <div id="footerMain"></div>
 </body>
 </html>

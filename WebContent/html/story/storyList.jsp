@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,62 +52,40 @@
                         </form>
                     </div>
                     <!-- 스토리 썸네일 타이틀 등등 -->
+                    <c:forEach items="${requestScope.sList}" var="sOne" varStatus="index">
                     <div class="story_List" style="padding-top: 20px;">
                         <div class="story_num1">
                             <div class="thumbnail">
-                                <a href="./storyDetail.html"><div class="story_List_thumb" style="background: url(../최지현_포트폴리오_수정[JH.GG]/img/갱플랭크.PNG) center no-repeat; background-size: cover;"></div></a>
+                                <a href="/story/detail?storyNo=${sOne.storyNo }"><div class="story_List_thumb" style="background: url(<img src="/story-upload/${sOne.fileName }">) center no-repeat; background-size: cover;"></div></a>
                                 <!-- 스토리 내용 틀-->
                                 <div class="story_List_contents">
                                     <!-- 스토리 내용 -->
-                                    <div class="story_List_contents_title">세미프로젝트 끝내고싶어서 죽을거 같은 어느 학생의 칵테일 레시피를 올린다</div>
+                                    <div class="story_List_contents_title">${sOne.storyContents }[${sOne.storyViewCount }]</div>
                                     <!-- 스토리 푸터 -->
                                     <div class="story_List_contents_name">
                                         <!-- 좋아요/댓글 왼쪽-->
                                         <div class="story_List_contents_l">
                                             <span>
-                                                <img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">4
+                                                <img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">
+                                             	${sOne.storyLikeCount}
                                             </span>
                                             <span>
-                                                <img src="../../img/댓글 아이콘.png" alt="댓글 수">3
+                                                <img src="../../img/댓글 아이콘.png" alt="댓글 수">
+                                                ${sOne.storyReplyCount }
                                             </span>
                                         </div>
                                         <!-- 작성자 오른쪽 -->
                                         <div class="story_List_contents_r">
                                             <!-- a태그에 회원정보로 이동 img 링크삽입 -->
-                                            <a href=""><img src="../최지현_포트폴리오_수정[JH.GG]/img/가렌.PNG" alt="">이태욱(작성자)</a>
+                                            <a href=""><img src="../img/myPageLogo.png alt="">${sOne.userId }</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </c:forEach>
                         <!--2번째 스토리 -->
-                        <div class="story_num1">
-                            <div class="thumbnail">
-                                <a href=""><div class="story_List_thumb" style="background: url(https://www.visualdive.com/wp-content/uploads/2021/07/210708_-%EC%97%AC%EC%9E%90%EB%93%A4%EC%9D%B4-%EC%A2%8B%EC%95%84%ED%95%98%EB%8A%94-%EC%B9%B5%ED%85%8C%EC%9D%BC-%EC%B6%94%EC%B2%9C-819x1024.jpg) center no-repeat; background-size: cover;"></div></a>
-                                <!-- 스토리 내용 틀-->
-                                <div class="story_List_contents">
-                                    <!-- 스토리 내용 -->
-                                    <div class="story_List_contents_title">세미프로젝트 끝내고싶어서 죽을거 같은 어느 학생의 칵테일 레시피를 올린다</div>
-                                    <!-- 스토리 푸터 -->
-                                    <div class="story_List_contents_name">
-                                        <!-- 좋아요/댓글 왼쪽-->
-                                        <div class="story_List_contents_l">
-                                            <span>
-                                                <img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">4
-                                            </span>
-                                            <span>
-                                                <img src="../../img/댓글 아이콘.png" alt="댓글 수">3
-                                            </span>
-                                        </div>
-                                        <!-- 작성자 오른쪽 -->
-                                        <div class="story_List_contents_r">
-                                            <!-- a태그에 회원정보로 이동 img 링크삽입 -->
-                                            <a href=""><img src="../최지현_포트폴리오_수정[JH.GG]/img/가렌.PNG" alt="">이태욱(작성자)</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <!-- n번째 스토리 -->
                     </div>
                 </div>
