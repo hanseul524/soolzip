@@ -2,9 +2,11 @@ package user.model.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import common.JDBCTemplate;
 import user.model.dao.UserDAO;
+import user.model.vo.PageData;
 import user.model.vo.User;
 
 public class UserService {
@@ -95,6 +97,43 @@ public class UserService {
 			JDBCTemplate.close(conn);
 		}
 		return result;
+	}
+	//회원 리스트 보기
+	public PageData printAllUser(int currentPage) {
+		PageData pd = new PageData();
+		Connection conn = null;
+		UserDAO uDAO = new UserDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			List<User> uList = uDAO.selectAllUser(conn, currentPage);
+			String pageNavi = uDAO.getPageNavi(conn, currentPage);
+			pd.setUserList(uDAO.selectAllUser(conn, currentPage));
+			pd.setPageNavi(uDAO.getPageNavi(conn, currentPage));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return pd;
+	}
+	public PageData printAllAdmin(int currentPage) {
+		PageData pd = new PageData();
+		Connection conn = null;
+		UserDAO uDAO = new UserDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			List<User> aList = uDAO.selectAllAdmin(conn, currentPage);
+			String pageNavi = uDAO.getPageNavi(conn, currentPage);
+			pd.setUserList(uDAO.selectAllAdmin(conn, currentPage));
+			pd.setPageNavi(uDAO.getPageNavi(conn, currentPage));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return pd;
 	}
 
 }

@@ -8,9 +8,9 @@ public class User {
 	private String userName;
 	private String userEmail;
 	private String userPhone;
+	private String userAdmin;
 	
 	public User() {}
-	
 	
 	
 	public User(String userId, String userPwd, String userName, String userEmail, String userPhone) {
@@ -23,7 +23,6 @@ public class User {
 	}
 
 	
-	
 	public User(String userId, String userPwd, String userEmail, String userPhone) {
 		super();
 		this.userId = userId;
@@ -32,7 +31,13 @@ public class User {
 		this.userPhone = userPhone;
 	}
 
+	public String getUserAdmin() {
+		return userAdmin;
+	}
 
+	public void setUserAdmin(String userAdmin) {
+		this.userAdmin = userAdmin;
+	}
 
 	public int getUserNo() {
 		return userNo;
