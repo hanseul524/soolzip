@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import myPage.service.MyPageService;
-import recipe.model.service.RecipeService;
-import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
-import story.model.vo.Story;
+import recipe.model.vo.RecipeReply;
 import user.model.vo.User;
 
 
@@ -44,14 +42,15 @@ public class MyPageServlet extends HttpServlet {
 		//임시공개 리스트
 		List<Recipe> cList = new MyPageService().myCacheRecipe(userId);
 		//스토리 리스트
-		List<Story> sList = new MyPageService().myStory(userId);
+//		List<Story> sList = new MyPageService().myStory(userId);
 		//스크랩 리스트
 		List<Recipe> scList = new MyPageService().myScrap(userId);
 		//레시피 내가쓴 댓글 리스트
-		
+		List<RecipeReply> reList = new MyPageService().myRecipeReply(userId);
 		if(user !=null) {
+			request.setAttribute("reList", reList);
 			request.setAttribute("scList", scList);
-			request.setAttribute("sList", sList);
+//			request.setAttribute("sList", sList);
 			request.setAttribute("cList", cList);
 			request.setAttribute("rList", rList);
 			request.setAttribute("storyCount", storyCount);

@@ -9,6 +9,7 @@ import java.util.List;
 
 import common.JDBCTemplate;
 import recipe.model.vo.Recipe;
+import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
 import user.model.vo.User;
 
@@ -232,6 +233,34 @@ public class MyPageDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return scList;
+	}
+
+	public List<RecipeReply> myRecipeReply(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<RecipeReply> reList = null;
+		String query = "select R.recipe_no, P.contents ,P.enrollDate, R.recipe_title from recipe R,recipe_reply P where  R.recipe_no = P.recipe_no and P.REPLY_NAME=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			reList = new ArrayList<>();
+			while(rset.next()) {
+				RecipeReply re = new RecipeReply();
+				re.setRecipeNo(rset.getInt("RECIPE_NO"));
+				re.setReplyContents(rset.getString("CONTENTS"));
+				re.setReplyDate(rset.getTimestamp("ENROLLDATE"));
+				re.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				reList.add(re);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return reList;
 	}
 	
 }

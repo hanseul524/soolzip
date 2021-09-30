@@ -35,6 +35,18 @@
             $("."+tab_id).addClass("active");
         });
     });
+	$(document).ready(function(){
+        let wrap = document.querySelector(".myPage-con");
+        let bar = document.querySelector('.bar');
+        wrap.addEventListener('scroll', function(){
+            let scrollTop = wrap.scrollTop;
+            let scrollHeight = wrap.scrollHeight - wrap.clientHeight;
+            //scrollHeight 화면 스크롤
+            //wrap.clientHeight div영역 높이
+            let percentage = (scrollTop/scrollHeight) * 100;
+            bar.style.height = percentage + '%';
+        })
+    });
 </script>
 <style>
 	.list li,.sub-tab li{list-style: none;}
@@ -45,7 +57,10 @@
 	.sub-tab ul li{text-align: center;line-height: 49px; border:1px solid black; float: left; width: 200px;}
 	.list{display: flex;}
 	.list li{flex:1; display: block; text-align: center; line-height: 79px; border:1px solid black;}
-	.myPage-con{width: 1000px;height: 680px;border: 1px solid black;margin-top: 100px;margin-left: 23px; display: none;}
+	.myPage-con{width: 1000px;height: 680px;border: 1px solid black;margin-top: 100px;margin-left: 23px; display: none; overflow: auto; position: relative;}
+	.myPage-con::-webkit-scrollbar{display: none;}
+    .barwrap{width: 10px; height: 100%; background-color: #fff; float: right;  top:0;position: sticky;}
+    .bar{width: 100%; height: 0%; background-color: rgb(145,140,0); transition: height 0.3s ease;}
 	.active{display: block;}
 </style>
 <title></title>
@@ -100,7 +115,8 @@
            </ul>
        </div>
        <!-- 레시피 콘텐츠 -->
-       <div class="myPage-con tab-0 active" style="overflow:hidden;">
+       <div class="myPage-con tab-0 active">
+       		<div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
        		<c:if test ="${empty cList }">
        			<center>
                    <img style="margin-top: 250px;" src="/upload/story_none.png"
@@ -130,6 +146,7 @@
            </c:if>
        </div>
        <div class="myPage-con tab-1">
+           <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
            <c:if test="${empty rList }">
                <center>
                    <img style="margin-top: 250px;" src="/upload/story_none.png"
@@ -161,6 +178,7 @@
            </c:if>
         </div>
         <div class="myPage-con tab-2">
+        <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
             <c:if test ="${empty sList }">
        			<center>
                    <img style="margin-top: 250px;" src="/upload/story_none.png"
@@ -193,13 +211,43 @@
 	       		</c:if>
        		</c:forEach>
         </div>
-        <div class="myPage-con tab-3">
-            <h1>레시피</h1>
+        <div class="myPage-con tab-3" style="overflow: hidden; overflow-y: scroll;">
+        <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
+            <table class="table table-striped" style="width: 98%;">
+                <tr style="text-align: center;">
+                    <th style="width: 80%;">댓글내용</th>
+                    <th style="width: 20%;">작성일</th>
+                </tr>
+                <c:forEach items="${requestScope.reList }" var="reList"
+                   varStatus="index">
+                <tr>
+                    <td>${reList.replyContents }</td>
+                    <td style="text-align: center;">${reList.replyDate }</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">ㄴ<a href="/recipe/detail?recipeNo=${reList.recipeNo }">${reList.recipeTitle }</a></td>
+                </tr>
+                </c:forEach>
+            </table>
         </div>
-        <div class="myPage-con tab-8">
-            <h1>스토리</h1>
+        <div class="myPage-con tab-8" style="overflow: hidden; overflow-y: scroll;">
+        <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
+            <table class="table table-striped" style="width: 100%;">
+                <tr style="text-align: center;">
+                    <th style="width: 80%;">댓글내용</th>
+                    <th style="width: 20%;">작성일</th>
+                </tr>
+                <tr>
+                    <td>아</td>
+                    <td style="text-align: center;">2021.09.21 18:54:32</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">ㄴ게시글제목123</td>
+                </tr>
+            </table>
         </div>
         <div class="myPage-con tab-4">
+        <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
             <c:if test ="${empty scList }">
        			<center>
                    <img style="margin-top: 250px;" src="/upload/story_none.png"
@@ -232,6 +280,7 @@
         </div>
         
         <div class="myPage-con tab-5">
+        <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
             <table border="1" id="get-message-table" class="message-table">
                 <tr>
                     <th>발신자</th>
@@ -246,6 +295,7 @@
             </table>
         </div>
         <div class="myPage-con tab-9">
+        <div class="barwrap"><div class="bar"></div></div><!--스크롤 인디게이터 -->
             <table border="1" id="send-message-table" class="message-table">
                 <tr>
                     <th>수신자</th>

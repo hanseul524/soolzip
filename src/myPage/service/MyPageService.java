@@ -9,6 +9,7 @@ import myPage.dao.MyPageDAO;
 import recipe.model.dao.RecipeDAO;
 import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
+import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
 import user.model.vo.User;
 
@@ -152,6 +153,22 @@ public class MyPageService {
 			JDBCTemplate.close(conn);
 		}
 		return scList;
+	}
+
+	public List<RecipeReply> myRecipeReply(String userId) {
+		Connection conn = null;
+		List<RecipeReply> reList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			reList = mDao.myRecipeReply(conn,userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return reList;
 	}
 
 }

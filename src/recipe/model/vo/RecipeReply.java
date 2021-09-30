@@ -1,6 +1,5 @@
 package recipe.model.vo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class RecipeReply {
@@ -9,6 +8,7 @@ public class RecipeReply {
 	private String replyContents;
 	private String replyUserId;
 	private Timestamp replyDate;
+	private String recipeTitle;
 	
 	
 	
@@ -55,6 +55,12 @@ public class RecipeReply {
 	}
 	public void setReplyDate(Timestamp replyDate) {
 		this.replyDate = replyDate;
+	}
+	public String getRecipeTitle() {
+		return recipeTitle;
+	}
+	public void setRecipeTitle(String recipeTitle) {
+		this.recipeTitle = recipeTitle;
 	}
 	@Override
 	public String toString() {
