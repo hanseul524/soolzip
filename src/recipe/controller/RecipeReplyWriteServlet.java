@@ -43,12 +43,8 @@ public class RecipeReplyWriteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		User user = new User();
-		//로그인 완성 시 삭제 start
-				user.setUserId("user01");
-				session.setAttribute("user", user);
-		//로그인 완성 시 삭제 end
-		String userId = ((User)session.getAttribute("user")).getUserId();
+		String userId = (String)session.getAttribute("userId");
+		
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		String replyContents = request.getParameter("replyContents");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

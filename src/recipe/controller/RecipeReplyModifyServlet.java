@@ -39,9 +39,10 @@ public class RecipeReplyModifyServlet extends HttpServlet {
 		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		String replyContents = request.getParameter("replyContents");
+		System.out.println("@@@@@@@@@@@@@@@@ : "+replyContents);
 		int result = new RecipeService().modifyRecipeReplyOne(replyNo,replyContents);
 		if(result>0) {
-			response.sendRedirect("/notice/detail?recipeNo="+recipeNo);
+			response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 		}else {
 			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
 		}

@@ -96,13 +96,12 @@
 							<td>${reply.replyUserId }</td>
 							<td>${reply.replyContents }</td>
 							<td>${reply.replyDate }</td>
-<%-- 							<c:if test="${sessionScope.userId eq reply.replyUserId} "> --%>
 							<td>
-								<a href="javascript:void(0)" onclick="showModifyReply(this)">수정</a>
-								/
-								<a href="/recipeReply/delete?recipeNo=${reply.recipeNo }&replyNo=${reply.replyNo }">삭제</a>
+							<c:if test="${sessionScope.userId eq reply.replyUserId }">
+									<a href="javascript:void(0)" onclick="showModifyReply(this)">수정</a>
+									<a href="/recipeReply/delete?recipeNo=${reply.recipeNo }&replyNo=${reply.replyNo }">삭제</a>
+							</c:if>
 							</td>
-<%-- 							</c:if>						 --%>
 						</tr>
 						<tr style="display:none;">
 							<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
@@ -124,7 +123,7 @@
 					</form>
 					<script>
 						function modifyReply(obj, replyNo , recipeNo){
-							var contents = $(obj).parent().prev().find("input").val(); // obj를 이용하여 값 찾기
+							var contents = $(obj).parent().prev().prev().find("input").val(); // obj를 이용하여 값 찾기
 							$("#modifyReplyContents").val(contents);
 							$("#modifyReplyNo").val(replyNo);
 							$("#modifyRecipeNo").val(recipeNo);
@@ -144,6 +143,26 @@
 			<!-- navi -->
 			<div id="right_area" align="center">
  				<a href="#"><img src="/img/myPageLogo.png" alt=""></a>
+ 				
+ 				
+<!--  				좋아요 폼 -->
+ 				<form>
+  					<input type="hidden" name="recipeNo">					
+ 					<input type="hidden" name="likeNo">
+ 					
+ 					
+ 					
+ 					
+ 					<button>좋아요</button>
+ 				</form>
+ 				
+<!--  				스크랩 폼 -->
+ 				<form>
+ 					<input type="hidden">
+ 					
+ 					<button>스크랩</button>
+ 				</form>
+ 				
  				<div style="border-top:10px solid #f1f1f2;">
  					<h1>재료 리스트</h1>
 					<table border="1px">
@@ -164,6 +183,7 @@
 					</table>
  				</div>
 			</div>
+			
 		</div>
 	</div>
 	<div id="footerMain"></div>
