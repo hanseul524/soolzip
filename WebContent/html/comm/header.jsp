@@ -65,21 +65,22 @@ ul.myMenu>li ul.submenu>li:hover {
 			</c:if>
 			
 			<c:if test="${sessionScope.userId ne null and userId ne ''}">
-			<li><a href="index.jsp"> <img style="width: 50px; margin: 5px;"
-					src="/img/myPageLogo.png" alt=""></a>
-				<ul class="">
-                        <li><a href="#">마이페이지</a></li>
-                        <li><a href="#">로그아웃</a></li>
-                        <li><a href="#">투표하기</a></li>
-                </ul>
-			</li>
+    			<li class="loginok">
+        			<a href="index.jsp"><img style="width: 50px; margin: 5px;"
+        			src="img/myPageLogo.png" alt=""></a>
+      				<ul class="mypage">
+        				<li><a href="#">마이페이지</a></li>
+        				<li><a href="/user/logout">로그아웃</a></li>
+        				<li><a href="#">투표하기</a></li>
+      				</ul>
+  				</li>
 			</c:if>
 		</ul>
 	</div>
 	<!-- 메인 로고 -->
 	<div class="header">
-		<a href="#"> <img style="width: 400px; height: 300px;"
-			src="/img/mainLogo.png" alt="">
+		<a href="#"> <img style="width: 370px; height: 80px;"
+			src="/img/mainlogo.png" alt="">
 		</a>
 		
 	</div>

@@ -22,7 +22,7 @@ body {
 
 .header a img {
 	position: relative;
-	left: 19px;
+	margin:40px
 }
 
 .user-area {
@@ -108,7 +108,25 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 }
-
+.user-area-menu>.loginok {
+    position: relative;
+}
+.user-area-menu>.loginok:hover .mypage {
+    display: block;
+}
+.loginok .mypage {
+  display: none;
+  position: absolute;
+}
+.mypage {
+  display: inline-block;
+  background: rgba(201, 199, 199, 0.7);
+  border-radius: 5px;
+  width: 72px;
+}
+.mypage a {
+  font-size: 12px;
+}
 #footer {
 	position: relative;
 	width: 100%;
