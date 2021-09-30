@@ -45,7 +45,7 @@
 </style>
 <script>
 	$(document).ready(function() {
-		$("#headerMain").load("/html/comm/header.html");
+		$("#headerMain").load("/html/comm/header.jsp");
 		$("#footerMain").load("/html/comm/footer.html");
 	});
 </script>

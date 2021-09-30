@@ -60,7 +60,7 @@ ul.myMenu>li ul.submenu>li:hover {
 			</li>
 			<c:if test ="${sessionScope.userId eq null}">
 			<li><a href="index.jsp"> <img style="width: 50px; margin: 5px;"
-					src="/img/myPageLogo.png" alt=""></a>
+					src="/img/myPagelogo.png" alt=""></a>
 			</li>		
 			</c:if>
 			
@@ -80,7 +80,7 @@ ul.myMenu>li ul.submenu>li:hover {
 	<!-- 메인 로고 -->
 	<div class="header">
 		<a href="#"> <img style="width: 370px; height: 80px;"
-			src="/img/mainlogo.png" alt="">
+			src="/img/mainLogo.png" alt="">
 		</a>
 		
 	</div>
