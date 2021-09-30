@@ -10,15 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import message.model.vo.Message;
 import myPage.service.MyPageService;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeReply;
+import story.model.vo.Story;
 import user.model.vo.User;
 
 
-/**
- * Servlet implementation class MyPageServlet
- */
 @WebServlet("/myPage/myPage")
 public class MyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,15 +41,23 @@ public class MyPageServlet extends HttpServlet {
 		//임시공개 리스트
 		List<Recipe> cList = new MyPageService().myCacheRecipe(userId);
 		//스토리 리스트
-//		List<Story> sList = new MyPageService().myStory(userId);
+		List<Story> sList = new MyPageService().myStory(userId);
 		//스크랩 리스트
 		List<Recipe> scList = new MyPageService().myScrap(userId);
 		//레시피 내가쓴 댓글 리스트
 		List<RecipeReply> reList = new MyPageService().myRecipeReply(userId);
+		//스토리 내가쓴 댓글 리스트
+		
+		//보낸쪽지
+		List<Message> msList = new MyPageService().myMessageSendList(userId);
+		//받은쪽지
+		List<Message> mgList = new MyPageService().myMessageGetList(userId);
 		if(user !=null) {
+			request.setAttribute("mgList", mgList);
+			request.setAttribute("msList", msList);
 			request.setAttribute("reList", reList);
 			request.setAttribute("scList", scList);
-//			request.setAttribute("sList", sList);
+			request.setAttribute("sList", sList);
 			request.setAttribute("cList", cList);
 			request.setAttribute("rList", rList);
 			request.setAttribute("storyCount", storyCount);

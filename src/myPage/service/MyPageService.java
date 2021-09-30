@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.JDBCTemplate;
+import message.model.vo.Message;
 import myPage.dao.MyPageDAO;
 import recipe.model.dao.RecipeDAO;
 import recipe.model.vo.PageData;
@@ -154,7 +155,7 @@ public class MyPageService {
 		}
 		return scList;
 	}
-
+	//내가쓴 댓글 레시피
 	public List<RecipeReply> myRecipeReply(String userId) {
 		Connection conn = null;
 		List<RecipeReply> reList = null;
@@ -169,6 +170,39 @@ public class MyPageService {
 			JDBCTemplate.close(conn);
 		}
 		return reList;
+	}
+	//내가쓴 쪽지 리스트
+	public List<Message> myMessageSendList(String userId) {
+		Connection conn = null;
+		List<Message> msList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			msList = mDao.myMessageSendList(conn,userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return msList;
+	}
+	//받은쪽지 리스트
+	public List<Message> myMessageGetList(String userId) {
+		Connection conn = null;
+		List<Message> mgList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			mgList = mDao.myMessageGetList(conn,userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return mgList;
+	
 	}
 
 }
