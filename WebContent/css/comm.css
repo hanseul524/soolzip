@@ -110,6 +110,7 @@ body {
 }
 .user-area-menu>.loginok {
     position: relative;
+    
 }
 .user-area-menu>.loginok:hover .mypage {
     display: block;

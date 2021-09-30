@@ -30,7 +30,7 @@ public class UserLogoutServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(session != null) {
 			session.invalidate();
-			response.sendRedirect("/main.html");
+			response.sendRedirect("/main.jsp");
 			System.out.println("로그아웃 성공");
 		}
 	}

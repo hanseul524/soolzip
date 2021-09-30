@@ -21,7 +21,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#header").load("/html/comm/header.html");
+		$("#header").load("/html/comm/header.jsp");
 		$("#footer").load("/html/comm/footer.html");
 	});
 	$(document).ready(function(){

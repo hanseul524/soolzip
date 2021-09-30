@@ -13,6 +13,8 @@ $(document).ready(function () {
 	$("#footerMain").load("/html/comm/footer.html");
 	
 	$('#frm').on("submit", function() {
+		
+		
 	    if($('#user-id').val() == "") {
 	      alert("아이디를 입력해주세요.");
 	      return false;
@@ -33,10 +35,10 @@ $(document).ready(function () {
         <h2>Login</h2>
         <form action="/user/login" name="loginForm" id="frm" method="post">
           <div class="login_id">
-            <input type="text" name="user-id" placeholder="아이디">
+            <input type="text" id="user-id" name="user-id" placeholder="아이디">
           </div>
           <div class="login_pw">
-            <input type="password" name="user-pwd" placeholder="패스워드">
+            <input type="password" id = "user-pwd" name="user-pwd" placeholder="패스워드">
           </div>
           <div class="login_etc">
             <div class="forget_id">
