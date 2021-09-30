@@ -268,7 +268,7 @@ public class MyPageDAO {
 	public List<Message> myMessageSendList(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query ="select * from message where msg_send_user = ? order by MSG_SEND_DATE DESC";
+		String query ="select * from message where msg_send_user = ? and sent_del='N' order by MSG_SEND_DATE DESC";
 		List<Message> msList = null;
 		
 		try {
@@ -299,7 +299,7 @@ public class MyPageDAO {
 	public List<Message> myMessageGetList(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query ="select * from message where msg_get_user = ? order by MSG_SEND_DATE DESC";
+		String query ="select * from message where msg_get_user = ? and recv_del='N' order by MSG_SEND_DATE DESC";
 		List<Message> mgList = null;
 		
 		try {
@@ -325,6 +325,75 @@ public class MyPageDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return mgList;
+	}
+	//받은메세지 상세페이지
+	public List<Message> myGetMessageDetail(Connection conn, int msgNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Message> mdList = null;
+		String query = "select * from message where msg_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, msgNo);
+			rset = pstmt.executeQuery();
+			mdList = new ArrayList<>();
+			
+			while(rset.next()) {
+				Message msg = new Message();
+				msg.setMsgNo(rset.getInt("MSG_NO"));
+				msg.setMsgGetUser(rset.getString("MSG_GET_USER"));
+				msg.setMsgSendUser(rset.getString("MSG_SEND_USER"));
+				msg.setMsgName(rset.getString("MSG_NAME"));
+				msg.setMsgContents(rset.getString("MSG_CONTENTS"));
+				msg.setMsgSendDate(rset.getTimestamp("MSG_SEND_DATE"));
+				mdList.add(msg);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return mdList;
+	}
+	//받은 메세지 삭제
+	public int deleteMsg(Connection conn, int msgNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update message set recv_del='Y' where msg_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, msgNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int replyMessage(Connection conn, Message msg) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO MESSAGE VALUES(MSG_NO_SEQ.NEXTVAL,?,?,?,?,DEFAULT,DEFAULT,DEFAULT)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, msg.getMsgGetUser());
+			pstmt.setString(2, msg.getMsgSendUser());
+			pstmt.setString(3, msg.getMsgName());
+			pstmt.setString(4, msg.getMsgContents());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 	
 }

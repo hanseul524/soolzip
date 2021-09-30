@@ -205,4 +205,65 @@ public class MyPageService {
 	
 	}
 
+	public List<Message> myGetMessageDetail(int msgNo) {
+		Connection conn = null;
+		List<Message> mdList = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn= jdbcTemplate.createConnection();
+			mdList = mDao.myGetMessageDetail(conn,msgNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return mdList;
+	}
+
+	//메세지 삭제
+	public int deleteMsg(int msgNo) {
+		Connection conn = null;
+		int result = 0;
+		MyPageDAO mDao = new MyPageDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = mDao.deleteMsg(conn,msgNo);
+			
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	
+	//마이페이지 받은쪽지 답장
+	public int replyMessage(Message msg) {
+		int result = 0;
+		Connection conn = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = mDao.replyMessage(conn,msg);
+			
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
 }

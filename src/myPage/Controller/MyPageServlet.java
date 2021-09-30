@@ -1,6 +1,7 @@
 package myPage.Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -27,6 +28,7 @@ public class MyPageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		
 		String userId = (String)session.getAttribute("userId");
@@ -65,7 +67,12 @@ public class MyPageServlet extends HttpServlet {
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("/html/myPage/myPage.jsp").forward(request, response);
 		}else {
-			System.out.println("retry");
+			PrintWriter writer = response.getWriter(); 
+			writer.print("<script>");
+			writer.print("alert('로그인 해주세요!');");
+			writer.print("location.href = '/index.jsp'");
+			writer.print("</script>");
+			writer.close();
 		}
 	}
 
