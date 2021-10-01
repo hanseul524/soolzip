@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>adminpage</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin/main.css">
+<title>userSearch</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin/userlist.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -26,6 +29,10 @@ $(document).ready(function () {
           $(this).addClass('active');
         }
 	});
+	var delchk = [];
+	$('.chk:checked').each(function() {
+		console.log($(this).val());
+	});
 });
 </script>
 </head>
@@ -40,7 +47,7 @@ $(document).ready(function () {
         <li>
           <i class="fas fa-list"></i><a href="#">문의사항</a>
             <ul>
-                <li><a href="main.jsp">문의사항 관리</a></li>
+                <li><a href="/user/list">문의사항 관리</a></li>
                 <li><a href="#">답변</a></li>
             </ul>
         </li>
@@ -59,37 +66,56 @@ $(document).ready(function () {
   </div>
   <div class="menu-contents">
     <div id="contents-header">
-      <h2>문의사항 관리</h2>
+      <h2>회원 탈퇴</h2>
+      <hr style="border-top: 1px solid black; margin: 10px;">
+    </div>
+    <div id="contents-search">
+    <form action="/user/search" method="get">
+      <input type="text" name="searchId" id="user-id" placeholder="아이디로 회원 조회">
+      <input type="submit" value="검색">
+<!--       <a href="#"><img src="/img/icon_header_search.png" alt=""></a> -->
+    </form>
     </div>
     <div id="contents-list">
+    <form action="/user/delete" method="get">
     <table class="table table-hover">
       <tr>
-        <th>접수번호</th>
-        <th>제목</th>
-        <th>작성자 ID</th>
-        <th>등록일</th>
-        <th>상태</th>
+        <th>회원번호</th>
+        <th>아이디</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>휴대폰</th>
+        <th>권한부여</th>
+        <th>삭제</th>
       </tr>
+    <c:forEach items="${requestScope.uList}" var="user" varStatus="index">
       <tr>
-        <td>001</td>
-        <td>회원탈퇴는 어떻게 하나요?</td>
-        <td>user01</td>
-        <td>2021-09-18</td>
-        <td>미해결</td>
+        <td>${user.userNo}</td>
+        <td>${user.userId}</td>
+        <td>${user.userName}</td>
+        <td>${user.userEmail}</td>
+        <td>${user.userPhone}</td>
+        <td>${user.userAdmin}</td>
+        <td><input type="checkbox" name="chk" id="${user.userId}" value="${user.userId}"></td>
       </tr>
-    </table>
+    </c:forEach>
     <hr>
-    <div class="text-center"></div>
-      <ul class="pagination">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-      </ul>
+<!--       <ul class="pagination"> -->
+<!--         <li><a href="#">1</a></li> -->
+<!--         <li><a href="#">2</a></li> -->
+<!--         <li><a href="#">3</a></li> -->
+<!--         <li><a href="#">4</a></li> -->
+<!--         <li><a href="#">5</a></li> -->
+<!--       </ul> -->
+    </form>
+    </table>
+      <div class="removeCk">
+        <input type="submit" value="선택삭제">
+      </div>
     </div>
   </div>
 </div>
+</form>
 <div id="footerMain"></div> 
 </body>
 </html>

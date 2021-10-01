@@ -6,10 +6,21 @@ public class PageData {
 	private List<User> userList;
 	private List<User> adminList;
 	private String pageNavi;
+	private String apageNavi;
 	
 	public PageData() {}
 	
 	
+	public String getApageNavi() {
+		return apageNavi;
+	}
+
+
+	public void setApageNavi(String apageNavi) {
+		this.apageNavi = apageNavi;
+	}
+
+
 	public List<User> getAdminList() {
 		return adminList;
 	}
@@ -34,9 +45,11 @@ public class PageData {
 		this.pageNavi = pageNavi;
 	}
 
+
 	@Override
 	public String toString() {
-		return "PageData [userList=" + userList + ", adminList=" + adminList + ", pageNavi=" + pageNavi + "]";
+		return "PageData [userList=" + userList + ", adminList=" + adminList + ", pageNavi=" + pageNavi + ", apageNavi="
+				+ apageNavi + "]";
 	}
-	
+
 }

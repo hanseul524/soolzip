@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String pageNavi = (String)request.getAttribute("pageNavi");
+	String apageNavi = (String)request.getAttribute("apageNavi");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -50,7 +50,11 @@ $(document).ready(function () {
             </ul>
         </li>
         <li>
-          <i class="far fa-user-circle"></i><a href="/user/list">회원 관리</a>
+           <i class="far fa-user-circle"></i><a href="#">회원 관리</a>
+            <ul>
+                <li><a href="/user/list">회원 탈퇴</a></li>
+                <li><a href="#">관리자 권한 부여</a></li>
+            </ul>
         </li>
         <li>
           <i class="fas fa-user-circle"></i><a href="/admin/list">관리자 관리</a>
@@ -64,10 +68,14 @@ $(document).ready(function () {
       <hr style="border-top: 1px solid black; margin: 10px;">
     </div>
     <div id="contents-search">
+    <form action="/user/search" method="get">
       <input type="text" name="user-id" id="user-id" placeholder="전체 관리자 조회">
-      <a href="#"><img src="/img/icon_header_search.png" alt=""></a>
+      <input type="submit" value="검색">
+<!--       <a href="#"><img src="/img/icon_header_search.png" alt=""></a> -->
+    </form>
     </div>
     <div id="contents-list">
+    <form action="/admin/delete" method="get">
     <table class="table table-hover">
       <tr>
         <th>회원번호</th>
@@ -86,16 +94,17 @@ $(document).ready(function () {
         <td>${admin.userEmail}</td>
         <td>${admin.userPhone}</td>
         <td>${admin.userAdmin}</td>
-        <td><input type="checkbox" name="checkList"></td>
+        <td><input type="checkbox" name="chkad" id="${admin.userId}" value="${admin.userId}"></td>
       </tr>
     </c:forEach>
     </table>
     <hr>
     <tr>
 		<td colspan="10" align="center">
-		<%= pageNavi %>
+		<%= apageNavi %>
 		</td>
 	</tr>
+	</form>
     <div class="text-center"></div>
 <!--       <ul class="pagination"> -->
 <!--         <li><a href="#">1</a></li> -->

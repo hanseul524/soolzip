@@ -32,6 +32,10 @@ $(document).ready(function () {
           $(this).addClass('active');
         }
 	});
+	var delchk = [];
+	$('.chk:checked').each(function() {
+		console.log($(this).val());
+	});
 });
 </script>
 </head>
@@ -51,7 +55,11 @@ $(document).ready(function () {
             </ul>
         </li>
         <li>
-          <i class="far fa-user-circle"></i><a href="/user/list">회원 관리</a>
+          <i class="far fa-user-circle"></i><a href="#">회원 관리</a>
+            <ul>
+                <li><a href="/user/list">회원 탈퇴</a></li>
+                <li><a href="#">관리자 권한 부여</a></li>
+            </ul>
         </li>
         <li>
           <i class="fas fa-user-circle"></i><a href="/admin/list">관리자 관리</a>
@@ -61,16 +69,18 @@ $(document).ready(function () {
   </div>
   <div class="menu-contents">
     <div id="contents-header">
-      <h2>회원 계정 관리</h2>
+      <h2>회원 탈퇴</h2>
       <hr style="border-top: 1px solid black; margin: 10px;">
     </div>
     <div id="contents-search">
-    <form action="" method="get">
-      <input type="text" name="user-id" id="user-id" placeholder="전체 회원 조회">
-      <a href="#"><img src="/img/icon_header_search.png" alt=""></a>
+    <form action="/user/search" method="get">
+      <input type="text" name="searchId" id="user-id" placeholder="아이디로 회원 조회">
+      <input type="submit" id="search" value="검색">
+<!--       <a href="#"><img src="/img/icon_header_search.png" alt=""></a> -->
     </form>
     </div>
     <div id="contents-list">
+    <form action="/user/delete" method="get">
     <table class="table table-hover">
       <tr>
         <th>회원번호</th>
@@ -89,16 +99,16 @@ $(document).ready(function () {
         <td>${user.userEmail}</td>
         <td>${user.userPhone}</td>
         <td>${user.userAdmin}</td>
-        <td><input type="checkbox" name="checkList"></td>
+        <td><input type="checkbox" name="chk" id="${user.userId}" value="${user.userId}"></td>
       </tr>
     </c:forEach>
     <hr>
 	<tr>
+<!--     <div class="text-center"></div> -->
 		<td colspan="10" align="center">
-		<%= pageNavi %>
+		<%= pageNavi %>		
 		</td>
 	</tr>
-    <div class="text-center"></div>
 <!--       <ul class="pagination"> -->
 <!--         <li><a href="#">1</a></li> -->
 <!--         <li><a href="#">2</a></li> -->
@@ -106,13 +116,15 @@ $(document).ready(function () {
 <!--         <li><a href="#">4</a></li> -->
 <!--         <li><a href="#">5</a></li> -->
 <!--       </ul> -->
-      <div class="removeCk">
+    </form>
     </table>
+      <div class="removeCk">
         <input type="submit" value="선택삭제">
       </div>
     </div>
   </div>
 </div>
+</form>
 <div id="footerMain"></div> 
 </body>
 </html>

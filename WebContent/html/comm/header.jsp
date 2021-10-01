@@ -50,6 +50,13 @@ ul.myMenu>li ul.submenu>li:hover {
 	<!-- 사용자 nav -->
 	<div class="user-area">
 		<ul class="user-area-menu">
+			
+			<c:if test="${user.userAdmin eq 'Y' }">
+			<li><a href="/html/admin/main.jsp"> <img style="width: 50px; margin: 5px;"
+					src="/img/adminLogo.png" alt="">
+			</a></li>
+			</c:if>
+			
 			<li><a href="#"> <img style="width: 50px; margin: 5px;"
 					src="/img/suggestion.png" alt="">
 			</a></li>
@@ -58,12 +65,12 @@ ul.myMenu>li ul.submenu>li:hover {
 					<img style="width: 50px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
 			</li>
-			<c:if test ="${sessionScope.userId eq null}">
+			<c:if test ="${user.userId eq null}">
 				<li><a href="/index.jsp"> <img style="width: 50px; margin: 5px;"
 						src="/img/myPageLogo.png" alt=""></a>
 				</li>		
 			</c:if>
-			<c:if test="${sessionScope.userId ne null and userId ne ''}">
+			<c:if test="${user.userId ne null and userId ne ''}">
     			<li class="loginok">
         			<a href="#"><img style="width: 50px; margin: 5px;"
         			src="/img/myPageLogo.png" alt=""></a>

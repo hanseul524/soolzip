@@ -28,6 +28,7 @@ public class UserDAO {
 				user = new User();
 				user.setUserId(rset.getString("USER_ID"));
 				user.setUserPwd(rset.getString("USER_PWD"));
+				user.setUserAdmin(rset.getString("user_admin_yn"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,6 +165,43 @@ public class UserDAO {
 		}
 		return uList;
 	}
+	// 관리자 전체 조회
+	public List<User> selectAllAdmin(Connection conn, int currentPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<User> aList = null;
+		String query = "SELECT *FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_NO ASC)"
+				+ "AS NUM,USER_NO, USER_ID, USER_NAME, USER_EMAIL, USER_PHONE, USER_ADMIN_YN "
+				+ "FROM USERS WHERE USER_ADMIN_YN = 'Y') WHERE NUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			int viewCountPerPage = 10;
+			int start = currentPage*viewCountPerPage-(viewCountPerPage-1);
+			int end = currentPage*viewCountPerPage;
+			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			aList = new ArrayList<User>();
+			while(rset.next()) {
+				User user = new User();
+				user.setUserNo(rset.getInt("USER_NO"));
+				user.setUserId(rset.getString("USER_ID"));
+				user.setUserName(rset.getString("USER_NAME"));
+				user.setUserEmail(rset.getString("USER_EMAIL"));
+				user.setUserPhone(rset.getString("USER_PHONE"));
+				user.setUserAdmin(rset.getString("USER_ADMIN_YN"));
+				aList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return aList;
+	}
 	// 페이징처리
 	public String getPageNavi(Connection conn, int currentPage) {
 		int pageCountPerView = 5;
@@ -205,6 +243,47 @@ public class UserDAO {
 		}
 		return sb.toString();
 	}
+	//관리자 페이지 패이징처리
+	public String getAPageNavi(Connection conn, int currentPage) {
+		int pageCountPerView = 5;
+		int viewTotalCount = adminTotalCount(conn);
+		int viewCountPerPage = 10;
+		int pageTotalCount = 0;
+		int pageTotalCountMod = viewTotalCount % viewCountPerPage;
+		if(pageTotalCountMod > 0) {
+			pageTotalCount = viewTotalCount / viewCountPerPage + 1;
+		}else {
+			pageTotalCount = viewTotalCount / viewCountPerPage;
+		}
+		int startNavi = ((currentPage-1)/pageCountPerView) * pageCountPerView + 1;
+		int endNavi = startNavi + pageCountPerView - 1;
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		boolean needPrev = true;
+		boolean needNext = true;
+		if(startNavi == 1) {
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		StringBuilder sb = new StringBuilder();
+		if(needPrev) {
+			sb.append("<a href='/admin/list?currentPage=" + (startNavi-1) + "'> [이전] </a>");
+		}
+		for(int i=startNavi; i<=endNavi; i++) {
+			if(i == currentPage) {
+				sb.append(i + " ");
+			}else {
+				sb.append("<a href='/admin/list?currentPage=" + i + "'>" + i + "</a>");
+			}
+		}
+		if(needNext) {
+			sb.append("<a href='/admin/list?currentPage=" + (endNavi+1) + "'> [다음] </a>");
+		}
+		return sb.toString();
+	}
 	// 전체 회원 숫자를 세줄 메소드
 	private int totalCount(Connection conn) {
 		int totalValue = 0;
@@ -226,25 +305,77 @@ public class UserDAO {
 		}
 		return totalValue;
 	}
-
-	public List<User> selectAllAdmin(Connection conn, int currentPage) {
-		PreparedStatement pstmt = null;
+	
+	private int adminTotalCount(Connection conn) {
+		int totalValue = 0;
+		Statement stmt = null;
 		ResultSet rset = null;
-		List<User> aList = null;
-		String query = "SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY USER_NO ASC)"
-				+ "AS NUM,USER_NO, USER_ID, USER_NAME, USER_EMAIL, USER_PHONE, USER_ADMIN_YN FROM USERS)"
-				+ "WHERE USER_ADMIN_YN = 'Y' AND NUM BETWEEN ? AND ?";
+		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM USERS where user_admin_yn = 'y' ";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				totalValue = rset.getInt("TOTALCOUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return totalValue;
+	}
+	// 회원 삭제
+	
+	// 회원 삭제
+	public int deleteUser(Connection conn, String users) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String [] userArr = users.split(",");
+		String query = "DELETE FROM USERS WHERE USER_ID = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			int viewCountPerPage = 10;
-			int start = currentPage*viewCountPerPage-(viewCountPerPage-1);
-			int end = currentPage*viewCountPerPage;
-			
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			for(int i=0; i<userArr.length; i++) {
+				pstmt.setString(1, userArr[i]);
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	// 관리자 삭제
+	public int deleteAdmin(Connection conn, String admins) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String [] adminArr = admins.split(",");
+		String query = "DELETE FROM USERS WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			for(int i=0; i<adminArr.length; i++) {
+				pstmt.setString(1, adminArr[i]);
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<User> selectSearchUser(Connection conn, String searchUser) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<User> uList = null;
+		String query = "SELECT * FROM USERS WHERE USER_ID LIKE ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchUser+"%");
 			rset = pstmt.executeQuery();
-			aList = new ArrayList<User>();
+			uList = new ArrayList<User>();
 			while(rset.next()) {
 				User user = new User();
 				user.setUserNo(rset.getInt("USER_NO"));
@@ -253,14 +384,15 @@ public class UserDAO {
 				user.setUserEmail(rset.getString("USER_EMAIL"));
 				user.setUserPhone(rset.getString("USER_PHONE"));
 				user.setUserAdmin(rset.getString("USER_ADMIN_YN"));
-				aList.add(user);
+				uList.add(user);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
 		}
-		return aList;
+		return uList;
 	}
+
 }

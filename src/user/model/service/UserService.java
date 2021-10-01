@@ -117,6 +117,7 @@ public class UserService {
 		}
 		return pd;
 	}
+	//관리자 리스트 보기
 	public PageData printAllAdmin(int currentPage) {
 		PageData pd = new PageData();
 		Connection conn = null;
@@ -125,9 +126,9 @@ public class UserService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			List<User> aList = uDAO.selectAllAdmin(conn, currentPage);
-			String pageNavi = uDAO.getPageNavi(conn, currentPage);
-			pd.setUserList(uDAO.selectAllAdmin(conn, currentPage));
-			pd.setPageNavi(uDAO.getPageNavi(conn, currentPage));
+			String apageNavi = uDAO.getAPageNavi(conn, currentPage);
+			pd.setAdminList(aList);
+			pd.setApageNavi(apageNavi);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -135,5 +136,47 @@ public class UserService {
 		}
 		return pd;
 	}
-
+	//회원삭제
+	public int removeUser(String users) {
+		int result = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = new UserDAO().deleteUser(conn, users);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//관리자 삭제
+	public int removeAdmin(String admins) {
+		int result = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = new UserDAO().deleteAdmin(conn, admins);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	public List<User> searchUser(String searchUser) {
+		Connection conn = null;
+		List<User> uList = null;
+		try {
+			conn = jdbcTemplate.createConnection();
+			uList = new UserDAO().selectSearchUser(conn, searchUser);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return uList;
+	}
 }

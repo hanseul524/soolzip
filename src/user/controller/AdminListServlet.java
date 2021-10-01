@@ -43,7 +43,7 @@ public class AdminListServlet extends HttpServlet {
 		List<User> aList = pageData.getAdminList();
 		if(!aList.isEmpty()) {
 			request.setAttribute("aList", aList);
-			request.setAttribute("pageNavi", pageData.getPageNavi());
+			request.setAttribute("apageNavi", pageData.getApageNavi());
 			request.getRequestDispatcher("/html/admin/adminlist.jsp").forward(request, response);
 		}else {
 			System.out.println("조회 실패");

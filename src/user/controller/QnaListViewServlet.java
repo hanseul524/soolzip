@@ -6,22 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import user.model.service.UserService;
-import user.model.vo.User;
 
 /**
- * Servlet implementation class UserLoginServlet
+ * Servlet implementation class QnaListViewServlet
  */
-@WebServlet("/user/login")
-public class UserLoginServlet extends HttpServlet {
+@WebServlet("/admin/qnalist")
+public class QnaListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserLoginServlet() {
+    public QnaListViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,26 +26,16 @@ public class UserLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("user-id"); //jsp에서 input값 넘겨받기
-		String userPwd = request.getParameter("user-pwd");
-		System.out.println("서블릿에 넘어옴");
-		User user = new UserService().selectLogin(userId, userPwd);
-		
-		if(user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);//세션에 저장
-//			session.setAttribute("user", user);
-			System.out.println("로그인 성공");
-			response.sendRedirect("/main.jsp");
-		}else {
-			System.out.println("로그인 실패");
-		}
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
+
 }
