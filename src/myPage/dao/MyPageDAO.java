@@ -270,7 +270,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<StoryReply> srList = null;
-		String query = "select s.story_no,s.story_contents, sr.REPLY_CONTENTS, sr.reply_enrolldate from story s, story_reply sr where s.user_Id=?";
+		String query = "select s.story_no,s.story_contents, sr.REPLY_CONTENTS, sr.reply_enrolldate from story s, story_reply sr where s.story_no = sr.story_no and s.user_Id=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -280,6 +280,11 @@ public class MyPageDAO {
 			
 			while(rset.next()) {
 				StoryReply sr = new StoryReply();
+				sr.setStoryNo(rset.getInt("STORY_NO"));
+				sr.setStoryContents(rset.getString("STORY_CONTENTS"));
+				sr.setReplyContents(rset.getString("REPLY_CONTENTS"));
+				sr.setReplyDate(rset.getTimestamp("REPLY_ENROLLDATE"));
+				srList.add(sr);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

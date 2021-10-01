@@ -1,5 +1,3 @@
-<%@page import="recipe.model.vo.Recipe"%>
-<%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -136,6 +134,7 @@
 <body>
 	<div id="headerMain"></div>
 	<div class="wrapper">
+	<!--프로필  -->
 		<aside id="profile">
 			<div id="profile-img">
 				<img src="/img/mainLogo.png" alt="">
@@ -147,13 +146,14 @@
 				<span>레시피 : ${recipeCount }개 </span><br> <br> <span>스토리
 					: ${storyCount }개</span>
 			</div>
-			<form action="/html/myPage/myInfoUpdate.jsp" method="POST">
+			<form action="/user/update" method="POST">
 				<input type="submit" value="회원 정보 수정" id="update-btn"> <input
 					type="hidden" name="userId" value="${user.userId }"> <input
 					type="hidden" name="userEmail" value="${user.userEmail }">
 				<input type="hidden" name="userPhone" value="${user.userPhone }">
 			</form>
 		</aside>
+		
 		<main>
 			<div class="list-div">
 				<ul class="list" id="kategori">
@@ -272,13 +272,13 @@
 						<center>
 							<div style="float: left; margin: 10px;">
 								<div class="box-thumb" style="width: 200px; height: 200px;">
-									<a href="#"> <img style="width: 100%; height: 100%;"
+									<a href="/story/detail?storyNo=${sList.storyNo }"> <img style="width: 100%; height: 100%;"
 										src="/upload/${sList.fileName }" alt="">
 									</a>
 								</div>
 								<div class="box-caption" style="margin: 10px;">
 									<div class="box-title" style="width:200px; height:20px; overflow:hidden;">
-										<a href="#" style="text-decoration: none; color: black;">${sList.storyContents }</a>
+										<a href="/story/detail?storyNo=${sList.storyNo }" style="text-decoration: none; color: black;">${sList.storyContents }</a>
 										<br><span style="font-size:0.6em; color:gray;">${sList.storyTag }</span>
 									</div>
 									<div class="box-name" style="overflow: hidden;">
@@ -331,19 +331,31 @@
 					<div class="bar"></div>
 				</div>
 				<!--스크롤 인디게이터 -->
-				<table class="table table-striped" style="width: 98%;">
-					<tr style="text-align: center;">
-						<th style="width: 80%;">댓글내용</th>
-						<th style="width: 20%;">작성일</th>
-					</tr>
-					<tr>
-						<td>아</td>
-						<td style="text-align: center;">2021.09.21 18:54:32</td>
-					</tr>
-					<tr>
-						<td colspan="2" style="text-align: left;">ㄴ게시글제목123</td>
-					</tr>
-				</table>
+				<c:if test="${empty srList }">
+					<center>
+						<img style="margin-top: 250px;" src="/upload/story_none.png"
+							alt="">
+					</center>
+				</c:if>
+				<c:if test="${!empty srList }">
+					<table class="table table-striped" style="width: 98%;">
+						<tr style="text-align: center;">
+							<th style="width: 80%;">댓글내용</th>
+							<th style="width: 20%;">작성일</th>
+						</tr>
+						<c:forEach items="${requestScope.srList }" var="srList"
+							varStatus="index">
+							<tr>
+								<td>${srList.replyContents }</td>
+								<td style="text-align: center;">${srList.replyDate }</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="text-align: left;">ㄴ<a
+									href="/story/detail?storyNo=${srList.storyNo }">${srList.storyContents }</a></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 			</div>
 			<!-- 스크랩컨텐츠 -->
 			<div class="myPage-con tab-4">
