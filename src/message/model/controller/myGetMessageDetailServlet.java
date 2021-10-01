@@ -1,4 +1,4 @@
-package myPage.Controller;
+package message.model.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import message.model.service.MsgService;
 import message.model.vo.Message;
-import myPage.service.MyPageService;
 
 @WebServlet("/message/detail")
 public class myGetMessageDetailServlet extends HttpServlet {
@@ -25,7 +25,7 @@ public class myGetMessageDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int msgNo = 0;
 		msgNo = Integer.parseInt(request.getParameter("msgNo"));
-		List<Message> mdList = new MyPageService().myGetMessageDetail(msgNo);
+		List<Message> mdList = new MsgService().myGetMessageDetail(msgNo);
 		if (mdList != null) {
 			request.setAttribute("mdList", mdList);
 			

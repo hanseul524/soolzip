@@ -1,4 +1,4 @@
-package myPage.Controller;
+package message.model.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import myPage.service.MyPageService;
+import message.model.service.MsgService;
 
 /**
  * Servlet implementation class DeleteMsgServlet
@@ -34,7 +34,7 @@ public class DeleteMsgServlet extends HttpServlet {
 		int msgNo = Integer.parseInt(request.getParameter("msgNo"));
 		
 		int result =0;
-		result = new MyPageService().deleteMsg(msgNo);
+		result = new MsgService().deleteMsg(msgNo);
 		if(result>0) {
 			PrintWriter writer = response.getWriter(); 
 			writer.print("<script>");

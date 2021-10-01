@@ -442,7 +442,7 @@
 							<% cnt +=1;  %>
 							<tr>
 								<td style="text-align: center;"><%=cnt %></td>
-								<td>${msList.msgName }</td>
+								<td><a href="/message/msDetail?msgNo=${msList.msgNo }" onclick="window.open(this.href,'쪽지','width=1000 height =1300');return false;" >${msList.msgName }</a></td>
 								<td style="text-align: center;">${msList.msgGetUser }</td>
 								<td style="text-align: center;">${msList.msgSendDate }</td>
 							</tr>

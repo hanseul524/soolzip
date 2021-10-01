@@ -5,13 +5,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.JDBCTemplate;
-import message.model.vo.Message;
 import myPage.dao.MyPageDAO;
-import recipe.model.dao.RecipeDAO;
-import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
+import story.model.vo.StoryReply;
 import user.model.vo.User;
 
 public class MyPageService {
@@ -171,99 +169,22 @@ public class MyPageService {
 		}
 		return reList;
 	}
-	//내가쓴 쪽지 리스트
-	public List<Message> myMessageSendList(String userId) {
-		Connection conn = null;
-		List<Message> msList = null;
-		MyPageDAO mDao = new MyPageDAO();
-		
-		try {
-			conn = jdbcTemplate.createConnection();
-			msList = mDao.myMessageSendList(conn,userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return msList;
-	}
-	//받은쪽지 리스트
-	public List<Message> myMessageGetList(String userId) {
-		Connection conn = null;
-		List<Message> mgList = null;
-		MyPageDAO mDao = new MyPageDAO();
-		
-		try {
-			conn = jdbcTemplate.createConnection();
-			mgList = mDao.myMessageGetList(conn,userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return mgList;
-	
-	}
 
-	public List<Message> myGetMessageDetail(int msgNo) {
+	public List<StoryReply> myStoryReply(String userId) {
 		Connection conn = null;
-		List<Message> mdList = null;
+		List<StoryReply> srList = null;
 		MyPageDAO mDao = new MyPageDAO();
 		
 		try {
-			conn= jdbcTemplate.createConnection();
-			mdList = mDao.myGetMessageDetail(conn,msgNo);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(conn);
-		}
-		return mdList;
-	}
-
-	//메세지 삭제
-	public int deleteMsg(int msgNo) {
-		Connection conn = null;
-		int result = 0;
-		MyPageDAO mDao = new MyPageDAO();
-		try {
 			conn = jdbcTemplate.createConnection();
-			result = mDao.deleteMsg(conn,msgNo);
-			
-			if(result>0) {
-				JDBCTemplate.commit(conn);
-			}else {
-				JDBCTemplate.rollback(conn);
-			}
+			srList = mDao.myStoryReply(conn, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
-		return result;
+		return srList;
 	}
 	
-	//마이페이지 받은쪽지 답장
-	public int replyMessage(Message msg) {
-		int result = 0;
-		Connection conn = null;
-		MyPageDAO mDao = new MyPageDAO();
-		
-		try {
-			conn = jdbcTemplate.createConnection();
-			result = mDao.replyMessage(conn,msg);
-			
-			if(result>0) {
-				JDBCTemplate.commit(conn);
-			}else {
-				JDBCTemplate.rollback(conn);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return result;
-	}
 
 }

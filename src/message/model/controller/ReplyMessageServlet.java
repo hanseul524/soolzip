@@ -1,4 +1,4 @@
-package myPage.Controller;
+package message.model.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import message.model.service.MsgService;
 import message.model.vo.Message;
-import myPage.service.MyPageService;
 
 /**
  * Servlet implementation class ReplyMessageServlet
@@ -43,7 +43,7 @@ public class ReplyMessageServlet extends HttpServlet {
 		msg.setMsgName(msgName);
 		msg.setMsgContents(contents);
 		
-		result = new MyPageService().replyMessage(msg);
+		result = new MsgService().replyMessage(msg);
 		
 		if(result>0) {
 			PrintWriter writer = response.getWriter(); 
