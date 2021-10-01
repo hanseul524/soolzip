@@ -61,12 +61,12 @@
                     </div>
                     <div class="story_view_contents">
                         <div class="story_view_contents_img">
-                            <img src="${resquestScope.storyOne.fileName }" alt="">
+                            <img src="/story-upload/${requestScope.storyOne.fileName }" alt="">
                         </div>
                         <!-- 등록할때 쓴 내용을 받아와야함 -->
-                        <div class="story_view_contents_txt">ㅎㅇ</div>
+                        <div class="story_view_contents_txt">${requestScope.storyOne.storyContents }</div>
                         <div class="Story_view_tags">
-                            <div class="story_tag_list_txt">#반반 #프로젝트</div>
+                            <div class="story_tag_list_txt">${requestScope.storyOne.storyTag }</div>
                         </div>
                     </div>
                 </div>

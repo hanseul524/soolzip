@@ -45,9 +45,9 @@ public class StoryListServlet extends HttpServlet {
 		PageData pageData = new StoryService().printAllStory(currentPage);
 		List<Story> storyList = pageData.getStoryList();
 		
-		for(Story story : storyList) {
-			System.out.println(story.toString());
-		}
+//		for(Story story : storyList) {
+//			System.out.println(story.toString());
+//		}
 		if(!storyList.isEmpty()) {
 			request.setAttribute("storyList", storyList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());

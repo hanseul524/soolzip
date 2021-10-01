@@ -77,6 +77,6 @@ public class StoryService {
 		}finally {
 			JDBCTemplate.close(conn);
 		}
-		return null;
+		return storyOne;
 	}
 }
