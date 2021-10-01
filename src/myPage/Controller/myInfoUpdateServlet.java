@@ -39,7 +39,7 @@ public class myInfoUpdateServlet extends HttpServlet {
 		int result = new MyPageService().modifyUser(user);
 		if(result>0) {
 			session.invalidate();
-			response.sendRedirect("/html/myPage/succes.html");
+			response.sendRedirect("/WEB-INF/html/myPage/succes.html");
 			//세션파괴
 		}else {
 			System.out.println("다시해");

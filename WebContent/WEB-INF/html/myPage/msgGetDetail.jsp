@@ -81,7 +81,10 @@ hr {
 				<button class="btn" id="msg-del" style="margin-right: 30px">삭제</button>
 				<input type="hidden" name="msgNo" value="${mdList.msgNo }">
 			</form>
-				<a href="/html/myPage/replyMsg.jsp?msgSendUser=${mdList.msgSendUser }"><button class="btn">답장</button></a>
+			<form action="/send/reply"method="get">
+				<input type="submit" value="답장"  class="btn">
+				<input type="hidden" name="msgSendUser" value="${mdList.msgSendUser }">
+			</form>
 			<hr>
 			<textarea readonly>${mdList.msgContents }</textarea>
 			<br>

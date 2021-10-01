@@ -2,10 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="user.model.vo.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String email = request.getParameter("userEmail");
-String phone = request.getParameter("userPhone");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +10,7 @@ String phone = request.getParameter("userPhone");
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>개인정보수정</title>
-<link rel="stylesheet" href="./css/myInfoUpdate.css">
+<link rel="stylesheet" href="/html/myPage/css/myInfoUpdate.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 span {
@@ -30,7 +27,7 @@ span {
 				<h2>회원정보 수정</h2>
 				<div class="login_id">
 					<h4>아이디</h4>
-					<input type="text" name="userId" id="userid" value="${userId }"
+					<input type="text" name="userId" id="userid" value="<%=request.getAttribute("userId") %>"
 						readonly>
 				</div>
 				<div class="login_pw">
@@ -48,13 +45,13 @@ span {
 				<div class="login_name">
 					<h4>이메일</h4>
 					<input type="text" name="userEmail" id="email"
-						placeholder="이메일을 입력해주세요" value="<%=email%>">
+						placeholder="이메일을 입력해주세요" value="<%=request.getAttribute("userEmail")%>">
 				</div>
 				<span id="email_error"></span>
 				<div class="login_addr">
 					<h4>휴대폰</h4>
 					<input type="text" name="userPhone" id="phone"
-						placeholder="'-'제외하고 입력해 주세요" value="<%=phone%>">
+						placeholder="'-'제외하고 입력해 주세요" value="<%=request.getAttribute("userPhone")%>">
 				</div>
 				<span id="phone_error"></span>
 				<div class="submit">

@@ -87,7 +87,7 @@ hr {
 			<input type="text" id="msg-name" name="msgName" placeholder="제목입력란">
 			<input type="text" id="susin" value="수신자 : " readonly><input
 				type="text" id="susin-id" placeholder="수신자 id" name="msgGetUser"
-				value="<%=request.getParameter("msgSendUser")%>"> <input
+				value="<%=request.getAttribute("msgSendUser")%>"> <input
 				type="button" value="이전" class="btn cn"> <input
 				type="submit" value="전송" class="btn">
 			<hr>

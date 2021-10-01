@@ -31,7 +31,7 @@ public class myGetMessageDetailServlet extends HttpServlet {
 			
 
 			
-			request.getRequestDispatcher("/html/myPage/msgGetDetail.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/myPage/msgGetDetail.jsp").forward(request, response);
 		}
 	}
 
