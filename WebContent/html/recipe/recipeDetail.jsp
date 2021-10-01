@@ -202,13 +202,9 @@
  				</form>
  			
  		<!-- 레시피 수정 -->
- 				<form action="/recipe/modify" method="post">
- 				<c:if test="${sessionScope.userId eq recipeOne.userId}">	
- 					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
- 					<input type="submit" value="레시피 수정">
- 				</c:if>
- 				</form>
- 
+ 			<c:if test="${sessionScope.userId eq recipeOne.userId}">
+ 				<a href="/recipe/modify?recipeNo=${recipeOne.recipeNo }">레시피 수정</button>
+ 			</c:if>
  
  
  				<div style="border-top:10px solid #f1f1f2;">

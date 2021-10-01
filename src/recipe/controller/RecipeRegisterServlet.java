@@ -89,6 +89,8 @@ public class RecipeRegisterServlet extends HttpServlet {
 			mainFile.setFileSize(multi.getFile("mainFile").length());
 			mainFile.setRegName(userId);
 		}
+		
+		//레시피 정보 넣기
 		Recipe recipe = new Recipe(recipeContents,recipeTitle,recipeMainDrink,recipeAlcohol,recipeTag);
 		recipe.setRecipeFile(mainFile);
 		recipe.setUserId(userId);
@@ -110,11 +112,6 @@ public class RecipeRegisterServlet extends HttpServlet {
 		
 		//제조과정 리스트 저장
 		String [] fileContents = multi.getParameterValues("fileContents");
-		// fileContents[0] 1 2 ~
-		
-	
-		
-		
 		List<RecipeMakeProcess> makeList = new ArrayList();
 		
 		for(int i = 0; i< fileContents.length; i++) {

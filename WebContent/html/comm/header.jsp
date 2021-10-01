@@ -58,12 +58,13 @@ ul.myMenu>li ul.submenu>li:hover {
 					<img style="width: 50px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
 			</li>
-			<c:if test ="${sessionScope.userId eq null}">
+			<c:if test ="${empty sessionScope.userId}">
 				<li><a href="/index.jsp"> <img style="width: 50px; margin: 5px;"
 						src="/img/myPageLogo.png" alt=""></a>
 				</li>		
 			</c:if>
-			<c:if test="${sessionScope.userId ne null and userId ne ''}">
+<%-- 			${sessionScope.userId ne null and userId ne ''} --%>
+			<c:if test="${not empty sessionScope.userId}">
     			<li class="loginok">
         			<a href="#"><img style="width: 50px; margin: 5px;"
         			src="/img/myPageLogo.png" alt=""></a>
