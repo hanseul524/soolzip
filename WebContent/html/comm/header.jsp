@@ -65,12 +65,14 @@ ul.myMenu>li ul.submenu>li:hover {
 					<img style="width: 50px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
 			</li>
+			
 			<c:if test ="${user.userId eq null}">
 				<li><a href="/index.jsp"> <img style="width: 50px; margin: 5px;"
 						src="/img/myPageLogo.png" alt=""></a>
 				</li>		
 			</c:if>
 			<c:if test="${user.userId ne null and userId ne ''}">
+
     			<li class="loginok">
         			<a href="#"><img style="width: 50px; margin: 5px;"
         			src="/img/myPageLogo.png" alt=""></a>

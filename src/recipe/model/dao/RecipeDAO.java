@@ -300,7 +300,7 @@ public class RecipeDAO {
 		ResultSet rset = null;
 		List<RecipeMakeProcess> mList = null;
 		RecipeMakeProcess recipeMkProcess = null;
-		String query = "select make_no, recipe_no, File_no, Make_contents, file_name from recipe_make_process join recipe_file using(file_no) where recipe_no = ? order by 1";
+		String query = "select make_no, recipe_no, File_no, Make_contents,file_path ,file_name from recipe_make_process join recipe_file using(file_no) where recipe_no = ? order by 1";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, recipeNo);
@@ -312,6 +312,7 @@ public class RecipeDAO {
 				recipeMkProcess.setRecipeNo(rset.getInt("recipe_no"));
 				recipeMkProcess.setMakeContents(rset.getString("Make_contents"));
 				recipeMkProcess.setFileName(rset.getString("file_name"));
+				recipeMkProcess.setFilePath(rset.getString("file_path"));
 				mList.add(recipeMkProcess);
 			}
 		} catch (SQLException e) {
@@ -496,6 +497,100 @@ public class RecipeDAO {
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
+		return result;
+	}
+
+	public int deleteRecipeIngredient(Connection conn, int recipeNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "Delete from recipe_ingredient where recipe_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+		
+	}
+
+	public int deleteRecipeOne(Connection conn, int recipeNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "Delete from recipe where recipe_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteRecipeMkProcess(Connection conn, int recipeNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "Delete from recipe_make_process where recipe_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, recipeNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateRecipe(Connection conn, Recipe recipe) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update recipe set recipe_title = ?, recipe_contents = ?, recipe_maindrink = ?, recipe_alcohol = ?, recipe_tag = ?, recipe_saveState = ? where recipe_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, recipe.getRecipeTitle());
+			pstmt.setString(2, recipe.getRecipeContents());
+			pstmt.setString(3, recipe.getRecipeMainDrink());
+			pstmt.setInt(4, recipe.getRecipeAlcohol());
+			pstmt.setString(5,recipe.getRecipeTag());
+			pstmt.setInt(6, recipe.getRecipeSaveState());
+			pstmt.setInt(7, recipe.getRecipeNo());
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateRecipeIngred(Connection conn, RecipeIngredient tmp) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE recipe_ingredient set ingredient_name = ?,ingredient_gram = ? where ingredient_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, tmp.getIngredientName());
+			pstmt.setString(2,tmp.getIngredientGram());
+			pstmt.setInt(3,tmp.getIngredientNo());
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
 		return result;
 	}
 

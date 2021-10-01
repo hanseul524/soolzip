@@ -302,4 +302,55 @@ public class RecipeService {
 		return result;
 	}
 
+	public int removeRecipeOne(int recipeNo) {
+		int result =0;
+		Connection conn =null;
+		RecipeDAO rDao = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.deleteRecipeOne(conn, recipeNo);
+			if (result > 0) {
+				if(rDao.deleteRecipeMkProcess(conn,recipeNo)>0&&rDao.deleteRecipeIngredient(conn, recipeNo)>0&&rDao.deleteRecipeReplyOne(conn, recipeNo)>0) {
+					JDBCTemplate.commit(conn);
+				}
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		
+		return result;
+	}
+
+	public int modifyRecipe(Recipe recipe, List<RecipeIngredient> ingredList) {
+		int result = 0;
+		Connection conn = null;
+		RecipeDAO recipeDAO = new RecipeDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			
+			result = recipeDAO.updateRecipe(conn, recipe);
+			if (result > 0) {
+			//레시피 재료 수정
+				for (RecipeIngredient tmp : ingredList) {
+					if (recipeDAO.updateRecipeIngred(conn, tmp) <= 0)
+						throw new SQLException("error");
+				}
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			JDBCTemplate.rollback(conn);
+			// e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+
 }
