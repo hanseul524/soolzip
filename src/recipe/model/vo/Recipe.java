@@ -21,6 +21,10 @@ public class Recipe {
 	private String fileName;// -> 대표사진 파일을 불러오기위한 맴버 
 	private RecipeFile recipeFile; // 레시피 대표사진 파일id를 넣기위한 맴버
 	
+	
+	private int likeCheck; // 레시피 좋아요 상태 표시
+	private int scrapCheck;
+	
 	private List<RecipeReply> replies; // 댓글 리스트
 	
 	
@@ -64,7 +68,25 @@ public class Recipe {
 	}
 
 	
-	
+	public int getScrapCheck() {
+		return scrapCheck;
+	}
+
+
+	public void setScrapCheck(int scrapCheck) {
+		this.scrapCheck = scrapCheck;
+	}
+
+
+	public int getLikeCheck() {
+		return likeCheck;
+	}
+
+
+	public void setLikeCheck(int likeCheck) {
+		this.likeCheck = likeCheck;
+	}
+
 
 	public List<RecipeReply> getReplies() {
 		return replies;

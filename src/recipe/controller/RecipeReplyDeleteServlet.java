@@ -30,7 +30,7 @@ public class RecipeReplyDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
-		int result = new RecipeService().removeNoiceReplyOne(replyNo);
+		int result = new RecipeService().removeRecipeReplyOne(replyNo);
 		
 		if(result>0) {
 			response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);

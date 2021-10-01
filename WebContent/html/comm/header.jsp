@@ -59,7 +59,7 @@ ul.myMenu>li ul.submenu>li:hover {
 				</a>
 			</li>
 			<c:if test ="${sessionScope.userId eq null}">
-				<li><a href="index.jsp"> <img style="width: 50px; margin: 5px;"
+				<li><a href="/index.jsp"> <img style="width: 50px; margin: 5px;"
 						src="/img/myPageLogo.png" alt=""></a>
 				</li>		
 			</c:if>

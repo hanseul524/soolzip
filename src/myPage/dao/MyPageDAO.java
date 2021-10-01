@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.JDBCTemplate;
+import message.model.vo.Message;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
@@ -179,7 +180,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Story> sList = null;
-		String query = "SELECT STORY_ENROLLDATE, S.STORY_NO, STORY_CONTENTS, (SELECT COUNT(*) FROM STORY_REPLY WHERE STORY_NO = S.STORY_NO)as SCNT, F.STORYFILE_NO, F.STORYFILE_NAME FROM STORY S, STORY_FILE F WHERE S.STORY_NO = F.STORY_NO AND USER_ID=?";
+		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as \"SCNT\" FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -188,12 +189,13 @@ public class MyPageDAO {
 			sList = new ArrayList<>();
 			while(rset.next()) {
 				Story story = new Story();
-				story.setFileNo(rset.getString("STORYFILE_NO"));
-				story.setFileName(rset.getString("STORYFILE_NAME"));
 				story.setStoryEnrollDate(rset.getDate("STORY_ENROLLDATE"));
-				story.setStoryContents(rset.getString("STORY_CONTENTS"));
-				story.setStoryReplyCount(rset.getInt("SCNT"));
 				story.setStoryNo(rset.getInt("STORY_NO"));
+				story.setStoryContents(rset.getString("STORY_CONTENTS"));
+				story.setFileName(rset.getString("STORYFILE_NAME"));
+				story.setStoryTag(rset.getString("STORY_TAG"));
+				story.setUserId(rset.getString("USER_ID"));
+				story.setStoryReplyCount(rset.getInt("SCNT"));
 				sList.add(story);
 			}
 		} catch (SQLException e) {
@@ -261,6 +263,68 @@ public class MyPageDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return reList;
+	}
+
+	public List<Message> myMessageSendList(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query ="select * from message where msg_send_user = ? order by MSG_SEND_DATE DESC";
+		List<Message> msList = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			msList= new ArrayList<>();
+			
+			while(rset.next()) {
+				Message msg = new Message();
+				msg.setMsgNo(rset.getInt("MSG_NO"));
+				msg.setMsgGetUser(rset.getString("MSG_GET_USER"));
+				msg.setMsgSendUser(rset.getString("MSG_SEND_USER"));
+				msg.setMsgName(rset.getString("MSG_NAME"));
+				msg.setMsgContents(rset.getString("MSG_CONTENTS"));
+				msg.setMsgSendDate(rset.getTimestamp("MSG_SEND_DATE"));
+				msList.add(msg);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return msList;
+	}
+
+	public List<Message> myMessageGetList(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query ="select * from message where msg_get_user = ? order by MSG_SEND_DATE DESC";
+		List<Message> mgList = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			mgList= new ArrayList<>();
+			
+			while(rset.next()) {
+				Message msg = new Message();
+				msg.setMsgNo(rset.getInt("MSG_NO"));
+				msg.setMsgGetUser(rset.getString("MSG_GET_USER"));
+				msg.setMsgSendUser(rset.getString("MSG_SEND_USER"));
+				msg.setMsgName(rset.getString("MSG_NAME"));
+				msg.setMsgContents(rset.getString("MSG_CONTENTS"));
+				msg.setMsgSendDate(rset.getTimestamp("MSG_SEND_DATE"));
+				mgList.add(msg);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return mgList;
 	}
 	
 }
