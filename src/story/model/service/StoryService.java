@@ -88,7 +88,7 @@ public class StoryService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = sDao.insertStoryReply(conn,userId,storyNo,replyContents,uploadTime);
-			if(result>0) {
+			if(result > 0) {
 				JDBCTemplate.commit(conn);
 			}else {
 				JDBCTemplate.rollback(conn);
@@ -99,7 +99,6 @@ public class StoryService {
 		}finally {
 			JDBCTemplate.close(conn);
 		}
-		
 		return result;
 	}
 }

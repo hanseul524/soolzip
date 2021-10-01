@@ -73,10 +73,23 @@
                 <!-- 댓글입력 -->
                 <div class="reply_write">
                     <div class="input_reply" style="position: relative;">
-                        <textarea style="height: 100px; width: 80%; resize: none;" name="text" id="text" class="reply_form"></textarea>
+                    
+                    <form action="/storReply/wirte" method="post"> 
+                    	<input type ="hidden" name="storyNo" value="${requestScope.storyOne.storyNo }">
+                        <textarea style="height: 100px; width: 80%; resize: none;" name="replyContents" id="text" class="reply_form"></textarea>
+                    <c:if test="${sessionScope.userId eq null }">          
+<!--                 	css수정해야한다. -->
+                    	<a class="btn" style="height:100px; width:100px;" href="/index.jsp">
+                    	로그인
+                    	</a>
+                    </c:if>
+                    <c:if test="${sessionScope.userId ne null and userId ne '' }">
                         <span class="input-btn">
-                            <button type="button" class="btn" style="height:100px; width:100px;">등록</button>
+                            <button type="submit" name="button" class="btn" style="height:100px; width:100px;">등록</button>
                         </span>
+                    </form>
+                    </c:if>
+                    
                     </div>
                     <!-- 좋아요 -->
                     <div class="btn-like like">
@@ -94,6 +107,7 @@
                     </div>
                 </div>
                 <!-- 회원들 댓글 -->
+                <c:forEach items="${storyOne.replies }" var="reply" varStatus="index">
                 <div class="other reply_list" style="margin-top: 15px;">
                     <div class="other_left">
                         <!-- 회원 링크 -->
@@ -102,31 +116,17 @@
                     <div class="other_mid" style="position: relative;">
                         <!-- 댓글 작성자 작성일 -->
                         <h4 class="mid-title">
-                            <b class="info_name" style="cursor: pointer;">최지현</b>
-                            날짜 시간 분 초
+                            <b class="info_name" style="cursor: pointer;">${reply.replyUserId }</b>
+                            ${reply.replyDate }
                         </h4>
-                            <!-- 이름을 한번더 넣을거면 b -->
+                            <!-- 이름을 한번더 넣을거면 -->
                             <!-- 댓글 -->
-                            댓글 댓글 댓글 갱플랭크 못생겼다.
+                            ${reply.replyContents }
                     </div>
                 </div>
+                </c:forEach>
                 <!-- 회원들 댓글 -->
-                <div class="other reply_list" style="margin-top: 15px;">
-                    <div class="other_left">
-                        <!-- 회원 링크 -->
-                        <a href=""><img class="other_object" src="../../img/myPageLogo.png" alt=""></a>
-                    </div>
-                    <div class="other_mid" style="position: relative;">
-                        <!-- 댓글 작성자 작성일 -->
-                        <h4 class="mid-title">
-                            <b class="info_name" style="cursor: pointer;">이태욱</b>
-                            날짜 시간 분 초
-                        </h4>
-                            <!-- 이름을 한번더 넣을거면 b -->
-                            <!-- 댓글 -->
-                            반반 프로젝트 가보자!
-                    </div>
-                </div>
+
                 <!-- 회원들 댓글 -->
             </div>
         </div>
