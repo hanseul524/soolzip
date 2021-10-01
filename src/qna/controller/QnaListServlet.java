@@ -31,13 +31,13 @@ public class QnaListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String userId = request.getSession().getAttribute("userId").toString();
-		String userId = "임진영";
+		String userId = request.getSession().getAttribute("userId").toString();
+		//String userId = "임진영";
 		List<Qna> qList = new QnaService().selectQna(userId);
 		
 		if(!qList.isEmpty()) {
 			request.setAttribute("qList", qList);
-			request.getRequestDispatcher("/html/qna/qnaList.jsp").forward(request, response);
+			request.getRequestDispatcher("/html/qna/serviceCenter.jsp").forward(request, response);
 		}else {
 			request.getRequestDispatcher("/html/qna/qnaError.html").forward(request, response);
 		}

@@ -41,17 +41,19 @@ public class QnaWriteServlet extends HttpServlet {
 		String title = request.getParameter("qnaTitle");
 		String content = request.getParameter("qnaContent");
 		HttpSession session = request.getSession();
-		//String userId = (String)session.getAttribute("userId");
-		String userId = "임진영";
+		String userId = (String)session.getAttribute("userId");
+		//String userId = "임진영";
 		Qna qna = new Qna();
 		qna.setQnaTitle(title);
 		qna.setQnaContent(content);
 		qna.setUserId(userId);
 
+		System.out.println(title);
+		System.out.println(content);
 
 		int result = new QnaService().insertQna(qna);
 		if(result>0) {
-			response.sendRedirect("/qna/list");
+			response.sendRedirect("/service/center");
 		}else {
 			request.getRequestDispatcher("/html/qna/serviseFailed.html").forward(request, response);
 		}
