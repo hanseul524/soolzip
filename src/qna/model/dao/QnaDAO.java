@@ -54,14 +54,14 @@ public class QnaDAO {
 	public int insertQna(Connection conn, Qna qna) {
 		PreparedStatement pstmt = null;
 		int result =0;
-		String query = "INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,?,?,?,'N',DEFAULT)";
+		String query = "INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,?,?,?,'N',DEFAULT,NULL,NULL,NULL,NULL)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, qna.getUserId());
 			pstmt.setString(2, qna.getQnaTitle());
 			pstmt.setString(3, qna.getQnaContent());
-
+			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -88,6 +88,10 @@ public class QnaDAO {
 				qnaOne.setQnaNo(rset.getInt("QNA_NO"));
 				qnaOne.setQnaTitle(rset.getString("QNA_TITLE"));
 				qnaOne.setQnaContent(rset.getString("QNA_CONTENT"));
+				qnaOne.setReplyTitle(rset.getString("REPLY_TITLE"));
+				qnaOne.setQnaContent(rset.getString("REPLY_CONTENT"));
+				qnaOne.setReplyWriteDate(rset.getDate("REPLY_WRITEDATE"));
+				qnaOne.setReplyUserName(rset.getString("REPLY_USERNAME"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

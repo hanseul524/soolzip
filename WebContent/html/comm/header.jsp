@@ -97,7 +97,7 @@ ul.myMenu>li ul.submenu>li:hover {
 			<li class="menu3"><a href="/story/list">스토리</a></li>
 			<li class="menu4"><a href="#">화상채팅</a></li>
 			<li class="menu5"><a href="#">공지사항</a></li>
-			<li class="menu6"><a href="#">고객센터</a></li>
+			<li class="menu6"><a href="/service/center">고객센터</a></li>
 		</ul>
 	</div>
 	<div class="direct-search">
