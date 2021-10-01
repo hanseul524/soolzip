@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import common.JDBCTemplate;
 import story.model.vo.Story;
 import story.model.vo.StoryFile;
+import story.model.vo.StoryReply;
 
 public class StoryDAO {
 
@@ -178,7 +180,7 @@ public class StoryDAO {
 		}
 		return totalValue;
 	}
-
+	//스토리 상세
 	public Story selectOneStroy(Connection conn, int storyNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -206,5 +208,20 @@ public class StoryDAO {
 		}
 		return storyOne;
 	}
+	//스토리 댓글 등록
+	public int insertStoryReply(Connection conn, String userId, int storyNo, String replyContents,
+			Timestamp uploadTime) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql="";
+		pstmt = conn.prepareStatement(sql);
+		return 0;
+	}
+	//상세 댓글 리스트
+	public List<StoryReply> selectAllStoryReply(Connection conn, int storyNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

@@ -18,7 +18,7 @@ public class Story {
 	private String fileName;
 	private StoryFile storyFile;
 	
-	private List<RecipeReply> replies; //댓글 리스트
+	private List<StoryReply> replies; //댓글 리스트
 	public Story() {
 		super();
 	}
@@ -52,12 +52,12 @@ public class Story {
 
 	
 
-	public List<RecipeReply> getReplies() {
+	public List<StoryReply> getReplies() {
 		return replies;
 	}
 
 
-	public void setReplies(List<RecipeReply> replies) {
+	public void setReplies(List<StoryReply> replies) {
 		this.replies = replies;
 	}
 
