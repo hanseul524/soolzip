@@ -17,7 +17,7 @@ import story.model.service.StoryService;
 /**
  * Servlet implementation class StorReplyRegisterServlet
  */
-@WebServlet("/StorReply/wirte")
+@WebServlet("/storReply/wirte")
 public class StorReplyRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,8 +33,6 @@ public class StorReplyRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -51,7 +49,7 @@ public class StorReplyRegisterServlet extends HttpServlet {
 		SimpleDateFormat formats = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Timestamp uploadTime = Timestamp.valueOf(formats.format(Calendar.getInstance().getTimeInMillis()));
 		int result = new StoryService().registerStoryReply(userId,storyNo,replyContents,uploadTime);
-		
+				
 		if(result > 0) {
 			System.out.println("등록성공"); //디버깅 위함
 			response.sendRedirect("/story/detail?storyNo="+storyNo);

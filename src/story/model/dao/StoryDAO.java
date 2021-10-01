@@ -213,14 +213,51 @@ public class StoryDAO {
 			Timestamp uploadTime) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql="";
-		pstmt = conn.prepareStatement(sql);
-		return 0;
+		String sql="INSERT INTO STORY_REPLY VALUES(SEQ_STORY_REPLY.NEXTVAL,?,?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storyNo);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, replyContents);
+			pstmt.setTimestamp(4, uploadTime);
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 	//상세 댓글 리스트
 	public List<StoryReply> selectAllStoryReply(Connection conn, int storyNo) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<StoryReply> List = null;
+		StoryReply storyReply = null;
+		String sql ="SELECT * FROM STORY_REPLY WHERE STORY_NO = ? ORDER BY 1 DESC";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storyNo);
+			rset = pstmt.executeQuery();
+			List = new ArrayList();
+			while(rset.next()) {
+				storyReply = new StoryReply();
+				storyReply.setReplyNo(rset.getInt("REPLY_NO"));
+				storyReply.setStoryNo(rset.getInt("STORY_NO"));
+				storyReply.setReplyUserId(rset.getString("REPLY_NICKNAME"));
+				storyReply.setReplyContents(rset.getString("REPLY_CONTENTS"));
+				storyReply.setReplyDate(rset.getTimestamp("REPLY_ENROLLDATE"));
+				List.add(storyReply);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return List;
 	}
 
 	
