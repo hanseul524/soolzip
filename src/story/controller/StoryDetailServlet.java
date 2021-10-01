@@ -34,13 +34,15 @@ public class StoryDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session =request.getSession();
 		String userId = (String)session.getAttribute("userId");
-		//에러 났습니다//
-		int storyNo = Integer.parseInt(request.getParameter("story_NO"));
+		
+		
+		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		//스토리 정보
 		Story storyOne = new StoryService().pintOneStroy(storyNo);
+			
 		if(storyOne !=null) {
 			request.setAttribute("storyOne", storyOne);
-			request.getRequestDispatcher("/html/story/storyDateil.jsp").forward(request,response);
+			request.getRequestDispatcher("/html/story/storyDetail.jsp").forward(request,response);
 		}else {
 			request.getRequestDispatcher("/html/story/storyError.html").forward(request,response);
 		}

@@ -76,5 +76,6 @@ public class Message {
 		return "Message [msgNo=" + msgNo + ", msgGetUser=" + msgGetUser + ", msgSendUser=" + msgSendUser + ", msgName="
 				+ msgName + ", msgContents=" + msgContents + ", msgSendDate=" + msgSendDate + "]";
 	}
+
 	
 }

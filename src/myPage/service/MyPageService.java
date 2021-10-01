@@ -5,13 +5,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.JDBCTemplate;
-import message.model.vo.Message;
 import myPage.dao.MyPageDAO;
-import recipe.model.dao.RecipeDAO;
-import recipe.model.vo.PageData;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
+import story.model.vo.StoryReply;
 import user.model.vo.User;
 
 public class MyPageService {
@@ -171,38 +169,22 @@ public class MyPageService {
 		}
 		return reList;
 	}
-	//내가쓴 쪽지 리스트
-	public List<Message> myMessageSendList(String userId) {
+
+	public List<StoryReply> myStoryReply(String userId) {
 		Connection conn = null;
-		List<Message> msList = null;
+		List<StoryReply> srList = null;
 		MyPageDAO mDao = new MyPageDAO();
 		
 		try {
 			conn = jdbcTemplate.createConnection();
-			msList = mDao.myMessageSendList(conn,userId);
+			srList = mDao.myStoryReply(conn, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
 		}
-		return msList;
+		return srList;
 	}
-	//받은쪽지 리스트
-	public List<Message> myMessageGetList(String userId) {
-		Connection conn = null;
-		List<Message> mgList = null;
-		MyPageDAO mDao = new MyPageDAO();
-		
-		try {
-			conn = jdbcTemplate.createConnection();
-			mgList = mDao.myMessageGetList(conn,userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(conn);
-		}
-		return mgList;
 	
-	}
 
 }

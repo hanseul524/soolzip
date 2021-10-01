@@ -1,6 +1,7 @@
 package myPage.Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,11 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import message.model.service.MsgService;
 import message.model.vo.Message;
 import myPage.service.MyPageService;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
+import story.model.vo.StoryReply;
 import user.model.vo.User;
 
 
@@ -27,6 +30,7 @@ public class MyPageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		
 		String userId = (String)session.getAttribute("userId");
@@ -47,12 +51,13 @@ public class MyPageServlet extends HttpServlet {
 		//레시피 내가쓴 댓글 리스트
 		List<RecipeReply> reList = new MyPageService().myRecipeReply(userId);
 		//스토리 내가쓴 댓글 리스트
-		
+//		List<StoryReply> srList = new MyPageService().myStoryReply(userId);
 		//보낸쪽지
-		List<Message> msList = new MyPageService().myMessageSendList(userId);
+		List<Message> msList = new MsgService().myMessageSendList(userId);
 		//받은쪽지
-		List<Message> mgList = new MyPageService().myMessageGetList(userId);
+		List<Message> mgList = new MsgService().myMessageGetList(userId);
 		if(user !=null) {
+//			request.setAttribute("srList", srList);
 			request.setAttribute("mgList", mgList);
 			request.setAttribute("msList", msList);
 			request.setAttribute("reList", reList);
@@ -65,7 +70,12 @@ public class MyPageServlet extends HttpServlet {
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("/html/myPage/myPage.jsp").forward(request, response);
 		}else {
-			System.out.println("retry");
+			PrintWriter writer = response.getWriter(); 
+			writer.print("<script>");
+			writer.print("alert('로그인 해주세요!');");
+			writer.print("location.href = '/index.jsp'");
+			writer.print("</script>");
+			writer.close();
 		}
 	}
 

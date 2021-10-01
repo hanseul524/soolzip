@@ -2,6 +2,7 @@ package story.model.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import common.JDBCTemplate;
@@ -69,14 +70,36 @@ public class StoryService {
 			conn = jdbcTemplate.createConnection();
 			storyOne = sDAO.selectOneStroy(conn, storyNo);
 			//댓글 storyReply
-//			list = sDAO.selectAllStoryReply(conn, storyNo);
-//			storyOne.setReplies(list);
+			list = sDAO.selectAllStoryReply(conn, storyNo);
+			storyOne.setReplies(list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(conn);
 		}
-		return null;
+		return storyOne;
+	}
+	//스토리 댓글 등록
+	public int registerStoryReply(String userId, int storyNo, String replyContents, Timestamp uploadTime) {
+		int result = 0;
+		Connection conn = null;
+		StoryDAO sDao = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = sDao.insertStoryReply(conn,userId,storyNo,replyContents,uploadTime);
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		
+		return result;
 	}
 }

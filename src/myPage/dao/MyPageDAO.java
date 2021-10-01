@@ -12,6 +12,7 @@ import message.model.vo.Message;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeReply;
 import story.model.vo.Story;
+import story.model.vo.StoryReply;
 import user.model.vo.User;
 
 public class MyPageDAO {
@@ -118,7 +119,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='1' order by recipe_no";
+		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, (select count(*) from recipe_reply where recipe_no=r.recipe_no)as RECIPE_REPLYCOUNT, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='1' order by recipe_no";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -180,7 +181,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Story> sList = null;
-		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as \"SCNT\" FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=?";
+		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as SCNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -236,7 +237,7 @@ public class MyPageDAO {
 		}
 		return scList;
 	}
-
+	//레시피 내가 작성한 댓글조회
 	public List<RecipeReply> myRecipeReply(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -265,27 +266,20 @@ public class MyPageDAO {
 		return reList;
 	}
 
-	public List<Message> myMessageSendList(Connection conn, String userId) {
+	public List<StoryReply> myStoryReply(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query ="select * from message where msg_send_user = ? order by MSG_SEND_DATE DESC";
-		List<Message> msList = null;
+		List<StoryReply> srList = null;
+		String query = "select s.story_no,s.story_contents, sr.REPLY_CONTENTS, sr.reply_enrolldate from story s, story_reply sr where s.user_Id=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
 			rset = pstmt.executeQuery();
-			msList= new ArrayList<>();
+			srList = new ArrayList<>();
 			
 			while(rset.next()) {
-				Message msg = new Message();
-				msg.setMsgNo(rset.getInt("MSG_NO"));
-				msg.setMsgGetUser(rset.getString("MSG_GET_USER"));
-				msg.setMsgSendUser(rset.getString("MSG_SEND_USER"));
-				msg.setMsgName(rset.getString("MSG_NAME"));
-				msg.setMsgContents(rset.getString("MSG_CONTENTS"));
-				msg.setMsgSendDate(rset.getTimestamp("MSG_SEND_DATE"));
-				msList.add(msg);
+				StoryReply sr = new StoryReply();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -293,38 +287,9 @@ public class MyPageDAO {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
-		return msList;
+		return srList;
 	}
 
-	public List<Message> myMessageGetList(Connection conn, String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String query ="select * from message where msg_get_user = ? order by MSG_SEND_DATE DESC";
-		List<Message> mgList = null;
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userId);
-			rset = pstmt.executeQuery();
-			mgList= new ArrayList<>();
-			
-			while(rset.next()) {
-				Message msg = new Message();
-				msg.setMsgNo(rset.getInt("MSG_NO"));
-				msg.setMsgGetUser(rset.getString("MSG_GET_USER"));
-				msg.setMsgSendUser(rset.getString("MSG_SEND_USER"));
-				msg.setMsgName(rset.getString("MSG_NAME"));
-				msg.setMsgContents(rset.getString("MSG_CONTENTS"));
-				msg.setMsgSendDate(rset.getTimestamp("MSG_SEND_DATE"));
-				mgList.add(msg);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
-		}
-		return mgList;
-	}
+	
 	
 }

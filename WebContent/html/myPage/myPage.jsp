@@ -35,6 +35,7 @@
 			$("." + tab_id).addClass("active");
 		});
 	});
+	
 	$(document).ready(function() {
 		let wrap = document.querySelector(".myPage-con");
 		let bar = document.querySelector('.bar');
@@ -383,7 +384,7 @@
 				</c:if>
 			</div>
 			<!-- 쪽지컨텐츠 -->
-			<div class="myPage-con tab-5">
+			<div class="myPage-con tab-5" id="myGetMsg">
 				<div class="barwrap">
 					<div class="bar"></div>
 				</div>
@@ -408,13 +409,7 @@
 							<% cnt +=1;  %>
 							<tr>
 								<td style="text-align: center;"><%=cnt %></td>
-								<td><a href="/html/myPage/msgGetDetail.html?msgNo=${mgList.msgNo }" onclick="window.open(this.href,'_blank','location= no','width=1000,heigth=1300'); return false;">${mgList.msgName }</a></td>
-								<input type="hidden" name="msgNo" value="${mgList.msgNo }">
-								<input type="hidden" name="msgGetUser" value="${mgList.msgGetUser }">
-								<input type="hidden" name="msgSendUser" value="${mgList.SendUser }">
-								<input type="hidden" name="msgName" value="${mgList.msgName }">
-								<input type="hidden" name="msgContents" value="${mgList.msgContents }">
-								<input type="hidden" name="msgSendDate" value="${mgList.msgSendDate }">
+								<td><a href="/message/detail?msgNo=${mgList.msgNo }" onclick="window.open(this.href,'쪽지','width=1000 height =1300');return false;" >${mgList.msgName }</a></td>
 								<td style="text-align: center;">${mgList.msgGetUser }</td><!-- 누르면 회원페이지로 가기 -->
 								<td style="text-align: center;">${mgList.msgSendDate }</td>
 							</tr>
@@ -447,7 +442,7 @@
 							<% cnt +=1;  %>
 							<tr>
 								<td style="text-align: center;"><%=cnt %></td>
-								<td>${msList.msgName }</td>
+								<td><a href="/message/msDetail?msgNo=${msList.msgNo }" onclick="window.open(this.href,'쪽지','width=1000 height =1300');return false;" >${msList.msgName }</a></td>
 								<td style="text-align: center;">${msList.msgGetUser }</td>
 								<td style="text-align: center;">${msList.msgSendDate }</td>
 							</tr>
