@@ -154,7 +154,7 @@
             <div class="box-caption">
                 <div class="box-title">${rOne.recipeTitle }[${rOne.recipeReplyCount }]</div>
                 <div class="box-name"  style="overflow: hidden;">
-                    <a href="#"> 
+                    <a href="/user/page?userId=${rOne.userId }"> 
                         <img src="/img/myPageLogo.png" alt="">
                         ${rOne.userId }
                     </a>

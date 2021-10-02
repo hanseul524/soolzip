@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class sendReply
  */
 @WebServlet("/send/reply")
-public class sendReply extends HttpServlet {
+public class sendReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public sendReply() {
+    public sendReplyServlet() {
         super();
     }
 

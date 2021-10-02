@@ -151,7 +151,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> cList = null;
-		String query = "select recipe_title, F.file_name,recipe_enrollDate, recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='0' order by recipe_no";
+		String query = "select recipe_title, F.file_name,recipe_enrollDate,recipe_no ,recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='0' order by recipe_no";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -160,6 +160,7 @@ public class MyPageDAO {
 			cList = new ArrayList<Recipe>();
 			while(rset.next()) {
 				Recipe recipe= new Recipe();
+				recipe.setRecipeNo(rset.getInt("RECIPE_NO"));
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
 				recipe.setFileName(rset.getString("file_name"));
 				recipe.setRecipeReplyCount(rset.getInt("recipe_replycount"));
@@ -295,6 +296,46 @@ public class MyPageDAO {
 		return srList;
 	}
 
+	
+	//회원탈퇴 체크용
+	public String exitCk(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		String ck = "";
+		String query = "select user_id from users where user_id=? or USER_DROP = 'Y'";
+		ResultSet rset = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ck = rset.getString("USER_ID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return ck;
+	}
+	//회원탈퇴
+	public int exitUser(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "DELETE FROM USERS WHERE USER_ID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

@@ -6,7 +6,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<title>Document</title>
+<title>쪽지</title>
 <style>
 * {
 	margin: 0;
@@ -93,6 +93,7 @@ hr {
 			<hr>
 			<textarea name="contents" onKeyUp="javascript:fnChkByte(this,'1000')"
 				placeholder="내용 입력란"></textarea>
+				<br>
 			<span id="byteInfo" style="margin-left: 29px;">0</span>/ 1000bytes
 		</form>
 

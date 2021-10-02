@@ -186,5 +186,42 @@ public class MyPageService {
 		return srList;
 	}
 	
+	//회원탈퇴여부 확인용
+	public String exitCk(String userId) {
+		String ck ="";
+		Connection conn = null;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			ck = mDao.exitCk(conn, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return ck;
+	}
+	//회원탈퇴
+	public int exitUser(String userId) {
+		Connection conn = null;
+		int result = 0;
+		MyPageDAO mDao = new MyPageDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = mDao.exitUser(conn, userId);
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
 
 }
