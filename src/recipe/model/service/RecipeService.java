@@ -388,4 +388,22 @@ public class RecipeService {
 		return result;
 	}
 
+	public PageData printKategorieRecipe(int currentPage, String recipeMainDrink) {
+		PageData pd = new PageData();
+
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+
+		try {
+			conn = jdbcTemplate.createConnection();
+			pd.setRecipeList(rDao.selectKategorieRecipe(conn, currentPage, recipeMainDrink));
+			pd.setPageNavi(rDao.getPageNavi(conn, currentPage));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn); 
+		}
+		return pd;
+	}
+
 }

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>레시피 상세페이지</title>
 <link rel="stylesheet" href="../../css/comm.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
@@ -37,11 +37,16 @@
 	
 }
 
-.container img {
-	width: 200px;
-	height: 150px;
+#mainImg {
+	width: 400px;
 	border-radius: 10px;
+	max-width: 100%; height: auto; border:1px solid #eaeaea; padding: 0px; 
 }
+#userImg{
+	widtt:100px;
+}
+}
+
 </style>
 <script>
 	$(document).ready(function() {
@@ -57,9 +62,12 @@
 			<div id="contents_area" align="center" >
 				<!-- 헤더 -->
 				<div>
-					<img src="/upload/${requestScope.recipeOne.fileName }" alt="">
+					<img id="mainImg"src="/upload/${requestScope.recipeOne.fileName }" alt="">
 					<h1>${requestScope.recipeOne.recipeTitle }</h1>
 					<p>${requestScope.recipeOne.recipeContents }</p>
+					<span>${recipeOne.recipeMainDrink }</span>
+					<span>${recipeOne.recipeAlcohol }</span>
+					
 				</div>
 				
 				
@@ -153,26 +161,32 @@
 					</script>
 				</div>
 			</div>
+			
+			
 			<!-- navi -->
 			<div id="right_area" align="center">
- 				<a href="#">
- 					<img src="/img/myPageLogo.png" alt="">
+ 				<a href="/user/page?userId=${recipeOne.userId }">
+ 					<img id="userImg" src="/img/myPageLogo.png" alt="">
  					<br>
- 					${recipeOne.userId }
+ 					<h3>${recipeOne.userId }</h6>
  				</a>
-		<!-- 좋아요 폼 -->
+			<!-- 좋아요 폼 -->
  				<form action="/recipe/like" method="post" id="">
   					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
  					<input type="hidden" name="likeCheck" value ="${recipeOne.likeCheck }">
 					<!--로그인 체크 -->
-					<c:if test="${user.userId ne null and userId ne ''}">	
+					<c:if test="${user.userId ne null and userId ne ''and user.userId ne recipeOne.userId}">	
 						<!--좋아요 아닌 상태 체크 -->
 		 				<c:if test="${recipeOne.likeCheck eq null or recipeOne.likeCheck eq 0  }">
-		 					<input type="submit" value="좋아요">		
+		 					<input id="likebtn" type="submit" value="좋아요" style="display:none">
+		 					<img src="/img/빈하트.png" style="height:25px; width:25px; cursor:pointer" onclick="javascript: $('#likebtn').click();">
+		 						
 		 				</c:if>
 						<!--좋아요 상태 체크 -->
 	 					<c:if test="${recipeOne.likeCheck ne null and recipeOne.likeCheck ne 0 }">
-	 						<input type="submit"  value="좋아요 취소">	
+	 						<input id="likebtn" type="submit" value="좋아요취소" style="display:none">
+		 					<img src="/img/찬하트.png" style="height:25px; width:25px; cursor:pointer" onclick="javascript: $('#likebtn').click();">
+		 						
 	 					</c:if>
 					</c:if>
  				</form>
@@ -182,9 +196,9 @@
  					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
  					<input type="hidden" name="scrapCheck" value ="${recipeOne.scrapCheck }">
  					<!--로그인 체크 -->
- 					<c:if test="${user.userId ne null and userId ne ''}">	
+ 					<c:if test="${user.userId ne null and userId ne '' and user.userId ne recipeOne.userId }">	
 	 					<!-- 스크랩 아닌 상태 체크 -->
-	 					<c:if test="${recipeOne.scrapCheck eq null or recipeOne.scrapCheck eq 0  }">
+	 					<c:if test="${recipeOne.scrapCheck eq null or recipeOne.scrapCheck eq 0 }">
 		 					<input type="submit" value="스크랩">		
 		 				</c:if>
 						<!-- 스크랩 상태 체크 -->

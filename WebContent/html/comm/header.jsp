@@ -97,16 +97,16 @@ ul.myMenu>li ul.submenu>li:hover {
 	<div class="nav" id="main-nav">
 		<ul class="myMenu">
 			<li class="menu1"><a href="/recipe/list">레시피</a>
-				<ul class="menu1_s submenu">
-					<li><a href="/recipe/list">레시피</a></li>
-					<li><a href="#">명예의전당</a></li>
-					<li><a href="#">투표하기</a></li>
-				</ul></li>
-			<li class="menu2"><a href="#">정보게시판</a></li>
-			<li class="menu3"><a href="/story/list">스토리</a></li>
-			<li class="menu4"><a href="#">화상채팅</a></li>
-			<li class="menu5"><a href="#">공지사항</a></li>
-			<li class="menu6"><a href="/service/center">고객센터</a></li>
+<!-- 				<ul class="menu1_s submenu"> -->
+<!-- 					<li><a href="/recipe/list">레시피</a></li> -->
+<!-- 					<li><a href="#">명예의전당</a></li> -->
+<!-- 					<li><a href="#">투표하기</a></li> -->
+<!-- 				</ul></li> -->
+			<li class="menu2"><a href="/story/list">스토리</a></li>
+			<li class="menu3"><a href="#">명예의전당</a></li>
+<!-- 			<li class="menu4"><a href="#">화상채팅</a></li> -->
+			<li class="menu4"><a href="#">투표현황</a></li>
+			<li class="menu5"><a href="/service/center">고객센터</a></li>
 		</ul>
 	</div>
 	<div class="direct-search">
