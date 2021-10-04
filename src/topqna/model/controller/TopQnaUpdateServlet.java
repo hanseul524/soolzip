@@ -1,6 +1,8 @@
-package qna.controller;
+package topqna.model.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,21 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import qna.model.service.QnaService;
-import qna.model.vo.Qna;
+import topqna.model.dao.TopQnaDAO;
+import topqna.model.service.TopQnaService;
+import topqna.model.vo.TopQna;
 import user.model.vo.User;
 
 /**
- * Servlet implementation class QnaWriteServlet
+ * Servlet implementation class TopQnaUpdateServlet
  */
-@WebServlet("/qna/write")
-public class QnaWriteServlet extends HttpServlet {
+@WebServlet("/top/qna/update")
+public class TopQnaUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaWriteServlet() {
+    public TopQnaUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +34,8 @@ public class QnaWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/html/qna/qnaWrite.html").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -39,30 +43,35 @@ public class QnaWriteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String title = request.getParameter("qnaTitle");
-		String content = request.getParameter("qnaContent");
 		//HttpSession session = request.getSession();
-		//String userId = (String)session.getAttribute("userId");
-		//String userId = "임진영";
+		//String userId = request.getSession().getAttribute("userId").toString();
 		HttpSession session = request.getSession();
 	      User user = new User();
 	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
 	      String userId = user.getUserId();
-		Qna qna = new Qna();
-		qna.setQnaTitle(title);
-		qna.setQnaContent(content);
-		qna.setUserId(userId);
+		int topNO = Integer.parseInt(request.getParameter("topQnaNo"));
+		String topTitle = request.getParameter("topQnaTitle");
+		String topContent = request.getParameter("topQnaContents");
 
-		System.out.println(title);
-		System.out.println(content);
+		TopQna topQna = new TopQna();
+		topQna.setTopQnaNo(topNO);
+		topQna.setTopQnaTitle(topTitle);
+		topQna.setTopQnaContent(topContent);
+		
+		int result = new TopQnaService().updateTopQna(topQna);
+		System.out.println(topTitle);
+		System.out.println(topContent);
 
-		int result = new QnaService().insertQna(qna);
 		if(result>0) {
+
 			response.sendRedirect("/service/center");
 		}else {
-			request.getRequestDispatcher("/WEB-INF/html/qna/serviceFailed.html").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/qna/qnaError.html").forward(request, response);
 		}
-
+		
+		
+		
+		
 	}
 
 }
