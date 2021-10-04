@@ -1,8 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="qna.model.vo.Qna"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String pageNavi = (String)request.getAttribute("pageNavi");
+	List<Qna> qList = (List<Qna>)request.getAttribute("qList");
 %>
 <!DOCTYPE html>
 <html>
@@ -30,11 +33,18 @@ $(document).ready(function () {
           $(this).addClass('active');
         }
 	});
-	$("a[name='trigger']").click(function(){
-		$(this).closest("tr").next().toggle();
-	});
-	$("a[name='trigger']").click(function(){
-		  $(this).closest("tr").next().toggle();
+// 	$("a[name='trigger']").click(function(){
+// 		$(this).closest("tr").next().toggle();
+// 	});
+// 	$("a[name='trigger']").click(function(){
+// 		  $(this).closest("tr").next().toggle();
+// 	});
+	$(".qnaRow").click(function(event){
+	    let selectedIndex = $(this).index();
+	    $("#qnaNo").val(selectedIndex);
+	    $(this).next().show();
+	    $(this).next().next().show();
+	    
 	});
 });
 </script>
@@ -71,24 +81,37 @@ $(document).ready(function () {
 <!--     <form action="/admin/qnalist" method="get"> -->
     <table class="table table-hover">
       <tr>
-        <th>접수번호</th>
-        <th>제목</th>
-        <th>작성자 ID</th>
-        <th>등록일</th>
-        <th>상태</th>
+        <th scope="col">접수번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자 ID</th>
+        <th scope="col">등록일</th>
+        <th scope="col">상태</th>
       </tr>
-      <c:forEach items="${requestScope.qList}" var="qna" varStatus="index">
-      <tr>
-        <td>${qna.qnaNo}</td>
-        <td><a href="#" name="trigger">${qna.qnaTitle}</a></td>
-        <td>${qna.userId}</td>
-        <td>${qna.qnaWriteDate}</td>
-        <td>${qna.qnaStatus}</td>
+<%--       <c:forEach items="${requestScope.qList}" var="qna" varStatus="index"> --%>
+	<%for(Qna qna : qList){ %>
+	<tbody>
+      <tr class="qnaRow">
+        <td scope="row"><%=qna.getQnaNo() %></td>
+        <td scope="row"><%=qna.getQnaTitle() %></td>
+        <td scope="row"><%=qna.getUserId() %></td>
+        <td scope="row"><%=qna.getQnaWriteDate() %></td>
+        <td scope="row"><%=qna.getQnaStatus() %></td>
       </tr>
-      <tr class="qna-content">
-      	<td colspan="5"><a name="first" id="first"></a>${qna.qnaContent}</td>
+      <tr id="qnaDetail" style="display:none;">
+      	<td colspan="5"><%=qna.getQnaContent() %></td>
       </tr>
-      </c:forEach>
+      <tr style="display:none;">
+      	<td colspan="3">
+      	
+<%--       	<%=qna.getReplyContent() %> --%>
+      	</td>
+      	<td>
+      	<%=qna.getReplyWriteDate() %>
+      	</td>
+      </tr>
+<%--       </c:forEach> --%>
+	</tbody>
+	<%} %>
     </table>
     <tr>
     	<td colspan="10" align="center">

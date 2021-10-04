@@ -1,6 +1,8 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +51,12 @@ public class UserLoginServlet extends HttpServlet {
 			response.sendRedirect("/main.jsp");
 		}else {
 			System.out.println("로그인 실패");
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('아이디와 비밀번호를 확인해주세요.')");
+			out.println("history.go(-1);");
+			out.println("</script>");
 		}
 	}
 }

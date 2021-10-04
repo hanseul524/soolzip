@@ -112,6 +112,12 @@ public class UserFindPwdServlet extends HttpServlet {
 			int result = new UserService().changePwd(userId, AuthenticationKey);
 			if (result > 0) {
 				System.out.println("비밀번호 변경 성공");
+				response.setContentType("text/html; charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('비밀번호가 변경되었습니다. 수정해주세요.')");
+				out.println("</script>");
+				response.sendRedirect("/index.jsp");
 			}else {
 				System.out.println("비밀번호 변경 실패");
 				response.setContentType("text/html; charset=utf-8");

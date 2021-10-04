@@ -92,5 +92,20 @@ public class QnaService {
 		}
 		return pd;
 	}
+
+	public int registerReply(String userId, int qnaNo, String replyContent) {
+		int result = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = new QnaDAO().updateReply(conn, userId, qnaNo, replyContent);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
 	
 }
