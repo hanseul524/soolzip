@@ -166,7 +166,7 @@
 					<form action="/recipeReply/modify" method="post" id="modifyForm">
 						<input type="hidden" name="replyContents" id="modifyReplyContents">
 						<input type="hidden" name="replyNo" id="modifyReplyNo">
-						<input type="hidden" name="recipeNo" id="modifyStoryNo">
+						<input type="hidden" name="storyNo" id="modifyStoryNo">
 					</form>
 					<script>
 					function modifyReply(obj, replyNo , recipeNo){
