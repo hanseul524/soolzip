@@ -43,15 +43,22 @@ ul ul {
     bottom: 10px;
     left: 510px;
   }
-  #contents-search input {
+  #contents-search input#user-id{
     width: 40%;
     height: 40px;
-    border-radius: 5px;
+    border-radius:5px;
     margin: 0 10px ;
     padding: 0px 20px;
     border: 1px solid lightgrey;
     background-color: rgb(240, 240, 240);
     outline: none;
+  }
+  #contents-search input#search {
+  background-img:url('./img/icon_header_search.png');
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 30px;
+  border: 0;  
   }
   #contents-list {
     width: 100%;

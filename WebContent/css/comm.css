@@ -128,6 +128,47 @@ body {
 .mypage a {
   font-size: 12px;
 }
+.video-con video{
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.text-con img{
+  position: absolute;
+  width: 42%;
+  height: 31%;
+  top: 600px;
+  left: 40px;
+}
+.search-con {
+  position: absolute;
+  top: 850px;
+  right: 100px;
+}
+.search-con input:focus {
+  outline: none;
+}
+.search-con input{
+  width: 600px;
+  height: 70px;
+  border: 1px solid rgba(255, 255, 255, 0.205);
+  border-radius: 30px;
+  background: transparent;
+  text-align: right;
+  caret-color: #918c00;
+  font-size: 30px;
+}
+.search-con input::placeholder {
+  color: rgba(255, 255, 255, 0.342);
+  font-weight: lighter;
+  font-size: 30px;
+}
+
+video::-webkit-media-controls-panel {
+display: none !important;
+opacity: 1 !important;
+}
 #footer {
 	position: relative;
 	width: 100%;
