@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.JDBCTemplate;
+import qna.model.vo.Qna;
 import user.model.dao.UserDAO;
 import user.model.vo.PageData;
 import user.model.vo.User;
@@ -166,6 +167,7 @@ public class UserService {
 		}
 		return result;
 	}
+	//전체 회원 조회
 	public List<User> searchUser(String searchUser) {
 		Connection conn = null;
 		List<User> uList = null;
@@ -178,5 +180,18 @@ public class UserService {
 			JDBCTemplate.close(conn);
 		}
 		return uList;
+	}
+	//회원 권한 변경
+	public int changeUser(String users) {
+		int result = 0;
+		Connection conn = null;
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = new UserDAO().updateUser(conn, users);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

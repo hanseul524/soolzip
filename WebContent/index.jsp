@@ -43,7 +43,7 @@ $(document).ready(function () {
           </div>
           <div class="login_etc">
             <div class="forget_id">
-            <a href="./html/userinfo/findinfo.jsp">아이디/비밀번호 찾기</a>
+            <a href="/find/info">아이디/비밀번호 찾기</a>
             </div>
           </div>
           <div class="submit">

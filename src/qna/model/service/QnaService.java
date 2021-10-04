@@ -6,6 +6,7 @@ import java.util.List;
 
 import common.JDBCTemplate;
 import qna.model.dao.QnaDAO;
+import qna.model.vo.PageData;
 import qna.model.vo.Qna;
 
 public class QnaService {
@@ -72,4 +73,24 @@ public class QnaService {
 		}
 		return qnaOne;
 	}
+	//관리자 페이지 문의사항 전체조회
+	public PageData printAllQna(int currentPage) {
+		PageData pd = new PageData();
+		Connection conn = null;
+		QnaDAO qDAO = new QnaDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			List<Qna> qList = qDAO.selectAllQna(conn, currentPage);
+			String pageNavi = qDAO.getPageNavi(conn, currentPage);
+			pd.setQnaList(qList);
+			pd.setPageNavi(pageNavi);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return pd;
+	}
+	
 }

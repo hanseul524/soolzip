@@ -19,43 +19,21 @@
 <body>
 	<div id="headerMain"></div>
     <!-- contents -->
-    <div id="content" class="contents">
-        <div class="row" style="background-color: #918c00; margin: 30px 0px 50px 0px; padding: 80px 10px 80px 10px;">
-            <div class="card" >
-                <h2>TITLE HEADING</h2>
-                <h5>Title description, Sep 2, 2021 </h5>
-                <p>Some text..</p>
-                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                    Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-                </p>
-            </div>
-        </div>
+  <div id="content" class="contents">
+    <div class="row" style="background-color: #918c00; margin: 30px 0px 50px 0px;">
+      <div class="video-con">
+        <video autoplay controls loop>
+          <source src="/img/main.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="text-con">
+        <img src="/img/content-text2.png" alt="">
+      </div>
+      <div class="search-con">
+        <input type="text" name="" id="" placeholder="레시피 검색하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+      </div>
     </div>
+  </div>
     <div id="footerMain"></div>
 </body>
 </html>

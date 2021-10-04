@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.Random;
@@ -113,12 +114,18 @@ public class UserFindPwdServlet extends HttpServlet {
 				System.out.println("비밀번호 변경 성공");
 			}else {
 				System.out.println("비밀번호 변경 실패");
+				response.setContentType("text/html; charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('입력하신 정보가 일치하지 않습니다.')");
+				out.println("history.go(-1);");
+				out.println("</script>");
 			}
 			
 		//정보가 일치하지 않으면 실패 메세지 출력 후 다시 입력창으로
 		}else {
 			System.out.println("실패");
-			response.sendRedirect("/html/userinfo/findinfo.jsp");
+			response.sendRedirect("/WEB-INF/html/userinfo/findinfo.jsp");
 		}
 	}
 	

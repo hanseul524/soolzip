@@ -52,29 +52,29 @@ ul.myMenu>li ul.submenu>li:hover {
 		<ul class="user-area-menu">
 			
 			<c:if test="${user.userAdmin eq 'Y' }">
-			<li><a href="/html/admin/main.jsp"> <img style="width: 50px; margin: 5px;"
+			<li><a href="/admin/qnalist"><img style="width: 45px; margin: 5px;"
 					src="/img/adminLogo.png" alt="">
 			</a></li>
 			</c:if>
 			
-			<li><a href="#"> <img style="width: 50px; margin: 5px;"
+			<li><a href="#"> <img style="width: 45px; margin: 5px;"
 					src="/img/suggestion.png" alt="">
 			</a></li>
 			<li>
 				<a href="/recipe/register"> 
-					<img style="width: 50px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
+					<img style="width: 45px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
 			</li>
 			
 			<c:if test ="${user.userId eq null}">
-				<li><a href="/index.jsp"> <img style="width: 50px; margin: 5px;"
+				<li><a href="/index.jsp"> <img style="width: 45px; margin: 5px;"
 						src="/img/myPageLogo.png" alt=""></a>
 				</li>		
 			</c:if>
 			<c:if test="${user.userId ne null and userId ne ''}">
 
     			<li class="loginok">
-        			<a href="#"><img style="width: 50px; margin: 5px;"
+        			<a href="#"><img style="width: 45px; margin: 5px;"
         			src="/img/myPageLogo.png" alt=""></a>
       				<ul class="mypage">
         				<li><a href="/myPage/myPage">마이페이지</a></li>
