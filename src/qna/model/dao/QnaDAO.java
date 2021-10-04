@@ -202,6 +202,25 @@ public class QnaDAO {
 		}
 		return totalValue;
 	}
+	// 관리자 문의사항 댓글등록
+	public int updateReply(Connection conn, String userId, int qnaNo, String replyContent) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE QNA SET QNA_STATUS = 'Y', REPLY_CONTENT = ?,"
+				+ "REPLY_USERNAME = ? WHERE QNA_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, replyContent);
+			pstmt.setString(2, userId);
+			pstmt.setInt(3, qnaNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }
 
 

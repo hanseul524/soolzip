@@ -128,6 +128,11 @@ body {
 .mypage a {
   font-size: 12px;
 }
+.video-con {
+  width: 100%;
+  height: 720px;
+  overflow: hidden;
+}
 .video-con video{
   width: 100%;
   overflow: hidden;
@@ -152,8 +157,10 @@ body {
 .search-con input{
   width: 600px;
   height: 70px;
-  border: 1px solid rgba(255, 255, 255, 0.205);
-  border-radius: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.205);
+  border-left: none;
+  border-right: none;
+  border-top: none;
   background: transparent;
   text-align: right;
   caret-color: #918c00;

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>header</title>
 <link rel="stylesheet" href="/css/comm.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 ul, ol, li {
 	list-style: none;
@@ -44,6 +45,16 @@ ul.myMenu>li ul.submenu>li:hover {
 	background: #fff;
 }
 </style>
+<script>
+$(document).ready(function () {
+	function logoutok() {
+		if(confirm ("정말 로그아웃 하시겠습니까?")) {
+			alert("로그아웃 되었습니다.");
+			location.href = "/user/logout";
+		}
+	};
+});
+</script>
 </head>
 <body>
 <div id="wrap" style="position: relative;">
@@ -78,7 +89,7 @@ ul.myMenu>li ul.submenu>li:hover {
         			src="/img/myPageLogo.png" alt=""></a>
       				<ul class="mypage">
         				<li><a href="/myPage/myPage">마이페이지</a></li>
-        				<li><a href="/user/logout">로그아웃</a></li>
+        				<li><a href="/user/logout" onclick="logoutok();">로그아웃</a></li>
         				<li><a href="#">투표하기</a></li>
       				</ul>
   				</li>
