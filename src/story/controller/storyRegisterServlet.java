@@ -16,6 +16,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import story.model.service.StoryService;
 import story.model.vo.Story;
 import story.model.vo.StoryFile;
+import user.model.vo.User;
 
 /**
  * Servlet implementation class storyRegisterServlet
@@ -36,7 +37,7 @@ public class storyRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/html/story/storyRegister.html").forward(request,response);
+		request.getRequestDispatcher("/WEB-INF/html/story/storyRegister.html").forward(request,response);
 	}
 
 	/**
@@ -44,19 +45,12 @@ public class storyRegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		//로그인 완성시 삭제 start
 		HttpSession session = request.getSession();
-//		User user = new User();
-//		user.setUserId("user01");
-//		session.setAttribute("user", user);
-		//로그인 완성시 삭제 end
-		String userId = "user01";
+		User user = new User();
+		if(session.getAttribute("user")!=null)
+			user = (User)session.getAttribute("user");
+		String userId = user.getUserId();
 		
-		//session ID 값이 null이면 로그인 페이지로 넘어간다.
-		
-//		if(userId == null) {
-//			response.sendRedirect("/user/login");
-//		}
 		
 		//첨부 사진 저장
 		String uploadFilePath = request.getServletContext().getRealPath("story-upload");
@@ -86,7 +80,7 @@ public class storyRegisterServlet extends HttpServlet {
 			System.out.println("등록성공");
 			response.sendRedirect("/story/list");
 		}else {
-			response.sendRedirect("/html/story/storyError.html");
+			response.sendRedirect("/WEB-INF/html/story/storyError.html");
 		}
 	}
 }

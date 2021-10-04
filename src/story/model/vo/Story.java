@@ -18,6 +18,8 @@ public class Story {
 	private String fileName;
 	private StoryFile storyFile;
 	
+	private int likeCheck;// 좋아요 상태
+	
 	private List<StoryReply> replies; //댓글 리스트
 	public Story() {
 		super();
@@ -51,6 +53,16 @@ public class Story {
 
 
 	
+	
+	public int getLikeCheck() {
+		return likeCheck;
+	}
+
+
+	public void setLikeCheck(int likeCheck) {
+		this.likeCheck = likeCheck;
+	}
+
 
 	public List<StoryReply> getReplies() {
 		return replies;

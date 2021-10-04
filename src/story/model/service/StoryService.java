@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import common.JDBCTemplate;
+import recipe.model.dao.RecipeDAO;
 import story.model.dao.StoryDAO;
 import story.model.vo.PageData;
 import story.model.vo.Story;
@@ -97,6 +98,111 @@ public class StoryService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//스토리 댓글 삭제
+	public int removeStoryReplyOne(int replyNo) {
+		int result = 0;
+		Connection conn = null;
+		StoryDAO sDao = new StoryDAO();
+		try {
+			conn=jdbcTemplate.createConnection();
+			result = sDao.deleteStoryReplyOne(conn,replyNo);
+			if(result>0) {
+				JDBCTemplate.close(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//스토리 댓글 수정
+	public int modifyStoryReplyOne(int replyNo, String replyContents) {
+		int result = 0;
+		Connection conn = null;
+		StoryDAO rDao = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.updateStoryReplyOne(conn, replyNo, replyContents);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//스토리 삭제
+	public int removeStoryOne(int storyNo) {
+		int result = 0;
+		Connection conn = null;
+		StoryDAO sDao = new StoryDAO();
+		try {
+			conn =jdbcTemplate.createConnection();
+			result = sDao.deleteStoryOne(conn, storyNo);
+			if(result > 0) {
+				if(sDao.deleteStoryReplyOne(conn, storyNo)>0) {
+					JDBCTemplate.commit(conn);
+				}
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//좋아요 취소
+	public int removeStoryLike(int storyNo, String userId) {
+		int result = 0;
+		Connection conn =null;
+		StoryDAO sDao = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result= sDao.deleteStoryLike(conn,storyNo,userId);
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//좋아요 등록
+	public int insertStoryLike(int storyNo, String userId) {
+		int result = 0;
+		Connection conn =null;
+		StoryDAO rDao = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = rDao.insertRecipeLike(conn, storyNo, userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			JDBCTemplate.close(conn);
 		}
 		return result;

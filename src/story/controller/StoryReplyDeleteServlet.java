@@ -6,23 +6,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import story.model.service.StoryService;
-import story.model.vo.Story;
-import user.model.vo.User;
 
 /**
- * Servlet implementation class StoryDetailServlet
+ * Servlet implementation class StoryReplyDeleteServlet
  */
-@WebServlet("/story/detail")
-public class StoryDetailServlet extends HttpServlet {
+@WebServlet("/storyReply/delete")
+public class StoryReplyDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StoryDetailServlet() {
+    public StoryReplyDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +28,13 @@ public class StoryDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//한글 번역
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session =request.getSession();
-		User user = new User();
-		if(session.getAttribute("user")!=null)
-			user = (User)session.getAttribute("user");
-		String userId = user.getUserId();
-	
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
-		//스토리 정보
-		Story storyOne = new StoryService().pintOneStroy(storyNo);
+		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
+		int result = new StoryService().removeStoryReplyOne(replyNo);
 		
-		if(storyOne !=null) {
-			request.setAttribute("storyOne", storyOne);
-			request.getRequestDispatcher("/WEB-INF/html/story/storyDetail.jsp").forward(request,response);
+		if(result > 0) {
+			response.sendRedirect("/story/detail?storyNo="+storyNo);
+			System.out.println("삭제성공");
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
 		}

@@ -56,7 +56,15 @@
                         </div>
                         <div class="story_view_top_button">
                                 <!-- 링크 달아줘야함 타입은 히든으로 회원가입한 사람만 볼 수 있게-->
-                                <input type="button" value="수정"><input type="button" value="삭제">
+                                <input type="button" value="수정">
+                                <form action="/story/remove" method="post">
+                                <c:if test="${user.userId eq storyOne.userId }">
+                                <a href="/WEB-INF/html/story/storylist.jsp">
+                                	<input type="hidden" name="storyNo" value="${storyOne.storyNo }">
+                                	<input type="submit" value="삭제">
+                                </a>
+                                </c:if>
+                                </form>
                         </div>
                     </div>
                     <div class="story_view_contents">
@@ -77,28 +85,41 @@
                     <form action="/storReply/wirte" method="post"> 
                     	<input type ="hidden" name="storyNo" value="${requestScope.storyOne.storyNo }">
                         <textarea style="height: 100px; width: 80%; resize: none;" name="replyContents" id="text" class="reply_form"></textarea>
-                    <c:if test="${sessionScope.userId eq null }">          
+                    <c:if test="${user.userId eq null }">          
 <!--                 	css수정해야한다. -->
                     	<a class="btn" style="height:100px; width:100px;" href="/index.jsp">
                     	로그인
                     	</a>
                     </c:if>
-                    <c:if test="${sessionScope.userId ne null and userId ne '' }">
+                    <c:if test="${user.userId ne null and userId ne '' }">
                         <span class="input-btn">
                             <button type="submit" name="button" class="btn" style="height:100px; width:100px;">등록</button>
                         </span>
-                    </form>
                     </c:if>
+                    </form>
                     
                     </div>
                     <!-- 좋아요 -->
+                    <form action ="/story/like" method="post">
+                    <input type="hidden" name="storyNo" value="${storyOne.storyNo}">
+                    <input type="hidden" name="likeCheck" value ="${storyOne.likeCheck }">
+                    <c:if test="${user.userId ne null and userId ne ''}">
                     <div class="btn-like like">
-                        <button type="button" class="btn">
-                            <img style="vertical-align: middle;" src="../img/좋아요.png" alt="">
-                        </button>
+                    	<c:if test="${storyOne.likeCheck eq null or storyOne.likeCheck eq 0 }">
+                    		<button type="submit" class="btn" id="좋아요">
+                           		<img style="vertical-align: middle;" src="../img/좋아요.png" alt="">
+                       		</button>
+                    	</c:if>
+                    	<c:if test="${storyOne.likeCheck ne null and storyOne.likeCheck ne 0 }">
+                        	<button type="submit" class="btn" id="좋아요 취소">
+                            	<img style="vertical-align: middle;" src="../img/좋아요.png" alt="">
+                        	</button>
+                    	</c:if>
                     </div>
+                    </c:if>
+                    </form>
                 </div>
-                <!-- 댓글-->
+                <!-- 댓글 타이틀-->
                 <div class="view_reply">
                     <div class="reply_title">
                         댓글
@@ -114,17 +135,57 @@
                         <a href=""><img class="other_object" src="../../img/myPageLogo.png" alt=""></a>
                     </div>
                     <div class="other_mid" style="position: relative;">
-                        <!-- 댓글 작성자 작성일 -->
                         <h4 class="mid-title">
                             <b class="info_name" style="cursor: pointer;">${reply.replyUserId }</b>
+                        <!-- 댓글 작성자 작성일 -->
                             ${reply.replyDate }
+                            <c:if test="${user.userId eq reply.replyUserId }">
+                             <a href="javascript:void(0)">수정</a>
+                             <a href="/storyReply/delete?storyNo=${reply.storyNo }&replyNo=${reply.replyNo}">삭제</a>
+                            </c:if>
                         </h4>
                             <!-- 이름을 한번더 넣을거면 -->
                             <!-- 댓글 -->
                             ${reply.replyContents }
+                            
                     </div>
+                        <table>
+                            <tr style="display:none;">
+							<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
+							<td>${reply.replyUserId }</td>
+							<td><input type="text" size="40" value="${reply.replyContents }" id="modifyReply"></td>
+							<td>${reply.replyDate }</td>
+							<td>
+								<a href="javascript:void(0)" onclick="modifyReply(this,${reply.replyNo},${reply.storyNo })">수정완료</a>
+								/
+								<a href="javascript:void(0)" onclick="hideModifyReply(this)">취소</a>
+							</td>			
+						</tr>
+                        </table>
+						</c:forEach>
+					<form action="/recipeReply/modify" method="post" id="modifyForm">
+						<input type="hidden" name="replyContents" id="modifyReplyContents">
+						<input type="hidden" name="replyNo" id="modifyReplyNo">
+						<input type="hidden" name="recipeNo" id="modifyStoryNo">
+					</form>
+					<script>
+					function modifyReply(obj, replyNo , recipeNo){
+						var contents = $(obj).parent().prev().prev().find("input").val(); // obj를 이용하여 값 찾기
+						$("#modifyReplyContents").val(contents);
+						$("#modifyReplyNo").val(replyNo);
+						$("#modifyStoryNo").val(recipeNo);
+						$("#modifyForm").submit();
+					}
+					function showModifyReply(obj) {
+						$(obj).parents("tr").next().show();
+						$(obj).parents("tr").hide();
+					}
+					function hideModifyReply(obj) {
+						$(obj).parents("tr").prev().show();
+						$(obj).parents("tr").hide();
+					}
+					</script>
                 </div>
-                </c:forEach>
                 <!-- 회원들 댓글 -->
 
                 <!-- 회원들 댓글 -->

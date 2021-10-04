@@ -1,31 +1,25 @@
 package story.controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import story.model.service.StoryService;
-import user.model.vo.User;
 
 /**
- * Servlet implementation class StorReplyRegisterServlet
+ * Servlet implementation class StoryReplyModifyServlet
  */
-@WebServlet("/storReply/wirte")
-public class StorReplyRegisterServlet extends HttpServlet {
+@WebServlet("/storyReply/modify")
+public class StoryReplyModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StorReplyRegisterServlet() {
+    public StoryReplyModifyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,31 +28,23 @@ public class StorReplyRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//한글번역
-		request.setCharacterEncoding("UTF-8"); 
-		HttpSession session = request.getSession();
-		User user = new User();
-		if(session.getAttribute("user")!=null)
-			user = (User)session.getAttribute("user");
-		String userId = user.getUserId();
-		
+		request.setCharacterEncoding("UTF-8");
+		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		String replyContents = request.getParameter("replyContents");
-		SimpleDateFormat formats = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		Timestamp uploadTime = Timestamp.valueOf(formats.format(Calendar.getInstance().getTimeInMillis()));
-		int result = new StoryService().registerStoryReply(userId,storyNo,replyContents,uploadTime);
-				
+		int result =new StoryService().modifyStoryReplyOne(replyNo,replyContents);
 		if(result > 0) {
-			System.out.println("등록성공"); //디버깅 위함
 			response.sendRedirect("/story/detail?storyNo="+storyNo);
 		}else {
-			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html");
+			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
 		}
 	}
 
