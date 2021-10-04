@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class RecipeFile {
 	private int fileNo;
-	private String filePath;
-	private String fileName;
+	private String filePath="";
+	private String fileName="";
 	private long fileSize;
 	private Date regDate;
 	private String regName;

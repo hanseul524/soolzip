@@ -51,9 +51,9 @@ public class RecipeListServlet extends HttpServlet {
 		if(!rList.isEmpty()) {
 			request.setAttribute("rList", rList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());
-			request.getRequestDispatcher("/html/recipe/recipeList.jsp").forward(request, response);	
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeList.jsp").forward(request, response);	
 		}else {
-			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);
 		}
 		
 	}

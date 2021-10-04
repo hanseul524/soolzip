@@ -29,7 +29,7 @@ public class UserLogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if(session != null) {
-			session.setAttribute("userId", null);
+			session.setAttribute("user", null);
 			session.invalidate();
 			response.sendRedirect("/main.jsp");
 			System.out.println("로그아웃 성공");
