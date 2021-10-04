@@ -128,7 +128,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 			</c:if>
 			<c:if test = "${user.userId ne null }">
 			<form action="/send/reply" method="get">
-				<button id="update-btn" class="faild-msg" style="border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">쪽지보내기</button>
+				<button id="update-btn" class="suc-msg" style="border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">쪽지보내기</button>
 				<input type="hidden" value="${userId }" name="msgSendUser">
 			</form>
 			</c:if>
