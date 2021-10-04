@@ -40,11 +40,11 @@ public class RecipeRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String userId = "";
-    	HttpSession session = null;
-    	session = request.getSession();
-		userId =(String)session.getAttribute("userId");
-    	if(session.getAttribute("userId") == null) {
+    	HttpSession session = request.getSession();
+		User user = new User();
+		if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+		String userId = user.getUserId();
+    	if(userId == null) {
     		response.setContentType("text/html; charset=utf-8");
     		PrintWriter out = response.getWriter();
     		out.println("<script>");
@@ -52,7 +52,7 @@ public class RecipeRegisterServlet extends HttpServlet {
     		out.println("history.back(-1);");
     		out.println("</script>");
     	}else {
-    		request.getRequestDispatcher("/html/recipe/recipeReg.html").forward(request, response);    		
+    		request.getRequestDispatcher("/WEB-INF/html/recipe/recipeReg.html").forward(request, response);    		
     	}
 	}
 
@@ -60,9 +60,11 @@ public class RecipeRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		User user = new User();
+		if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+		String userId = user.getUserId();
+		
 		request.setCharacterEncoding("UTF-8");
 		
 		// 1. upload 폴더에 실제 파일을 저장하는 작업
@@ -134,7 +136,7 @@ public class RecipeRegisterServlet extends HttpServlet {
 			System.out.println("등록성공");
 			response.sendRedirect("/recipe/list");
 		}else {
-			response.sendRedirect("/html/recipe/recipeError.html");
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);
 		}
 
 	}

@@ -14,6 +14,7 @@ import recipe.model.service.RecipeService;
 import recipe.model.vo.Recipe;
 import recipe.model.vo.RecipeIngredient;
 import recipe.model.vo.RecipeMakeProcess;
+import user.model.vo.User;
 
 /**
  * Servlet implementation class RecipeDetailServlet
@@ -36,7 +37,10 @@ public class RecipeDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		User user = new User();
+		if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+			
+		String userId = user.getUserId();
 		
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		//레시피정보
@@ -47,11 +51,12 @@ public class RecipeDetailServlet extends HttpServlet {
 		List<RecipeMakeProcess> mList = new RecipeService().printOneRecipeMkProcess(recipeNo); 
 		
 		
+		
 		if(recipeOne !=null) {	
 			request.setAttribute("iList", iList);
 			request.setAttribute("mList", mList);
 			request.setAttribute("recipeOne", recipeOne);
-			request.getRequestDispatcher("/html/recipe/recipeDetail.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeDetail.jsp").forward(request,response);
 			int viewCount = new RecipeService().RecipeViewCount(recipeNo);
 			
 			if(viewCount>0) {
@@ -61,7 +66,7 @@ public class RecipeDetailServlet extends HttpServlet {
 			}
 			
 		}else {
-			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);
 		}
 		
 	}

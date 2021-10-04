@@ -3,10 +3,10 @@ package recipe.model.vo;
 public class RecipeMakeProcess {
 	private int makeNo; // 제조 번호
 	private int recipeNo;
-	private String fileNo;
-	private String fileName;
-	private String filePath;
-	private String makeContents;
+	private String fileNo = "";
+	private String fileName = "";
+	private String filePath = "";
+	private String makeContents = "";
 	private RecipeFile recipeFile;
 
 	public RecipeMakeProcess() {

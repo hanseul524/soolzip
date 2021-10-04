@@ -44,7 +44,7 @@ public class RecipeReplyModifyServlet extends HttpServlet {
 		if(result>0) {
 			response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 		}else {
-			request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);
 		}
 	}
 

@@ -43,7 +43,9 @@ public class RecipeReplyWriteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		User user = new User();
+		user = (User)session.getAttribute("user"); 
+		String userId = user.getUserId();
 		
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		String replyContents = request.getParameter("replyContents");

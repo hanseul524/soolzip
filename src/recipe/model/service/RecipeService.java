@@ -29,8 +29,9 @@ public class RecipeService {
 		RecipeDAO recipeDAO = new RecipeDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
+			
 			// 레시피의 파일id의 (대표사진) 파일name 존재할시 file 인서트(대표사진)
-			if (recipe.getRecipeFile().getFileName() != null) {
+			if (recipe.getRecipeFile().getFileName() != null && recipe.getRecipeFile().getFileName() != "") {
 				recipe.setFileNo(String.valueOf(recipeDAO.inserRecipeFile(conn, recipe.getRecipeFile())));
 			}
 			// result는 등록된 레시피 번호 (시퀀스 번호)
@@ -39,7 +40,7 @@ public class RecipeService {
 			if (result > Integer.MIN_VALUE) {
 
 				for (RecipeMakeProcess tmp : makeList) {
-					if (tmp.getRecipeFile().getFileName() != null) {
+					if (tmp.getRecipeFile().getFileName() != null && tmp.getRecipeFile().getFileName() != "") {
 						tmp.setFileNo(String.valueOf(recipeDAO.inserRecipeFile(conn, tmp.getRecipeFile())));
 					}
 					if (recipeDAO.insertRecipeMakeProcess(conn, tmp, result) <= 0)
@@ -326,20 +327,54 @@ public class RecipeService {
 		return result;
 	}
 
-	public int modifyRecipe(Recipe recipe, List<RecipeIngredient> ingredList) {
+	public int modifyRecipe(Recipe recipe, List<RecipeIngredient> ingredList, List<RecipeMakeProcess> makeList, String[] rmIngredientIds, String[] rmMakeIds) {
 		int result = 0;
 		Connection conn = null;
 		RecipeDAO recipeDAO = new RecipeDAO();
+		
 		try {
 			conn = jdbcTemplate.createConnection();
-			
 			result = recipeDAO.updateRecipe(conn, recipe);
 			if (result > 0) {
-			//레시피 재료 수정
-				for (RecipeIngredient tmp : ingredList) {
-					if (recipeDAO.updateRecipeIngred(conn, tmp) <= 0)
-						throw new SQLException("error");
+				//레시피 재료 삭제
+				for(String str : rmIngredientIds) {
+					recipeDAO.deleteRecipeIngredientId(conn, str);
 				}
+				//레시피 재료 수정
+				for (RecipeIngredient tmp : ingredList) {
+					if(tmp.getIngredientNo()!=0) {
+						if (recipeDAO.updateRecipeIngred(conn, tmp) <= 0)
+							throw new SQLException("error");						
+					}else {
+						if (recipeDAO.insertRecipeIngred(conn, tmp, tmp.getRecipeNo()) <= 0)
+							throw new SQLException("error");
+					}
+				}
+				
+				for(RecipeMakeProcess tmp :makeList) {
+					for(String str : rmMakeIds) {
+						recipeDAO.deleteRecipeMkProcess(conn, str);
+					}
+					
+					int fileNo = tmp.getRecipeFile().getFileNo();
+					tmp.setRecipeNo(recipe.getRecipeNo());
+					if(tmp.getRecipeFile().getFileNo()!=0 && !"".equals(tmp.getRecipeFile().getFilePath())) {
+						fileNo= recipeDAO.updateRecipeFile(conn,tmp.getRecipeFile());
+						if(fileNo<=0) throw new SQLException("error");
+					}else if(tmp.getRecipeFile().getFileNo() ==0 && !"".equals(tmp.getRecipeFile().getFilePath())){
+						fileNo = recipeDAO.inserRecipeFile(conn,tmp.getRecipeFile());	
+						if(fileNo<=0) throw new SQLException("error");
+					}
+					
+					if(tmp.getMakeNo() != 0) {
+						if(recipeDAO.updateRecipeMakeProcess(conn, tmp, fileNo)<=0)
+							throw new SQLException("error");
+					}else {
+						if(recipeDAO.insertRecipeMakeProcess1(conn, tmp, fileNo)<=0)
+							throw new SQLException("error");
+					}
+				}
+				
 				JDBCTemplate.commit(conn);
 			} else {
 				JDBCTemplate.rollback(conn);
