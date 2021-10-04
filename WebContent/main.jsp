@@ -30,7 +30,7 @@
         <img src="/img/content-text2.png" alt="">
       </div>
       <div class="search-con">
-        <input type="text" name="" id="" placeholder="레시피 검색하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+        <input style="color: #fff;" type="text" name="" id="" placeholder="레시피 검색하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
       </div>
     </div>
   </div>

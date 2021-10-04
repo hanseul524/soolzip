@@ -82,7 +82,12 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Story> sList = null;
-		String sql="SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY STORY_NO DESC)AS NUM, STORY_NO,USER_ID,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,STORY_REPLYCOUNT,STORY_LIKE_COUNT,STORY_VIEWCOUNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO) WHERE NUM BETWEEN ? AND ?";
+		String sql="SELECT * FROM(SELECT ROW_NUMBER()\r\n" + 
+				"OVER(ORDER BY STORY_NO DESC)AS NUM,STORY_NO,USER_ID,\r\n" + 
+				"(SELECT COUNT(*) FROM STORY_LIKE L WHERE L.STORY_NO = S.STORY_NO) AS LIKE_CNT,\r\n" + 
+				"(SELECT COUNT(*) FROM STORY_REPLY SR WHERE SR.STORY_NO = S.STORY_NO) AS REPLY_CNT,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,STORY_VIEWCOUNT\r\n" + 
+				"FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO) \r\n" + 
+				"WHERE NUM BETWEEN ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			int viewCountPage = 12; //페이지 당 보여줄 게시글 갯수
@@ -99,8 +104,8 @@ public class StoryDAO {
 				story.setStoryContents(rset.getString("STORY_CONTENTS"));
 				story.setFileName(rset.getString("STORYFILE_NAME"));
 				story.setStoryTag(rset.getString("STORY_TAG"));
-				story.setStoryReplyCount(rset.getInt("STORY_REPLYCOUNT"));
-				story.setStoryLikeCount(rset.getInt("STORY_LIKE_COUNT"));
+				story.setStoryReplyCount(rset.getInt("reply_cnt"));
+				story.setStoryLikeCount(rset.getInt("like_cnt"));
 				story.setStoryViewCount(rset.getInt("STORY_VIEWCOUNT"));
 				sList.add(story);
 			}
@@ -198,6 +203,7 @@ public class StoryDAO {
 				storyOne.setStoryContents(rset.getString("STORY_CONTENTS"));
 				storyOne.setFileName(rset.getString("STORYFILE_NAME"));
 				storyOne.setStoryTag(rset.getString("STORY_TAG"));
+				storyOne.setStoryEnrollDate(rset.getDate("STORY_ENROLLDATE"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -282,7 +288,7 @@ public class StoryDAO {
 	public int updateStoryReplyOne(Connection conn, int replyNo, String replyContents) {
 		PreparedStatement pstmt = null;
 		int result=0;
-		String query="UPDATE STORY_REPLY SET CONTENTS=? WHERE REPLY_NO=?";
+		String query="UPDATE STORY_REPLY SET REPLY_CONTENTS=? WHERE REPLY_NO=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -340,6 +346,22 @@ public class StoryDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, storyNo);
 			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	//스토리 조회수
+	public int updateStoryViewCount(Connection conn, int storyNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update story set story_viewcount = story_viewcount+1 where story_no=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, storyNo);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

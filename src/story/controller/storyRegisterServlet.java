@@ -1,6 +1,7 @@
 package story.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,20 @@ public class storyRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/html/story/storyRegister.html").forward(request,response);
+		HttpSession session = request.getSession();
+		User user = new User();
+		if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+		String userId = user.getUserId();
+    	if(userId == null) {
+    		response.setContentType("text/html; charset=utf-8");
+    		PrintWriter out = response.getWriter();
+    		out.println("<script>");
+    		out.println("alert('로그인을 하셔야 합니다.');");
+    		out.println("history.back(-1);");
+    		out.println("</script>");
+    	}else {
+    		request.getRequestDispatcher("/WEB-INF/html/story/storyRegister.html").forward(request, response);    		
+    	}
 	}
 
 	/**
