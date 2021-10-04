@@ -159,8 +159,12 @@
 /*     } */
     #topQnaContents{
     border: none;
-    style="resize:none;"
+    resize: none;
+    	background: transparent;
+    
     }
     #topQnaTitle{
      border: none;
+     	background: transparent;
+     
     }
