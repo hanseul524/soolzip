@@ -20,8 +20,9 @@
 }
 
 #msg-name {
-	border: none;
-	width: 100%;
+	border-left: none;
+	border-right: none;
+	border-top: none;
 	height: 10%;
 	outline: none;
 	margin-left: 4%;
@@ -84,7 +85,7 @@ hr {
 <body>
 	<div class="h1">
 		<form action="/msg/replyMsg" method="post">
-			<input type="text" id="msg-name" name="msgName" placeholder="제목입력란">
+			<input type="text" id="msg-name" name="msgName" placeholder="제목입력란" size=50><br>
 			<input type="text" id="susin" value="수신자 : " readonly><input
 				type="text" id="susin-id" placeholder="수신자 id" name="msgGetUser"
 				value="<%=request.getAttribute("msgSendUser")%>"> <input

@@ -1,6 +1,7 @@
-package qna.controller;
+package recipe.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import qna.model.service.QnaService;
-import qna.model.vo.PageData;
-import qna.model.vo.Qna;
+import recipe.model.service.RecipeService;
+import recipe.model.vo.PageData;
+import recipe.model.vo.Recipe;
 
 /**
- * Servlet implementation class QnaListAllServlet
+ * Servlet implementation class RecipeKategorieServlet
  */
-@WebServlet("/admin/qnalist")
-public class QnaListAllServlet extends HttpServlet {
+@WebServlet("/recipe/kategorie")
+public class RecipeKategorieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaListAllServlet() {
+    public RecipeKategorieServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,21 +33,26 @@ public class QnaListAllServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String recipeMainDrink = request.getParameter("recipeMainDrink");
 		int currentPage = 0;
 		String getCurrentPage = request.getParameter("currentPage");
+		
 		if(getCurrentPage == null) {
 			currentPage = 1;
 		}else {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		PageData pageData = new QnaService().printAllQna(currentPage);
-		List<Qna> qList = pageData.getQnaList();
-		if(!qList.isEmpty()) {
-			request.setAttribute("qList", qList);
+			currentPage =  Integer.parseInt(getCurrentPage);
+		} 
+		
+		PageData pageData = new RecipeService().printKategorieRecipe(currentPage,recipeMainDrink );
+		List<Recipe> rList = pageData.getRecipeList();
+		
+		if(!rList.isEmpty()) {
+			request.setAttribute("rList", rList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());
-			request.getRequestDispatcher("/WEB-INF/html/admin/adminMain.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeList.jsp").forward(request, response);	
 		}else {
-			System.out.println("조회 실패");
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeList.jsp").forward(request,response);
 		}
 	}
 

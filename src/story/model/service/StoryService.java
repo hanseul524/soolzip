@@ -207,4 +207,25 @@ public class StoryService {
 		}
 		return result;
 	}
+	//조회수 1업
+	public int StoryViewCount(int storyNo) {
+		int result = 0;
+		Connection conn = null;
+		StoryDAO sDao = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = sDao.updateStoryViewCount(conn,storyNo);
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
 }

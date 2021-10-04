@@ -31,7 +31,54 @@
         overflow: auto;
         font: inherit;
     }
-    
+/*     좋아요버튼 */
+.likebuble { 
+        position: fixed;
+        bottom: -60px; 
+        width: 50px; 
+        height: 50px; 
+        background: url("https://e7.pngegg.com/pngimages/254/799/png-clipart-cocktail-cocktail.png") no-repeat;
+         background-size: cover; 
+        } 
+        .likebuble:first-of-type { 
+            left: 10px; 
+            animation: bubble 2s 2s linear infinite 
+        } 
+        .likebuble:nth-of-type(2) { 
+            left: 50%; 
+            animation: bubble 10s 1s linear infinite 
+        } 
+        .likebuble:nth-of-type(3) {
+             left: 150px; 
+             animation: bubble 8s 1s linear infinite 
+            } 
+            .likebuble:nth-of-type(4) { 
+                right: 100px; 
+                animation: bubble 3.5s 1s linear infinite 
+            } 
+            .likebuble:nth-of-type(5) { 
+                right: 10px; 
+                animation: bubble 3s 1s linear infinite 
+            } 
+            .likebuble:nth-of-type(6) { 
+                right: 30px; 
+                animation: bubble 5s 1s linear infinite 
+            } 
+            .likebuble:nth-of-type(7) {
+                 right: 55px; 
+                 animation: bubble 7s 1s linear infinite 
+                } 
+                .likebuble:nth-of-type(8) {
+                     right: 50%; 
+                     animation: bubble 9s 1s linear infinite 
+                    } 
+                    .likebuble:nth-of-type(9) { 
+                        right: 70%; animation: bubble 3s 1s linear infinite 
+                    } 
+                    .likebuble:nth-of-type(10) { 
+                        right: 10%; animation: bubble 2.5s 1s linear infinite 
+                    } 
+                    @keyframes bubble { 0% { bottom: -100px; opacity: 1 } 50% { opacity: 0 } to { bottom: 100%; opacity: 0 } }
 </style>
 <script>
     $(document).ready(function(){
@@ -49,10 +96,10 @@
                     <div class="story_view_top">
                         <div class="story_view_top_name">
                             <!-- 회원페이지로 이동 링크 -->
-                            <a href="">
-                                <img src="../../img/myPageLogo.png" alt="">최지현(작성자)
+                            <a href="/user/page?userId=${storyOne.userId }">
+                                <img src="../../img/myPageLogo.png" alt="">${storyOne.userId }
                             </a>
-                            <span class="story_view_top_date">시/분/초</span>
+                            <span class="story_view_top_date">${storyOne.storyEnrollDate}</span>
                         </div>
                         <div class="story_view_top_button">
                                 <!-- 링크 달아줘야함 타입은 히든으로 회원가입한 사람만 볼 수 있게-->
@@ -87,8 +134,8 @@
                         <textarea style="height: 100px; width: 80%; resize: none;" name="replyContents" id="text" class="reply_form"></textarea>
                     <c:if test="${user.userId eq null }">          
 <!--                 	css수정해야한다. -->
-                    	<a class="btn" style="height:100px; width:100px;" href="/index.jsp">
-                    	로그인
+                    	<a class="btn" style="height:100px; width:100px; background-color:  #d3d3d3" href="/index.jsp">
+                    		<h2 style="font-weight: bold; font-size:20px; margin-top: 32px;">Login</h2>
                     	</a>
                     </c:if>
                     <c:if test="${user.userId ne null and userId ne '' }">
@@ -106,85 +153,71 @@
                     <c:if test="${user.userId ne null and userId ne ''}">
                     <div class="btn-like like">
                     	<c:if test="${storyOne.likeCheck eq null or storyOne.likeCheck eq 0 }">
-                    		<button type="submit" class="btn" id="좋아요">
-                           		<img style="vertical-align: middle;" src="../img/좋아요.png" alt="">
+                    		<button type="submit" class="btn" id="likeOn">
+                           		<img style="vertical-align: middle;" src="https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/15721583221557740359-512.png" alt="">
                        		</button>
                     	</c:if>
                     	<c:if test="${storyOne.likeCheck ne null and storyOne.likeCheck ne 0 }">
-                        	<button type="submit" class="btn" id="좋아요 취소">
+                        	<button type="submit" class="btn" id="likeOff">
                             	<img style="vertical-align: middle;" src="../img/좋아요.png" alt="">
                         	</button>
                     	</c:if>
                     </div>
                     </c:if>
+                   </div>
                     </form>
                 </div>
                 <!-- 댓글 타이틀-->
                 <div class="view_reply">
+                
                     <div class="reply_title">
                         댓글
                         <!-- 댓글수 넣어야 댐 -->
-                        <span>댓글수(3)</span>
+                        <span></span>
                     </div>
+ 
                 </div>
                 <!-- 회원들 댓글 -->
                 <c:forEach items="${storyOne.replies }" var="reply" varStatus="index">
-                <div class="other reply_list" style="margin-top: 15px;">
-                    <div class="other_left">
-                        <!-- 회원 링크 -->
-                        <a href=""><img class="other_object" src="../../img/myPageLogo.png" alt=""></a>
-                    </div>
-                    <div class="other_mid" style="position: relative;">
-                        <h4 class="mid-title">
-                            <b class="info_name" style="cursor: pointer;">${reply.replyUserId }</b>
-                        <!-- 댓글 작성자 작성일 -->
-                            ${reply.replyDate }
-                            <c:if test="${user.userId eq reply.replyUserId }">
-                             <a href="javascript:void(0)">수정</a>
-                             <a href="/storyReply/delete?storyNo=${reply.storyNo }&replyNo=${reply.replyNo}">삭제</a>
-                            </c:if>
-                        </h4>
-                            <!-- 이름을 한번더 넣을거면 -->
-                            <!-- 댓글 -->
-                            ${reply.replyContents }
-                            
-                    </div>
-                        <table>
-                            <tr style="display:none;">
-							<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
-							<td>${reply.replyUserId }</td>
-							<td><input type="text" size="40" value="${reply.replyContents }" id="modifyReply"></td>
-							<td>${reply.replyDate }</td>
-							<td>
-								<a href="javascript:void(0)" onclick="modifyReply(this,${reply.replyNo},${reply.storyNo })">수정완료</a>
-								/
-								<a href="javascript:void(0)" onclick="hideModifyReply(this)">취소</a>
-							</td>			
-						</tr>
-                        </table>
-						</c:forEach>
-					<form action="/recipeReply/modify" method="post" id="modifyForm">
+	                	<div class="other reply_list" style="margin-top: 15px;">
+		                    <div class="other_left">
+		                        <!-- 회원 링크 -->
+		                        <a href=""><img class="other_object" src="../../img/myPageLogo.png" alt=""></a>
+		                    </div>
+		                    <div class="other_mid" style="position: relative;">
+		                        <h4 class="mid-title">
+		                            <b class="info_name" style="cursor: pointer;">${reply.replyUserId }</b>
+		                        <!-- 댓글 작성자 작성일 -->
+		                            ${reply.replyDate }
+		                            <c:if test="${user.userId eq reply.replyUserId }">
+		                             <a href="javascript:void(0)" onclick="showModifyReply(this);">수정</a>
+		                             <a href="/storyReply/delete?storyNo=${reply.storyNo }&replyNo=${reply.replyNo}">삭제</a>
+		                            </c:if>
+		                        </h4>
+		                            <!-- 이름을 한번더 넣을거면 -->
+		                            <!-- 댓글 -->
+		                            ${reply.replyContents }
+		                    </div>
+	                    </div>
+                 		<table>
+                           <tr style="display:none;">
+								<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
+								<td>${reply.replyUserId }</td>
+								<td><input type="text" size="40" value="${reply.replyContents }" id="modifyReply"></td>
+								<td>${reply.replyDate }</td>
+								<td>
+									<a href="javascript:void(0)" onclick="modifyReply(this,${reply.replyNo},${reply.storyNo })">수정완료</a>
+									/
+									<a href="javascript:void(0)" onclick="hideModifyReply(this)">취소</a>
+								</td>			
+							</tr>
+                       </table>
+					</c:forEach>
+					<form action="/storyReply/modify" method="post" id="modifyForm">
 						<input type="hidden" name="replyContents" id="modifyReplyContents">
 						<input type="hidden" name="replyNo" id="modifyReplyNo">
-						<input type="hidden" name="recipeNo" id="modifyStoryNo">
+						<input type="hidden" name="storyNo" id="modifyStoryNo">
 					</form>
-					<script>
-					function modifyReply(obj, replyNo , recipeNo){
-						var contents = $(obj).parent().prev().prev().find("input").val(); // obj를 이용하여 값 찾기
-						$("#modifyReplyContents").val(contents);
-						$("#modifyReplyNo").val(replyNo);
-						$("#modifyStoryNo").val(recipeNo);
-						$("#modifyForm").submit();
-					}
-					function showModifyReply(obj) {
-						$(obj).parents("tr").next().show();
-						$(obj).parents("tr").hide();
-					}
-					function hideModifyReply(obj) {
-						$(obj).parents("tr").prev().show();
-						$(obj).parents("tr").hide();
-					}
-					</script>
                 </div>
                 <!-- 회원들 댓글 -->
 
@@ -192,6 +225,34 @@
             </div>
         </div>
     </div>
+    <div class="likebuble"></div>
+     <div class="likebuble"></div>
+      <div class="likebuble"></div>
+       <div class="likebuble"></div>
+        <div class="likebuble"></div>
+         <div class="likebuble"></div>
+          <div class="likebuble"></div>
+           <div class="likebuble"></div>
+            <div class="likebuble"></div>
+             <div class="likebuble"></div>
+              <div class="likebuble"></div>
     <div id="footerMain"></div>
+	<script>
+		function modifyReply(obj, replyNo , storyNo){
+			var contents = $(obj).parent().prev().prev().find("input").val(); // obj를 이용하여 값 찾기
+			$("#modifyReplyContents").val(contents);
+			$("#modifyReplyNo").val(replyNo);
+			$("#modifyStoryNo").val(storyNo);
+			$("#modifyForm").submit();
+		}
+		function showModifyReply(obj) {
+			$(obj).parents(".reply_list").next().find("tr").css("display", "block");
+			$(obj).closest("h4").hide();
+		}
+		function hideModifyReply(obj) {
+			$(obj).closest("h4").prev().show();
+			$(obj).closest("h4").hide();
+		}
+	</script>
 </body>
 </html>

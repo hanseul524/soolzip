@@ -43,9 +43,16 @@ public class StoryDetailServlet extends HttpServlet {
 		//스토리 정보
 		Story storyOne = new StoryService().pintOneStroy(storyNo);
 		
+		
 		if(storyOne !=null) {
 			request.setAttribute("storyOne", storyOne);
 			request.getRequestDispatcher("/WEB-INF/html/story/storyDetail.jsp").forward(request,response);
+			int viewCount = new StoryService().StoryViewCount(storyNo);
+			if(viewCount>0) {
+				System.out.println("조회수 1업");
+			}else {
+				System.out.println("조회수 x");
+			}
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
 		}

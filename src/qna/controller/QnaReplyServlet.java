@@ -1,25 +1,29 @@
-package story.controller;
+package qna.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import story.model.service.StoryService;
+import qna.model.service.QnaService;
+import user.model.vo.User;
 
 /**
- * Servlet implementation class StoryReplyModifyServlet
+ * Servlet implementation class QnaReplyServlet
  */
-@WebServlet("/storyReply/modify")
-public class StoryReplyModifyServlet extends HttpServlet {
+@WebServlet("/qna/reply")
+public class QnaReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StoryReplyModifyServlet() {
+    public QnaReplyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,15 +41,22 @@ public class StoryReplyModifyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
-		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
-		String replyContents = request.getParameter("replyContents");
-		System.out.println("@@@@@@@"+replyContents);
-		int result =new StoryService().modifyStoryReplyOne(replyNo,replyContents);
+		HttpSession session = request.getSession();
+		User user = new User();
+		if(session.getAttribute("user")!=null)
+			user = (User)session.getAttribute("user");
+		String userId = user.getUserId();
+		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+		String replyContent = request.getParameter("replyContent");
+		System.out.println(replyContent);
+		System.out.println(qnaNo);
+		int result = new QnaService().registerReply(userId, qnaNo, replyContent);
+		
 		if(result > 0) {
-			response.sendRedirect("/story/detail?storyNo="+storyNo);
+			System.out.println("등록성공");
+			response.sendRedirect("/admin/qnalist");
 		}else {
-			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
+			System.out.println("등록실패");
 		}
 	}
 

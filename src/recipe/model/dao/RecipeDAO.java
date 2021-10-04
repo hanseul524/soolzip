@@ -689,4 +689,42 @@ public class RecipeDAO {
 		return result;
 	}
 
+	public List<Recipe> selectKategorieRecipe(Connection conn, int currentPage, String recipeMainDrink) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Recipe> rList = null;
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_maindrink = ?) where NUM BETWEEN ? AND ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
+			int start = currentPage * viewCountPerPage - (viewCountPerPage - 1);
+			int end = currentPage * viewCountPerPage;
+			pstmt.setString(1,recipeMainDrink);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			rList = new ArrayList<Recipe>();
+			while (rset.next()) {
+				Recipe recipe = new Recipe();
+				recipe.setRecipeSaveState(rset.getInt("recipe_savestate"));
+				recipe.setRecipeNo(rset.getInt("recipe_no"));
+				recipe.setUserId(rset.getString("USER_ID"));
+				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				recipe.setFileName(rset.getString("file_name"));
+				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
+				recipe.setRecipeReplyCount(rset.getInt("reply_cnt"));
+				recipe.setRecipeLikeCount(rset.getInt("like_cnt"));
+				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
+				rList.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return rList;
+	}
+
 }

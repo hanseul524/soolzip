@@ -1,4 +1,4 @@
-package story.controller;
+package recipe.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import story.model.service.StoryService;
-
 /**
- * Servlet implementation class StoryReplyModifyServlet
+ * Servlet implementation class RecipeSearchServlet
  */
-@WebServlet("/storyReply/modify")
-public class StoryReplyModifyServlet extends HttpServlet {
+@WebServlet("/recipe/search")
+public class RecipeSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StoryReplyModifyServlet() {
+    public RecipeSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,17 +34,7 @@ public class StoryReplyModifyServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
-		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
-		String replyContents = request.getParameter("replyContents");
-		System.out.println("@@@@@@@"+replyContents);
-		int result =new StoryService().modifyStoryReplyOne(replyNo,replyContents);
-		if(result > 0) {
-			response.sendRedirect("/story/detail?storyNo="+storyNo);
-		}else {
-			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
-		}
+		
 	}
 
 }
