@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class QnaDAO {
 		List<Qna> qList = null;
 
 		String query="SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO) AS NUM, QNA_NO, USER_ID, QNA_TITLE, QNA_CONTENT, QNA_STATUS, QNA_WRITEDATE FROM QNA)"
-				+ "   WHERE USER_ID = ?";
+				+ " WHERE USER_ID = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -37,12 +38,9 @@ public class QnaDAO {
 				qna.setQnaContent(rset.getString("QNA_CONTENT"));
 				qna.setQnaStatus(rset.getString("QNA_STATUS"));
 				qna.setQnaWriteDate(rset.getDate("QNA_WRITEDATE"));
-
 				qList.add(qna);
 			}
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(pstmt);
@@ -54,7 +52,7 @@ public class QnaDAO {
 	public int insertQna(Connection conn, Qna qna) {
 		PreparedStatement pstmt = null;
 		int result =0;
-		String query = "INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,?,?,?,'N',DEFAULT,NULL,NULL,NULL,NULL)";
+		String query = "INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,?,?,?,'N',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -102,9 +100,108 @@ public class QnaDAO {
 			
 		}
 		
-		
 		return qnaOne;
 	}
+	// 관리자 페이지 문의사항 전체 조회
+	public List<Qna> selectAllQna(Connection conn, int currentPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Qna> qList = null;
+		String query = "SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO ASC) AS NUM,"
+				+ "QNA_NO, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_WRITEDATE, QNA_STATUS FROM QNA)"
+				+ "WHERE NUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			int viewCountPerPage = 10;
+			int start = currentPage*viewCountPerPage-(viewCountPerPage-1);
+			int end = currentPage*viewCountPerPage;
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery(); //rset에 쿼리문 값 저장
+			qList = new ArrayList<Qna>();
+			while(rset.next()) {
+				Qna qna = new Qna();
+				qna.setQnaNo(rset.getInt("QNA_NO"));
+				qna.setQnaTitle(rset.getString("QNA_TITLE"));
+				qna.setQnaContent(rset.getString("QNA_CONTENT"));
+				qna.setUserId(rset.getString("USER_ID"));
+				qna.setQnaWriteDate(rset.getDate("QNA_WRITEDATE"));
+				qna.setQnaStatus(rset.getString("QNA_STATUS"));
+				qList.add(qna);
+			}
+			System.out.println(qList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return qList;
 	}
+	// 문의사항 페이징 처리
+	public String getPageNavi(Connection conn, int currentPage) {
+		int pageCountPerView = 5;
+		int viewTotalCount = totalCount(conn);
+		int viewCountPerPage = 10;
+		int pageTotalCount = 0;
+		int pageTotalCountMod = viewTotalCount%viewCountPerPage;
+		
+		if(pageTotalCountMod > 0) {
+			pageTotalCount = viewTotalCount/viewCountPerPage+1;
+		}else {
+			pageTotalCount = viewTotalCount/viewCountPerPage;
+		}
+		
+		int startNavi = ((currentPage-1)/pageCountPerView)*pageCountPerView+1;
+		int endNavi = startNavi+pageCountPerView-1;
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		boolean needPrev = true;
+		boolean needNext = true;
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		StringBuilder sb = new StringBuilder();
+		if(needPrev) {
+			sb.append("<a href='/admin/qnalist?currentPage=" + (startNavi-1) + "'> [이전] </a>");
+		}
+		
+		for(int i=startNavi; i<=endNavi; i++) {
+			if(i == currentPage) {
+				sb.append(i + " ");
+			}else {
+				sb.append("<a href='/admin/qnalist?currentPage=" + i +"'>" + i + "</a>");
+			}
+		}
+		if(needNext) {
+			sb.append("<a href='/notice/list?currentPage=" + (endNavi+1) + "'> [다음] </a>");
+		}
+ 		return sb.toString();
+	}
+	
+	// 전체 문의사항 갯수 세줄 메소드
+	private int totalCount(Connection conn) {
+		int totalValue = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM QNA";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				totalValue = rset.getInt("TOTALCOUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return totalValue;
+	}
+}
 
 

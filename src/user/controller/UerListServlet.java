@@ -44,7 +44,7 @@ public class UerListServlet extends HttpServlet {
 		if(!uList.isEmpty()) {
 			request.setAttribute("uList", uList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());
-			request.getRequestDispatcher("/html/admin/userlist.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/admin/userlist.jsp").forward(request, response);
 		}else {
 			System.out.println("조회 실패");
 		}

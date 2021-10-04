@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import qna.model.service.QnaService;
 import qna.model.vo.Qna;
+import user.model.vo.User;
 
 /**
  * Servlet implementation class QnaWriteServlet
@@ -40,9 +41,13 @@ public class QnaWriteServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String title = request.getParameter("qnaTitle");
 		String content = request.getParameter("qnaContent");
-		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("userId");
+		//HttpSession session = request.getSession();
+		//String userId = (String)session.getAttribute("userId");
 		//String userId = "임진영";
+		HttpSession session = request.getSession();
+	      User user = new User();
+	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+	      String userId = user.getUserId();
 		Qna qna = new Qna();
 		qna.setQnaTitle(title);
 		qna.setQnaContent(content);
@@ -55,7 +60,7 @@ public class QnaWriteServlet extends HttpServlet {
 		if(result>0) {
 			response.sendRedirect("/service/center");
 		}else {
-			request.getRequestDispatcher("/html/qna/serviseFailed.html").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/qna/serviceFailed.html").forward(request, response);
 		}
 
 	}

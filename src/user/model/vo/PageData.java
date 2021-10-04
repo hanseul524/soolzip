@@ -2,6 +2,8 @@ package user.model.vo;
 
 import java.util.List;
 
+import qna.model.vo.Qna;
+
 public class PageData {
 	private List<User> userList;
 	private List<User> adminList;
@@ -9,7 +11,7 @@ public class PageData {
 	private String apageNavi;
 	
 	public PageData() {}
-	
+
 	
 	public String getApageNavi() {
 		return apageNavi;

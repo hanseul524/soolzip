@@ -62,7 +62,7 @@ public class RecipeDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, result);
 			pstmt.setString(2, tmp.getIngredientName());
-			pstmt.setString(3, tmp.getIngredientGram());
+			pstmt.setString(3, tmp.getIngredientGram() == "" ? null : tmp.getIngredientGram());
 			result1 = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -81,6 +81,24 @@ public class RecipeDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, result);
 			pstmt.setString(2, tmp.getFileNo());
+			pstmt.setString(3, tmp.getMakeContents());
+			result1 = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result1;
+	}
+	
+	public int insertRecipeMakeProcess1(Connection conn, RecipeMakeProcess tmp, int fileNo) {
+		PreparedStatement pstmt = null;
+		int result1 = 0;
+		String query = "INSERT INTO recipe_make_process VALUES(SEQ_make.NEXTVAL,?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tmp.getRecipeNo());
+			pstmt.setString(2, fileNo == 0 ? null : fileNo+"");
 			pstmt.setString(3, tmp.getMakeContents());
 			result1 = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -112,7 +130,6 @@ public class RecipeDAO {
 			pstmt.setString(3, tmp.getFileName());
 			pstmt.setLong(4, tmp.getFileSize());
 			pstmt.setString(5, tmp.getRegName());
-			// pstmt.setString(5, 유저아이디넣어야함);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -300,7 +317,7 @@ public class RecipeDAO {
 		ResultSet rset = null;
 		List<RecipeMakeProcess> mList = null;
 		RecipeMakeProcess recipeMkProcess = null;
-		String query = "select make_no, recipe_no, File_no, Make_contents,file_path ,file_name from recipe_make_process join recipe_file using(file_no) where recipe_no = ? order by 1";
+		String query = "select make_no, recipe_no, File_no, Make_contents,file_path ,file_name from recipe_make_process left outer join recipe_file using(file_no) where recipe_no = ? order by 1";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, recipeNo);
@@ -308,6 +325,7 @@ public class RecipeDAO {
 			mList = new ArrayList();
 			while (rset.next()) {
 				recipeMkProcess = new RecipeMakeProcess();
+				recipeMkProcess.setFileNo(rset.getString("File_no"));
 				recipeMkProcess.setMakeNo(rset.getInt("make_no"));
 				recipeMkProcess.setRecipeNo(rset.getInt("recipe_no"));
 				recipeMkProcess.setMakeContents(rset.getString("Make_contents"));
@@ -500,6 +518,23 @@ public class RecipeDAO {
 		return result;
 	}
 
+	public int deleteRecipeIngredientId(Connection conn, String id) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "Delete from recipe_ingredient where ingredient_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+		
+	}
+	
 	public int deleteRecipeIngredient(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -533,6 +568,24 @@ public class RecipeDAO {
 		return result;
 	}
 
+	// 제조 과정 삭제항목 삭제
+	public int deleteRecipeMkProcess(Connection conn, String id) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "Delete from recipe_make_process where make_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	
 	public int deleteRecipeMkProcess(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -584,6 +637,48 @@ public class RecipeDAO {
 			pstmt.setString(1, tmp.getIngredientName());
 			pstmt.setString(2,tmp.getIngredientGram());
 			pstmt.setInt(3,tmp.getIngredientNo());
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateRecipeFile(Connection conn, RecipeFile recipeFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE recipe_file set file_name =?,file_Path=?,file_size=? where file_no= ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, recipeFile.getFileName());
+			pstmt.setString(2, recipeFile.getFilePath());
+			pstmt.setLong(3, recipeFile.getFileSize());
+			pstmt.setInt(4, recipeFile.getFileNo());
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateRecipeMakeProcess(Connection conn, RecipeMakeProcess tmp, int fileNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE recipe_make_process set File_no=?,make_contents=? where make_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, fileNo == 0 ? null : fileNo+"");
+			pstmt.setString(2, tmp.getMakeContents());
+			pstmt.setInt(3, tmp.getMakeNo());
+			
 			result= pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

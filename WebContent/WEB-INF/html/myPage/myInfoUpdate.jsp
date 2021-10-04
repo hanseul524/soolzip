@@ -27,8 +27,8 @@ span {
 				<h2>회원정보 수정</h2>
 				<div class="login_id">
 					<h4>아이디</h4>
-					<input type="text" name="userId" id="userid" value="<%=request.getAttribute("userId") %>"
-						readonly>
+					<input type="text" name="userId" id="userid"
+						value="<%=request.getAttribute("userId")%>" readonly>
 				</div>
 				<div class="login_pw">
 					<h4>비밀번호</h4>
@@ -45,50 +45,51 @@ span {
 				<div class="login_name">
 					<h4>이메일</h4>
 					<input type="text" name="userEmail" id="email"
-						placeholder="이메일을 입력해주세요" value="<%=request.getAttribute("userEmail")%>">
+						placeholder="이메일을 입력해주세요"
+						value="<%=request.getAttribute("userEmail")%>">
 				</div>
 				<span id="email_error"></span>
 				<div class="login_addr">
 					<h4>휴대폰</h4>
 					<input type="text" name="userPhone" id="phone"
-						placeholder="'-'제외하고 입력해 주세요" value="<%=request.getAttribute("userPhone")%>">
+						placeholder="'-'제외하고 입력해 주세요"
+						value="<%=request.getAttribute("userPhone")%>">
 				</div>
 				<span id="phone_error"></span>
 				<div class="submit">
 					<input type="submit" value="회원정보 수정" id="sb"> <br> <br>
-					<input type="button" value="취소" id="tq">
+					<input type="button" value="취소" id="tq"> <br> <br>
 				</div>
-				<!-- </form> -->
 			</div>
 		</div>
 	</form>
-<script>
-	//2. 비밀번호
-	$("#password").focusout(
-		function() {
-			var txt = "password";
-			var el = $("#" + txt);
-			var num = el.val().search(/[0-9]/g);
-			var eng = el.val().search(/[a-z]/ig);
-			var spe = el.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-			if (el.val() == "") {
-				$("#password_error").html("비밀번호를 입력하세요.");
+	<script>
+		//2. 비밀번호
+		$("#password").focusout(
+				function() {
+					var txt = "password";
+					var el = $("#" + txt);
+					var num = el.val().search(/[0-9]/g);
+					var eng = el.val().search(/[a-z]/ig);
+					var spe = el.val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+					if (el.val() == "") {
+						$("#password_error").html("비밀번호를 입력하세요.");
 
-			} else if (el.val().length < 8 || el.val().length > 16) {
-				$("#password_error").html("8자~16자 이내로 입력하세요.");
+					} else if (el.val().length < 8 || el.val().length > 16) {
+						$("#password_error").html("8자~16자 이내로 입력하세요.");
 
-			} else if (el.val().search(/\s/) != -1) {
-				$("#password_error").html("비밀번호는 공백 없이 입력하세요.");
+					} else if (el.val().search(/\s/) != -1) {
+						$("#password_error").html("비밀번호는 공백 없이 입력하세요.");
 
-			} else if ((num < 0 && eng < 0) || (eng < 0 && spe < 0)
-					|| (spe < 0 && num < 0)) {
-				$("#password_error").html(
-						"영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력하세요.");
-			} else {
-				$("#password_error").html("");
-			}
+					} else if ((num < 0 && eng < 0) || (eng < 0 && spe < 0)
+							|| (spe < 0 && num < 0)) {
+						$("#password_error").html(
+								"영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력하세요.");
+					} else {
+						$("#password_error").html("");
+					}
 
-		});
+				});
 		$("#password_re").focusout(function() {
 			var txt1 = $("#password").val();
 			var txt2 = $("#password_re").val();
@@ -119,23 +120,29 @@ span {
 				$("#phone_error").html('입력값을 확인하세요');
 			}
 		});
-		
-		$("#sb").on('click', function() {
-			var pwd = $("#password_error").text();
-			var pwdre = $("#password_re_error").text();
-			var email = $("#email_error").text();
-			var phone = $("#phone_error").text();
-			
-			if(pwd == "" && pwdre =="" && email =="" && phone ==""){
-				return true;
-			}else{
-				alert("입력 정보를 확인하세요.");
-				return false;
-			}
-		});
-		$("#tq").on("click",function(){
+
+		$("#sb").on(
+				'click',
+				function() {
+					var pwd = $("#password_error").text();
+					var pwdre = $("#password_re_error").text();
+					var email = $("#email_error").text();
+					var phone = $("#phone_error").text();
+
+					if (pwd == "" && pwdre == "" && email == "" && phone == ""
+							&& $("#password").val() != ""
+							&& $("#password_re").val() != ""
+							&& $("#email").val() != ""
+							&& $("#phone").val() != "") {
+						return true;
+					} else {
+						alert("입력 정보를 확인하세요.");
+						return false;
+					}
+				});
+		$("#tq").on("click", function() {
 			history.back();
 		});
-</script>
+	</script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class Message {
 	private int msgNo;
+	private int userNo;
 	private String msgGetUser;
 	private String msgSendUser;
 	private String msgName;
@@ -12,10 +13,11 @@ public class Message {
 	
 	public Message() {}
 
-	public Message(int msgNo, String msgGetUser, String msgSendUser, String msgName, String msgContents,
+	public Message(int msgNo, int userNo, String msgGetUser, String msgSendUser, String msgName, String msgContents,
 			Timestamp msgSendDate) {
 		super();
 		this.msgNo = msgNo;
+		this.userNo = userNo;
 		this.msgGetUser = msgGetUser;
 		this.msgSendUser = msgSendUser;
 		this.msgName = msgName;
@@ -29,6 +31,14 @@ public class Message {
 
 	public void setMsgNo(int msgNo) {
 		this.msgNo = msgNo;
+	}
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getMsgGetUser() {
@@ -73,9 +83,12 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [msgNo=" + msgNo + ", msgGetUser=" + msgGetUser + ", msgSendUser=" + msgSendUser + ", msgName="
-				+ msgName + ", msgContents=" + msgContents + ", msgSendDate=" + msgSendDate + "]";
+		return "Message [msgNo=" + msgNo + ", userNo=" + userNo + ", msgGetUser=" + msgGetUser + ", msgSendUser="
+				+ msgSendUser + ", msgName=" + msgName + ", msgContents=" + msgContents + ", msgSendDate=" + msgSendDate
+				+ "]";
 	}
+
+	
 
 	
 }

@@ -37,7 +37,7 @@ public class UserSearchServlet extends HttpServlet {
 		uList = new UserService().searchUser(searchUser);
 		if(!uList.isEmpty()) {
 			request.setAttribute("uList", uList);
-			request.getRequestDispatcher("/html/admin/userSearch.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/admin/userSearch.jsp").forward(request, response);
 		}else {
 			System.out.println("조회실패");
 		}

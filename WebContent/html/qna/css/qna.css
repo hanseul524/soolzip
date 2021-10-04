@@ -42,7 +42,7 @@
   	border-radius: 15px;
     }
     .amount > li:hover{
-       background-color : #ff8040;
+        background-color: #918c0038;
     
     }
     .contents1{
@@ -61,8 +61,7 @@
         width: 1000px;
         display: inline-block;
         padding: 10px;
-  	    border:1px solid #ccc;
-		background-color : gray;
+  	    border:1px solid #ccc; 	     
   		border-radius: 30px 10px;
 	  	
     }
@@ -132,13 +131,13 @@
     
     .tab button:hover {
     
-    background-color: #ddd;
+    background-color: #918c0038;
     
     }
     
     .tab button.active {
     
-    background-color: #ccc;
+    background-color: #918c0038;
     
     }
     
@@ -152,4 +151,8 @@
     
     border-top: none;
     
+    }
+    .form-control{
+    border: none;
+    background-color: white;
     }

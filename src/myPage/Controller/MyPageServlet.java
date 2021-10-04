@@ -32,10 +32,11 @@ public class MyPageServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
-		
-		String userId = (String)session.getAttribute("userId");
+	      User user = new User();
+	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+	      String userId = user.getUserId();
 		//유저 정보 저장
-		User user = new MyPageService().addUser(userId);
+		user = new MyPageService().addUser(userId);
 		//공개된 레시피 갯수 카운트
 		int recipeCount = new MyPageService().recipeCount(userId);
 		//내가쓴 스토리 갯수 카운트
@@ -56,6 +57,7 @@ public class MyPageServlet extends HttpServlet {
 		List<Message> msList = new MsgService().myMessageSendList(userId);
 		//받은쪽지
 		List<Message> mgList = new MsgService().myMessageGetList(userId);
+		
 		if(user !=null) {
 			request.setAttribute("srList", srList);
 			request.setAttribute("mgList", mgList);

@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import qna.model.service.QnaService;
 import qna.model.vo.Qna;
+import user.model.vo.User;
 
 /**
  * Servlet implementation class QnaWriteServlet
@@ -31,15 +33,19 @@ public class QnaListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getSession().getAttribute("userId").toString();
+		//String userId = request.getSession().getAttribute("userId").toString();
 		//String userId = "임진영";
+		HttpSession session = request.getSession();
+	      User user = new User();
+	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
+	      String userId = user.getUserId();
 		List<Qna> qList = new QnaService().selectQna(userId);
 		
 		if(!qList.isEmpty()) {
 			request.setAttribute("qList", qList);
-			request.getRequestDispatcher("/html/qna/serviceCenter.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/qna/serviceCenter.jsp").forward(request, response);
 		}else {
-			request.getRequestDispatcher("/html/qna/qnaError.html").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/qna/qnaError.html").forward(request, response);
 		}
 	}
 

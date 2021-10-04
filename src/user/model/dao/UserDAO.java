@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.JDBCTemplate;
+import qna.model.vo.Qna;
 import user.model.vo.User;
 
 public class UserDAO {
@@ -327,8 +328,6 @@ public class UserDAO {
 		return totalValue;
 	}
 	// 회원 삭제
-	
-	// 회원 삭제
 	public int deleteUser(Connection conn, String users) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -364,7 +363,7 @@ public class UserDAO {
 		}
 		return result;
 	}
-
+	// 전체 회원 조회
 	public List<User> selectSearchUser(Connection conn, String searchUser) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -394,5 +393,22 @@ public class UserDAO {
 		}
 		return uList;
 	}
-
+	// 회원 권한 변경
+	public int updateUser(Connection conn, String users) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String [] userArr = users.split(",");
+		String query = "UPDATE USERS SET USER_ADMIN_YN = 'Y' WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			for(int i=0; i<userArr.length; i++) {
+				pstmt.setString(1, userArr[i]);
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

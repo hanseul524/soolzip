@@ -1,6 +1,8 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,13 +37,21 @@ public class UserFindIdServlet extends HttpServlet {
 		
 		if(userOne != null) {
 			request.setAttribute("userOne", userOne);
-//			System.out.println(user + "아이디 찾기 성공");
-			request.getRequestDispatcher("/html/userinfo/findinfo.jsp").forward(request, response);
+			System.out.println( "아이디 찾기 성공");
+			
+			
+			request.getRequestDispatcher("/WEB-INF/html/userinfo/findinfo.jsp").forward(request, response);
 //			response.sendRedirect("/html/userinfo/findinfo.jsp");
 		}else {
 			System.out.println("아이디찾기 실패");
-			}
-		}	
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('입력하신 정보가 일치하지 않습니다.')");
+			out.println("history.go(-1);");
+			out.println("</script>");
+		}
+	}	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

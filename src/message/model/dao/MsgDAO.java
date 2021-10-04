@@ -46,7 +46,7 @@ public class MsgDAO {
 	public List<Message> myMessageGetList(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query ="select * from message where msg_get_user = ? and recv_del='N' order by MSG_SEND_DATE DESC";
+		String query ="select MSG_NO,MSG_GET_USER,MSG_SEND_USER,MSG_NAME, MSG_CONTENTS, MSG_SEND_DATE,(SELECT USER_NO FROM USERS u WHERE m.msg_send_user = u.user_id ) as user_no from message m where msg_get_user = ? and recv_del='N' order by MSG_SEND_DATE DESC";
 		List<Message> mgList = null;
 		
 		try {
@@ -58,6 +58,7 @@ public class MsgDAO {
 			while(rset.next()) {
 				Message msg = new Message();
 				msg.setMsgNo(rset.getInt("MSG_NO"));
+				msg.setUserNo(rset.getInt("USER_NO"));
 				msg.setMsgGetUser(rset.getString("MSG_GET_USER"));
 				msg.setMsgSendUser(rset.getString("MSG_SEND_USER"));
 				msg.setMsgName(rset.getString("MSG_NAME"));
