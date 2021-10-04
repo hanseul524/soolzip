@@ -41,7 +41,8 @@ public class UserPageServlet extends HttpServlet {
 		String ck = new MyPageService().exitCk(userId);
 		if(ck == "") {
 			exitCk = false;
-		}
+		};
+		
 		//유저페이지 레시피리스트
 		List<Recipe> rList = new MyPageService().myPagePrintAllRecipe(userId);
 		//유저가 쓴 스토리 리스트
@@ -50,7 +51,15 @@ public class UserPageServlet extends HttpServlet {
 		int recipeCount = new MyPageService().recipeCount(userId);
 		//유저가 쓴 스토리 카운트
 		int storyCount = new MyPageService().storyCount(userId);
-		if(exitCk) {
+		
+		if(userId.equals(user.getUserId())){
+			PrintWriter writer = response.getWriter();
+			writer.print("<script>");
+			writer.print("alert('마이페이지를 이용해주세요');");
+			writer.print("history.go(-1);");
+			writer.print("</script>");
+			writer.close();
+		}else if(exitCk && !(userId.equals(user.getUserId()))) {
 			request.setAttribute("storyCount", storyCount);
 			request.setAttribute("recipeCount", recipeCount);
 			request.setAttribute("userId",userId);

@@ -28,6 +28,7 @@ public class JDBCTemplate {
 	
 	public Connection createConnection() throws SQLException {
 		String url = "jdbc:oracle:thin:@sonof.iptime.org:8521:XE";
+//		String url = "jdbc:oracle:thin:@localhost:1521:XE";
 		String user = "SOOLZIP";
 		String password = "SOOLZIP";
 		Connection conn = DriverManager.getConnection(url, user, password);
