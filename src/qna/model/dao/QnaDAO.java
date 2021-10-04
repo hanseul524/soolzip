@@ -54,7 +54,7 @@ public class QnaDAO {
 	public int insertQna(Connection conn, Qna qna) {
 		PreparedStatement pstmt = null;
 		int result =0;
-		String query = "INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,?,?,?,'N',DEFAULT,NULL,NULL,NULL,NULL)";
+		String query = "INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL,?,?,?,'N',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

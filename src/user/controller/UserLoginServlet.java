@@ -16,7 +16,7 @@ import user.model.vo.User;
  */
 @WebServlet("/user/login")
 public class UserLoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,30 +26,29 @@ public class UserLoginServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
+   /**
+    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+   }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("user-id"); //jsp에서 input값 넘겨받기
-		String userPwd = request.getParameter("user-pwd");
-		System.out.println("서블릿에 넘어옴");
-		User user = new UserService().selectLogin(userId, userPwd);
-		
-		if(user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);//세션에 저장
-//			session.setAttribute("user", user);
-			System.out.println("로그인 성공");
-			response.sendRedirect("/main.jsp");
-		}else {
-			System.out.println("로그인 실패");
-		}
-	}
+   /**
+    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      String userId = request.getParameter("user-id"); //jsp에서 input값 넘겨받기
+      String userPwd = request.getParameter("user-pwd");
+      System.out.println("서블릿에 넘어옴");
+      User user = new UserService().selectLogin(userId, userPwd);
+      
+      if(user != null) {
+         HttpSession session = request.getSession();
+         session.setAttribute("user", user);//세션에 저장
+         System.out.println("로그인 성공");
+         response.sendRedirect("/main.jsp");
+      }else {
+         System.out.println("로그인 실패");
+      }
+   }
 }

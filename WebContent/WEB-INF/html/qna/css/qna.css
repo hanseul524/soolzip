@@ -61,7 +61,8 @@
         width: 1000px;
         display: inline-block;
         padding: 10px;
-  	    border:1px solid #ccc; 	     
+  	    border:1px solid #ccc;
+  	     
   		border-radius: 30px 10px;
 	  	
     }
@@ -152,7 +153,14 @@
     border-top: none;
     
     }
-    .form-control{
+/*     .form-control{ */
+/*     border: none; */
+/*     background-color: white; */
+/*     } */
+    #topQnaContents{
     border: none;
-    background-color: white;
+    style="resize:none;"
+    }
+    #topQnaTitle{
+     border: none;
     }
