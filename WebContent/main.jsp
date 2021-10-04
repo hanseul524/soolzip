@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,65 +71,21 @@
   </div>
 	<!-- 명예의전당 후보 -->
 	<div style="width:1200px;margin: 0 auto;">
-     	<span style="margin-left:30px;font-size:2rem; font-weight:bold">명예의 전당 후보</span>
+     	<span style="margin-left:30px;font-size:2rem; font-weight:bold">명예의 전당 레시피</span>
      	<button class="update-btn" style="float:right;border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표하러 가기</button>
+     	<span style="float:right; line-height:50px; font-size:1.5rem;">내손으로 직접뽑는 레시피</span>
    	
 	    <div class="swiper mySwiper" style="width:1200px; height:400px; margin:0 auto;">
 	        <div class="swiper-wrapper" style="">
 	            <!-- 1번사진 0-->
-	            <div class="swiper-slide"style="">
-
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="/upload/1.jpg" href ="" alt=""><br>
-	                <span style="font-size:1rem;font-weight:bold">title</span>
-                    </a>
-	            </div>
-	            <!-- test아래지우기 -->
+	           <c:forEach items="${requestScope.rList }" var="rList" varStatus="index">
 	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
+	                <a href="/recipe/detail?recipeNo=${rList.recipeNo }" style="position: absolute; text-decoration: none;">
+	                <img src="/upload/${rList.fileName }"><br>
+	                <span style="font-size:1rem;font-weight:bold">${rList.recipeTitle }</span>
                     </a>
 	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
-	            <div class="swiper-slide">
-	                <a href="product.html" style="position: absolute; text-decoration: none;">
-	                <img src="https://milanokorea.shop/web/product/big/202108/9447db43f683cba3103762ad00f1cbb2.jpg" href ="product.html" alt="">
-                    </a>
-	            </div>
+	            </c:forEach>
 	     	</div>
 	         <!-- 네비게이션 버튼 지정 -->
 	         <div class="swiper-button-prev"style=""></div><!-- 이전 버튼 -->

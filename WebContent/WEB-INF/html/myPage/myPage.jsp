@@ -267,7 +267,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 						<c:forEach items="${requestScope.cList }" var="cList"
 							varStatus="index">
 							<article class="location-listing" style="float: left; margin: 10px;">
-								<a href="/recipe/modify?recipeNo=${cList.recipeNo }" class="location-title">${cList.recipeTitle }</a>
+								<a href="/recipe/modify?recipeNo=${cList.recipeNo }" class="location-title">Click!</a>
 								<div class="location-image">
 									 <a href="" class="sendNo"><img style="width: 100%; height: 100%;"
 										src="/upload/${cList.fileName }" alt="">
@@ -304,7 +304,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 					    <c:forEach items="${requestScope.rList }" var="rList"
 						varStatus="index">
                             <article class="location-listing" style="float: left; margin: 10px;">
-                                <a href="/recipe/detail?recipeNo=${rList.recipeNo }" class="location-title">${rList.recipeTitle }</a>
+                                <a href="/recipe/detail?recipeNo=${rList.recipeNo }" class="location-title">Click!</a>
                                 <div class="location-image">
                                     <a href="/recipe/detail?recipeNo=${rList.recipeNo }"> <img
                                         style="width: 100%; height: 100%;"
@@ -351,7 +351,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 					<c:forEach items="${requestScope.sList}" var="sList"
 					varStatus="index">
 						 <article class="location-listing" style="float: left; margin: 10px;">
-						 	<a href="/story/detail?storyNo=${sList.storyNo }" class="location-title">${sList.storyContents }</a>
+						 	<a href="/story/detail?storyNo=${sList.storyNo }" class="location-title">Click!</a>
 								<div class="location-image">
 									<a href="/story/detail?storyNo=${sList.storyNo }"> <img style="width: 100%; height: 100%;"
 										src="/upload/${sList.fileName }" alt="">
@@ -461,7 +461,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 					<c:forEach items="${requestScope.scList}" var="scList"
 					varStatus="index">
 						 <article class="location-listing" style="float: left; margin: 10px;">
-						 	<a href="/recipe/detail?recipeNo=${scList.recipeNo }" class="location-title">${scList.recipeTitle }</a>
+						 	<a href="/recipe/detail?recipeNo=${scList.recipeNo }" class="location-title">Click!</a>
 								<div class="location-image">
 									<a href="/recipe/detail?recipeNo=${scList.recipeNo }"> <img style="width: 100%; height: 100%;"
 										src="/upload/${scList.fileName }" alt="">
