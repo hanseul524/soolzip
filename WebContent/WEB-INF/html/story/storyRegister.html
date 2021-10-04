@@ -33,7 +33,7 @@
             $(input).closest('div').find('input:file').click();
         }
 
-        //파일읽어서 등록이미지 뿌려줌
+        //파일읽어서 등록이미지 뿌려주기
         function readURL(input, id) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -44,20 +44,13 @@
             }
         }
         function fnValidate() {
-            //무엇이 값이 ''일때
-            // 		var el = $("#test");
-            // 		if(el.val() == ''){
-            // 			el.focus();
-            // 			return true;
-            // 		}
-
             return false;
         }
         //등록
         function fnSave(type) {
             //제출일 경우 필수값 체크필요
             if (type == 'A') {
-                $("input[name='StorySaveState']").val("1");
+                $("input[name='StorySave']").val("1");
                 if (fnValidate()) return;
             }
             $("#test").submit();
@@ -76,7 +69,7 @@
     <div class="container">
         <div class="contents">
             <form action="/story/register" method="post" id="test" style="margin: 0 auto; width: 1000px;"enctype="multipart/form-data">
-                <input type="hidden" name="StorySaveState" value="0" />
+                <input type="hidden" name="StorySave" value="0" />
                 <h1 class="h1text" align="center" style="margin-top: 2em;">스토리 등록</h1>
                 <table style="margin-left: 250px;">
                     <thead></thead>
@@ -114,12 +107,6 @@
                     <!-- <input type="button" value="삭제"> -->
                     <input class="btn_color" type="reset" value="취소">
                     <input class="btn_color" type="button" onclick="fnSave('A');" value="등록">
-                    <!-- <input type="button" onclick="fnSave('B');" value="임시저장">
-                    <div class="btn_area">
-                        <a href="./storyList.html"><input type="submit" class="btn_color" value="등록"></a>
-                        <a href="./storyList.html"><input class="btn_color" type="button" value="취소"></a>
-                    </div> -->
-                    <!-- <input type="submit" value="저장후 공개" id="test1"> -->
                 </div>
             </form>
         </div>

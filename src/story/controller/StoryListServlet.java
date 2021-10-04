@@ -51,10 +51,10 @@ public class StoryListServlet extends HttpServlet {
 		if(!storyList.isEmpty()) {
 			request.setAttribute("storyList", storyList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());
-			request.getRequestDispatcher("/html/story/storyList.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/story/storyList.jsp").forward(request,response);
 		}
 		else {
-			request.getRequestDispatcher("/html/story/storyError.html").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request, response);
 		}
 	}
 

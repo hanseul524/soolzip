@@ -250,6 +250,7 @@ public class StoryDAO {
 				storyReply.setReplyDate(rset.getTimestamp("REPLY_ENROLLDATE"));
 				List.add(storyReply);
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -258,6 +259,94 @@ public class StoryDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return List;
+	}
+	//스토리 댓글 삭제
+	public int deleteStoryReplyOne(Connection conn, int replyNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql="DELETE FROM STORY_REPLY WHERE REPLY_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	//스토리 댓글 수정
+	public int updateStoryReplyOne(Connection conn, int replyNo, String replyContents) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		String query="UPDATE STORY_REPLY SET CONTENTS=? WHERE REPLY_NO=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, replyContents);
+			pstmt.setInt(2, replyNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+	// 스토리 삭제
+	public int deleteStoryOne(Connection conn, int storyNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql="DELETE FROM STORY WHERE STORY_NO =?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storyNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	//좋아요 취소
+	public int deleteStoryLike(Connection conn, int storyNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "DELETE FROM STORY_like WHERE STORY_NO=? and user_id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storyNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	//좋아요 등록
+	public int insertRecipeLike(Connection conn, int storyNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into STORY_like values(?,?,SEQ_STORY_LIKE.NEXTVAL)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, storyNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 	
