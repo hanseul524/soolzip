@@ -185,15 +185,14 @@
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
 	                    </tr>	 
+	                    <% if(qOne.getReplyContent() != null){ %>
 	                    <tr style="display:none;">
-	                    
 	                    	<td colspan="4">
 	                    	문의 답변 : <%=qOne.getReplyContent() %>
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
-	                    	 
 	                    </tr>
-			
+						<%} %>
 	                </tbody>
 	               <%} %>
 	             
@@ -259,6 +258,16 @@
                 $(item).css('display', 'none');
             } else {
                 $(item).css('display', 'block');
+            }
+
+        });
+        $(".tablinks").each(function(index, item) {
+            if (index != selectedIndex) {
+                $(item).removeClass("active");
+
+            } else {
+
+                $(this).addClass('active');
             }
 
         });
