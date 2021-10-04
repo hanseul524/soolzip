@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>servicecenter</title>
 	   <link rel="stylesheet" href="/css/comm.css">
-	   <link rel="stylesheet" href="/html/qna/css/qna.css">
+	   <link rel="stylesheet" href="/css/qna/qna.css">
 	   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -64,7 +64,8 @@
                 <input  class="form-control" name="topQnaTitle" id="topQnaTitle" value="" disabled >
 
             </div>
-            <div><hr></div>
+            <hr>
+            
             <div class="mb-3">
                 <textarea class="form-control" name="topQnaContents" id="topQnaContents" rows="5" disabled >
 
@@ -145,7 +146,7 @@
                         <p> <textarea name="qnaContent" rows="15" cols="64" placeholder="내용을 입력해주세요." style="resize:none;"></textarea></p>
                     </label>
                     
-                    <p class="login-btn">
+                    <p class="write-btn">
                         <input class="full-bu-b" type="submit" value="등록">
                         <input class="full-bu-b" type="reset" value="취소">
                     </p>
@@ -183,7 +184,7 @@
 	                    	문의 내용 : <%=qOne.getQnaContent() %>
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
-	                    	 
+	                    </tr>	 
 	                    <tr style="display:none;">
 	                    
 	                    	<td colspan="4">
@@ -210,9 +211,7 @@
        
           
          
-<form id="qnaDetailRequestForm" action="" method="GET">
-    <input type="hidden" id="qnaNo" name="qnaNo" val="1"/>
-</form>
+
 
 
  <div id="footerMain"></div>
