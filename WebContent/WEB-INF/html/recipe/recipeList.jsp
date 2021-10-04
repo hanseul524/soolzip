@@ -29,10 +29,9 @@
             text-align: center;
             box-sizing: border-box;
         }
-            .kategoire li > a:hover{
-                background-color: #918c0038;
-            }
-           
+      	 .kategoire li > a:hover{
+           background-color: #918c0038;
+      	 }
         .kategoire li > a{
             display: table;
             width: 115px;
@@ -55,7 +54,7 @@
         }
         
         .box li{
-         border:1px solid black; 
+         	border:1px solid #8080807a; 
             width: 282px;
             list-style: none;
             padding: 0;
@@ -64,11 +63,11 @@
             vertical-align: top;
             position: relative;
         }
-        
-        .box-caption{
-            padding: 10px 2px;
-            text-align: center;
+        .box li:hover{
+        border:1px solid #918c00;
         }
+        
+        
         .box-thumb{
             position: relative;
             border-radius: 4px;
@@ -107,34 +106,83 @@
             line-height: 25px;
             line-height: 32px\0;
         }
+         .recipe_List_contents {
+            padding: 10px 20px;
+        }
+        .recipe_List_contents_title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
+            white-space: normal;
+            line-height: 140%;
+            font-size: 16px;
+            margin-bottom: 8px;
+            padding-bottom: 1px;
+        }
+        .recipe_List_contents_content{
+         	overflow: hidden;
+            text-overflow: ellipsis;
+             display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
+            white-space: normal;
+            line-height: 140%;
+            font-size: 8px;
+            color: #1c1c1cd4;
+            margin-bottom: 8px;
+            padding-bottom: 1px;
+        }
+        .recipe_List_contents_l {
+            display: inline-block;
+            color: #777;
+            font-weight: 300;
+        }   
+        .recipe_List_contents_r {
+            float: right;
+            color: #999;
+            font-size: 14px;
+            vertical-align: top;
+            margin-right: 2px;
+        }
+/*     	.kategoire li .active{ */
+/*      		background-color: #918c00; */
+/*     	} */
     
     </style>
      <script>
-  	$(document).ready(function() {
-  		$("#headerMain").load("/html/comm/header.jsp");
-  		$("#footerMain").load("/html/comm/footer.html");
-  	});
+	  	$(document).ready(function() {
+	  		$("#headerMain").load("/html/comm/header.jsp");
+	  		$("#footerMain").load("/html/comm/footer.html");
+	  	});
+  		
+	  	
+	  
+  	
      </script>
 </head>
 <body>
 	<div id="headerMain"></div>
     <h1 style="text-align: center;">레시피</h1>
     <!-- 카테고리 -->
-    <ul class="kategoire" style="border:solid 1px gray; padding: 20px 0 0 20px;">
-        <li><a href="#"><span>전체</span></a></li>
-        <li><a href="#"><span>소주</span></a></li>
-        <li><a href="#"><span>맥주</span></a></li>
-        <li><a href="#"><span>막걸리</span></a></li>
-        <li><a href="#"><span>와인</span></a></li>
-        <li><a href="#"><span>보드카</span></a></li>
-        <li><a href="#"><span>럼</span></a></li>
-        <li><a href="#"><span>진</span></a></li>
-        <li><a href="#"><span>데킬라</span></a></li>
-        <li><a href="#"><span>위스키</span></a></li>
-        <li><a href="#"><span>브랜디</span></a></li>
-        <li><a href="#"><span>전통주</span></a></li>
+    <ul class="kategoire" padding: 20px 0 0 20px;">
+        <li><a href="/recipe/list"><span>전체</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=소주"><span>소주</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=맥주"><span>맥주</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=막걸리"><span>막걸리</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=와인"><span>와인</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=보드카"><span>보드카</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=럼"><span>럼</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=진"><span>진</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=데킬라"><span>데킬라</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=위스키"><span>위스키</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=브랜디"><span>브랜디</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=전통주"><span>전통주</span></a></li>
         <li><a href="#"><span>명예의전당</span></a></li>
-        <li><a href="#"><span>기타</span></a></li>
+        <li><a href="/recipe/kategorie?recipeMainDrink=기타"><span>기타</span></a></li>
     </ul>
     <br>
     <br>
@@ -144,6 +192,12 @@
     
     <!-- 레시피 리스트 -->
     <ul class="box">
+    	<c:if test="${empty rList }">
+    	 <center>
+			<img style="margin: 100px 0 100px 0;" src="/upload/story_none.png"
+				alt="">
+		</center>
+    	</c:if>
     	<c:forEach items="${requestScope.rList }" var="rOne" varStatus="index">
         <li>
             <div class="box-thumb">
@@ -152,15 +206,33 @@
                 </a>
             </div>
             <div class="box-caption">
-                <div class="box-title">${rOne.recipeTitle }[${rOne.recipeReplyCount }]</div>
-                <div class="box-name"  style="overflow: hidden;">
-                    <a href="#"> 
-                        <img src="/img/myPageLogo.png" alt="">
-                        ${rOne.userId }
-                    </a>
-                    <br>
-                <span>조회수 : ${rOne.recipeViewCount } </span> <span>좋아요수 : ${rOne.recipeLikeCount } </span>
-                </div>
+				<div class="recipe_List_contents">
+			        <!-- 스토리 내용 -->
+			        <div class="recipe_List_contents_title">${rOne.recipeTitle }[${rOne.recipeViewCount }]</div>
+			        <div class="recipe_List_contents_content">
+			        	${rOne.recipeContents }
+			        </div>
+			        <!-- 스토리 푸터 -->
+			        <div class="recipe_List_contents_name">
+			            <!-- 좋아요/댓글 왼쪽-->
+			            <div class="recipe_List_contents_l">
+			                <span>
+			                    <img style="width:20px; height:20px;" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">
+			                    ${rOne.recipeLikeCount }
+			                </span>
+			                <span>
+			                    <img style="width:20px; height:20px;" src="/img/댓글 아이콘.png" alt="댓글 수">
+			                    ${rOne.recipeReplyCount }
+			                </span>
+			            </div>
+			            <!-- 작성자 오른쪽 -->
+			            <div class="recipe_List_contents_r">
+			                <!-- a태그에 회원정보로 이동 img 링크삽입 -->
+			                <a href="/user/page?userId=${rOne.userId }"><img style="width:20px; height:20px;" src="/img/myPageLogo.png" alt="이미지">${rOne.userId }</a>
+			                
+			            </div>
+			        </div>
+			    </div>
             </div>
         </li>
     	</c:forEach>
@@ -168,17 +240,6 @@
         
     </ul>
     <table align="center">
-    	<tr>
-			<td colspan="3" align="center">
-				<form action="/notice/search" method="get">
-					<input type="text" name="searchKeyword">
-					<input type="submit" value="검색">
-				</form>
-			</td>
-			<td>
-				<a href="/html/recipe/recipeReg.html">글쓰기</a>
-			</td>
-		</tr>
 		<!-- 내비게이션 바 -->
 		<tr>
 			<td colspan="4" align="center">
