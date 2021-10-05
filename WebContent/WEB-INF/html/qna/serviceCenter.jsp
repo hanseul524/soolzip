@@ -174,7 +174,7 @@
     			
   				   <tbody>
 	                    <tr class="qnaRow" >
- 	                        <td scope="row">${qOne.qnaTitle }</a></td> 
+ 	                        <td scope="row">${qOne.qnaTitle }</td> 
 	                        <td scope="row">${qOne.qnaNo }</td> 
 	                        <td scope="row">${qOne.qnaWriteDate }</td>
 	                        <td scope="row">${qOne.qnaStatus }</td>
@@ -195,15 +195,9 @@
 		                    </tr>
 	                   	</c:if>
 	                </tbody>
-    			</c:forEach>	
-		
+    			</c:forEach>
 	            </table>
-	            
-	            
             </div>
-<!--         </div> -->
-        
-
     </div>
 </div>
     

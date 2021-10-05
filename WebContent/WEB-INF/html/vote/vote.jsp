@@ -95,36 +95,38 @@
 
     <ul class="box" style="text-align: center;" >
         <div style="display: inline-block;">
-<%--         <c:forEach  items="${requestScope.cList }" var="cOne" varStatus="index"> --%>
+        <c:forEach  items="${requestScope.cList }" var="cOne" varStatus="index">
          <li>
-                <article class="location-listing" style="float: left; margin: 10px;">
-                
-                    <a href="" class="location-title">Click!</a>
-                    <div class="location-image" id="box-thumb">
-                         <a href="" class="sendNo"><img style="width: 100%; height: 100%;"
-                            src="https://recipe1.ezmember.co.kr/cache/recipe/2019/05/25/39ac1e73e998e88da300d38663242f0a1_m.jpg"   alt="">
-                        </a>
+            <article class="location-listing" style="float: left; margin: 10px;">
+            
+                <a href="" class="location-title">Click!</a>
+                <div class="location-image" id="box-thumb">
+                     <a href="" class="sendNo"><img style="width: 100%; height: 100%;"
+                        src="/upload/${cOne.fileName }"   alt="">
+                    </a>
+                </div>
+            </article>
+            <div>
+                <div style="padding:30px" >
+                    <div style="width: 150px; overflow: hidden; text-overflow: ellipsis; background-color: blue;">
+                    	${cOne.recipeTitle }
                     </div>
-                </article>
-                <div>
-                    <div style="padding:30px" >
-                        <div style="width: 150px; overflow: hidden; text-overflow: ellipsis; background-color: blue;">제목 영역입니다!!sssssssssssssssssssssssssssss</div>
-                    </div>                              
-                    <div class="box-name">
-                        <a href="#">
-                            <img src="/img/myPageLogo.png" alt="">
-                            작성자명
-                        </a>
-                    </div> 
-                    <div class="option" style="margin:20px;" >
-                        <form action="">
-                            <button type="submit">투표하기</button>
-                            <button type="submit">투표완료</button>
-                         </form>
-                </div>
-                </div>
+                </div>                              
+                <div class="box-name">
+                    <a href="#">
+                        <img src="/img/myPageLogo.png" alt="">
+                        ${cOne.recipeUserId }
+                    </a>
+                </div> 
+                <div class="option" style="margin:20px;" >
+                    <form action="">
+                        <button type="submit">투표하기</button>
+                        <button type="submit">투표완료</button>
+                     </form>
+            </div>
+            </div>
           </li>
-<%--         </c:forEach> --%>
+        </c:forEach>
     	</div>
     </ul>
 

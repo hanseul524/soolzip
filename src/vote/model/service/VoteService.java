@@ -23,6 +23,7 @@ public class VoteService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			cList = new VoteDAO().selectVoteRecipe(conn);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

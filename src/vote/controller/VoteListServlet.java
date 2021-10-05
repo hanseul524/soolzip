@@ -34,6 +34,9 @@ public class VoteListServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		List<RecipeCandidate> cList = new VoteService().printVoteRecipe();
 		
+		for(RecipeCandidate a: cList) {
+			System.out.println(a.toString());
+		}
 		
 		if(!cList.isEmpty()) {
 			request.setAttribute("cList", cList);

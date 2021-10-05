@@ -7,23 +7,53 @@ public class RecipeCandidate {
 	private int recipeNo;
 	private Date fixdDate;
 	private int voteCount;
-	private String endState;
-	
+	private String fileName;
+	private String recipeTitle;
+	private String recipeUserId;
 	
 	public RecipeCandidate() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public RecipeCandidate(int candidateNo, int recipeNo, Date fixdDate, int voteCount, String endState) {
-		super();
-		this.candidateNo = candidateNo;
-		this.recipeNo = recipeNo;
-		this.fixdDate = fixdDate;
-		this.voteCount = voteCount;
-		this.endState = endState;
-	}
 	
+	
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
+	public String getRecipeTitle() {
+		return recipeTitle;
+	}
+
+	public void setRecipeTitle(String recipeTitle) {
+		this.recipeTitle = recipeTitle;
+	}
+
+
+
+
+	public String getRecipeUserId() {
+		return recipeUserId;
+	}
+
+
+
+
+	public void setRecipeUserId(String recipeUserId) {
+		this.recipeUserId = recipeUserId;
+	}
+
+
+
+
 	public int getCandidateNo() {
 		return candidateNo;
 	}
@@ -48,17 +78,19 @@ public class RecipeCandidate {
 	public void setVoteCount(int voteCount) {
 		this.voteCount = voteCount;
 	}
-	public String getEndState() {
-		return endState;
-	}
-	public void setEndState(String endState) {
-		this.endState = endState;
-	}
+
+
+
 
 	@Override
 	public String toString() {
 		return "RecipeCandidate [candidateNo=" + candidateNo + ", recipeNo=" + recipeNo + ", fixdDate=" + fixdDate
-				+ ", voteCount=" + voteCount + ", endState=" + endState + "]";
+				+ ", voteCount=" + voteCount + ", fileName=" + fileName + ", recipeTitle=" + recipeTitle
+				+ ", recipeUserId=" + recipeUserId + "]";
 	}
+
+
+	
+	
 	
 }
