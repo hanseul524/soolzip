@@ -37,7 +37,7 @@
         bottom: -60px; 
         width: 50px; 
         height: 50px; 
-        background: url("https://e7.pngegg.com/pngimages/254/799/png-clipart-cocktail-cocktail.png") no-repeat;
+        background: url("/img/찬하트.png") no-repeat;
          background-size: cover; 
         } 
         .likebuble:first-of-type { 
@@ -103,7 +103,13 @@
                         </div>
                         <div class="story_view_top_button">
                                 <!-- 링크 달아줘야함 타입은 히든으로 회원가입한 사람만 볼 수 있게-->
-                                <input type="button" value="수정">
+                                <c:if test="${user.userId eq storyOne.userId }">
+                                <a href="/story/modify?storyNo=${storyOne.storyNo }">
+                                	<input type="hidden" name="storyNo" value="${storyOne.storyNo }">
+                                	<input type="submit" value="수정">
+<!-- 									스토리 수정 -->
+                                </a>
+                                </c:if>
                                 <form action="/story/remove" method="post">
                                 <c:if test="${user.userId eq storyOne.userId }">
                                 <a href="/WEB-INF/html/story/storylist.jsp">
@@ -150,16 +156,16 @@
                     <form action ="/story/like" method="post">
                     <input type="hidden" name="storyNo" value="${storyOne.storyNo}">
                     <input type="hidden" name="likeCheck" value ="${storyOne.likeCheck }">
-                    <c:if test="${user.userId ne null and userId ne ''}">
+                    <c:if test="${user.userId ne null and userId ne '' and user.userId ne storyOne.userId}">
                     <div class="btn-like like">
                     	<c:if test="${storyOne.likeCheck eq null or storyOne.likeCheck eq 0 }">
-                    		<button type="submit" class="btn" id="likeOn">
-                           		<img style="vertical-align: middle;" src="https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/15721583221557740359-512.png" alt="">
+                    		<button id="likebtn" type="submit" class="btn" value="좋아요" >
+                           		<img style="vertical-align: middle;" src="/img/빈하트.png" alt="" onclick="javascript:$('#likebtn').click();">
                        		</button>
                     	</c:if>
                     	<c:if test="${storyOne.likeCheck ne null and storyOne.likeCheck ne 0 }">
-                        	<button type="submit" class="btn" id="likeOff">
-                            	<img style="vertical-align: middle;" src="../img/좋아요.png" alt="">
+                        	<button id="likebtn" type="submit" class="btn" value="좋아요 취소" >
+                            	<img style="vertical-align: middle;" src="/img/찬하트.png" alt="" onclick="javascript:$('#likebtn').click();">
                         	</button>
                     	</c:if>
                     </div>

@@ -41,8 +41,9 @@ public class StoryDetailServlet extends HttpServlet {
 	
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		//스토리 정보
-		Story storyOne = new StoryService().pintOneStroy(storyNo);
+		Story storyOne = new StoryService().pintOneStroy(storyNo,userId);
 		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@"+storyOne.toString());
 		
 		if(storyOne !=null) {
 			request.setAttribute("storyOne", storyOne);

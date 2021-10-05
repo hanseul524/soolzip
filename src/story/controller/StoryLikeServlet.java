@@ -48,11 +48,14 @@ public class StoryLikeServlet extends HttpServlet {
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		int likeCheck = Integer.parseInt(request.getParameter("likeCheck"));
 		int result = 0;
+		
+		
+		System.out.println("@@@"+likeCheck);
 		if(likeCheck == 1) {
 			result=new StoryService().removeStoryLike(storyNo,userId);
 			if(result>0) {
 				System.out.println("취소");
-				response.sendRedirect("/story/detail?storyNo ="+storyNo);
+				response.sendRedirect("/story/detail?storyNo="+storyNo);
 			}else {
 				request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
 			}
