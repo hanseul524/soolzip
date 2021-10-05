@@ -25,9 +25,7 @@ public class MainServlet extends HttpServlet {
 		List<Recipe> rList = null;
 		rList = new MainPageService().regendRecipe();
 		request.setAttribute("rList", rList);
-		System.out.println("1");
 		request.getRequestDispatcher("/main.jsp").forward(request, response);
-		System.out.println("2");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

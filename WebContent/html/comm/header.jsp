@@ -98,7 +98,7 @@ $(document).ready(function () {
 	</div>
 	<!-- 메인 로고 -->
 	<div class="header">
-		<a href="/main.jsp"> <img style="width: 370px; height: 80px;"
+		<a href="/main"> <img style="width: 370px; height: 80px;"
 			src="/img/mainLogo.png" alt="">
 		</a>
 		
@@ -125,7 +125,7 @@ $(document).ready(function () {
 			placeholder="주류명 또는 레시피명을 검색해주세요." autocomplete="off"> <a
 			href="#" class=""> <img
 			src="https://www.greating.co.kr/front_pc/images/icon_header_search.png?ver=210304"
-			id="dvSrhFilterBtn2" alt="검색">
+			id="dvSrhFilterBtn2" alt="검색" style="outline:none;">
 		</a>
 	</div>
 </div>
