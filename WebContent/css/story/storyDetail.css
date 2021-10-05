@@ -52,11 +52,15 @@
     
 }
 .story_view_top_button input{
+	cursor: pointer;
+    border: 1px solid #918c00;
+    background-color: #fff;
     margin-left: 15px;
     color: #918c00;
-    font-weight: 400;
+    font-weight: bold;
     width: 70px;
     height: 45px;
+    float: left;
 }
 /* 스토리 이미지 */
 .story_view_contents{
