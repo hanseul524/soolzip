@@ -424,5 +424,23 @@ public class RecipeService {
 		}
 		return pd;
 	}
+	//명예의전당 레시피 리스트
+	public PageData printAllLegendRecipe(int currentPage) {
+		PageData pd = new PageData();
+
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+
+		try {
+			conn = jdbcTemplate.createConnection();
+			pd.setRecipeList(rDao.selectAllLegendRecipe(conn, currentPage));
+			pd.setPageNavi(rDao.getLegendPageNavi(conn, currentPage));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn); 
+		}
+		return pd;
+	}
 
 }

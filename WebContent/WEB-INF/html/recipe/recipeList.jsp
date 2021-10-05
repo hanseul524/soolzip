@@ -63,9 +63,9 @@
             vertical-align: top;
             position: relative;
         }
-        .box li:hover{
-        border:1px solid #918c00;
-        }
+         .box .public-re:hover{ 
+	        border:1px solid #918c00; 
+         } 
         
         
         .box-thumb{
@@ -151,12 +151,27 @@
 /*     	.kategoire li .active{ */
 /*      		background-color: #918c00; */
 /*     	} */
+    .box .legend-recipe{
+   	 --borderWidth: 3px;
+	  position: relative;
+	  border-radius: var(--borderWidth);
+	  background-color:white;
+    }
+    .legend-recipe { --borderWidth: 1px; position: relative;}
+    .legend-recipe:after { content: ''; position: absolute; top: calc(-1 * var(--borderWidth)); left: calc(-1 * var(--borderWidth)); height: calc(100% + var(--borderWidth) * 2); width: calc(100% + var(--borderWidth) * 2); background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82); border-radius: calc(1.5 * var(--borderWidth)); z-index: -1; animation: animatedgradient 2s ease alternate infinite; background-size: 300% 300%; } 
+    @keyframes animatedgradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+    .glory img{
+    	width:30px;
+    	height:30px;
+    }
     
     </style>
      <script>
 	  	$(document).ready(function() {
 	  		$("#headerMain").load("/html/comm/header.jsp");
 	  		$("#footerMain").load("/html/comm/footer.html");
+	  		
 	  	});
   		
 	  	
@@ -199,42 +214,84 @@
 		</center>
     	</c:if>
     	<c:forEach items="${requestScope.rList }" var="rOne" varStatus="index">
-        <li>
-            <div class="box-thumb">
-                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
-                    <img style="width:250px; height:200px;" src="/upload/${rOne.fileName }" alt="" >
-                </a>
-            </div>
-            <div class="box-caption">
-				<div class="recipe_List_contents">
-			        <!-- 스토리 내용 -->
-			        <div class="recipe_List_contents_title">${rOne.recipeTitle }[${rOne.recipeViewCount }]</div>
-			        <div class="recipe_List_contents_content">
-			        	${rOne.recipeContents }
-			        </div>
-			        <!-- 스토리 푸터 -->
-			        <div class="recipe_List_contents_name">
-			            <!-- 좋아요/댓글 왼쪽-->
-			            <div class="recipe_List_contents_l">
-			                <span>
-			                    <img style="width:20px; height:20px;" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">
-			                    ${rOne.recipeLikeCount }
-			                </span>
-			                <span>
-			                    <img style="width:20px; height:20px;" src="/img/댓글 아이콘.png" alt="댓글 수">
-			                    ${rOne.recipeReplyCount }
-			                </span>
-			            </div>
-			            <!-- 작성자 오른쪽 -->
-			            <div class="recipe_List_contents_r">
-			                <!-- a태그에 회원정보로 이동 img 링크삽입 -->
-			                <a href="/user/page?userId=${rOne.userId }"><img style="width:20px; height:20px;" src="/img/myPageLogo.png" alt="이미지">${rOne.userId }</a>
-			                
-			            </div>
-			        </div>
-			    </div>
-            </div>
-        </li>
+       	<c:if test="${rOne.recipeLegendState eq '0' }">
+	        <li class="public-re">
+	            <div class="box-thumb">
+	                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
+	                    <img style="width:250px; height:200px;" src="/upload/${rOne.fileName }" alt="" >
+	                </a>
+	            </div>
+	            <div class="box-caption">
+					<div class="recipe_List_contents">
+				        <!-- 스토리 내용 -->
+				        <div class="recipe_List_contents_title">${rOne.recipeTitle }[${rOne.recipeViewCount }]</div>
+				        <div class="recipe_List_contents_content">
+				        	${rOne.recipeContents }
+				        </div>
+				        <!-- 스토리 푸터 -->
+				        <div class="recipe_List_contents_name">
+				            <!-- 좋아요/댓글 왼쪽-->
+				            <div class="recipe_List_contents_l">
+				                <span>
+				                    <img style="width:20px; height:20px;" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">
+				                    ${rOne.recipeLikeCount }
+				                </span>
+				                <span>
+				                    <img style="width:20px; height:20px;" src="/img/댓글 아이콘.png" alt="댓글 수">
+				                    ${rOne.recipeReplyCount }
+				                </span>
+				            </div>
+				            <!-- 작성자 오른쪽 -->
+				            <div class="recipe_List_contents_r">
+				                <!-- a태그에 회원정보로 이동 img 링크삽입 -->
+				                <a href="/user/page?userId=${rOne.userId }"><img style="width:20px; height:20px;" src="/img/myPageLogo.png" alt="이미지">${rOne.userId }</a>
+				                
+				            </div>
+				        </div>
+				    </div>
+	            </div>
+	        </li>
+        </c:if>
+        <c:if test="${rOne.recipeLegendState eq '1' }">
+            <li class="legend-recipe">
+	            <div class="glory"style="width:30px;height:30px;">
+	            	<img src="data:image/jpeg;base64,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">
+	            </div>
+	            <div class="box-thumb">
+	                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
+	                    <img style="width:250px; height:200px;" src="/upload/${rOne.fileName }" alt="" >
+	                </a>
+	            </div>
+	            <div class="box-caption">
+					<div class="recipe_List_contents">
+				        <!-- 스토리 내용 -->
+				        <div class="recipe_List_contents_title">${rOne.recipeTitle }[${rOne.recipeViewCount }]</div>
+				        <div class="recipe_List_contents_content">
+				        	${rOne.recipeContents }
+				        </div>
+				        <!-- 스토리 푸터 -->
+				        <div class="recipe_List_contents_name">
+				            <!-- 좋아요/댓글 왼쪽-->
+				            <div class="recipe_List_contents_l">
+				                <span>
+				                    <img style="width:20px; height:20px;" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/72x72/2764.png" alt="좋아요 수">
+				                    ${rOne.recipeLikeCount }
+				                </span>
+				                <span>
+				                    <img style="width:20px; height:20px;" src="/img/댓글 아이콘.png" alt="댓글 수">
+				                    ${rOne.recipeReplyCount }
+				                </span>
+				            </div>
+				            <!-- 작성자 오른쪽 -->
+				            <div class="recipe_List_contents_r">
+				                <!-- a태그에 회원정보로 이동 img 링크삽입 -->
+				                <a href="/user/page?userId=${rOne.userId }"><img style="width:20px; height:20px;" src="/img/myPageLogo.png" alt="이미지">${rOne.userId }</a>
+				            </div>
+				        </div>
+				    </div>
+	            </div>
+	        </li>
+        </c:if>
     	</c:forEach>
     
         
