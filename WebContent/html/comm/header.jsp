@@ -108,25 +108,19 @@ $(document).ready(function () {
 	<div class="nav" id="main-nav">
 		<ul class="myMenu">
 			<li class="menu1"><a href="/recipe/list">레시피</a>
-<!-- 				<ul class="menu1_s submenu"> -->
-<!-- 					<li><a href="/recipe/list">레시피</a></li> -->
-<!-- 					<li><a href="#">명예의전당</a></li> -->
-<!-- 					<li><a href="#">투표하기</a></li> -->
-<!-- 				</ul></li> -->
 			<li class="menu2"><a href="/story/list">스토리</a></li>
 			<li class="menu3"><a href="#">명예의전당</a></li>
-<!-- 			<li class="menu4"><a href="#">화상채팅</a></li> -->
 			<li class="menu4"><a href="#">투표현황</a></li>
 			<li class="menu5"><a href="/service/center">고객센터</a></li>
 		</ul>
 	</div>
 	<div class="direct-search">
-		<input type="text" id="searchInput" class="searchInput"
-			placeholder="주류명 또는 레시피명을 검색해주세요." autocomplete="off"> <a
-			href="#" class=""> <img
-			src="https://www.greating.co.kr/front_pc/images/icon_header_search.png?ver=210304"
-			id="dvSrhFilterBtn2" alt="검색">
-		</a>
+		<form id="searchForm"action="/recipe/search" method="post">
+			<input type="text" id="searchInput" name="searchInput" placeholder="주류명 또는 레시피명을 검색해주세요." autocomplete="off">
+			<a href="javascript:searchForm.submit();" class="">
+			  <img src="https://www.greating.co.kr/front_pc/images/icon_header_search.png?ver=210304"  alt="검색">
+			</a>
+		</form>
 	</div>
 </div>
 </body>
