@@ -1,21 +1,17 @@
 @charset "UTF-8";
-a {
-  text-decoration: none;
-  color: black;
-  text-align: center;
-}
 .loginbox {
-  width: 90%;
-  height: 100vh;
+  width: 450px;
+  height: 850px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 form {
   width: 100%;
 }
 .login {
-  width: 30%;
+  width: 450px;
   height: 600px;
   border: 1px solid lightgrey;
   border-radius: 20px;
@@ -62,13 +58,16 @@ h2 {
   margin: 0 auto;
   width: 80%;
   font-size: 14px;
-  display: flex;
 }
-.forget_id {
-	margin:0 auto;
-	width: 100%
+.forgot_id {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
 }
-
+.forgot_id a {
+  margin-top: 20px;
+  top: 20px;
+}
 .submit {
   width: 80%;
   margin: 0 auto;
