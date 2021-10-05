@@ -24,7 +24,7 @@
  
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-
+	
  
 </head>
 <script>
@@ -52,8 +52,9 @@
         </li> 
       
         </c:forEach>
+        
     </ul>
-    
+    </div>
     <div  id="content" onclick="onDisplay" style="display: none;"  >
 
 <!--         <span onclick="this.parentElement.style.display='none'"="close">X</span>  -->
@@ -185,15 +186,15 @@
 	                    	문의 내용 : ${qOne.qnaContent }
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
-	                    </tr>	 
-	                    <% if(qOne.getReplyContent() != null){ %>
-	                    <tr style="display:none;">
-	                    	<td colspan="4">
-	                    	문의 답변 : ${qOne.replyContent } 
-	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
-	                    	</td>
-	                    </tr>
-						<%} %>
+	                    </tr>	 	                 
+						<c:if test="${qOne.replyContent ne null and qOne.replyContent ne '' }">
+		                    <tr style="display:none;">
+		                    	<td colspan="4">
+		                    	문의 답변 : ${qOne.replyContent } 
+		                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
+		                    	</td>
+		                    </tr>
+	                   	</c:if>							
 	                </tbody>
     			</c:forEach>	
 		

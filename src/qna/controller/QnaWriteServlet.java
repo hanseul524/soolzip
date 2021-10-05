@@ -1,6 +1,8 @@
 package qna.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +41,11 @@ public class QnaWriteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+
 		String title = request.getParameter("qnaTitle");
 		String content = request.getParameter("qnaContent");
+		
 		//HttpSession session = request.getSession();
 		//String userId = (String)session.getAttribute("userId");
 		//String userId = "임진영";
@@ -58,9 +63,26 @@ public class QnaWriteServlet extends HttpServlet {
 
 		int result = new QnaService().insertQna(qna);
 		if(result>0) {
-			response.sendRedirect("/service/center");
+			PrintWriter writer = response.getWriter(); 
+			writer.print("<script>");
+			writer.print("alert('문의등록 완료');");
+			writer.print("window.location = '/service/center';");
+			writer.print("self.close();");
+			writer.print("</script>");
+			writer.close();
+			
+			//response.sendRedirect("/service/center");
+			
 		}else {
-			request.getRequestDispatcher("/WEB-INF/html/qna/serviceFailed.html").forward(request, response);
+			PrintWriter writer = response.getWriter(); 
+			writer.print("<script>");
+			writer.print("alert('로그인 후 이용해주세요.');");
+			writer.print("window.location = '/index.jsp';");
+			writer.print("self.close();");
+			writer.print("</script>");
+			writer.close();
+			
+			//request.getRequestDispatcher("/WEB-INF/html/qna/serviceFailed.html").forward(request, response);
 		}
 
 	}
