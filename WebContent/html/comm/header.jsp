@@ -90,7 +90,7 @@ $(document).ready(function () {
       				<ul class="mypage">
         				<li><a href="/myPage/myPage">마이페이지</a></li>
         				<li><a href="/user/logout" onclick="logoutok();">로그아웃</a></li>
-        				<li><a href="#">투표하기</a></li>
+        				<li><a href="/vote/list">투표하기</a></li>
       				</ul>
   				</li>
 			</c:if>
@@ -110,7 +110,7 @@ $(document).ready(function () {
 			<li class="menu1"><a href="/recipe/list">레시피</a>
 			<li class="menu2"><a href="/story/list">스토리</a></li>
 			<li class="menu3"><a href="/legend/recipe">명예의전당</a></li>
-			<li class="menu4"><a href="#">투표현황</a></li>
+			<li class="menu4"><a href="/vote/list">투표현황</a></li>
 			<li class="menu5"><a href="/service/center">고객센터</a></li>
 		</ul>
 	</div>
