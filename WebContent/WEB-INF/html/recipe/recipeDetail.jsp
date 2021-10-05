@@ -75,14 +75,24 @@ button[class*="btn"] {border: 0;}
 	color: white;
 }
 .btn.green {box-shadow: 0px 4px 0px #87a86f;}
-.replytb{width:100%;}
-.replytb{border:1px solied black;}
+.replytb {width:90%;border-top:1px solid #e6e7e8;}
+.replytb th{}
 .replytb td{text-align:center;}
+p{font-size:1.3rem;}
 </style>
 <script>
 	$(document).ready(function() {
 		$("#headerMain").load("/html/comm/header.jsp");
 		$("#footerMain").load("/html/comm/footer.html");
+		
+		$("#insertbtn").on("click",function(){
+			if($("#replyContents").val() == ""){
+				alert("내용을 입력해주세요.");
+				return false;
+			}else{
+				return true;
+			}
+		});
 	});
 	$('a').click(function(event){
 	    event.preventDefault(); 
@@ -120,23 +130,22 @@ button[class*="btn"] {border: 0;}
 				
 				<!-- 댓글작성 -->
 				<div>
-					<h2>한줄 댓글</h2>
+					<h2 style="text-align:left;margin-left:60px">한줄 댓글</h2>
 					<form class="box_write"  action="/recipeReply/write" method="post">
 						<input type="hidden" name="recipeNo" value="${requestScope.recipeOne.recipeNo}">
 					<c:if test ="${user.userId eq null}">
 						<br>
-						댓글 작성을 위해 로그인이 필요합니다
+						<p>댓글 작성을 위해 로그인이 필요합니다<p>
 						<br>
-						<a href="/index.jsp">로그인 하러가기</a>
+						<a href="/index.jsp" style="color:blue;font-weight:bold;">로그인 하러가기</a>
 						<br>
 						<br>
 						<br>
 					</c:if>
-					
-					
 					<c:if test="${user.userId ne null and userId ne ''}">
-						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents" style="width:80%; height:50px; resize:none; position:relative"></textarea>
-						<button name="button" type="submit" style="float:right; margin-right:15px; margin-left:-50px;height:50px;background:#fff;border:none">댓글남기기</button>
+						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents" id="replyContents" style="width:83%; height:50px; resize:none; position:relative"></textarea>
+						<button name="button" id="insertbtn" type="submit" style="float:right; margin-right:15px; margin-left:-50px;height:50px;background:#fff;border:none">댓글등록</button>
+						<br><br>
 					</c:if>
 					</form>
 					
@@ -146,13 +155,12 @@ button[class*="btn"] {border: 0;}
 							<th>아이디</th>
 							<th>댓글</th>
 							<th>작성날짜</th>
-							<th>수정/삭제</th>
 						</tr>
 						<c:forEach items="${recipeOne.replies}" var="reply" varStatus="index">
 						<tr>
-							<td>${reply.replyUserId }</td>
-							<td>${reply.replyContents }</td>
-							<td>${reply.replyDate.getMonth()+1 }.${reply.replyDate.getDate()} ${reply.replyDate.getHours() }:${reply.replyDate.getMinutes() }</td>
+							<td style="width:10%;">${reply.replyUserId }</td>
+							<td style="width:70%;">${reply.replyContents }</td>
+							<td style="width:10%;">${reply.replyDate.getMonth()+1 }-${reply.replyDate.getDate() } ${reply.replyDate.getHours() }:${reply.replyDate.getMinutes() }</td>
 							<td>
 							<c:if test="${user.userId eq reply.replyUserId }">
 									<a href="javascript:void(0)" onclick="showModifyReply(this)">수정</a>
@@ -206,7 +214,7 @@ button[class*="btn"] {border: 0;}
  				<a href="/user/page?userId=${recipeOne.userId }">
  					<img id="userImg" src="/img/myPageLogo.png" alt="">
  					<br>
- 					<h3>${recipeOne.userId }</h6>
+ 					<h3>${recipeOne.userId }</h3>
  				</a>
 			<!-- 좋아요 폼 -->
  				<form action="/recipe/like" method="post" id="">
@@ -249,15 +257,14 @@ button[class*="btn"] {border: 0;}
  				<form id="recipeRM"action="/recipe/remove" method="post">
  				<c:if test="${user.userId eq recipeOne.userId}">	
  					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
- 					<a href="javascript:recipeRM.submit();" class="btn green rounded">레시피 삭제</a>
+ 					<a href="javascript:recipeRM.submit();" class="btn green rounded" style="float:left; margin-left:50px;">레시피 삭제</a>
  				</c:if>
  				</form>
  			
  		<!-- 레시피 수정 -->
  			<c:if test="${user.userId eq recipeOne.userId}">
- 				<a href="/recipe/modify?recipeNo=${recipeOne.recipeNo }" class="btn green rounded">레시피 수정</a>
+ 				<a href="/recipe/modify?recipeNo=${recipeOne.recipeNo }" class="btn green rounded" style="margin-left:-30px;">레시피 수정</a>
  			</c:if>
- 
  				<!-- 재료 리스트 -->
  				<style>
  				table.type11 {
@@ -273,7 +280,7 @@ button[class*="btn"] {border: 0;}
 				  font-weight: bold;
 				  vertical-align: top;
 				  color: #fff;
-				  background: #918c00 ;
+				  background: #9abf7f ;
 				}
 				table.type11 td {
 				  width: 155px;

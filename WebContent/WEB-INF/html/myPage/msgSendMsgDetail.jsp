@@ -71,6 +71,8 @@ hr {
 </head>
 <body>
 	<div class="h1">
+	 <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
 		<c:forEach items="${requestScope.sdList }" var="sdList"
 			varStatus="index">
 			<input type="text" id="msg-name" readonly value="${sdList.msgName }">

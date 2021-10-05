@@ -16,6 +16,8 @@ import story.model.vo.StoryReply;
 import user.model.vo.User;
 
 public class MyPageDAO {
+	
+	public MyPageDAO() {}
 
 	// 회원정보 수정
 	public int updateUser(Connection conn, User user) {

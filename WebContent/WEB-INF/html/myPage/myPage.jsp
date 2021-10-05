@@ -196,7 +196,8 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 <title></title>
 </head>
 <body>
-	<div id="headerMain"></div>
+	<div id="headerMain"></div> <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
 	<div class="my-wrapper">
 	<!--프로필  -->
 		<aside id="profile">
@@ -402,7 +403,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 							varStatus="index">
 							<tr>
 								<td style="font-size:1.1rem">${reList.replyContents }</td>
-								<td style="text-align: center; font-size:0.8rem;">${reList.replyDate }</td>
+								<td style="text-align: center; font-size:0.8rem;">${reList.replyDate.getMonth()+1 }-${reList.replyDate.getDate() } ${reList.replyDate.getHours() }:${reList.replyDate.getMinutes() }</td>
 							</tr>
 							<tr>
 								<td colspan="2" style="text-align: left; font-size:0.6rem">ㄴ[레시피]<a
@@ -434,7 +435,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 							varStatus="index">
 							<tr>
 								<td style="font-size:1.1rem">${srList.replyContents }</td>
-								<td style="text-align: center; font-size:0.8rem;">${srList.replyDate }</td>
+								<td style="text-align: center; font-size:0.8rem;">${srList.replyDate.getMonth()+1 }-${srList.replyDate.getDate() } ${srList.replyDate.getHours() }:${srList.replyDate.getMinutes() }</td>
 							</tr>
 							<tr>
 								<td colspan="2" style="text-align: left;font-size:0.6rem">ㄴ[스토리]<a
@@ -516,7 +517,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 								<td style="text-align: center;"><%=cnt %></td>
 								<td><a href="/message/detail?msgNo=${mgList.msgNo }" onclick="window.open(this.href,'쪽지','width=1000 height =1300');return false;" >${mgList.msgName }</a></td>
 								<td style="text-align: center;"><a href="/user/page?userId=${mgList.msgSendUser }">${mgList.msgSendUser }</a></td>
-								<td style="text-align: center;">${mgList.msgSendDate }</td>
+								<td style="text-align: center;">${mgList.msgSendDate.getMonth()+1 }-${mgList.msgSendDate.getDate() } ${mgList.msgSendDate.getHours() }:${mgList.msgSendDate.getMinutes() }</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -549,7 +550,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 								<td style="text-align: center;"><%=cnt %></td>
 								<td><a href="/message/msDetail?msgNo=${msList.msgNo }" onclick="window.open(this.href,'쪽지','width=1000 height =1300');return false;" >${msList.msgName }</a></td>
 								<td style="text-align: center;"><a href="/user/page?userId=${msList.msgGetUser }">${msList.msgGetUser }</a></td>
-								<td style="text-align: center;">${msList.msgSendDate }</td>
+								<td style="text-align: center;">${msList.msgSendDate.getMonth()+1 }-${msList.msgSendDate.getDate() } ${msList.msgSendDate.getHours() }:${msList.msgSendDate.getMinutes() }</td>
 							</tr>
 						</c:forEach>
 					</table>

@@ -107,6 +107,8 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 </head>
 <body>
 	<div id="headerMain"></div>
+	 <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
 	<div class="my-wrapper">
 		<!--프로필  -->
 		<aside id="profile">

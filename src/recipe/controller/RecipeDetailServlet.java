@@ -1,6 +1,9 @@
 package recipe.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -45,6 +48,7 @@ public class RecipeDetailServlet extends HttpServlet {
 		int recipeNo = Integer.parseInt(request.getParameter("recipeNo"));
 		//레시피정보
 		Recipe recipeOne = new RecipeService().printOneRecipe(userId,recipeNo);
+		
 		// 레시피1에 대한 재료 여러개
 		List<RecipeIngredient> iList = new RecipeService().printOneRecipeIngr(recipeNo);
 		// 레시피2에 대한 제조과정 여러개 

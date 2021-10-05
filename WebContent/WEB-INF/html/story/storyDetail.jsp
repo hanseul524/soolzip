@@ -88,6 +88,8 @@
 </script>
 <body>
     <div id="headerMain"></div>
+     <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
     <h1 class="h1text" style="text-align: center;">상세페이지</h1>
     <div class="container">
         <div class="contents">

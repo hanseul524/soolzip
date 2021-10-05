@@ -44,15 +44,24 @@ ul.myMenu>li ul.submenu>li>a {
 ul.myMenu>li ul.submenu>li:hover {
 	background: #fff;
 }
+input:focus{outline:none;}
 </style>
 <script>
 $(document).ready(function () {
-	function logoutok() {
+	$("#log-btn").on("click",function(){
 		if(confirm ("정말 로그아웃 하시겠습니까?")) {
-			alert("로그아웃 되었습니다.");
+			alert("로그아웃 되었습니다")
 			location.href = "/user/logout";
+			return true;
+		}else{
+			return false;
 		}
-	};
+	});
+	$("#regicon").hover(function(){
+		$("#regblock").css("display","block");
+	},function(){
+		$("#regblock").css("display","none");
+	});
 });
 </script>
 </head>
@@ -67,14 +76,11 @@ $(document).ready(function () {
 					src="/img/adminLogo.png" alt="">
 			</a></li>
 			</c:if>
-			
-			<li><a href="#"> <img style="width: 45px; margin: 5px;"
-					src="/img/suggestion.png" alt="">
-			</a></li>
 			<li>
-				<a href="/recipe/register"> 
+				<a href="/recipe/register" id="regicon"> 
 					<img style="width: 45px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
+				<div id="regblock" style="display:none;margin-left:-25px;width:100px;height:30px;position:absolute; background-color:rgb(140,136,41);text-align:center;color:white;"><span style="font-weight:bold;line-height:25px;">레시피 등록</span></div>
 			</li>
 			
 			<c:if test ="${user.userId eq null}">
@@ -89,7 +95,7 @@ $(document).ready(function () {
         			src="/img/myPageLogo.png" alt=""></a>
       				<ul class="mypage">
         				<li><a href="/myPage/myPage">마이페이지</a></li>
-        				<li><a href="/user/logout" onclick="logoutok();">로그아웃</a></li>
+        				<li><a href="/user/logout" id="log-btn">로그아웃</a></li>
         				<li><a href="/vote/list">투표하기</a></li>
       				</ul>
   				</li>
@@ -117,7 +123,7 @@ $(document).ready(function () {
 	<div class="direct-search">
 		<form id="searchForm"action="/recipe/search" method="post">
 			<input type="text" id="searchInput" name="searchInput" placeholder="주류명 또는 레시피명을 검색해주세요." autocomplete="off">
-			<a href="javascript:searchForm.submit();" class="">
+			<a href="javascript:searchForm.submit();" class="a">
 			  <img src="https://www.greating.co.kr/front_pc/images/icon_header_search.png?ver=210304"  alt="검색">
 			</a>
 		</form>

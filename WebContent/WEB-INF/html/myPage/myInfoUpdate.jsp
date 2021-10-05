@@ -18,6 +18,25 @@ span {
 	margin-top: 3px;
 	color: red;
 }
+* {margin: 0;padding: 0;box-sizing: border-box;font-family: "Noto Sans KR", sans-serif;}
+a {text-decoration: none;color: black;}
+.wrap {width: 100%;height: 1000px;display: flex;align-items: center;justify-content: center;background: rgba(0, 0, 0, 0.1);}
+.join {width: 30%;height: 900px; background: white; border-radius: 20px; display: flex; justify-content: center; align-items: center;flex-direction: column;}
+h2 {color: rgba(145, 140, 0,0.4);font-size: 3em;}
+.login_id {margin-top: 20px;width: 80%;}
+.login_id input {width: 100%;height: 50px;border-radius: 30px;margin-top: 10px;padding: 0px 20px;border: 1px solid lightgray;outline: none;}
+.login_pw {margin-top: 20px;width: 80%;}
+.login_pw input {width: 100%;height: 50px;border-radius: 30px;margin-top: 10px;padding: 0px 20px;border: 1px solid lightgray;outline: none;}
+.login_pw-re{margin-top: 20px;width: 80%;}
+.login_pw-re input{width: 100%;height: 50px;border-radius: 30px;margin-top: 10px;padding: 0px 20px;border: 1px solid lightgray;outline: none;}
+.login_name{margin-top: 20px;width: 80%;}
+.login_name input {width: 100%;height: 50px;border-radius: 30px;margin-top: 10px;padding: 0px 20px;border: 1px solid lightgray;outline: none;}
+.login_addr{margin-top: 20px;width: 80%;}
+.login_addr input{width: 100%;height: 50px;border-radius: 30px;margin-top: 10px;padding: 0px 20px;border: 1px solid lightgray;outline: none;}
+.submit {margin-top: 50px;width: 80%;}
+.submit input {width: 100%;height: 50px;border: 0;outline: none;border-radius: 40px;background: linear-gradient(to left, rgba(145,140,0,0.4), rgba(145,140,0,0.4));color: white;font-size: 1.2em;letter-spacing: 2px;}
+.submit input:hover{background: linear-gradient(to left, rgba(145,140,0,0.4), rgba(145,140,0,0.8));}
+ 
 </style>
 </head>
 <body>

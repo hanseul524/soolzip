@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/user/update")
-public class userUpdateServlet extends HttpServlet {
+public class UserUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public userUpdateServlet() {
+    public UserUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

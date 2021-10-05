@@ -4,12 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>전체 레시피 조회</title>
-        <link rel="stylesheet" href="../../css/comm.css">
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전체 레시피 조회</title>
+<link rel="stylesheet" href="../../css/comm.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
         <style>
         a {
             text-decoration: none;
@@ -56,6 +59,7 @@
         .box li{
          	border:1px solid #8080807a; 
             width: 282px;
+            height: 350px;
             list-style: none;
             padding: 0;
             margin: 0 37px 40px 0;
@@ -175,10 +179,12 @@
 </head>
 <body>
 	<div id="headerMain"></div>
-    <h1 style="text-align: center; margin:20px;padding:50px;">명예의 전당</h1>
-    <!-- 정렬 nav -->
-    <ul></ul>
-    
+	 <br>
+     <hr style="border: 0.2px solid rgb(236, 236, 236);">
+	<div style="text-align: center; margin-bottom:50px;margin-top:50px;">
+    <span style="font-family:'Sunflower', sans-serif;font-size:3rem;font-weight:bold;">명예의 전당</span><br><br>
+    <span style="font-family: 'Sunflower', sans-serif;font-size:1.5rem;">사용자들의 투표로 선정된 믿음과 신뢰의 레시피를 만나보세요 </span>
+    </div>
     <!-- 레시피 리스트 -->
     <ul class="box">
     	<c:if test="${empty lList }">
@@ -200,9 +206,8 @@
             <div class="box-caption">
 				<div class="recipe_List_contents">
 			        <!-- 스토리 내용 -->
-			        <div class="recipe_List_contents_title">${rOne.recipeTitle }[${rOne.recipeViewCount }]</div>
+			        <div class="recipe_List_contents_title">${rOne.recipeTitle }</div>
 			        <div class="recipe_List_contents_content">
-			        	${rOne.recipeContents }
 			        </div>
 			        <!-- 스토리 푸터 -->
 			        <div class="recipe_List_contents_name">
@@ -215,6 +220,10 @@
 			                <span>
 			                    <img style="width:20px; height:20px;" src="/img/댓글 아이콘.png" alt="댓글 수">
 			                    ${rOne.recipeReplyCount }
+			                </span>
+			                <span>
+			                	<img style="width:20px; height:20px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO0AAADVCAMAAACMuod9AAAANlBMVEX////MzMzJycn5+fnQ0NDT09P19fX8/PzZ2dnW1tb09PTc3Nzi4uLR0dHb29vs7Ozt7e3m5uYr60zYAAAGzElEQVR4nO2d65ajKhCFB/Cuifr+Lzsdk/SkO4WyC1Aza3+/zlmzGthCFcWt8ucPIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCFmoXVV1C5Wr66NbkwfXjXPfloWxvyjKZpinyh3dwFR0Y18uIo2HRbUph7E6uqlxuGko13S+iS778TN7uZ76IlToD81FPx3ddpBqLnGhL4rb+WO62A1FhNSn4PITBNdRvfpb8LlnqKlJJPUpuD2tDddzkVLqQ3Bxyg52fdJufdFr+7NZcNfmkfoQ3Jwp8OjKnFoXvW13tMgH+bUuessz6K2yjuEfepuj7be+7qV10dsf6p+HPbUueofDtE4Z5tdNucUx8YbTGOx9/VdcLsX3/8BFtAcM51mxmDPtMFXfba1dNw6tUawK5521OnTWucX4cojQ4UsmW+7qndGOtZfVaNfBEfaO3Yt2rG22A4OuAcvcq3tHsF2BQb0Dp247Zta5gHWCbcP7ABwz9ppR5Z3KIC2yBpsdsWFji8yjGXNPiq8Pjpysoxk0LU3YA3Zvn1zjE4fNE8pxVkEf1JaZIqsO++qltp4anOCyGC84xJqIqkDjzbBOwBZ3UWJhuckDK7D+OLFwdYl9FTjvt59X4T/qAqn6yxsnqBOr0l4SVHnHgWJtCi/pwFVRkWgmcli1qXzkdIhcbLZP6DJ6dFMjwZBCxSYx2jtozfFysQDqC7uxcq/m63LppGj7rfNodCxHy4XFmtVlz89j+y/Jw2r7WrTyOLkVvh+44iu69m27za4eZ6F+OU4uXtvKXn7tiY/s1f+BrrBao/bM6NSzWtnk/ZOVDQ5F52onohrX6u/a1U0P/58pOlc5J4AR1NJsn9lszJ3eVQTuJZUxs+YM2tfozUDBu4NV4o3QLMDA3ex7PR4DDFgb+yIw/LhJc+ypO5mVywqKEjzbh7WmHejyHjwPeCD3T6C389g8HmEYdGGicA7+OkK3ZWXvohnK2KJTNXx8cVRwPCZH2Hg4dydcrWLuuSHvqYYPRfnvdW3xjBQBjTs2PlcI9I0Vj7NVhhvumHWW4vOqwJpcnoW093bCzoh0Hsr47A4qQSpANz2YME+liI7XSoecjDiU1V8/JGJWhGpPpOIgsxCjAsU66FncZgipNdobUnnYIkY03IjnGFtBhnLyuSFOINhQEYvQt8gzp32jNxLPDAd+vcQdsOGo1A7QeJZ7YBlSERd9kzaGcozZplArxZ4RfnNjzo3pW3Ekg2WkVrvet9oY/Mbn2e3BPlmMB/Qt2vLJUUNZKq+HShB3pyLm2837lcolh/FEufGxlHKxbcIup2nLThEnS32RNU4+cg0k2kLWNVDE+lbc6QOWp4nXt4E7cfCh+AOxsWffu1DP57KdhLdW3krStQU4H1Gu6GVDCfYDst0r3Qhy9qULqTxRaRP41/LaW+lFoFNrnSOU57fQkSIfvKqsajusSPBJxfgi9BxIbqBqnwa/kq5xzDFnfB4Xqpl/NHdaNc/0fI5w+/zWd6VMc2SuesepOSjWns37xOJXptQPZ/Dvqr134R16eGihvryruWbivdHSeR8SWeP1oPhkq3/OoLhCtGYzntG8dgsUN6aYW5YKuSvXldxVuAu39vQft9q4K6V4ULV+z3G+/HtPbTfvOcKOI/aOMix3K4xx43C9DdCiHbbyhMERTvyFbFhusvvJcBiV4vY5fPc8VZIG9IwgzVX7g94VgDFjxNTzE/SBTJKXdaA/Tvki6IJVncB0QaONflz2A2yJEP+hwTAu9dM2bAEY/aQdfOmV/Nki+EYzTi4oNsN78v3e36Iv6bKk2eqgJuhtF3xKnisxQg25Zm0zsKkn6VvUX2A5EVT2BPqHrPlqcue7QFPgZM6MlzeXCdixubI/vIDmqQlPPAlmXtsnRxyagygwMeGEhacru1lpcWDYHJJoc0TLzJey5Q10B38jU27XQ97gxq6Z/yqwK4y1l0HsYTfhUm2zd9o/Vc6/sp8n92ypq6b5qkgajjr6JPje025Jti//qSphR4t9pTsiV2d5XCrlOVM+bK9Ws0vqOy975p21uyfpfANNTBgh9th8wg/2yRdtr0fnin5SKd/ChUs9j9Yb1fvxXUqtp8vh7wY4JArUaoYz2OsbMxpOhmgtj51z1ujSDuivIXymn2UQSPgbMs1pf1LlBZdAsLXteEprlXBzowv570rN9XOkPuiGEs/gvvx42xl+YkNB3c0t8pttppk/VOk3bhra1cXs8k+X2zr/6KamYvltgvcfWzRF2fTz2P03Ot+oa+eqqnLOfZonIoQQQgghhBBCCCGEEEIIIYQQQgghhBBCCMnHX/fjUL9ntoTCAAAAAElFTkSuQmCC">
+			                	${rOne.recipeViewCount }
 			                </span>
 			            </div>
 			            <!-- 작성자 오른쪽 -->
@@ -233,7 +242,7 @@
     <table align="center">
 		<!-- 내비게이션 바 -->
 		<tr>
-			<td colspan="4" align="center" style="font-size:1rem;">
+			<td colspan="4" align="center" style="font-size:1.2rem;">
 				${requestScope.pageNavi}
 			</td>
 		</tr>
