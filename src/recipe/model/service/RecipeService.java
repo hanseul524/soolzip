@@ -309,16 +309,17 @@ public class RecipeService {
 		RecipeDAO rDao = new RecipeDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
+			System.out.println("step0");
 			result = rDao.deleteRecipeOne(conn, recipeNo);
-			if (result > 0) {
-				if(rDao.deleteRecipeMkProcess(conn,recipeNo)>0&&rDao.deleteRecipeIngredient(conn, recipeNo)>0&&rDao.deleteRecipeReplyOne(conn, recipeNo)>0) {
-					JDBCTemplate.commit(conn);
-				}
-			}else {
-				JDBCTemplate.rollback(conn);
-			}
+			System.out.println("step1");
+			rDao.deleteRecipeMkProcess(conn,recipeNo);
+			System.out.println("step2");
+			rDao.deleteRecipeIngredient(conn, recipeNo);
+			System.out.println("step3");
+			rDao.deleteRecipeReplyOne(conn, recipeNo);
+			JDBCTemplate.commit(conn);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			JDBCTemplate.rollback(conn);
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(conn);
@@ -397,6 +398,24 @@ public class RecipeService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			pd.setRecipeList(rDao.selectKategorieRecipe(conn, currentPage, recipeMainDrink));
+			pd.setPageNavi(rDao.getPageNavi(conn, currentPage));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn); 
+		}
+		return pd;
+	}
+
+	public PageData printSearchRecipe(int currentPage, String searchInput) {
+		PageData pd = new PageData();
+
+		Connection conn = null;
+		RecipeDAO rDao = new RecipeDAO();
+
+		try {
+			conn = jdbcTemplate.createConnection();
+			pd.setRecipeList(rDao.selectSearchRecipe(conn, currentPage, searchInput));
 			pd.setPageNavi(rDao.getPageNavi(conn, currentPage));
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -38,20 +38,52 @@
 }
 
 #mainImg {
-	width: 400px;
+	width: 350px;
 	border-radius: 10px;
-	max-width: 100%; height: auto; border:1px solid #eaeaea; padding: 0px; 
+	max-width: 100%; height: auto; border:1px solid #eaeaea; padding: 0px;
+	margin: 40px 0 20px 0; 
 }
 #userImg{
 	widtt:100px;
 }
+
+#mkimg{
+	display: block;
+    width: 300px;
+    margin: 0 auto 13px;
 }
+.btn.green {background-color: #9abf7f;}
+.btn {
+	margin: 9px;
+}
+a[class*="btn"] {text-decoration: none;}
+input[class*="btn"], 
+button[class*="btn"] {border: 0;}
+
+.rounded {
+  border-radius: 10px;
+}
+.btn:active {
+	top: 4px;	
+}
+.btn {
+	position: relative;
+	border: 0;
+	padding: 15px 25px;
+	display: inline-block;
+	text-align: center;
+	color: white;
+}
+.btn.green {box-shadow: 0px 4px 0px #87a86f;}
 
 </style>
 <script>
 	$(document).ready(function() {
 		$("#headerMain").load("/html/comm/header.jsp");
 		$("#footerMain").load("/html/comm/footer.html");
+	});
+	$('a').click(function(event){
+	    event.preventDefault(); 
 	});
 </script>
 </head>
@@ -74,13 +106,17 @@
 				<!-- 제조과정 -->
 				<div>
 					<h1>제조과정</h1>
+					
 					<c:forEach  items="${requestScope.mList }" var="mOne" varStatus="index">
-						<img style="width: 700px; height: 500px; border-radius: 10px; <c:if test="${empty mOne.fileNo }">display: none;</c:if>"
+						<img id="mkimg" <c:if test="${empty mOne.fileNo }">display: none;</c:if>"
 							src="/upload/${mOne.fileName }"
 							alt="" >
 						<p>${mOne.makeContents }</p>
 					</c:forEach>
 				</div>
+				<!-- 제조과정 end -->
+				
+				<!-- 댓글작성 -->
 				<div>
 					<h2>한줄 댓글</h2>
 					<form class="box_write"  action="/recipeReply/write" method="post">
@@ -137,6 +173,8 @@
 						</tr>
 						</c:forEach>
 					</table>
+					<!-- 댓글 end -->
+					<!-- 댓글 수정 -->
 					<form action="/recipeReply/modify" method="post" id="modifyForm">
 						<input type="hidden" name="replyContents" id="modifyReplyContents">
 						<input type="hidden" name="replyNo" id="modifyReplyNo">
@@ -163,7 +201,7 @@
 			</div>
 			
 			
-			<!-- navi -->
+			<!-- nav 바  -->
 			<div id="right_area" align="center">
  				<a href="/user/page?userId=${recipeOne.userId }">
  					<img id="userImg" src="/img/myPageLogo.png" alt="">
@@ -208,22 +246,47 @@
  					</c:if>
  				</form>
  		<!-- 레시피 삭제 -->
- 				<form action="/recipe/remove" method="post">
+ 				<form id="recipeRM"action="/recipe/remove" method="post">
  				<c:if test="${user.userId eq recipeOne.userId}">	
  					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
- 					<input type="submit" value="레시피 삭제">
+ 					<a href="javascript:recipeRM.submit();" class="btn green rounded">레시피 삭제</a>
  				</c:if>
  				</form>
  			
  		<!-- 레시피 수정 -->
  			<c:if test="${user.userId eq recipeOne.userId}">
- 				<a href="/recipe/modify?recipeNo=${recipeOne.recipeNo }">레시피 수정</button>
+ 				<a href="/recipe/modify?recipeNo=${recipeOne.recipeNo }" class="btn green rounded">레시피 수정</a>
  			</c:if>
  
- 
+ 				<!-- 재료 리스트 -->
+ 				<style>
+ 				table.type11 {
+				  border-collapse: separate;
+				  border-spacing: 1px;
+				  text-align: center;
+				  line-height: 1.5;
+				  margin: 20px 10px;
+				}
+				table.type11 th {
+				  width: 155px;
+				  padding: 10px;
+				  font-weight: bold;
+				  vertical-align: top;
+				  color: #fff;
+				  background: #918c00 ;
+				}
+				table.type11 td {
+				  width: 155px;
+				  padding: 10px;
+				  vertical-align: top;
+				  border-bottom: 1px solid #ccc;
+				  background: #eee;
+				}
+ 				</style>
+ 				
  				<div style="border-top:10px solid #f1f1f2;">
  					<h1>재료 리스트</h1>
-					<table border="1px">
+					<table class="type11">
 						<thead>
 							<tr>
 								<th>재료</th>

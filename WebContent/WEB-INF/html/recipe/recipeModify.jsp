@@ -175,6 +175,22 @@ table td input {
 // 			return true;
 // 		}
 		
+		
+		for(var i = 0; i < $("input[name='ingredient-name']").length; i++){
+			if(i < 3){
+				if($("input[name='ingredient-name']").get(i).value == ""){
+					alert("추가된 재료의 재료명을 입력하세요.");
+					$("input[name='ingredient-name']").get(i).focus();
+					return true;
+				}
+				if($("input[name='ingredient-gram']").get(i).value == ""){
+					$("input[name='ingredient-gram']").get(i).focus();
+					alert("추가된 재료의 그램을 입력하세요.");
+					return true;
+				}				
+			}
+		}
+		
  		return false;
 	}
 	

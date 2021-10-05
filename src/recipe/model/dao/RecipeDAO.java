@@ -90,7 +90,7 @@ public class RecipeDAO {
 		}
 		return result1;
 	}
-	
+
 	public int insertRecipeMakeProcess1(Connection conn, RecipeMakeProcess tmp, int fileNo) {
 		PreparedStatement pstmt = null;
 		int result1 = 0;
@@ -98,7 +98,7 @@ public class RecipeDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, tmp.getRecipeNo());
-			pstmt.setString(2, fileNo == 0 ? null : fileNo+"");
+			pstmt.setString(2, fileNo == 0 ? null : fileNo + "");
 			pstmt.setString(3, tmp.getMakeContents());
 			result1 = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -249,7 +249,7 @@ public class RecipeDAO {
 	}
 
 	// 레시피 리스트
-	public Recipe selectOneRecipe(Connection conn,String sessionId, int recipeNo) {
+	public Recipe selectOneRecipe(Connection conn, String sessionId, int recipeNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "select recipe_no,(select nvl(count(user_id),0) from recipe_like b where b.recipe_no = r.recipe_no and b.user_id = ?) as like_check, (select nvl(count(s.user_id),0) from recipe_scrap s where s.recipe_no = r.recipe_no and s.user_id = ?) as scrap_check, user_id,recipe_title, file_no, file_name, recipe_contents, recipe_maindrink,recipe_alcohol, recipe_Tag, recipe_savestate,recipe_viewcount,recipe_enrolldate, recipe_replycount, recipe_likecount,recipe_LegendState from recipe r join recipe_file f using(file_no) where recipe_no = ?";
@@ -342,16 +342,16 @@ public class RecipeDAO {
 		return mList;
 	}
 
-
-	//레시피 댓글 등록
-	public int insertRecipeReply(Connection conn, String userId, int recipeNo, String replyContents,Timestamp uploadTime) {
+	// 레시피 댓글 등록
+	public int insertRecipeReply(Connection conn, String userId, int recipeNo, String replyContents,
+			Timestamp uploadTime) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "INSERT INTO RECIPE_REPLY VALUES(SEQ_RECIPE_REPLY.NEXTVAL,?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, recipeNo);
-			pstmt.setString(2,userId);
+			pstmt.setString(2, userId);
 			pstmt.setString(3, replyContents);
 			pstmt.setTimestamp(4, uploadTime);
 			result = pstmt.executeUpdate();
@@ -363,7 +363,7 @@ public class RecipeDAO {
 		return result;
 	}
 
-	//레시피 댓글 리스트
+	// 레시피 댓글 리스트
 	public List<RecipeReply> selectAllRecipeReply(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -392,8 +392,8 @@ public class RecipeDAO {
 		}
 		return List;
 	}
-	
-	//레시피 댓글 삭제
+
+	// 레시피 댓글 삭제
 	public int deleteRecipeReplyOne(Connection conn, int replyNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -409,14 +409,14 @@ public class RecipeDAO {
 		}
 		return result;
 	}
-	
-	//레시피 댓글 수정
+
+	// 레시피 댓글 수정
 	public int updateRecipeReplyOne(Connection conn, int replyNo, String replyContents) {
-		
+
 		PreparedStatement pstmt = null;
-		int result=0;
-		String query="UPDATE recipe_reply SET CONTENTS=? WHERE REPLY_NO=?";
-		
+		int result = 0;
+		String query = "UPDATE recipe_reply SET CONTENTS=? WHERE REPLY_NO=?";
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, replyContents);
@@ -427,11 +427,11 @@ public class RecipeDAO {
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
-		
+
 		return result;
 	}
 
-	//레시피 좋아요 취소
+	// 레시피 좋아요 취소
 	public int deleteRecipeLike(Connection conn, int recipeNo, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -448,8 +448,8 @@ public class RecipeDAO {
 		}
 		return result;
 	}
-	
-	//레시피 좋아요
+
+	// 레시피 좋아요
 	public int insertRecipeLike(Connection conn, int recipeNo, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -466,7 +466,7 @@ public class RecipeDAO {
 		}
 		return result;
 	}
-	
+
 	// 레시피 조회수
 	public int updateRecipeViewCount(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
@@ -532,9 +532,9 @@ public class RecipeDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
-		
+
 	}
-	
+
 	public int deleteRecipeIngredient(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -549,7 +549,7 @@ public class RecipeDAO {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
-		
+
 	}
 
 	public int deleteRecipeOne(Connection conn, int recipeNo) {
@@ -584,8 +584,7 @@ public class RecipeDAO {
 		}
 		return result;
 	}
-	
-	
+
 	public int deleteRecipeMkProcess(Connection conn, int recipeNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -606,24 +605,24 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "update recipe set recipe_title = ?, recipe_contents = ?, recipe_maindrink = ?, recipe_alcohol = ?, recipe_tag = ?, recipe_saveState = ? where recipe_no = ?";
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, recipe.getRecipeTitle());
 			pstmt.setString(2, recipe.getRecipeContents());
 			pstmt.setString(3, recipe.getRecipeMainDrink());
 			pstmt.setInt(4, recipe.getRecipeAlcohol());
-			pstmt.setString(5,recipe.getRecipeTag());
+			pstmt.setString(5, recipe.getRecipeTag());
 			pstmt.setInt(6, recipe.getRecipeSaveState());
 			pstmt.setInt(7, recipe.getRecipeNo());
-			result= pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
-		
+
 		return result;
 	}
 
@@ -631,19 +630,19 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "UPDATE recipe_ingredient set ingredient_name = ?,ingredient_gram = ? where ingredient_no = ?";
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, tmp.getIngredientName());
-			pstmt.setString(2,tmp.getIngredientGram());
-			pstmt.setInt(3,tmp.getIngredientNo());
-			result= pstmt.executeUpdate();
+			pstmt.setString(2, tmp.getIngredientGram());
+			pstmt.setInt(3, tmp.getIngredientNo());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
-		
+
 		return result;
 	}
 
@@ -651,20 +650,20 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "UPDATE recipe_file set file_name =?,file_Path=?,file_size=? where file_no= ? ";
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, recipeFile.getFileName());
 			pstmt.setString(2, recipeFile.getFilePath());
 			pstmt.setLong(3, recipeFile.getFileSize());
 			pstmt.setInt(4, recipeFile.getFileNo());
-			result= pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
-		
+
 		return result;
 	}
 
@@ -672,20 +671,19 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "UPDATE recipe_make_process set File_no=?,make_contents=? where make_no=?";
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, fileNo == 0 ? null : fileNo+"");
+			pstmt.setString(1, fileNo == 0 ? null : fileNo + "");
 			pstmt.setString(2, tmp.getMakeContents());
 			pstmt.setInt(3, tmp.getMakeNo());
-			
-			result= pstmt.executeUpdate();
+
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
 		}
-		
 		return result;
 	}
 
@@ -699,9 +697,49 @@ public class RecipeDAO {
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
 			int start = currentPage * viewCountPerPage - (viewCountPerPage - 1);
 			int end = currentPage * viewCountPerPage;
-			pstmt.setString(1,recipeMainDrink);
+			pstmt.setString(1, recipeMainDrink);
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
+			rset = pstmt.executeQuery();
+			rList = new ArrayList<Recipe>();
+			while (rset.next()) {
+				Recipe recipe = new Recipe();
+				recipe.setRecipeSaveState(rset.getInt("recipe_savestate"));
+				recipe.setRecipeNo(rset.getInt("recipe_no"));
+				recipe.setUserId(rset.getString("USER_ID"));
+				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				recipe.setFileName(rset.getString("file_name"));
+				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
+				recipe.setRecipeReplyCount(rset.getInt("reply_cnt"));
+				recipe.setRecipeLikeCount(rset.getInt("like_cnt"));
+				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
+				rList.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return rList;
+	}
+
+	public List<Recipe> selectSearchRecipe(Connection conn, int currentPage, String searchInput) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Recipe> rList = null;
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_contents like '%'||?||'%' or recipe_tag like'%'||?||'%' or R.recipe_maindrink like '%'||?||'%') where NUM BETWEEN ? AND ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
+			int start = currentPage * viewCountPerPage - (viewCountPerPage - 1);
+			int end = currentPage * viewCountPerPage;
+			pstmt.setString(1, searchInput);
+			pstmt.setString(2, searchInput);
+			pstmt.setString(3, searchInput);
+			pstmt.setInt(4, start);
+			pstmt.setInt(5, end);
 			rset = pstmt.executeQuery();
 			rList = new ArrayList<Recipe>();
 			while (rset.next()) {

@@ -137,6 +137,21 @@ table td input {
 // 			el.focus();
 // 			return true;
 // 		}
+		for(var i = 0; i < $("input[name='ingredient-name']").length; i++){
+			if(i < 3){
+				if($("input[name='ingredient-name']").get(i).value == ""){
+					alert("재료를 3개 이상추가하세요");
+					$("input[name='ingredient-name']").get(i).focus();
+					return true;
+				}
+				if($("input[name='ingredient-gram']").get(i).value == ""){
+					$("input[name='ingredient-gram']").get(i).focus();
+					alert("재료의 그램을 입력하세요.");
+					return true;
+				}				
+			}
+		}
+
  		return false;
 	}
 	
@@ -152,6 +167,10 @@ table td input {
 			alert("대표사진을 추가하세요.");
 			$("#mainFile").focus();
 			return;
+		}else if($('#recipe-content').val()==""){
+			alert("한줄설명을 추가하세요.");
+			$("#recipe-content").focus();
+			return;
 		}
 		
 		//제출일 경우 필수값 체크필요
@@ -162,12 +181,18 @@ table td input {
 		var ingredientName = [];
 		var ingredientGram = [];
 		for(var i = 0; i < $("input[name='ingredient-name']").length; i++){
-			if($("input[name='ingredient-name']").get(i).value != "" && $("input[name='ingredient-gram']").get(i).value == ""){
-				alert("재료의 양을 입력해주세요.");
-				$("input[name='ingredient-gram']").get(i).focus();
-				return;
+			if(i > 2){
+				if($("input[name='ingredient-name']").get(i).value == ""){
+					alert("추가된 재료의 재료명을 입력하세요.");
+					$("input[name='ingredient-name']").get(i).focus();
+					return;
+				}
+				if($("input[name='ingredient-gram']").get(i).value == ""){
+					$("input[name='ingredient-gram']").get(i).focus();
+					alert("추가된 재료의 그램을 입력하세요.");
+					return;
+				}				
 			}
-			
 			ingredientName.push($("input[name='ingredient-name']").get(i).value);
 			ingredientGram.push($("input[name='ingredient-gram']").get(i).value);
 		}
@@ -204,7 +229,7 @@ table td input {
 				</tr>
 				<tr>
 					<th>레시피 한줄설명</th>
-					<td><input type="text" placeholder="내용을 입력하세요." name="recipe-contents"/></td>
+					<td><input type="text" id="recipe-content" placeholder="내용을 입력하세요." name="recipe-contents"/></td>
 				</tr>
 
 				<tr>
