@@ -169,34 +169,34 @@
 	                </tr>
 	                </thead>
 		
-    			<%for(Qna qOne : qList){ %>		
+    			<c:forEach items="${requestScope.qList }" var="qOne" varStatus="index">
+    			
   				   <tbody>
 	                    <tr class="qnaRow" >
- 	                        <td scope="row"><%=qOne.getQnaTitle()%></a></td> 
-	                        <td scope="row"><%=qOne.getQnaNo()%></td> 
-	                        <td scope="row"><%=qOne.getQnaWriteDate()%></td>
-	                        <td scope="row"><%=qOne.getQnaStatus()%></td>
+ 	                        <td scope="row">${qOne.qnaTitle }</a></td> 
+	                        <td scope="row">${qOne.qnaNo }</td> 
+	                        <td scope="row">${qOne.qnaWriteDate }</td>
+	                        <td scope="row">${qOne.qnaStatus }</td>
 	                    </tr>
 	                    
 	                    <tr id="qnaDetail" style="display:none;"  >
 	                    
 	                    	<td colspan="4">
-	                    	문의 내용 : <%=qOne.getQnaContent() %>
+	                    	문의 내용 : ${qOne.qnaContent }
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
 	                    </tr>	 
 	                    <tr style="display:none;">
 	                    
 	                    	<td colspan="4">
-	                    	문의 답변 : <%=qOne.getReplyContent() %>
+	                    	문의 답변 : ${qOne.replyContent } 
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
 	                    	 
 	                    </tr>
 			
 	                </tbody>
-	               <%} %>
-	             
+    			</c:forEach>	
 		
 	            </table>
 	            

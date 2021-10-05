@@ -19,7 +19,8 @@ public class QnaDAO {
 		ResultSet rset = null;
 		List<Qna> qList = null;
 
-		String query="SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO) AS NUM, QNA_NO, USER_ID, QNA_TITLE, QNA_CONTENT, QNA_STATUS, QNA_WRITEDATE FROM QNA)"
+		String query="SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO) AS NUM, QNA_NO, USER_ID, QNA_TITLE,"
+				+ "QNA_CONTENT, QNA_STATUS,reply_content , QNA_WRITEDATE FROM QNA)"
 				+ " WHERE USER_ID = ?";
 		
 		try {
@@ -32,6 +33,7 @@ public class QnaDAO {
 			
 			while(rset.next()) {
 				Qna qna = new Qna();
+				qna.setReplyContent(rset.getString("reply_content"));
 				qna.setQnaNo(rset.getInt("QNA_NO"));
 				qna.setUserId(rset.getString("USER_ID"));
 				qna.setQnaTitle(rset.getString("QNA_TITLE"));
@@ -108,8 +110,9 @@ public class QnaDAO {
 		ResultSet rset = null;
 		List<Qna> qList = null;
 		String query = "SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO ASC) AS NUM,"
-				+ "QNA_NO, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_WRITEDATE, QNA_STATUS FROM QNA)"
-				+ "WHERE NUM BETWEEN ? AND ?";
+				+ "QNA_NO, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_WRITEDATE, QNA_STATUS,"
+				+ "REPLY_CONTENT, REPLY_WRITEDATE, REPLY_USERNAME FROM QNA)"
+				+ "WHERE NUM BETWEEN ? AND ? order by qna_status";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -128,6 +131,9 @@ public class QnaDAO {
 				qna.setUserId(rset.getString("USER_ID"));
 				qna.setQnaWriteDate(rset.getDate("QNA_WRITEDATE"));
 				qna.setQnaStatus(rset.getString("QNA_STATUS"));
+				qna.setReplyContent(rset.getString("REPLY_CONTENT"));
+				qna.setReplyWriteDate(rset.getDate("REPLY_WRITEDATE"));
+				qna.setReplyUserName(rset.getString("REPLY_USERNAME"));
 				qList.add(qna);
 			}
 			System.out.println(qList);
@@ -203,11 +209,10 @@ public class QnaDAO {
 		return totalValue;
 	}
 	// 관리자 문의사항 댓글등록
-	public int updateReply(Connection conn, String userId, int qnaNo, String replyContent) {
+	public int updateReply(Connection conn, int qnaNo, String replyContent, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = "UPDATE QNA SET QNA_STATUS = 'Y', REPLY_CONTENT = ?,"
-				+ "REPLY_USERNAME = ? WHERE QNA_NO = ?";
+		String query = "UPDATE QNA SET QNA_STATUS = 'Y', REPLY_CONTENT = ?, REPLY_USERNAME = ? WHERE QNA_NO = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, replyContent);

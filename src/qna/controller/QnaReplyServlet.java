@@ -1,7 +1,6 @@
 package qna.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,15 +42,13 @@ public class QnaReplyServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		User user = new User();
-		if(session.getAttribute("user")!=null)
+		if(session.getAttribute("user")!= null)
 			user = (User)session.getAttribute("user");
 		String userId = user.getUserId();
 		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 		String replyContent = request.getParameter("replyContent");
-		System.out.println(replyContent);
-		System.out.println(qnaNo);
-		int result = new QnaService().registerReply(userId, qnaNo, replyContent);
-		
+		int result = new QnaService().registerReply(qnaNo, replyContent, userId);
+		// 문의사항 등록 -> userId / 댓글작성 -> userId 똑같은 컬럼이라 오류남
 		if(result > 0) {
 			System.out.println("등록성공");
 			response.sendRedirect("/admin/qnalist");

@@ -93,13 +93,14 @@ public class QnaService {
 		return pd;
 	}
 
-	public int registerReply(String userId, int qnaNo, String replyContent) {
+	public int registerReply(int qnaNO, String replyContent, String userId) {
+	
 		int result = 0;
 		Connection conn = null;
 		
 		try {
 			conn = jdbcTemplate.createConnection();
-			result = new QnaDAO().updateReply(conn, userId, qnaNo, replyContent);
+			result = new QnaDAO().updateReply(conn, qnaNO, replyContent, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

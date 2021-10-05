@@ -137,7 +137,6 @@ body {
   width: 100%;
   overflow: hidden;
   position: relative;
-  pointer-events:none;
 }
 
 .text-con img{
