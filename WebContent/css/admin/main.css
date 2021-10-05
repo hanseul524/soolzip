@@ -43,6 +43,12 @@ ul ul {
     text-align: center;
     padding: 20px;
   }
+  textarea {
+  	box-sizing: border-box;
+  	border: 1px solid #cccaca;
+  	border-radius: 5px;
+  	resize: both;
+  }
 /*   .qna-content { */
 /*   	display: none; */
 /*   } */
