@@ -112,7 +112,7 @@ public class QnaDAO {
 		String query = "SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO ASC) AS NUM,"
 				+ "QNA_NO, QNA_TITLE, QNA_CONTENT, USER_ID, QNA_WRITEDATE, QNA_STATUS,"
 				+ "REPLY_CONTENT, REPLY_WRITEDATE, REPLY_USERNAME FROM QNA)"
-				+ "WHERE NUM BETWEEN ? AND ? order by qna_status";
+				+ "WHERE NUM BETWEEN ? AND ? ORDER BY QNA_STATUS ASC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
