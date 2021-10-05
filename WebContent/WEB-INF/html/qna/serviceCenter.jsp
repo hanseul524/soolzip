@@ -32,6 +32,13 @@
 		$("#headerMain").load("/html/comm/header.jsp");
 		$("#footerMain").load("/html/comm/footer.html");
 
+		
+		$(".qnaRow").click(function() {
+			$(this).closest("tr").next().toggle();
+			$(this).closest("tr").next().next().toggle();
+			$(this).closest("tr").next().next().next().toggle();
+			
+		});
 	});
 </script>
 <body>
@@ -58,7 +65,7 @@
     <div  id="content" onclick="onDisplay" style="display: none;"  >
 
 <!--         <span onclick="this.parentElement.style.display='none'"="close">X</span>  -->
-		<button onclick="this.parentElement.style.display='none'" id="x-button" class>X</button> 
+		<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
         <form action="/top/qna/update" method="post" id="modifyForm">
             <input type="hidden" name="topQnaNo" id="topQnaNo" value="1">
             <div class="mb-3">
@@ -80,8 +87,7 @@
                 <button onclick="topQnaModifyCancle()">취소</button>
             </div>
         
-			</c:if>
-            
+			</c:if>        
     </div>
  <ul class="amount">
     
@@ -97,7 +103,7 @@
     </ul>
 <br><br>
 <hr>
-<div onclick="qnaCreate()" style="display: none;">
+<div onclick="qnaCreate()" style="display: none; display: inline-block;">
     <form action="/qna/write" method="post">
 
         <div class="qna"> 
@@ -183,14 +189,12 @@
 	                    <tr id="qnaDetail" style="display:none;"  >
 	                    	<td colspan="4">
 	                    	문의 내용 : ${qOne.qnaContent }
-	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
 	                    </tr>
 	                   	<c:if test="${qOne.replyContent ne null and qOne.replyContent ne '' }">
 		                    <tr style="display:none;">
 		                    	<td colspan="4">
 		                    	문의 답변 : ${qOne.replyContent } 
-		                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 		                    	</td>
 		                    </tr>
 	                   	</c:if>
@@ -275,8 +279,8 @@
 
 
     //조회 
-    $(this).next().show();
-    $(this).next().next().show();
+    //$(this).next().show();
+    //$(this).next().next().show();
 //     $("#qnaDetail").show();
  });
     </script>
