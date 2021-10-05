@@ -143,7 +143,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1) where NUM BETWEEN ? AND ?";
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_legendstate,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1) where NUM BETWEEN ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
@@ -164,6 +164,7 @@ public class RecipeDAO {
 				recipe.setRecipeReplyCount(rset.getInt("reply_cnt"));
 				recipe.setRecipeLikeCount(rset.getInt("like_cnt"));
 				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
+				recipe.setRecipeLegendState(rset.getInt("recipe_legendstate"));
 				rList.add(recipe);
 			}
 
@@ -764,5 +765,115 @@ public class RecipeDAO {
 		}
 		return rList;
 	}
+	//명예의전당 레시피 리스트
+	public List<Recipe> selectAllLegendRecipe(Connection conn, int currentPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Recipe> rList = null;
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title,recipe_legendstate, file_name, recipe_contents ,recipe_viewCount FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_legendstate=1) where NUM BETWEEN ? AND ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
+			int start = currentPage * viewCountPerPage - (viewCountPerPage - 1);
+			int end = currentPage * viewCountPerPage;
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			rList = new ArrayList<Recipe>();
+			while (rset.next()) {
+				Recipe recipe = new Recipe();
+				recipe.setRecipeNo(rset.getInt("recipe_no"));
+				recipe.setUserId(rset.getString("USER_ID"));
+				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
+				recipe.setFileName(rset.getString("file_name"));
+				recipe.setRecipeContents(rset.getString("RECIPE_CONTENTS"));
+				recipe.setRecipeReplyCount(rset.getInt("reply_cnt"));
+				recipe.setRecipeLikeCount(rset.getInt("like_cnt"));
+				recipe.setRecipeViewCount(rset.getInt("recipe_viewCount"));
+				recipe.setRecipeLegendState(rset.getInt("recipe_legendstate"));
+				rList.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		return rList;
+	}
+
+	public String getLegendPageNavi(Connection conn, int currentPage) {
+		int pageCountPerView = 5;// [1,2,3,4,5] , [6,7,8,9,10] 페이지번호는 5개 씩 짤라서 보여줌
+		int viewTotalCount = legendTotalCount(conn); // 총 게시물 수
+		int viewCountPerPage = 12; // 한 페이지에 들어가는 게시물수
+		int pageTotalCount = 0; // 페이지 총 개수
+
+		int pageTotalCountMod = viewTotalCount % viewCountPerPage; // 총게시물 갯수를 페이지카운트로 나눈 나머지
+
+		if (pageTotalCountMod > 0) {
+			pageTotalCount = viewTotalCount / viewCountPerPage + 1; // 나머지가 0보다 크면 페이지를 하나 추가한다
+		} else {
+			pageTotalCount = viewTotalCount / viewCountPerPage;
+		}
+
+		int startNavi = ((currentPage - 1) / pageCountPerView) * pageCountPerView + 1;
+		int endNavi = startNavi + pageCountPerView - 1;
+
+		// 7페이지까지 게시물 존재하는데 8,9,10 페이지까지 보여지는것을 방지
+		if (endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+		if (startNavi == 1) {
+			needPrev = false;
+		}
+		if (endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		StringBuilder sb = new StringBuilder();
+
+		if (needPrev) {
+			sb.append("<a href='/legend/recipe?currentPage=" + (startNavi - 1) + "'>[이전] </a>");
+		}
+		for (int i = startNavi; i <= endNavi; i++) {
+			if (i == currentPage) {
+				sb.append(i);
+			} else {
+				sb.append("<a href='/legend/recipe?currentPage=" + i + "'>" +" "+ i + " "+"</a>");
+			}
+		}
+		if (needNext) {
+			sb.append("<a href='/legend/recipe?currentPage=" + (endNavi + 1) + "'> [다음]</a>");
+		}
+
+		return sb.toString();
+	}
+
+	// 페이지 토탈 갯수 가져오는 메소드
+	public int legendTotalCount(Connection conn) {
+		int totalValue = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM recipe where recipe_savestate = 1 and recipe_legendstate = 1";
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if (rset.next()) {
+				totalValue = rset.getInt("TOTALCOUNT");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(stmt);
+			JDBCTemplate.close(rset);
+		}
+		return totalValue;
+	}
+	
+	
 
 }

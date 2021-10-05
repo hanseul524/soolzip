@@ -75,7 +75,9 @@ button[class*="btn"] {border: 0;}
 	color: white;
 }
 .btn.green {box-shadow: 0px 4px 0px #87a86f;}
-
+.replytb{width:100%;}
+.replytb{border:1px solied black;}
+.replytb td{text-align:center;}
 </style>
 <script>
 	$(document).ready(function() {
@@ -133,15 +135,14 @@ button[class*="btn"] {border: 0;}
 					
 					
 					<c:if test="${user.userId ne null and userId ne ''}">
-						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents" style="width:300px; height:50px; resize:none; "></textarea>
-						<button name="button" type="submit">댓글남기기</button>
+						<textarea placeholder="한 줄 댓글을 남겨주세요." name="replyContents" style="width:80%; height:50px; resize:none; position:relative"></textarea>
+						<button name="button" type="submit" style="float:right; margin-right:15px; margin-left:-50px;height:50px;background:#fff;border:none">댓글남기기</button>
 					</c:if>
 					</form>
 					
 					<!-- 댓글 리스트 -->
-					<table>
+					<table class="replytb">
 						<tr>
-							<th>이미지</th>
 							<th>아이디</th>
 							<th>댓글</th>
 							<th>작성날짜</th>
@@ -149,10 +150,9 @@ button[class*="btn"] {border: 0;}
 						</tr>
 						<c:forEach items="${recipeOne.replies}" var="reply" varStatus="index">
 						<tr>
-							<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
 							<td>${reply.replyUserId }</td>
 							<td>${reply.replyContents }</td>
-							<td>${reply.replyDate }</td>
+							<td>${reply.replyDate.getMonth()+1 }.${reply.replyDate.getDate()} ${reply.replyDate.getHours() }:${reply.replyDate.getMinutes() }</td>
 							<td>
 							<c:if test="${user.userId eq reply.replyUserId }">
 									<a href="javascript:void(0)" onclick="showModifyReply(this)">수정</a>

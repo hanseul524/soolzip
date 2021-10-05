@@ -109,7 +109,7 @@ $(document).ready(function () {
 		<ul class="myMenu">
 			<li class="menu1"><a href="/recipe/list">레시피</a>
 			<li class="menu2"><a href="/story/list">스토리</a></li>
-			<li class="menu3"><a href="#">명예의전당</a></li>
+			<li class="menu3"><a href="/legend/recipe">명예의전당</a></li>
 			<li class="menu4"><a href="#">투표현황</a></li>
 			<li class="menu5"><a href="/service/center">고객센터</a></li>
 		</ul>

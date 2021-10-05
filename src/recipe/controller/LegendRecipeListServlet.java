@@ -42,12 +42,12 @@ public class LegendRecipeListServlet extends HttpServlet {
 			currentPage =  Integer.parseInt(getCurrentPage);
 		} 
 		
-		PageData pageData = new RecipeService().printAllRecipe(currentPage);
-		List<Recipe> rList = pageData.getRecipeList();
+		PageData pageData = new RecipeService().printAllLegendRecipe(currentPage);
+		List<Recipe> lList = pageData.getRecipeList();
 		
 		
-		if(!rList.isEmpty()) {
-			request.setAttribute("rList", rList);
+		if(!lList.isEmpty()) {
+			request.setAttribute("lList", lList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());
 			request.getRequestDispatcher("/WEB-INF/html/recipe/legendRecipe.jsp").forward(request, response);	
 		}else {
