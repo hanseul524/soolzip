@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	String pageNavi = (String)request.getAttribute("pageNavi");
-%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -38,28 +35,6 @@ $(document).ready(function () {
 	});
 });
 </script>
-<style>
-.myButton {
-    background-color:#acacac;
-    border-radius:20px;
-    border:1px solid #8a8a8a;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-size:12px;
-    padding:0 20px;
-    text-decoration:none;
-    width: 100px;
-    height: 40px;
-  }
-  .myButton:hover {
-    background-color:rgb(145, 140, 0);
-  }
-  .myButton:active {
-    position:relative;
-    top:1px;
-  }
-</style>
 </head>
 <body>
 <div id="headerMain"></div>
@@ -90,21 +65,20 @@ $(document).ready(function () {
   </div>
   <div class="menu-contents">
     <div id="contents-header">
-    <form action="" method="get">
+    <form action="" method="">
       <h2>투표 관리</h2>
-      <button class="myButton" type="submit">start</button>
-      <button class="myButton" type="submit">end</button>
       <hr style="border-top: 1px solid black; margin: 10px;">
     </div>
 <!--     <div id="contents-search"> -->
 <!--     <form action="/user/search" method="get"> -->
 <!--       <input type="text" name="searchId" id="user-id" placeholder="아이디로 회원 조회"> -->
 <!--       <input type="submit" id="search" value="검색"> -->
-<!-- <!--       <a href="#"><img src="/img/icon_header_search.png" alt=""></a> --> -->
+<!-- <!--       <a href="#"><img src="/img/icon_header_search.png" alt=""></a> -->
 <!--     </form> -->
 <!--     </div> -->
     <div id="contents-list">
     <table class="table table-hover">
+    <span><i class="fas fa-chevron-right"></i>&nbsp;&nbsp;전체 레시피 순위</span>
       <tr>
         <th>레시피 번호</th>
         <th>제목</th>
@@ -112,32 +86,54 @@ $(document).ready(function () {
         <th>조회수</th>
         <th>아이디</th>
         <th>작성일</th>
+        <th>선택</th>
       </tr>
     <c:forEach items="" var="" varStatus="">
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+         <td>01</td>
+         <td>소주</td>
+         <td>10</td>
+         <td>125</td>
+         <td>user01</td>
+         <td>2021-10-05</td>
+        <td><input type="checkbox" name="" id=""></td>
       </tr>
     </c:forEach>
     <hr> 
-<!--     <div class="text-center"></div> -->
-<!--       <ul class="pagination"> -->
-<!--         <li><a href="#">1</a></li> -->
-<!--         <li><a href="#">2</a></li> -->
-<!--         <li><a href="#">3</a></li> -->
-<!--         <li><a href="#">4</a></li> -->
-<!--         <li><a href="#">5</a></li> -->
-<!--       </ul> -->
-    </form>
     </table>
+    	<button type="submit" class="myButton" value="">후보 선정하기</button>
+    </form>
+        <form action="" method="">
+      <table class="table table-hover">
+        <span><i class="fas fa-chevron-right"></i>&nbsp;&nbsp;명예의전당 후보 레시피</span>
+        <tr>
+          <th>레시피 번호</th>
+          <th>제목</th>
+          <th>좋아요</th>
+          <th>조회수</th>
+          <th>아이디</th>
+          <th>작성일</th>
+        </tr>
+      <c:forEach items="" var="" varStatus="">
+        <tr>
+          <td>01</td>
+          <td>소주</td>
+          <td>10</td>
+          <td>125</td>
+          <td>user01</td>
+          <td>2021-10-05</td>
+        </tr>
+      </c:forEach>
+      <hr>
+    </table>
+    <div class="btnarea">
+      <button type="submit" class="stBtn" value="">start</button>
+      <button type="submit" class="stBtn" value="">end</button>
+    </div>
+  </form>
     </div>
   </div>
 </div>
-</form>
 <div id="footerMain"></div> 
 </body>
 </html>
