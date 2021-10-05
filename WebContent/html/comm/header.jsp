@@ -121,12 +121,6 @@ $(document).ready(function () {
 			  <img src="https://www.greating.co.kr/front_pc/images/icon_header_search.png?ver=210304"  alt="검색">
 			</a>
 		</form>
-		<input type="text" id="searchInput" class="searchInput"
-			placeholder="주류명 또는 레시피명을 검색해주세요." autocomplete="off"> <a
-			href="#" class=""> <img
-			src="https://www.greating.co.kr/front_pc/images/icon_header_search.png?ver=210304"
-			id="dvSrhFilterBtn2" alt="검색" style="outline:none;">
-		</a>
 	</div>
 </div>
 </body>

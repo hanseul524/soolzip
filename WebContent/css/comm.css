@@ -101,6 +101,10 @@ body {
 	background: transparent;
 }
 
+.direct-search input:focus{
+	ouline:none;
+}
+
 .direct-search a {
 	position: absolute;
 	right: 10px;

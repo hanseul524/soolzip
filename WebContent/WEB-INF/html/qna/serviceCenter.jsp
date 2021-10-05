@@ -185,15 +185,15 @@
 	                    	문의 내용 : ${qOne.qnaContent }
 	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
 	                    	</td>
-	                    </tr>	 
-	                    <% if(qOne.getReplyContent() != null){ %>
-	                    <tr style="display:none;">
-	                    	<td colspan="4">
-	                    	문의 답변 : ${qOne.replyContent } 
-	                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
-	                    	</td>
 	                    </tr>
-						<%} %>
+	                   	<c:if test="${qOne.replyContent ne null and qOne.replyContent ne '' }">
+		                    <tr style="display:none;">
+		                    	<td colspan="4">
+		                    	문의 답변 : ${qOne.replyContent } 
+		                    	<button onclick="this.parentElement.style.display='none'" id="x-button">X</button> 
+		                    	</td>
+		                    </tr>
+	                   	</c:if>
 	                </tbody>
     			</c:forEach>	
 		
