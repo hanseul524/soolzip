@@ -186,21 +186,24 @@ public class StoryDAO {
 		return totalValue;
 	}
 	//스토리 상세
-	public Story selectOneStroy(Connection conn, int storyNo) {
+	public Story selectOneStroy(Connection conn, int storyNo, String sessionId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql ="SELECT STORY_NO,USER_ID,STORY_CONTENTS,FILE_NO,STORYFILE_NAME,STORY_TAG,STORY_VIEWCOUNT,STORY_ENROLLDATE,STORY_REPLYCOUNT,STORY_LIKE_COUNT FROM STORY S JOIN STORY_FILE F ON S.FILE_NO = F.STORYFILE_NO WHERE STORY_NO = ?";
+		String sql ="SELECT STORY_NO,(SELECT NVL(COUNT(USER_ID),0) FROM STORY_LIKE B WHERE B.STORY_NO = S.STORY_NO AND B.USER_ID=?)AS LIKE_CHECK, USER_ID,STORY_CONTENTS,FILE_NO,STORYFILE_NAME,STORY_TAG,STORY_VIEWCOUNT,STORY_ENROLLDATE,STORY_REPLYCOUNT,STORY_LIKE_COUNT FROM STORY S JOIN STORY_FILE F ON S.FILE_NO = F.STORYFILE_NO WHERE STORY_NO = ?";
 		Story storyOne = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, storyNo);
+			pstmt.setString(1, sessionId);
+			pstmt.setInt(2, storyNo);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				storyOne = new Story();
-				storyOne.setStoryNo(storyNo);
+				storyOne.setStoryNo(rset.getInt("STORY_NO"));
+				storyOne.setLikeCheck(rset.getInt("like_check"));
 				storyOne.setUserId(rset.getString("USER_ID"));
 				storyOne.setStoryContents(rset.getString("STORY_CONTENTS"));
+				storyOne.setFileNo(rset.getString("File_No"));
 				storyOne.setFileName(rset.getString("STORYFILE_NAME"));
 				storyOne.setStoryTag(rset.getString("STORY_TAG"));
 				storyOne.setStoryEnrollDate(rset.getDate("STORY_ENROLLDATE"));
@@ -324,7 +327,7 @@ public class StoryDAO {
 	public int deleteStoryLike(Connection conn, int storyNo, String userId) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = "DELETE FROM STORY_like WHERE STORY_NO=? and user_id=?";
+		String sql = "DELETE FROM STORY_LIKE WHERE STORY_NO=? and user_id=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, storyNo);
@@ -366,6 +369,43 @@ public class StoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	//스토리 수정
+	public int updateStory(Connection conn, Story story) {
+		PreparedStatement pstmt = null;
+		int result = 0 ;
+		String sql = "UPDATE STORY SET STORY_CONTENTS=?,STORY_TAG=? WHERE STORY_NO=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, story.getStoryContents());
+			pstmt.setString(2, story.getStoryTag());
+			pstmt.setInt(3, story.getStoryNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	//스토리 파일 수정
+	public int updateStoryFile(Connection conn, StoryFile storyFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql="UPDATE STORY_FILE SET STORYFILE_NAME=?,STORYFILE_PATH=?,STORYFILE_SIZE=? WHERE STORYFILE_NO=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, storyFile.getFileName());
+			pstmt.setString(2, storyFile.getFilePath());
+			pstmt.setLong(3, storyFile.getFileSize());
+			pstmt.setInt(4, storyFile.getFileNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;

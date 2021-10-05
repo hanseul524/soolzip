@@ -87,6 +87,7 @@ public class RecipeModifyServlet extends HttpServlet {
 		//어떤 레시피 인지 확인하기위한 변수 [recipeNo]
 		int recipeNo = Integer.parseInt(multi.getParameter("recipeNo"));
 		
+		
 		// 레시피 테이블에 수정사항 업데이트 하기위한 변수
 		int recipeSaveState = Integer.parseInt(multi.getParameter("recipeSaveState"));
 		String recipeTitle = multi.getParameter("recipe-title");

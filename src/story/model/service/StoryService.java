@@ -62,14 +62,14 @@ public class StoryService {
 		return page;
 	}
 	//상세 조회
-	public Story pintOneStroy(int storyNo) {
+	public Story pintOneStroy(int storyNo, String sessionId) {
 		Story storyOne = null;
 		Connection conn = null;
 		List<StoryReply> list = null;
 		StoryDAO sDAO = new StoryDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
-			storyOne = sDAO.selectOneStroy(conn, storyNo);
+			storyOne = sDAO.selectOneStroy(conn, storyNo,sessionId);
 			//댓글 storyReply
 			list = sDAO.selectAllStoryReply(conn, storyNo);
 			storyOne.setReplies(list);
@@ -180,7 +180,6 @@ public class StoryService {
 				JDBCTemplate.rollback(conn);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(conn);
@@ -222,6 +221,30 @@ public class StoryService {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
+		}
+		return result;
+	}
+	//스토리 수정
+	public int modifyStory(Story story, StoryFile storyFile) {
+		int result = 0;
+		Connection conn = null;
+		StoryDAO storyDAO = new StoryDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			
+			System.out.println("step1");
+			result = storyDAO.updateStory(conn,story);
+			storyDAO.updateStoryFile(conn,story.getStoryFile());
+			System.out.println("step2");
+			if(result>0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(conn);
