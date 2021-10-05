@@ -1,6 +1,7 @@
 package topqna.model.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
@@ -43,6 +44,8 @@ public class TopQnaUpdateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+
 		//HttpSession session = request.getSession();
 		//String userId = request.getSession().getAttribute("userId").toString();
 		HttpSession session = request.getSession();
@@ -64,9 +67,20 @@ public class TopQnaUpdateServlet extends HttpServlet {
 
 		if(result>0) {
 
-			response.sendRedirect("/service/center");
+			PrintWriter writer = response.getWriter(); 
+			writer.print("<script>");
+			writer.print("alert('수정완료');");
+			writer.print("window.location = '/service/center';");
+			writer.print("self.close();");
+			writer.print("</script>");
+			writer.close();
+			
+			
+			//response.sendRedirect("/service/center");
+			
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/qna/qnaError.html").forward(request, response);
+
 		}
 		
 		

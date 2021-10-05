@@ -58,6 +58,7 @@ public class ServiceCenterServlet extends HttpServlet {
 			request.setAttribute("tqList", tqList);
 			request.setAttribute("qList", qList);
 			request.getRequestDispatcher("/WEB-INF/html/qna/serviceCenter.jsp").forward(request, response);
+			
 		} else {
 			request.getRequestDispatcher("/WEB-INF/html/qna/qnaError.html").forward(request, response);
 		}

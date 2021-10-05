@@ -249,9 +249,10 @@
         $("#qnaCreatebtn").show();
 
     } 
-    $(".tablinks:eq(0)").addClass("active");
-
+   
+    $(".tablinks").eq(0).addClass("active");
     $("#qnawrite").css('display', 'block');
+    
     $(".tablinks").click(function(event) {
         let selectedIndex = $(this).index();
         console.log(selectedIndex);
@@ -260,6 +261,16 @@
                 $(item).css('display', 'none');
             } else {
                 $(item).css('display', 'block');
+            }
+
+        });
+        $(".tablinks").each(function(index, item) {
+            if (index != selectedIndex) {
+                $(item).removeClass("active");
+
+            } else {
+
+                $(this).addClass('active');
             }
 
         });
