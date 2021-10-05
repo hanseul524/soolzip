@@ -41,6 +41,7 @@ public class QnaListAllServlet extends HttpServlet {
 		}
 		PageData pageData = new QnaService().printAllQna(currentPage);
 		List<Qna> qList = pageData.getQnaList();
+		System.out.println(qList);
 		if(!qList.isEmpty()) {
 			request.setAttribute("qList", qList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());

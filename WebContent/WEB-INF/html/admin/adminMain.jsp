@@ -86,35 +86,36 @@ $(document).ready(function () {
 <!--     <form action="/admin/qnalist" method="get"> -->
     <table class="table table-hover">
       <tr>
-        <th scope="col">접수번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">작성자 ID</th>
-        <th scope="col">등록일</th>
-        <th scope="col">상태</th>
+        <th>접수번호</th>
+        <th>제목</th>
+        <th>작성자 ID</th>
+        <th>등록일</th>
+        <th>상태</th>
       </tr>
-
-	<%for(Qna qna : qList){ %>
+	<!-- 문의사항 리스트 -->
+<%--     <c:forEach items="${requestScope.qList}" var="qna" varStatus="index"> --%>
+<%for(Qna qna : qList){ %>	
 	<tbody>
       <tr class="qnaRow">
-        <td scope="row"><%=qna.getQnaNo() %></td>
-        <td scope="row"><%=qna.getQnaTitle() %></td>
-        <td scope="row"><%=qna.getUserId() %></td>
-        <td scope="row"><%=qna.getQnaWriteDate() %></td>
-        <td scope="row"><%=qna.getQnaStatus() %></td>
+        <td><%=qna.getQnaNo() %></td>
+        <td><%=qna.getQnaTitle() %></td>
+        <td><%=qna.getUserId() %></td>
+        <td><%=qna.getQnaWriteDate() %></td>
+        <td><%=qna.getQnaStatus() %></td>
       </tr>
       <tr id="qnaDetail" style="display:none;">
       	<td colspan="5"><%=qna.getQnaContent() %></td>
       </tr>
       <tr style="display:none;">
       	<td colspan="3"><%=qna.getReplyContent() %></td>
-      	<td><%=qna.getUserId() %></td>
-      	<td><%=qna.getQnaWriteDate() %></td>
+      	<td><%=qna.getReplyUserName() %></td>
+      	<td><%=qna.getReplyWriteDate() %></td>
       </tr>
+      <!-- 댓글작성 -->
       <tr style="display:none;">
       	<td colspan="5">
 		<form action="/qna/reply" method="post">
-		<input type="hidden" name="qnaNo" value="<%=qna.getQnaNo() %>">
-		
+		<input type="hidden" name="qnaNo" value="<%=qna.getQnaNo()%>">
 		<textarea style="width: 60%; height: 20%;" name="replyContent" id="reply"></textarea>
 		<input type="submit" value="댓글 등록">
 		</form>
@@ -122,6 +123,7 @@ $(document).ready(function () {
       </tr>
 	</tbody>
 	<%} %>
+<%--     </c:forEach> --%>
     </table>
     <tr>
     	<td colspan="10" align="center">
