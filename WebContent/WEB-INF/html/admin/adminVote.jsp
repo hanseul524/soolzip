@@ -38,6 +38,32 @@
 		});
 	});
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".myButton").on("click",function(){
+		if(confirm("후보선정을 하시겠습니까?")){
+			return true;
+		}else{
+			return false;
+		}
+	});
+	$(".stBtn1").on("click",function(){
+		if(confirm("투표를 시작하시겠습니까?")){
+			return true;
+		}else{
+			return false;
+		}
+	});
+	$(".stBtn2").on("click",function(){
+		if(confirm("투표를 종료하시겠습니까?")){
+			return true;
+		}else{
+			return false;
+		}
+	});
+});
+</script>
+
 </head>
 <body>
 	<div id="headerMain"></div>
@@ -135,12 +161,12 @@
 			</table>
 			<div class="btnarea">
 				<input type="hidden" name="voting-state" value="Y">
-				<button type="submit" class="stBtn" value="">start</button>
+				<button type="submit" class="stBtn1" value="">start</button>
 			</form>
 
 				<form action="/vote/end" method="post">
 					<input type="hidden" name="voting-state" value="N">
-					<button type="submit" class="stBtn" value="">end</button>
+					<button type="submit" class="stBtn2" value="">end</button>
 				</form>
 			</div>
 

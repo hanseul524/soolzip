@@ -257,7 +257,7 @@ p{font-size:1.3rem;}
  				<form id="recipeRM"action="/recipe/remove" method="post">
  				<c:if test="${user.userId eq recipeOne.userId}">	
  					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
- 					<a href="javascript:recipeRM.submit();" class="btn green rounded" style="float:left; margin-left:50px;">레시피 삭제</a>
+ 					<a href="javascript:recipeRM.submit();" onclick="return confirm('삭제를 하시겠습니까?');" class="btn green rounded" style="float:left; margin-left:50px;">레시피 삭제</a>
  				</c:if>
  				</form>
  			

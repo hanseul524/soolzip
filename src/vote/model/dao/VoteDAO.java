@@ -17,7 +17,7 @@ public class VoteDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<RecipeCandidate> cList = null;
-		String query = "select A.candidate_no, recipe_title, recipe_no,file_name,user_id, (select count(*) from vote where candidate_no = A.candidate_no) as vote_ct, nvl((select candidate_no from vote where user_id = ?), 0) as vote_at from recipe_candidate a join (select * from recipe join recipe_file using(file_no)) using(recipe_no)";
+		String query = "select A.candidate_no, recipe_title, recipe_no,file_name,user_id, (select count(*) from vote where candidate_no = A.candidate_no and vote_state='Y') as vote_ct, nvl((select candidate_no from vote where user_id = ? and vote_state='Y'), 0) as vote_at from recipe_candidate a join (select * from recipe join recipe_file using(file_no)) using(recipe_no)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -114,7 +114,7 @@ public class VoteDAO {
 		ResultSet rset = null;
 		int result = 0;
 		String querySelect = "SELECT * FROM (select RANK() OVER (ORDER BY \"voteCount\" desc)as RANK,candidate_no, recipe_no, fixed_date,\"voteCount\" from (select candidate_no, recipe_no, fixed_date,nvl(\"득표수\",0) as\"voteCount\" from recipe_candidate left OUTER join (select count(*) as\"득표수\", candidate_no from vote group by candidate_no) using(candidate_no))) where RANK = 1";
-		String query = "update recipe set recipe_legendState =1 where recipe_no = ?";
+		String query = "update recipe set recipe_legendState =1, legend_enrolldate = sysdate where recipe_no = ?";
 		try {
 			pstmt = conn.prepareStatement(querySelect);
 			rset = pstmt.executeQuery();
@@ -201,6 +201,21 @@ public class VoteDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, candidateNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateUserVoteState(Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update vote set vote_state = 'N'";
+		try {
+			pstmt = conn.prepareStatement(query);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

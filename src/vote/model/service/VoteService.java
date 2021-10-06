@@ -78,6 +78,8 @@ public class VoteService {
 			conn = jdbcTemplate.createConnection();
 			result = vDao.updateVoteState(conn ,votingState);
 			if(result>0) {
+				vDao.updateUserVoteState(conn);
+				
 				JDBCTemplate.commit(conn);
 			}else {
 				JDBCTemplate.rollback(conn);

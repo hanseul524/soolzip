@@ -42,9 +42,7 @@ public class VoteListServlet extends HttpServlet {
 		String votingState= new VoteService().printVotingState();
 		
 		List<RecipeCandidate> cList = new VoteService().printVoteRecipe(userId);
-		for(RecipeCandidate r : cList) {
-			System.out.println(r.toString());
-		}
+		
 		
 		if(!cList.isEmpty()) {
 			request.setAttribute("votingState",votingState);
