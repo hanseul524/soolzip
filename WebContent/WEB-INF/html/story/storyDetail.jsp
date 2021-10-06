@@ -140,8 +140,8 @@
                         <textarea style="height: 100px; width: 80%; resize: none;" name="replyContents" id="text" class="reply_form"></textarea>
                     <c:if test="${user.userId eq null }">          
 <!--                 	css수정해야한다. -->
-                    	<a class="btn" style="height:100px; width:100px; background-color:  #d3d3d3" href="/index.jsp">
-                    		<h2 style="font-weight: bold; font-size:20px; margin-top: 32px;">Login</h2>
+                    	<a class="btn" id="login_link" href="/index.jsp">
+                    		<div style="margin-top:35px;">로그인</div>
                     	</a>
                     </c:if>
                     <c:if test="${user.userId ne null and userId ne '' }">
@@ -196,8 +196,8 @@
 		                        <!-- 댓글 작성자 작성일 -->
 		                            ${reply.replyDate }
 		                            <c:if test="${user.userId eq reply.replyUserId }">
-		                             <a href="javascript:void(0)" onclick="showModifyReply(this);">수정</a>
-		                             <a href="/storyReply/delete?storyNo=${reply.storyNo }&replyNo=${reply.replyNo}">삭제</a>
+		                             <a class="modify_submit" href="javascript:void(0)" onclick="showModifyReply(this);">수정</a>
+		                             <a class="modify_submit" href="/storyReply/delete?storyNo=${reply.storyNo }&replyNo=${reply.replyNo}">삭제</a>
 		                            </c:if>
 		                        </h4>
 		                            <!-- 이름을 한번더 넣을거면 -->
@@ -207,14 +207,26 @@
 	                    </div>
                  		<table>
                            <tr style="display:none;">
-								<td><img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px"></td>
-								<td>${reply.replyUserId }</td>
-								<td><input type="text" size="40" value="${reply.replyContents }" id="modifyReply"></td>
-								<td>${reply.replyDate }</td>
 								<td>
-									<a href="javascript:void(0)" onclick="modifyReply(this,${reply.replyNo},${reply.storyNo })">수정완료</a>
-									/
-									<a href="javascript:void(0)" onclick="hideModifyReply(this)">취소</a>
+									<div style="margin-left: 50px ">
+										<img alt="" src="/img/myPageLogo.png" style="width:50px;height:50px">
+									</div>
+								</td>
+								<td>
+									<div style="margin-left: 10px ">
+										${reply.replyUserId }
+									</div>
+								</td>
+								<td><input style="margin-left: 10px " type="text" size="40" value="${reply.replyContents }" id="modifyReply"></td>
+								<td >
+									<div style="margin-left: 10px ">
+										${reply.replyDate }
+									</div>
+								</td>
+								<td>
+									<a class="modify_submit" style="margin-left: 10px; " href="javascript:void(0)" onclick="modifyReply(this,${reply.replyNo},${reply.storyNo })">수정완료</a>
+									
+									<a class="modify_submit" style="margin-left: 10px; href="javascript:void(0)" onclick="hideModifyReply(this)">취소</a>
 								</td>			
 							</tr>
                        </table>
@@ -225,23 +237,37 @@
 						<input type="hidden" name="storyNo" id="modifyStoryNo">
 					</form>
                 </div>
+                
                 <!-- 회원들 댓글 -->
 
                 <!-- 회원들 댓글 -->
+			<div class="bnr">
+            <div style="margin-left: 50px" class="jackpots">ｓｏｏＬ</div>
+<!--             <div style="margin-left: 100px" class="jackpots">ｏ</div> -->
+<!--             <div style="margin-left: 100px" class="jackpots">ｏ</div> -->
+<!--             <div style="margin-left: 100px" class="jackpots">Ｌ</div> -->
+			<div style="margin-left: 100px" class="jackpots">story</div>
+            <div style="margin-left: 115px" class="jackpots">.ＺＩＰ</div>
+<!--             <div style="margin-left: 100px" class="jackpots">Ｉ</div> -->
+<!--             <div style="margin-left: 100px" class="jackpots">Ｐ</div> -->
+            <div style="margin-left: 100px" class="jackpots"></div>
+			</div>
+           
+            
             </div>
         </div>
     </div>
-    <div class="likebuble"></div>
-     <div class="likebuble"></div>
-      <div class="likebuble"></div>
-       <div class="likebuble"></div>
-        <div class="likebuble"></div>
-         <div class="likebuble"></div>
-          <div class="likebuble"></div>
-           <div class="likebuble"></div>
-            <div class="likebuble"></div>
-             <div class="likebuble"></div>
-              <div class="likebuble"></div>
+<!--     <div class="likebuble"></div> -->
+<!--      <div class="likebuble"></div> -->
+<!--       <div class="likebuble"></div> -->
+<!--        <div class="likebuble"></div> -->
+<!--         <div class="likebuble"></div> -->
+<!--          <div class="likebuble"></div> -->
+<!--           <div class="likebuble"></div> -->
+<!--            <div class="likebuble"></div> -->
+<!--             <div class="likebuble"></div> -->
+<!--              <div class="likebuble"></div> -->
+<!--               <div class="likebuble"></div> -->
     <div id="footerMain"></div>
 	<script>
 		function modifyReply(obj, replyNo , storyNo){
@@ -256,7 +282,7 @@
 			$(obj).closest("h4").hide();
 		}
 		function hideModifyReply(obj) {
-			$(obj).closest("h4").prev().show();
+			$(obj).parents("h4").prev().show();
 			$(obj).closest("h4").hide();
 		}
 	</script>
