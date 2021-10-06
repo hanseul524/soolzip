@@ -17,7 +17,7 @@ public class Story {
 	private String fileNo; //대표 사진 id
 	private String fileName;
 	private StoryFile storyFile;
-	private int likeCheck;// 좋아요 상태
+	private int likeCheck;// 좋아요 상태 
 	
 	private List<StoryReply> replies; //댓글 리스트
 	public Story() {
