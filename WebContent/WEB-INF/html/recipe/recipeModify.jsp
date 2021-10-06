@@ -336,7 +336,7 @@ span {
 						<select name="recipe-mainDrink" id="" value="${recipeOne.recipeMainDrink }">
 							<option value="소주">소주</option>
 							<option value="맥주">맥주</option>
-							<option value="먹걸리">막걸리</option>
+							<option value="막걸리">막걸리</option>
 							<option value="와인">와인</option>
 							<option value="보드카">보드카</option>
 							<option value="럼">럼</option>
