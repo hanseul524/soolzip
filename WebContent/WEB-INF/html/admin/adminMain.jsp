@@ -76,7 +76,7 @@ $(document).ready(function () {
           <i class="fas fa-user-circle"></i><a href="/admin/list">관리자 관리</a>
         </li>
         <li>
-          <i class="fas fa-poll"></i><a href="#">투표 관리</a>
+          <i class="fas fa-poll"></i><a href="/adminVote/list">투표 관리</a>
         </li>
     </ul>
     </div>
