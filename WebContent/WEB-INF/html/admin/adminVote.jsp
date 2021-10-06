@@ -76,6 +76,7 @@
 		<!--     </div> -->
 		<div id="contents-list">
 			<form action="/candiate/register" method="post">
+			<c:if test="${not empty rList }">
 				<table class="table table-hover">
 					<span><i class="fas fa-chevron-right"></i>&nbsp;&nbsp;전체 레시피
 						순위</span>
@@ -104,6 +105,13 @@
 					<hr>
 				</table>
 				<button type="submit" class="myButton" value="">후보 선정하기</button>
+			</c:if>
+					<c:if test="${empty rList }">
+					<center>
+						<img style="margin: 100px 0 100px 0;" src="/upload/story_none.png"
+							alt="">
+					</center>
+					</c:if>
 			</form>
 			<form action="/vote/start" method="post">
 			<table class="table table-hover">
