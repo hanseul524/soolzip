@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');
 .loginbox {
   width: 450px;
   height: 850px;
@@ -6,6 +7,7 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 form {
   width: 100%;
@@ -81,6 +83,7 @@ h2 {
   background: white;
   color: gray;
   font-size: 1.2em;
+  font-weight: lighter;
   letter-spacing: 2px;
 }
 .signup {
@@ -100,6 +103,12 @@ h2 {
   font-size: 1.2em;
   letter-spacing: 2px;
   margin: 0 auto;
+}
+.signup input {
+  color: gray;
+  font-size: 1.2em;
+  font-weight: lighter;
+  letter-spacing: 2px;
 }
 .icon {
   width: 90%;
