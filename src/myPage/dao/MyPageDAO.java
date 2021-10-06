@@ -214,7 +214,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> scList = null;
-		String query = "select R.recipe_no, recipe_title, F.file_name ,recipe_enrollDate, recipe_replycount, recipe_LikeCount from recipe R,recipe_file F,RECIPE_SCRAP S where(R.file_no = F.file_no and r.file_no is not null) and (R.USER_ID=?) AND (S.RECIPE_NO = R.RECIPE_NO)";
+		String query = "select recipe_no,recipe_title ,file_name,recipe_enrollDate,recipe_replycount,recipe_LikeCount from (select Recipe_no from recipe_scrap where user_id =?)left outer join (recipe join recipe_file using(file_no)) using(recipe_no)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

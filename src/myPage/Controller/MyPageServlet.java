@@ -58,7 +58,7 @@ public class MyPageServlet extends HttpServlet {
 		//받은쪽지
 		List<Message> mgList = new MsgService().myMessageGetList(userId);
 		
-		for(Story a : sList) {
+		for(Recipe a : scList) {
 			System.out.println(a.toString());
 		}
 		
