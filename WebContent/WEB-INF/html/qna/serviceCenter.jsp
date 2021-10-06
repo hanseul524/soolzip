@@ -4,10 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="qna.model.vo.Qna"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	List<Qna> qList = (List<Qna>) request.getAttribute("qList");
-List<TopQna> tqList = (List<TopQna>) request.getAttribute("tqList");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -404,8 +401,6 @@ button, .full-bu-b:hover {
 
         let title = $(obj).children().eq(0).text();
         let contents = $(obj).children().eq(1).text();
-        console.log(title);
-        console.log(contents);
         $("#topQnaNo").val(no);
         $("#topQnaTitle").val(title);
         $("#topQnaContents").val(contents);
@@ -502,7 +497,6 @@ button, .full-bu-b:hover {
     $("#qnawrite").css('display', 'block');
     $(".tablinks").click(function(event) {
         let selectedIndex = $(this).index();
-        console.log(selectedIndex);
         $(".tabcontent").each(function(index, item) {
             if (index != selectedIndex) {
                 $(item).css('display', 'none');

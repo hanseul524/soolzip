@@ -41,13 +41,12 @@ public class QnaListAllServlet extends HttpServlet {
 		}
 		PageData pageData = new QnaService().printAllQna(currentPage);
 		List<Qna> qList = pageData.getQnaList();
-		System.out.println(qList);
 		if(!qList.isEmpty()) {
 			request.setAttribute("qList", qList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());
 			request.getRequestDispatcher("/WEB-INF/html/admin/adminMain.jsp").forward(request, response);
 		}else {
-			System.out.println("조회 실패");
+			
 		}
 	}
 

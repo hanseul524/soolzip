@@ -46,8 +46,7 @@ public class TopQnaUpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		//HttpSession session = request.getSession();
-		//String userId = request.getSession().getAttribute("userId").toString();
+		
 		HttpSession session = request.getSession();
 	      User user = new User();
 	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
@@ -62,9 +61,7 @@ public class TopQnaUpdateServlet extends HttpServlet {
 		topQna.setTopQnaContent(topContent);
 		
 		int result = new TopQnaService().updateTopQna(topQna);
-		System.out.println(topTitle);
-		System.out.println(topContent);
-
+	
 		if(result>0) {
 
 			PrintWriter writer = response.getWriter(); 
