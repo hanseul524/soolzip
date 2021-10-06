@@ -46,7 +46,6 @@ public class UserChangeListServlet extends HttpServlet {
 			request.setAttribute("upageNavi", pageData.getUpageNavi());
 			request.getRequestDispatcher("/WEB-INF/html/admin/userchange.jsp").forward(request, response);
 		}else {
-			System.out.println("조회 실패");
 		}
 	}
 

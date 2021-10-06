@@ -37,13 +37,9 @@ public class UserFindIdServlet extends HttpServlet {
 		
 		if(userOne != null) {
 			request.setAttribute("userOne", userOne);
-			System.out.println( "아이디 찾기 성공");
-			
-			
 			request.getRequestDispatcher("/WEB-INF/html/userinfo/findinfo.jsp").forward(request, response);
 //			response.sendRedirect("/html/userinfo/findinfo.jsp");
 		}else {
-			System.out.println("아이디찾기 실패");
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");

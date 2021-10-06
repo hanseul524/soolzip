@@ -39,7 +39,6 @@ public class UserDeleteServlet extends HttpServlet {
 			System.out.println("삭제성공");
 			response.sendRedirect("/user/list");
 		}else {
-			System.out.println("삭제실패");
 		}
 	}
 

@@ -45,7 +45,6 @@ public class UserChangeServlet extends HttpServlet {
 			System.out.println("권한변경 성공");
 			response.sendRedirect("/admin/list");
 		}else {
-			System.out.println("변경실패");
 		}
 	}
 }
