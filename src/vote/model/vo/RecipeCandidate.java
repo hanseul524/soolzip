@@ -10,6 +10,8 @@ public class RecipeCandidate {
 	private String fileName;
 	private String recipeTitle;
 	private String recipeUserId;
+//	private String voteUserId;// 투표한 사람 id
+	private	int voteAt; // 투표한 후보레시피 id
 	
 	public RecipeCandidate() {
 		super();
@@ -18,7 +20,16 @@ public class RecipeCandidate {
 
 	
 	
-	
+	public int getVoteAt() {
+		return voteAt;
+	}
+
+	public void setVoteAt(int voteAt) {
+		this.voteAt = voteAt;
+	}
+
+
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -81,16 +92,10 @@ public class RecipeCandidate {
 
 
 
-
 	@Override
 	public String toString() {
 		return "RecipeCandidate [candidateNo=" + candidateNo + ", recipeNo=" + recipeNo + ", fixdDate=" + fixdDate
 				+ ", voteCount=" + voteCount + ", fileName=" + fileName + ", recipeTitle=" + recipeTitle
-				+ ", recipeUserId=" + recipeUserId + "]";
+				+ ", recipeUserId=" + recipeUserId + ", voteAt=" + voteAt + "]";
 	}
-
-
-	
-	
-	
 }

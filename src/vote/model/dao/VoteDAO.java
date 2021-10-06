@@ -13,25 +13,26 @@ import vote.model.vo.RecipeCandidate;
 
 public class VoteDAO {
 
-	public List<RecipeCandidate> selectVoteRecipe(Connection conn) {
+	public List<RecipeCandidate> selectVoteRecipe(Connection conn,String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<RecipeCandidate> cList = null;
-		String query = "select * from recipe_candidate left outer join (select* from recipe left outer join recipe_file using(file_no)) using(recipe_no)";
+		String query = "select A.candidate_no, recipe_title, recipe_no,file_name,user_id, (select count(*) from vote where candidate_no = A.candidate_no) as vote_ct, nvl((select candidate_no from vote where user_id = ?), 0) as vote_at from recipe_candidate a join (select * from recipe join recipe_file using(file_no)) using(recipe_no)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
 			rset = pstmt.executeQuery();
 			cList = new ArrayList<RecipeCandidate>();
 			while(rset.next()) {
 				RecipeCandidate recipeCandidate = new RecipeCandidate();
 				recipeCandidate.setCandidateNo(rset.getInt("candidate_no"));
-				recipeCandidate.setRecipeNo(rset.getInt("recipe_no"));
-				recipeCandidate.setFixdDate(rset.getDate("Fixed_Date"));
-				recipeCandidate.setVoteCount(rset.getInt("vote_count"));
-				recipeCandidate.setFileName(rset.getString("file_name"));
 				recipeCandidate.setRecipeTitle(rset.getString("recipe_title"));
+				recipeCandidate.setRecipeNo(rset.getInt("recipe_no"));
+				recipeCandidate.setFileName(rset.getString("file_name"));
 				recipeCandidate.setRecipeUserId(rset.getString("user_id"));
+				recipeCandidate.setVoteCount(rset.getInt("vote_ct"));
+				recipeCandidate.setVoteAt(rset.getInt("vote_at"));
 				cList.add(recipeCandidate);
 			}
 		} catch (SQLException e) {
@@ -144,6 +145,62 @@ public class VoteDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public String selectVotingState(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from voting_status";
+		String result = "";
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset=pstmt.executeQuery();
+			while(rset.next()) {
+				result = rset.getString("voting_state");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		
+		return result;
+	}
+
+	public int deleteVoteAction(Connection conn, int candidateNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "DELETE FROM vote WHERE candidate_NO=? and user_id=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, candidateNo);
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertVoteAction(Connection conn, int candidateNo, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into vote values(seq_vote.nextval,?,?,sysdate,default)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, candidateNo);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

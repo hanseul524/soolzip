@@ -18,12 +18,12 @@ public class VoteService {
 	}
 	
 	// 투표 현황 페이지에 뿌려줄 데이터
-	public List<RecipeCandidate> printVoteRecipe() {
+	public List<RecipeCandidate> printVoteRecipe(String userId) {
 		Connection conn = null;
 		List<RecipeCandidate> cList = null;
 		try {
 			conn = jdbcTemplate.createConnection();
-			cList = new VoteDAO().selectVoteRecipe(conn);
+			cList = new VoteDAO().selectVoteRecipe(conn,userId);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,7 +108,67 @@ public class VoteService {
 		} catch (SQLException e) {
 			JDBCTemplate.rollback(conn);
 			e.printStackTrace();
-		}
+		} finally {
+			JDBCTemplate.close(conn);
+		}	
+		return result;
+	}
+
+	public String printVotingState() {
+		Connection conn = null;
+		VoteDAO vDao = new VoteDAO();
+		String voteState="";
+		try {
+			conn = jdbcTemplate.createConnection();
+			voteState = vDao.selectVotingState(conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}	
+		return voteState;
+	}
+
+	public int insertVoteAction(int candidateNo, String userId) {
+		int result = 0;
+		Connection conn = null;
+		VoteDAO vDao = new VoteDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = vDao.insertVoteAction(conn,candidateNo,userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}	
+		return result;
+	}
+
+	public int removeVoteAction(int candidateNo, String userId) {
+		int result = 0;
+		Connection conn = null;
+		VoteDAO vDao = new VoteDAO();
+		try {
+			conn = jdbcTemplate.createConnection();
+			result = vDao.deleteVoteAction(conn,candidateNo,userId);
+			if (result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}	
 		return result;
 	}
 
