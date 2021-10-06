@@ -770,7 +770,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title,recipe_legendstate, file_name, recipe_contents ,recipe_viewCount FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_legendstate=1) where NUM BETWEEN ? AND ?";
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY r.LEGEND_ENROLLDATE desc)AS NUM,r.LEGEND_ENROLLDATE ,recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title,recipe_legendstate, file_name, recipe_contents ,recipe_viewCount FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_legendstate=1) where NUM BETWEEN ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수

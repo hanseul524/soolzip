@@ -49,6 +49,7 @@ $(document).ready(function () {
     font-weight: nomal;
     font-size: 15px;
 }
+table th{text-align:center;}
 </style>
 </head>
 <body>
