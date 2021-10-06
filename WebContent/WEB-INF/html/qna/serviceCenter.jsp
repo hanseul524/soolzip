@@ -92,38 +92,9 @@ List<TopQna> tqList = (List<TopQna>) request.getAttribute("tqList");
 				</li>
 			</c:forEach>
 		</ul>
-		<br>
-		<br>
-		<hr>
-		<div onclick="qnaCreate()" style="display: none;">
-			<form action="/qna/write" method="post">
-
-				<div class="qna">
-					<h3 class="title">문의사항</h3>
-					<div>
-						<fieldset>
-							<label class="qna_title"> <input id="member_id"
-								name="member_id" class="inputTypeText" placeholder="제목입력"
-								value="" type="text">
-							</label> <label class="qna_cintents">
-								<p>
-									<textarea rows="15" cols="64" placeholder="내용을 입력해주세요."></textarea>
-								</p>
-							</label> <br>
-							<p class="qna_btn">
-								<input class="btn" type="submit" value="등록"> <input
-									class="btn" type="reset" value="취소">
-							</p>
-						</fieldset>
-					</div>
-				</div>
-
-			</form>
-		</div>
-		<div>
+		
 			<!-- <div class="qnaList_div" onclick="qnaList()" style="width: 1000px; display: inline-block; display: none;"> -->
 			<!--      <table class="table table-hover"> -->
-			<div id="headerMain"></div>
 			<!-- contents -->
 			<div class="main_layout">
 				<!--     <div id="content" class="contents" > -->
@@ -165,7 +136,6 @@ List<TopQna> tqList = (List<TopQna>) request.getAttribute("tqList");
 								<th scope="col" style="text-align: center;">상태</th>
 							</tr>
 						</thead>
-
 						<c:forEach items="${requestScope.qList }" var="qOne"
 							varStatus="index">
 

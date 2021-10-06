@@ -38,6 +38,8 @@ public class VoteListServlet extends HttpServlet {
 			request.setAttribute("cList", cList);
 			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
 		}else {
+			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
+
 			System.out.println("에러");
 		}
 	}
