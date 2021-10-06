@@ -46,7 +46,6 @@ public class UserRegisterServlet extends HttpServlet {
 		if(result > 0) {
 			response.sendRedirect("/index.jsp");
 		}else {
-			System.out.println("회원가입 실패");
 		}
 	}
 

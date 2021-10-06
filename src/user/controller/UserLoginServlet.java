@@ -41,16 +41,13 @@ public class UserLoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("user-id"); //jsp에서 input값 넘겨받기
 		String userPwd = request.getParameter("user-pwd");
-		System.out.println("서블릿에 넘어옴");
 		User user = new UserService().selectLogin(userId, userPwd);
 		
 		if(user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);//세션에 저장
-			System.out.println("로그인 성공");
 			response.sendRedirect("/main");
 		}else {
-			System.out.println("로그인 실패");
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");

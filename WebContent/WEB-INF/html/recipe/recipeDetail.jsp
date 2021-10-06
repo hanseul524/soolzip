@@ -10,6 +10,7 @@
 <title>레시피 상세페이지</title>
 <link rel="stylesheet" href="../../css/comm.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 body {
@@ -38,7 +39,6 @@ body {
 	width: 30%;
 	float: right;
 	vertical-align: top;
-	
 }
 
 #mainImg {
@@ -57,9 +57,9 @@ body {
     border-radius: 10px;
     margin: 50px auto 30px;
 }
-.btn.green {background-color: #9abf7f;}
+.btn.green {background-color: #b3ad06;}
 .btn {
-	margin: 9px;
+	margin: 5px;
 }
 a[class*="btn"] {text-decoration: none;}
 input[class*="btn"], 
@@ -74,12 +74,13 @@ button[class*="btn"] {border: 0;}
 .btn {
 	position: relative;
 	border: 0;
-	padding: 15px 25px;
+	padding: 10px 20px;
 	display: inline-block;
 	text-align: center;
 	color: white;
+	font-weight: 300;
+	Spread: -6px;
 }
-.btn.green {box-shadow: 0px 4px 0px #87a86f;}
 .replytb {width:90%;border-top:1px solid #e6e7e8;}
 .replytb th{}
 .replytb td{text-align:center;}
@@ -103,6 +104,15 @@ textarea {
 }
 textarea:focus {
   outline: none;
+}
+.rebtn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  background-color:transparent;
 }
 </style>
 <script>
@@ -135,13 +145,13 @@ textarea:focus {
 					<span class="strong">${requestScope.recipeOne.recipeTitle }</span>
 					<span style="margin-bottom: 5px; border-bottom: 0.5px solid black;">${requestScope.recipeOne.recipeContents }</span><br>
 					<span style="font-size:15px; font-weight: 300;">[주 재료] &nbsp;&nbsp; ${recipeOne.recipeMainDrink }</span>
-					<span style="font-size:15px; font-weight: 300;">${recipeOne.recipeAlcohol }</span>
+					<span style="font-size:15px; font-weight: 300;">:&nbsp;&nbsp;&nbsp;${recipeOne.recipeAlcohol }</span>
 				</div>
 				
 				
 				<!-- 제조과정 -->
 				<div style="padding: 80px;">
-					<h1>제조과정<span style="font-style: italic; font-size:13px; font-weight: 500;">&nbsp;step</span></h1>
+					<h1>제조과정<span style="font-style: italic; font-size:13px; font-weight: 500; color:rgb(187, 187, 187);">&nbsp;step</span></h1>
 					
 					<c:forEach  items="${requestScope.mList }" var="mOne" varStatus="index">
 						<span style="float:left; color:#918c00; margin-left: 60px; font-size:20px; font-weight: 500; text-align: left; margin-right: 50px;">
@@ -237,11 +247,11 @@ textarea:focus {
 			
 			
 			<!-- nav 바  -->
-			<div id="right_area" align="center">
+			<div id="right_area" align="center" style="height: unset;" >
  				<a href="/user/page?userId=${recipeOne.userId }">
  					<img id="userImg" src="/img/myPageLogo.png" alt="">
  					<br>
- 					<h3>${recipeOne.userId }</h3>
+ 					<span>${recipeOne.userId }</span>
  				</a>
 			<!-- 좋아요 폼 -->
  				<form action="/recipe/like" method="post" id="">
@@ -318,25 +328,31 @@ textarea:focus {
 				}
  				</style>
  				
- 				<div style="border-top:10px solid #f1f1f2;">
- 					<h1>재료 리스트</h1>
+<!--  				<div style="border-top:10px solid #f1f1f2; padding: 20px; position: fixed; right: 390px; bottom:100px;"> -->
+			<div style="width:500px; height:2800px;">
+			<div style="border-top:10px solid #f1f1f2; padding: 20px; position: sticky; top:10px; width:320px; float:left;">
+ 				<br>
+ 					<span class="strong" style="border-bottom: 1px solid black;">재료 리스트</span>
 					<table class="type11">
 						<thead>
 							<tr>
-								<th>재료</th>
-								<th>양</th>
+								<th><i class="fas fa-utensils"></i>&nbsp;&nbsp;
+								<span style="font-size:20px; font-weight: 300; margin-right:120px;">재료</span></th>
+								<th><i class="fas fa-blender"></i>
+								<span style="font-size:20px; font-weight: 300;">양</span></th>
 							</tr>
 						</thead>
 						<tbody>
 						<c:forEach  items="${requestScope.iList }" var="iOne" varStatus="index">
 							<tr>
-								<td>${iOne.ingredientName }</td>
-								<td>${iOne.ingredientGram }</td>
+								<td style="margin-bottom: 5px;">${iOne.ingredientName }</td>
+								<td style="margin-bottom: 5px;">${iOne.ingredientGram }</td>
 							</tr>
 						</c:forEach>
 						</tbody>
 					</table>
  				</div>
+			</div>
 			</div>
 			
 		</div>

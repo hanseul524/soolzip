@@ -39,7 +39,6 @@ public class UserSearchServlet extends HttpServlet {
 			request.setAttribute("uList", uList);
 			request.getRequestDispatcher("/WEB-INF/html/admin/userSearch.jsp").forward(request, response);
 		}else {
-			System.out.println("조회실패");
 		}
 	}
 

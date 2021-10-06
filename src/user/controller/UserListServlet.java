@@ -17,13 +17,13 @@ import user.model.vo.User;
  * Servlet implementation class UerListServlet
  */
 @WebServlet("/user/list")
-public class UerListServlet extends HttpServlet {
+public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UerListServlet() {
+    public UserListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +46,6 @@ public class UerListServlet extends HttpServlet {
 			request.setAttribute("pageNavi", pageData.getPageNavi());
 			request.getRequestDispatcher("/WEB-INF/html/admin/userlist.jsp").forward(request, response);
 		}else {
-			System.out.println("조회 실패");
 		}
 	}
 
