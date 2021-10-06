@@ -58,6 +58,10 @@ public class MyPageServlet extends HttpServlet {
 		//받은쪽지
 		List<Message> mgList = new MsgService().myMessageGetList(userId);
 		
+		for(Story a : sList) {
+			System.out.println(a.toString());
+		}
+		
 		if(user !=null) {
 			request.setAttribute("srList", srList);
 			request.setAttribute("mgList", mgList);

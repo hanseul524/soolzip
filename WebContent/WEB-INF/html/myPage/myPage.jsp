@@ -356,7 +356,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 						 	<a href="/story/detail?storyNo=${sList.storyNo }" class="location-title">Click!</a>
 								<div class="location-image">
 									<a href="/story/detail?storyNo=${sList.storyNo }"> <img style="width: 100%; height: 100%;"
-										src="/upload/${sList.fileName }" alt="">
+										src="/story-upload/${sList.fileName }" alt="">
 									</a>
 								</div>
 								<div class="box-caption" style="margin: 10px;">

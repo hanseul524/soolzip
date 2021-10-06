@@ -1,4 +1,4 @@
-package vote.controller;
+팻ㄷpackage vote.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
