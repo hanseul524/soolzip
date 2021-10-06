@@ -58,7 +58,6 @@ public class MyPageDAO {
 				user.setUserPwd(rset.getString("USER_PWD"));
 				user.setUserEmail(rset.getString("USER_EMAIL"));
 				user.setUserPhone(rset.getString("USER_PHONE"));
-				System.out.println(user.toString());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,7 +120,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, (select count(*) from recipe_reply where recipe_no=r.recipe_no)as RECIPE_REPLYCOUNT, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='1' order by recipe_no";
+		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, (select count(*) from recipe_reply where recipe_no=r.recipe_no)as RECIPE_REPLYCOUNT, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='1' order by recipe_enrolldate desc";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -153,7 +152,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> cList = null;
-		String query = "select recipe_title, F.file_name,recipe_enrollDate,recipe_no ,recipe_replycount, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='0' order by recipe_no";
+		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, (select count(*) from recipe_reply where recipe_no=r.recipe_no)as RECIPE_REPLYCOUNT, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='0' order by recipe_enrolldate desc";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -184,7 +183,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Story> sList = null;
-		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as SCNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=?";
+		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as SCNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=? order by story_enrolldate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
