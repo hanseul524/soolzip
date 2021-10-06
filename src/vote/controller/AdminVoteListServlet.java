@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import recipe.model.vo.Recipe;
 import vote.model.service.VoteService;
 import vote.model.vo.RecipeCandidate;
 
 /**
- * Servlet implementation class VoteListServlet
+ * Servlet implementation class AdminVoteListServlet
  */
-@WebServlet("/vote/list")
-public class VoteListServlet extends HttpServlet {
+@WebServlet("/adminVote/list")
+public class AdminVoteListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VoteListServlet() {
+    public AdminVoteListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +33,13 @@ public class VoteListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		List<Recipe> rList = new VoteService().printCandidateRecipe();
 		List<RecipeCandidate> cList = new VoteService().printVoteRecipe();
 		
-		if(!cList.isEmpty()) {
+		if(!rList.isEmpty()) {
+			request.setAttribute("rList", rList);
 			request.setAttribute("cList", cList);
-			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/admin/adminVote.jsp").forward(request,response);
 		}else {
 			System.out.println("에러");
 		}
@@ -46,7 +49,8 @@ public class VoteListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
