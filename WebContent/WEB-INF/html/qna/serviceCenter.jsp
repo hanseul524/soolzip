@@ -410,25 +410,14 @@ button, .full-bu-b:hover {
         $("#topQnaTitle").val(title);
         $("#topQnaContents").val(contents);
         
-        $("#content").show();
-//         console.log(obj);
-//         var isActive = $(obj).attr('class');
-        
-//         console.log(isActive);
-// 		if($(obj).hasClass('active')){
-// 			console.log('1')
-// 			$("#content").show();
-// 		}else{
-// 			console.log('2')
-// 			$("#content").hide();
-// 		}
-			
     }
-	    $(".liactive1").click(function(event) {
-	        let selectedIndex = $(this).index();
+    
+    //topQna 1번째 array click event 
+	$(".liactive1").click(function(event) {
+        let selectedIndex = $(this).index();
 	   
 		$(".liactive1").each(function(index, item) {
-			console.log(">>" + item)
+			
 	    	if (index != selectedIndex) {
 		  		$(item).removeClass("active");
 		  		
@@ -436,41 +425,69 @@ button, .full-bu-b:hover {
 				  	$(item).removeClass("active");
 				 }); 
 		  	} else {
-		    	$(item).addClass('active');
+		  		if($(item).hasClass('active')){
+		  			$(item).removeClass("active");
+		  			$("#content").hide();
+		  		}else{
+			    	$(item).addClass('active');
+			    	$("#content").show();
+		  		}
 		  }
 	
 		});
 		
 	 });
 	    
-	    $(".liactive2").click(function(event) {
-	        let selectedIndex = $(this).index();
-	   
+	//topQna 2번째 array click event 
+	$(".liactive2").click(function(event) {
+	    let selectedIndex = $(this).index();
+	  
 		$(".liactive2").each(function(index, item) {
-	    	if (index != selectedIndex) {
+		   	if (index != selectedIndex) {
 		  		$(item).removeClass("active");
 		  		
- 		  		$(".liactive1").each(function(index, item) {
+			  		$(".liactive1").each(function(index, item) {
 				  	$(item).removeClass("active");
 				 }); 
 		  	} else {
-		    	$(item).addClass('active');
+		  		if($(item).hasClass('active')){
+		  			$(item).removeClass("active");
+		  			$("#content").hide();
+		  		}else{
+			    	$(item).addClass('active');
+			    	$("#content").show();
+		  		}
 		  }
-	
-		});
 		
-	 });
-	   
+		});
+	
+	});
+	function topQnaModify() {
+
+		  document.getElementById("topQnaTitle").focus();
+
+		}
+		function topQnaModifySave() {
+
+		  document.getElementById("topQnaTitle").blur();
+
+		}   
     function topQnaModify(){
         $("#topQnaTitle").attr('disabled', false);
         $("#topQnaContents").attr('disabled', false);
+        $("#topQnaTitle").focus();
+		
     }
     function topQnaModifySave(){
         $("#modifyForm").submit();
+        $("#topQnaTitle").blur();
+
     }
     function topQnaModifyCancle(){
         $("#topQnaTitle").attr('disabled', true);
         $("#topQnaContents").attr('disabled', true);
+        $("#topQnaTitle").blur();
+
     }
      function qnaList(){
         $("#qnaListbtn").show();
