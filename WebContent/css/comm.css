@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');
+
 body {
 	width: 100%;
 	height: 100%;
 	padding: 10px;
-	font-family: Noto Sans Korean;
+	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 14px;
 	color: #000;
 	margin: 0;
@@ -72,7 +74,7 @@ body {
 	text-decoration: none;
 	color: black;
 	padding: 20px 25px;
-	font-size: 18px;
+	font-size: 20px;
 	text-align: center;
 	font-weight: bold;
 }
@@ -112,6 +114,10 @@ body {
 	display: inline-block;
 	vertical-align: middle;
 }
+.user-area-menu>.menu-li:hover {
+	transform: scale(1.1);
+	transition: 0.5s;
+}
 .user-area-menu>.loginok {
     position: relative;
     
@@ -119,21 +125,26 @@ body {
 .user-area-menu>.loginok:hover .mypage {
     display: block;
 }
+.user-area-menu>.loginok:hover {
+	transform: scale(1.1);
+	transition: 0.5s;
+}
 .loginok .mypage {
   display: none;
   position: absolute;
 }
 .mypage {
   display: inline-block;
-  background: rgba(201, 199, 199, 0.7);
+  background: #ececec;
   border-radius: 5px;
   width: 72px;
 }
 .mypage a {
   font-size: 12px;
+  font-weight: lighter;
 }
-.mypage>li:hover {
-	background: #c5c141fb;
+.mypage>li a:hover {
+	color: #c5c141fb;
 }
 .video-con {
   width: 100%;
@@ -183,6 +194,39 @@ video::-webkit-media-controls-panel {
 display: none !important;
 opacity: 1 !important;
 }
+.story-go {
+	width: 100%;
+	height: 900px;
+}
+.imgback {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+.imgtext {
+	width:100%;
+	position: absolute;
+	overflow: hidden;
+	top: 1700px;
+	left: 100px;
+}
+.Btn {
+	font-family: 'Noto Sans KR', sans-serif;
+	position: absolute;
+    border-radius:8px;
+    display:block;
+    cursor:pointer;
+    color:#fffff;
+    font-size:13px;
+    padding:10px 25px;
+    text-decoration:none;
+    border: none;
+    top:2340px; 
+    right: 300px;
+}
+  .Btn:hover {
+    font-weight: bold;
+  }
 #footer {
 	position: relative;
 	width: 100%;

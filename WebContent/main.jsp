@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <script>
 	$(document).ready(function (){
@@ -57,7 +60,7 @@
 <body>
 <div id="headerMain"></div>
     <!-- contents -->
-  <div id="content" class="contents"style="background-color:beige;">
+  <div id="content" class="contents">
     <div class="row" style="background-color: #918c00; margin: 30px 0px 50px 0px;">
       <div class="video-con">
         <video autoplay controls loop>
@@ -71,12 +74,15 @@
         <input style="color: #fff;" type="text" name="" id="" placeholder="레시피 검색하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
       </div>
     </div>
-	<div style="width:1200px;margin: 0 auto;">
-     	<span style="margin-left:30px;font-size:2rem; font-weight:bold">명예의 전당 레시피</span>
+	<div style="width:1200px; height: 700px; margin: 0 auto;">
+     	<span style="margin-left:30px;font-size:2rem; font-weight:bold;">명예의 전당 레시피</span>
+     	<p style="margin-left: 30px; font-weight: nomal; color:#918c00;">술집에서 가장 인기있는 레시피를 소개합니다.</p>
      	<button class="update-btn" style="float:right;border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표하러 가기</button>
-     	<span style="float:right; line-height:50px; font-size:1.5rem;font-family: 'Sunflower', sans-serif;">내손으로 직접뽑는 레시피</span>
+     	<span style="float:right; margin-right: 30px; line-height:50px; font-size:20px; font-weight: nomal">내손으로 직접뽑는 레시피
+     	<i class="fas fa-chevron-right"></i>
+     	</span>
    	
-	    <div class="swiper mySwiper" style="width:1200px; height:400px; margin:0 auto;">
+	    <div class="swiper mySwiper" style="width:1200px; height:500px; margin:0 auto;">
 	        <div class="swiper-wrapper" style="">
 	            <!-- 1번사진 0-->
 	           <c:if test="${!empty rList }">
@@ -100,6 +106,11 @@
 	         <!-- 페이징 -->
 	         <div class="swiper-pagination"></div>
 	     </div>
+  	</div>
+  	<div class="story-go">
+  		<img src="/img/storyimg.png" class="imgback">
+  		<img src="/img/storytext.png" class="imgtext">
+  		<button type="button" class="Btn"><a href="/story/list">바로가기</a></button>
   	</div>
   </div>
 	<!-- 명예의전당 후보 -->

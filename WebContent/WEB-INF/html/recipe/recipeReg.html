@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>레시피 등록</title>
-<link rel="stylesheet" href="../../css/comm.css">
+<link rel="stylesheet" href="css/recipe.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .filebox label {
@@ -45,8 +45,74 @@ table th {
 }
 
 table td input {
-	width: 170px;
-	height: 30px;
+	width: 250px;
+	height: 35px;
+  margin: 3px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+
+}
+table td input:focus {
+  outline: none;
+  background-color: rgba(246, 246, 246, 0.856);
+}
+p {
+  font-weight: normal;
+  padding-right: 20px;
+  width: 155px;
+}
+table {
+  border: 1px solid lightgrey;
+  border-radius: 30px;
+  padding: 20px;
+}
+textarea {
+  resize: none;
+  vertical-align:text-bottom;
+  width: 500px;
+  height: 130px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+}
+textarea:focus {
+  outline: none;
+}
+select {
+  width: 80px;
+  height: 35px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+}
+select:focus {
+  outline: none;
+}
+button {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  background-color:transparent;
+}
+button:hover {
+  background-color: #c2be5c;
+}
+#buttonArea input {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  margin-top: 10px;
+  background-color:transparent;
+}
+#buttonArea input:hover {
+  background-color: #c2be5c;
 }
 </style>
 <script>
@@ -207,33 +273,34 @@ table td input {
 </head>
 <body>
 	<div id="headerMain"></div>
+		<br>
+		<hr style="border: 0.2px solid rgb(236, 236, 236);">
 	<form action="/recipe/register" method="post" id="test" style="margin: 0 auto; width: 1000px;" enctype="multipart/form-data">
 		<input type="hidden" name="ingredientName" />
 		<input type="hidden" name="ingredientGram" />
 		<input type="hidden" name="recipeSaveState" value="0"/>
-		<h1 align="center" style="margin-top: 2em;">레시피 등록</h1>
+		<h1 align="center" style="margin-top: 2em; margin-bottom: 1em;">레시피 등록</h1>
 		<table>
-
-			<thead></thead>
+      <thead></thead>
 			<tbody>
 				<tr>
-					<th>주류명</th>
-					<td><input type="text" placeholder="예) 고진감래주" id ="recipe-title" name="recipe-title" /></td>
+					<th><p>주류명</p></th>
+					<td><input type="text" placeholder="예) 고진감래주" id ="recipe-title" name="recipe-title"></td>
 					<td rowspan="3" width="200px">
 						<input id="mainFile" name="mainFile" type="file" style="display: none;" onchange="readURL(this, 'mainImg')">
-						<img id="mainImg" style="width: 200px; height: 150px;" src="/img/photoImg.png" onclick="javascript: $('#mainFile').click();">
+						<img id="mainImg" style="width: 150px; height: 150px; margin-left: 30px;" src="/img/recipephoto.png" onclick="javascript: $('#mainFile').click();">
 						<br/>
-						<center><b>대표사진</b></center>
+						<center><p>대표사진</p></center>
 					</td>
 					
 				</tr>
 				<tr>
-					<th>레시피 한줄설명</th>
+					<th><p> 레시피 한줄설명</p></th>
 					<td><input type="text" id="recipe-content" placeholder="내용을 입력하세요." name="recipe-contents"/></td>
 				</tr>
 
 				<tr>
-					<th>메인 주류 정보</th>
+					<th><p>메인 주류 정보</p></th>
 					<td>
 						<select name="recipe-mainDrink" id="">
 							<option value="소주">소주</option>
@@ -244,7 +311,7 @@ table td input {
 							<option value="럼">럼</option>
 							<option value="진">진</option>
 							<option value="데킬라">데킬라</option>
-							<option value="위스키">위스키</option>s
+							<option value="위스키">위스키</option>
 							<option value="브랜디">브랜디</option>
 							<option value="전통주">전통주</option>
 							<option value="기타">기타</option>
@@ -259,7 +326,7 @@ table td input {
 				</tr>
 				
 				<tr>
-					<th>재료</th>
+					<th><p>재료</p></th>
 					<td>
 						<div id="ingredient">
 							<div id="ingredient1">
@@ -279,27 +346,27 @@ table td input {
 					</td>
 				</tr>
 				<tr>
-					<th>제조과정</th>	
+					<th><p>제조과정</p></th>	
 					<td colspan="2">
 						<div id="process">
-							<div id="process1" style="height: 150px; margin-bottom: 1em;">
-								<b>step1</b>
-								<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
+              <span style="font-size: 12px; margin: 0; padding: 0;">STEP1</span>
+							<div id="process1" style="height: 150px;">
+								<textarea placeholder="내용을 입력해주세요." name="fileContents"></textarea>
 								<input style="display: none;" type="file" name="processFile1" accept="image/*" onchange="readURL(this, 'processImg1')" />
-								<img id="processImg1" style="width: 200px; height: 150px; vertical-align: middle;" src="/img/photoImg.png" onclick="fnFileChange(this);">
+								<img id="processImg1" style="width: 150px; height: 150px; vertical-align: text-bottom; margin-left: 30px;" src="/img/recipephoto.png" onclick="fnFileChange(this);">
 							</div>
-							<div id="process2" style="height: 150px; margin-bottom: 1em;">
-								<b>step2</b>
-								<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
+              <span style="font-size: 12px; margin: 0; padding-top: 5px;">STEP2</span>
+							<div id="process2" style="height: 150px;">
+								<textarea placeholder="내용을 입력해주세요." name="fileContents"></textarea>
 								<input style="display: none;" type="file" name="processFile2" accept="image/*" onchange="readURL(this, 'processImg2')" />	
-								<img id="processImg2" style="width: 200px; height: 150px;vertical-align: middle;" src="/img/photoImg.png" onclick="fnFileChange(this);" >
+								<img id="processImg2" style="width: 150px; height: 150px;vertical-align: text-bottom; margin-left: 30px;" src="/img/recipephoto.png" onclick="fnFileChange(this);" >
 							</div>
 						</div>
-						<button type="button" style="margin-top: 1em;"  onclick='addRow2()'>순서추가</button>
+						<button type="button" style="margin-top: 10px;" onclick='addRow2()'>순서추가</button>
 					</td>
 				</tr>
 				<tr>
-					<th>태그 추가</th>
+					<th><p>태그 추가</p></th>
 					<td><input type="text" name="recipe-tag" placeholder="태그를 추가해주세요." style="width: 400px;" /></td>
 				</tr>
 			</tbody>
