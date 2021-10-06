@@ -47,17 +47,29 @@
                         <li role="presentation" class="total">
                             <a href="">전체</a>
                         </li>
-                        <li role="presentation" class="total">
-                            <a href="">MY</a>
-                        </li>
+<!--                         <li role="presentation" class="total"> -->
+<!--                             <a href="">MY</a> -->
+<!--                         </li> -->
                         <div class="pull-right">
-                            <a href="/story/register"><button  class="btn btn-info" style="font-size: 20px;">스토리 등록</button></a>
+                            <a href="/story/register"><button  class="btn-info" style="font-size:20px;font-weight: blod;">스토리 등록</button></a>
                         </div>
                     </ul>
                     <div class="story_tag">
                         <form action="">
-                            <!-- <img class="story_search_img" src="./최지현_포트폴리오_수정[JH.GG]/img/그웬.PNG" alt=""> --> <input class="story_tag_search" type="search" placeholder="#아침 #00 🔍">
-                            <div align="center">${requestScope.pageNavi }</div>
+                            <!-- <img class="story_search_img" src="./최지현_포트폴리오_수정[JH.GG]/img/그웬.PNG" alt=""> --> 
+<!--                             <input class="story_tag_search" type="search" placeholder="#아침 #00 🔍"> -->
+							<h1 class="storytext">
+								<span>🍺</span>
+								<span>🍻</span> 
+								<span>🍶  </span> 
+								<span>🥃 </span>
+								<span>🍹 </span> 
+								<span>🥂</span>
+								<span>🍷</span>
+								<span>🍸</span>
+								<span>🍾</span>
+							</h1>
+							<div align="center">${requestScope.pageNavi }</div>
                         </form>
                     </div>
                     <!-- 스토리 썸네일 타이틀 등등 -->
@@ -71,7 +83,7 @@
                                 <!-- 스토리 내용 틀-->
                                 <div class="story_List_contents">
                                     <!-- 스토리 내용 -->
-                                    <div class="story_List_contents_title">${sOne.storyContents }[${sOne.storyViewCount }]</div>
+                                    <div class="story_List_contents_title">${sOne.storyContents }</div>
                                     <!-- 스토리 푸터 -->
                                     <div class="story_List_contents_name">
                                         <!-- 좋아요/댓글 왼쪽-->
@@ -84,11 +96,18 @@
                                                 <img src="../../img/댓글 아이콘.png" alt="댓글 수">
                                                 ${sOne.storyReplyCount }
                                             </span>
+                                            <span>
+                                                <img src="../../img/조회수.png" alt="댓글 수">
+                                            	${sOne.storyViewCount }
+                                            </span>
                                         </div>
                                         <!-- 작성자 오른쪽 -->
                                         <div class="story_List_contents_r">
                                             <!-- a태그에 회원정보로 이동 img 링크삽입 -->
-                                            <a href=""><img src="../img/myPageLogo.png alt="">${sOne.userId }</a>
+                                            <a href="/user/page?userId=${sOne.userId }">
+                                            	<img src="../../img/myPageLogo.png" alt="">
+                                            	${sOne.userId }
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

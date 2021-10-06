@@ -54,6 +54,7 @@
 .story_view_top_button input{
 	cursor: pointer;
     border: 1px solid #918c00;
+    border-radius: 25px;
     background-color: #fff;
     margin-left: 15px;
     color: #918c00;
@@ -61,6 +62,19 @@
     width: 70px;
     height: 45px;
     float: left;
+}
+.story_view_top_button input:hover{
+	color: black;
+	border: none;
+}
+.modify_submit{
+	border: 1px solid #918c00;
+	border-radius:25px;
+	color:#918c00;
+}
+.modify_submit:hover{
+	color:black;
+	border:none;
 }
 /* 스토리 이미지 */
 .story_view_contents{
@@ -129,6 +143,28 @@
     white-space: nowrap;
     width: auto;
     float: left;
+}
+.input-btn button{
+	cursor: pointer;
+    border: 1px solid #918c00;
+    background-color: #fff;
+    font-weight: bold;
+    color: #918c00;
+}
+.input-btn button:hover{
+	color: black;
+	border: 1px solid black;
+}
+#login_link{
+	height:100px; 
+	width:100px; 
+	font-weight:blod;
+	color:#918c00; 
+	border:1px solid #918c00;
+}
+#login_link:hover{
+	color: black;
+	border: 1px solid black;
 }
 /* 좋아요 */
 .btn_like{
@@ -230,3 +266,43 @@
 .info_name{
     color: black;
 }
+/* 스토리 사이드 바 애니메이션 */
+.jackpots {
+	font-family: moon;
+	font-size: 50px;
+	margin-left: 1.5vw;
+	width: 100%;
+	height:100px;
+	float:left;
+}
+.bnr{
+	position:fixed;
+	width:200px;
+	display: inline-block;
+	top:35%;
+}
+
+.jackpots {
+    animation: jackpots 1s 0s ease infinite;
+    -moz-animation: jackpots 1s 0s ease infinite;
+    -webkit-animation: jackpots 1s 0s ease infinite;
+    -o-animation: jackpots 1s 0s ease infinite;
+
+  }
+  @keyframes jackpots {
+    0%,
+    100% {
+    text-shadow: 
+    -.1vw 0vw .1vw #f1e3ac, -.15vw 0vw .2vw #f1e3ac, -.2vw 0vw .2vw #f1e3ac, 
+    -.1vw 0vw 3vw #c2be42, -.2vw 0vw 3vw #c2be42, -.4vw 0vw 3vw #c2be42,
+    -.1vw 0vw 5vw #c2be42, -.2vw 0vw 5vw #c2be42, -.4vw 0vw .8vw #c2be42, .2vw 0vw 10vw #c2be42;
+      color: #918c00;
+    }
+    50% {
+    text-shadow: 
+    -.1vw 0vw .1vw #918c00, -.15vw 0vw .2vw #918c00, -.2vw 0vw .2vw #918c00, 
+    -.1vw 0vw .1vw #4d4a10, -.2vw 0vw .1vw #4d4a10, -.4vw 0vw .1vw #4d4a10,
+    -.1vw 0vw .2vw #4d4a10, -.2vw 0vw .2vw #4d4a10, -.4vw 0vw .2vw #4d4a10, .2vw 0vw .5vw #4d4a10;
+      color: #918c00;
+    }
+  }
