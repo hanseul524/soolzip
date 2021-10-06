@@ -16,6 +16,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script>
@@ -53,13 +54,52 @@ $(document).ready(function () {
 	});
 });
 </script>
+<style>
+#menu-bar {
+	margin-top: 20px;
+    width: 15%;
+    height: 700px;
+    float: left;
+    background-color: rgb(145, 140, 0);
+    color: white;
+    padding: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: nomal;
+    font-size: 15px;
+}
+textarea {
+  resize: none;
+  vertical-align:text-bottom;
+  width: 500px;
+  height: 130px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+}
+textarea:focus {
+  outline: none;
+}
+#replyok {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  background-color:transparent;
+}
+#replyok:hover {
+  background-color:rgba(182, 181, 181, 0.849);
+}
+</style>
 </head>
 <body>
+
 <div id="headerMain"></div>
   <div id="contnet" class="contents">
     <div id="menu-bar">
       <br>
       <p style="text-align: center;">관리자님, <br> 안녕하세요.</p>
+      <hr>
       <br>
       <ul>
         <li>
@@ -120,7 +160,7 @@ $(document).ready(function () {
 		<form action="/qna/reply" method="post">
 		<input type="hidden" name="qnaNo" value="<%=qna.getQnaNo()%>">
 		<textarea style="width: 60%; height: 20%;" name="replyContent" id="reply"></textarea>
-		<input type="submit" value="댓글 등록">
+		<input type="submit" value="댓글 등록" id="replyok">
 		</form>
       	</td>
       </tr>

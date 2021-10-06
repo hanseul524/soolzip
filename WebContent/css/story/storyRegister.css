@@ -1,6 +1,10 @@
 /* @import "storyList.css"; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');
+body {
+}
+
 .container{
-    width: 1240px;
+    width: 1100px;
     max-width: none !important;
     margin-right: auto;
     margin-left: auto;
@@ -11,6 +15,7 @@
     width: 1200px;
     min-height: 800px;
     border: 1px solid #e6e7e8;
+    border-radius: 5px;
     padding: 0 0 20px 0;
     background: #fff;
 }
@@ -48,8 +53,8 @@
     background: #918c00;
     color: black;
     display: inline-block;
-    width: 167px;
-    height: 52px;
+    width: 140px;
+    height: 50px;
     border-radius: 5px;
     border: 1px solid #e1e1e1;
     font-size: 16px;

@@ -14,6 +14,7 @@
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
@@ -38,6 +39,21 @@ $(document).ready(function () {
 	});
 });
 </script>
+<style>
+#menu-bar {
+	margin-top: 20px;
+    width: 15%;
+    height: 700px;
+    float: left;
+    background-color: rgb(145, 140, 0);
+    color: white;
+    padding: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: nomal;
+    font-size: 15px;
+}
+
+</style>
 </head>
 <body>
 <div id="headerMain"></div>
@@ -45,6 +61,7 @@ $(document).ready(function () {
     <div id="menu-bar">
       <br>
       <p style="text-align: center;">관리자님, <br> 안녕하세요.</p>
+      <hr>
       <br>
       <ul>
         <li>
@@ -61,7 +78,7 @@ $(document).ready(function () {
           <i class="fas fa-user-circle"></i><a href="/admin/list">관리자 관리</a>
         </li>
          <li>
-          <i class="fas fa-poll"></i><a href="#">투표 관리</a>
+          <i class="fas fa-poll"></i><a href="/adminVote/list">투표 관리</a>
         </li>
     </ul>
     </div>
@@ -118,7 +135,7 @@ $(document).ready(function () {
     </form>
     </table>
       <div class="removeCk">
-        <input type="submit" value="선택삭제">
+        <input type="submit" value="선택삭제" id="removebtn">
       </div>
     </div>
   </div>
