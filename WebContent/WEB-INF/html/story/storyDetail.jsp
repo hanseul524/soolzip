@@ -10,6 +10,9 @@
     <title>스토리 상세 페이지</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../css/story/storyDetail.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
 </head>
 <style>
     a{  /* 밑줄 해제 */
@@ -84,15 +87,25 @@
     $(document).ready(function(){
         $("#headerMain").load("/html/comm/header.jsp");
         $("#footerMain").load("/html/comm/footer.html");
+        
+        $("#insertbtn").on("click",function(){
+			if($("#replyContents").val() == ""){
+				alert("내용을 입력해주세요.");
+				return false;
+			}else{
+				return true;
+			}
+		});
     });
+    
 </script>
 <body>
     <div id="headerMain"></div>
      <br>
       <hr style="border: 0.2px solid rgb(236, 236, 236);">
-    <h1 class="h1text" style="text-align: center;">상세페이지</h1>
+    <h1 class="h1text" style="font-family:'Sunflower', sans-serif; font-size:3rem; text-align: center; margin: 50px">상세페이지</h1>
     <div class="container">
-        <div class="contents">
+        <div style="margin-left: 12%" class="contents">
             <div class="two_list">
                 <div class="story_view">
                     <div class="story_view_top">
@@ -139,7 +152,7 @@
                     
                     <form action="/storReply/wirte" method="post"> 
                     	<input type ="hidden" name="storyNo" value="${requestScope.storyOne.storyNo }">
-                        <textarea style="height: 100px; width: 80%; resize: none;" name="replyContents" id="text" class="reply_form"></textarea>
+                        <textarea style="height: 100px; width: 80%; resize: none;" name="replyContents" id="replyContents" class="reply_form"></textarea>
                     <c:if test="${user.userId eq null }">          
 <!--                 	css수정해야한다. -->
                     	<a class="btn" id="login_link" href="/index.jsp">
@@ -148,7 +161,7 @@
                     </c:if>
                     <c:if test="${user.userId ne null and userId ne '' }">
                         <span class="input-btn">
-                            <button type="submit" name="button" class="btn" style="height:100px; width:100px;">등록</button>
+                            <button id="insertbtn" type="submit" name="button" class="btn" style="height:100px; width:100px;">등록</button>
                         </span>
                     </c:if>
                     </form>
@@ -244,15 +257,15 @@
 
                 <!-- 회원들 댓글 -->
 			<div class="bnr">
-            <div style="margin-left: 50px" class="jackpots">ｓｏｏＬ</div>
+<!--             <div style="margin-left: 50px" class="jackpots">ｓｏｏＬ</div> -->
 <!--             <div style="margin-left: 100px" class="jackpots">ｏ</div> -->
 <!--             <div style="margin-left: 100px" class="jackpots">ｏ</div> -->
 <!--             <div style="margin-left: 100px" class="jackpots">Ｌ</div> -->
-			<div style="margin-left: 100px" class="jackpots">story</div>
-            <div style="margin-left: 115px" class="jackpots">.ＺＩＰ</div>
+<!-- 			<div style="margin-left: 100px" class="jackpots">story</div> -->
+<!--             <div style="margin-left: 115px" class="jackpots">.ＺＩＰ</div> -->
 <!--             <div style="margin-left: 100px" class="jackpots">Ｉ</div> -->
 <!--             <div style="margin-left: 100px" class="jackpots">Ｐ</div> -->
-            <div style="margin-left: 100px" class="jackpots"></div>
+<!--             <div style="margin-left: 100px" class="jackpots"></div> -->
 			</div>
            
             
