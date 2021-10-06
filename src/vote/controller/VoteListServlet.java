@@ -36,9 +36,9 @@ public class VoteListServlet extends HttpServlet {
 		
 		if(!cList.isEmpty()) {
 			request.setAttribute("cList", cList);
-			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/vote/vote2.jsp").forward(request,response);
 		}else {
-			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/vote/vote2.jsp").forward(request,response);
 
 			System.out.println("에러");
 		}

@@ -95,7 +95,7 @@
 	<div id="headerMain"></div>
 	<br>
 	<hr style="border: 0.2px solid rgb(236, 236, 236);">
-	  <div style="text-align: center; margin-bottom: 50px; text-align: center;">
+	  <div style="text-align: center; margin-bottom: 50px; text-align: center; width: 1500px;">
 	  <div style=" text-align: center; margin-top: 20px ">
 	  
 	  	<div style="display: inline-block; "><span style="font-family:'Sunflower', sans-serif;font-size:2rem;font-weight:bold;">투표현황</span></div> 
@@ -110,7 +110,7 @@
 	    <hr style="border: 0.2px solid rgb(236, 236, 236);">
 	
 	    <ul class="box" style="text-align: center;" >
-	        <div style="display: inline-block;">
+	        <div style="display: inline-block; width: 1500px;">
 	        <c:forEach  items="${requestScope.cList }" var="cOne" varStatus="index">
 	         <li>
 	            <article class="location-listing" style="float: left; margin: 10px;">
@@ -146,7 +146,7 @@
 	        </c:forEach>
 	    	</div>
 	    </ul>
-	
+	</div>
 	
 	
 	      <script>
