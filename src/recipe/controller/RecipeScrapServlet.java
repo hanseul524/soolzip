@@ -50,7 +50,6 @@ public class RecipeScrapServlet extends HttpServlet {
 		if(scrapCheck==1) {
 			result = new RecipeService().removeRecipeScrap(recipeNo,userId);
 			if(result>0) {
-				System.out.println("스크랩 취소");
 				response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 			}else {
 				request.getRequestDispatcher("/html/recipe/recipeError.html").forward(request, response);
@@ -58,7 +57,6 @@ public class RecipeScrapServlet extends HttpServlet {
 		}else {
 			result = new RecipeService().insertRecipeScrap(recipeNo,userId);
 			if(result>0) {
-				System.out.println("스크랩");
 				response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 			}else {
 				request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);

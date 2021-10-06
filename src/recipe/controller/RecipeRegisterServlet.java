@@ -133,7 +133,6 @@ public class RecipeRegisterServlet extends HttpServlet {
 		int result = new RecipeService().registerRecipe(recipe,ingredList,makeList);
 		
 		if(result > Integer.MIN_VALUE) {
-			System.out.println("등록성공");
 			response.sendRedirect("/recipe/list");
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);

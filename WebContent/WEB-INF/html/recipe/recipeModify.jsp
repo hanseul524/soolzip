@@ -336,7 +336,7 @@ span {
 						<select name="recipe-mainDrink" id="" value="${recipeOne.recipeMainDrink }">
 							<option value="소주">소주</option>
 							<option value="맥주">맥주</option>
-							<option value="먹걸리">막걸리</option>
+							<option value="막걸리">막걸리</option>
 							<option value="와인">와인</option>
 							<option value="보드카">보드카</option>
 							<option value="럼">럼</option>
@@ -407,7 +407,7 @@ span {
 									<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;">${mkProcess.makeContents }</textarea>
 									<input style="display:none;" type="file" name="processFile${index.count }" accept="image/*" onchange="readURL(this, 'processImg${index.count }')" />
 									<img id="processImg${index.count }" style="width: 150px; height: 150px; vertical-align: middle; margin-left: 30px;" 
-									src="<c:if test="${empty mkProcess.fileNo }">/img/photoImg.png</c:if><c:if test="${not empty mkProcess.fileNo }">/upload/${mkProcess.fileName }</c:if>"
+									src="<c:if test="${empty mkProcess.fileNo }">/img/recipephoto.png</c:if><c:if test="${not empty mkProcess.fileNo }">/upload/${mkProcess.fileName }</c:if>"
 									onclick="fnFileChange(this);">
 									<c:if test="${index.count>2 }">
 										<button type="button" onclick="rmRow2(this, <c:out value='${mkProcess.makeNo }' />)" />삭제</button>

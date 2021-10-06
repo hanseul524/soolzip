@@ -53,9 +53,6 @@ public class RecipeModifyServlet extends HttpServlet {
 		List<RecipeIngredient> iList = new RecipeService().printOneRecipeIngr(recipeNo);
 		// 레시피2에 대한 제조과정 여러개 
 		List<RecipeMakeProcess> mList = new RecipeService().printOneRecipeMkProcess(recipeNo); 
-		for(RecipeMakeProcess s : mList) {
-			System.out.println(s.toString());
-		}
 		
 		if(recipeOne !=null) {	
 			request.setAttribute("iList", iList);
@@ -110,11 +107,8 @@ public class RecipeModifyServlet extends HttpServlet {
 		
 		List<RecipeIngredient> ingredList = new ArrayList();
 		
-		System.out.println("legnth : " + ingredientNames.length);
-		
 		for(int i = 0; i < ingredientNames.length; i++) {
 			RecipeIngredient ingred = new RecipeIngredient();
-			System.out.println("@@@@@@@@@@@@@@ : "+ multi.getParameter("ingrNo"+(i+1)));
 			if(!"".equals(multi.getParameter("ingrNo"+(i+1)))){
 				ingred.setIngredientNo(Integer.parseInt(multi.getParameter("ingrNo"+(i+1))));
 			}
