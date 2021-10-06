@@ -42,14 +42,12 @@ public class VoteListServlet extends HttpServlet {
 		String votingState= new VoteService().printVotingState();
 		
 		List<RecipeCandidate> cList = new VoteService().printVoteRecipe(userId);
-		for(RecipeCandidate r : cList) {
-			System.out.println(r.toString());
-		}
+		
 		
 		if(!cList.isEmpty()) {
 			request.setAttribute("votingState",votingState);
 			request.setAttribute("cList", cList);
-			request.getRequestDispatcher("/WEB-INF/html/vote/vote2.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/vote/vote.jsp").forward(request,response);
 			System.out.println("에러");

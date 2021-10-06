@@ -67,14 +67,40 @@ $(document).ready(function () {
     font-weight: nomal;
     font-size: 15px;
 }
+textarea {
+  resize: none;
+  vertical-align:text-bottom;
+  width: 500px;
+  height: 130px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+}
+textarea:focus {
+  outline: none;
+}
+#replyok {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  background-color:transparent;
+}
+#replyok:hover {
+  background-color:rgba(182, 181, 181, 0.849);
+}
+.table th{text-align:center;}
 </style>
 </head>
 <body>
+
 <div id="headerMain"></div>
   <div id="contnet" class="contents">
     <div id="menu-bar">
       <br>
       <p style="text-align: center;">관리자님, <br> 안녕하세요.</p>
+      <hr>
       <br>
       <ul>
         <li>
@@ -135,7 +161,7 @@ $(document).ready(function () {
 		<form action="/qna/reply" method="post">
 		<input type="hidden" name="qnaNo" value="<%=qna.getQnaNo()%>">
 		<textarea style="width: 60%; height: 20%;" name="replyContent" id="reply"></textarea>
-		<input type="submit" value="댓글 등록">
+		<input type="submit" value="댓글 등록" id="replyok">
 		</form>
       	</td>
       </tr>

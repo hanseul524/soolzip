@@ -145,10 +145,11 @@ $(document).ready(function(){
 	})
 });
 $(document).ready(function(){
-	$("#.update-btn").on("click",function(){
+	$(".update-btn").on("click",function(){
 		submit();
 	})
 });
+
 </script>
 <style>
 *{margin: 0;padding: 0;}

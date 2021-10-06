@@ -39,11 +39,11 @@ public class UserChangeListServlet extends HttpServlet {
 		}else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		PageData pageData = new UserService().printAllUser(currentPage);
+		PageData pageData = new UserService().printAllUsers(currentPage);
 		List<User> uList = pageData.getUserList();
 		if(!uList.isEmpty()) {
 			request.setAttribute("uList", uList);
-			request.setAttribute("pageNavi", pageData.getPageNavi());
+			request.setAttribute("upageNavi", pageData.getUpageNavi());
 			request.getRequestDispatcher("/WEB-INF/html/admin/userchange.jsp").forward(request, response);
 		}else {
 			System.out.println("조회 실패");

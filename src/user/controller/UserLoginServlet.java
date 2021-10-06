@@ -48,7 +48,7 @@ public class UserLoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);//세션에 저장
 			System.out.println("로그인 성공");
-			response.sendRedirect("/main.jsp");
+			response.sendRedirect("/main");
 		}else {
 			System.out.println("로그인 실패");
 			response.setContentType("text/html; charset=utf-8");

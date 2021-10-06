@@ -9,8 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>레시피 상세페이지</title>
 <link rel="stylesheet" href="../../css/comm.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 .container {
 	margin-top: 10px;
 	background-color: #f1f1f2;
@@ -40,7 +44,7 @@
 #mainImg {
 	width: 350px;
 	border-radius: 10px;
-	max-width: 100%; height: auto; border:1px solid #eaeaea; padding: 0px;
+	max-width: 100%; height: auto; padding: 0px;
 	margin: 40px 0 20px 0; 
 }
 #userImg{
@@ -49,8 +53,9 @@
 
 #mkimg{
 	display: block;
-    width: 300px;
-    margin: 0 auto 13px;
+    width: 400px;
+    border-radius: 10px;
+    margin: 50px auto 30px;
 }
 .btn.green {background-color: #9abf7f;}
 .btn {
@@ -79,6 +84,26 @@ button[class*="btn"] {border: 0;}
 .replytb th{}
 .replytb td{text-align:center;}
 p{font-size:1.3rem;}
+
+span {
+	font-weight: nomal;
+	font-size: 18px;
+	display: inline-block;
+}
+.strong {
+	font-weight: 700;
+	font-size: 25px;
+	margin-bottom: 10px;
+	display: block;
+}
+textarea {
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+}
+textarea:focus {
+  outline: none;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -106,24 +131,26 @@ p{font-size:1.3rem;}
 			<div id="contents_area" align="center" >
 				<!-- 헤더 -->
 				<div>
-					<img id="mainImg"src="/upload/${requestScope.recipeOne.fileName }" alt="">
-					<h1>${requestScope.recipeOne.recipeTitle }</h1>
-					<p>${requestScope.recipeOne.recipeContents }</p>
-					<span>${recipeOne.recipeMainDrink }</span>
-					<span>${recipeOne.recipeAlcohol }</span>
-					
+					<img id="mainImg"src="/upload/${requestScope.recipeOne.fileName }" alt=""><br>
+					<span class="strong">${requestScope.recipeOne.recipeTitle }</span>
+					<span style="margin-bottom: 5px; border-bottom: 0.5px solid black;">${requestScope.recipeOne.recipeContents }</span><br>
+					<span style="font-size:15px; font-weight: 300;">[주 재료] &nbsp;&nbsp; ${recipeOne.recipeMainDrink }</span>
+					<span style="font-size:15px; font-weight: 300;">${recipeOne.recipeAlcohol }</span>
 				</div>
 				
 				
 				<!-- 제조과정 -->
-				<div>
-					<h1>제조과정</h1>
+				<div style="padding: 80px;">
+					<h1>제조과정<span style="font-style: italic; font-size:13px; font-weight: 500;">&nbsp;step</span></h1>
 					
 					<c:forEach  items="${requestScope.mList }" var="mOne" varStatus="index">
-						<img id="mkimg" <c:if test="${empty mOne.fileNo }">display: none;</c:if>"
+						<span style="float:left; color:#918c00; margin-left: 60px; font-size:20px; font-weight: 500; text-align: left; margin-right: 50px;">
+						STEP${index.count }</span> <br>
+						<img id="mkimg" <c:if test="${empty mOne.fileNo }">display: none;</c:if>
 							src="/upload/${mOne.fileName }"
 							alt="" >
-						<p>${mOne.makeContents }</p>
+						<p style="font-size:17px; font-weight: 400; text-align: center; margin-left: 30px;">${mOne.makeContents }</p>
+						<br><br>
 					</c:forEach>
 				</div>
 				<!-- 제조과정 end -->
@@ -257,7 +284,7 @@ p{font-size:1.3rem;}
  				<form id="recipeRM"action="/recipe/remove" method="post">
  				<c:if test="${user.userId eq recipeOne.userId}">	
  					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
- 					<a href="javascript:recipeRM.submit();" class="btn green rounded" style="float:left; margin-left:50px;">레시피 삭제</a>
+ 					<a href="javascript:recipeRM.submit();" onclick="return confirm('삭제를 하시겠습니까?');" class="btn green rounded" style="float:left; margin-left:50px;">레시피 삭제</a>
  				</c:if>
  				</form>
  			
@@ -267,27 +294,27 @@ p{font-size:1.3rem;}
  			</c:if>
  				<!-- 재료 리스트 -->
  				<style>
- 				table.type11 {
-				  border-collapse: separate;
-				  border-spacing: 1px;
-				  text-align: center;
-				  line-height: 1.5;
-				  margin: 20px 10px;
-				}
-				table.type11 th {
-				  width: 155px;
-				  padding: 10px;
-				  font-weight: bold;
-				  vertical-align: top;
-				  color: #fff;
-				  background: #9abf7f ;
-				}
-				table.type11 td {
-				  width: 155px;
-				  padding: 10px;
-				  vertical-align: top;
-				  border-bottom: 1px solid #ccc;
-				  background: #eee;
+/*  				table.type11 { */
+/* 				  border-collapse: separate; */
+/* 				  border-spacing: 1px; */
+/* 				  text-align: center; */
+/* 				  line-height: 1.5; */
+/* 				  margin: 20px 10px; */
+/* 				} */
+/* 				table.type11 th { */
+/* 				  width: 155px; */
+/* 				  padding: 10px; */
+/* 				  font-weight: bold; */
+/* 				  vertical-align: top; */
+/* 				  color: #fff; */
+/* 				  background: #9abf7f ; */
+/* 				} */
+/* 				table.type11 td { */
+/* 				  width: 155px; */
+/* 				  padding: 10px; */
+/* 				  vertical-align: top; */
+/* 				  border-bottom: 1px solid #ccc; */
+/* 				  background: #eee; */
 				}
  				</style>
  				

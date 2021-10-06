@@ -31,7 +31,7 @@ public class UserLogoutServlet extends HttpServlet {
 		if(session != null) {
 			session.setAttribute("user", null);
 			session.invalidate();
-			response.sendRedirect("/main.jsp");
+			response.sendRedirect("/main");
 			System.out.println("로그아웃 성공");
 		}
 	}

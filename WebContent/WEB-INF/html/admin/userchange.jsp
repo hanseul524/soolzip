@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String pageNavi = (String)request.getAttribute("pageNavi");
+	String upageNavi = (String)request.getAttribute("upageNavi");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -38,6 +38,9 @@ $(document).ready(function () {
 	});
 });
 </script>
+<style>
+.table th{text-align:center;}
+</style>
 </head>
 <body>
 <div id="headerMain"></div>
@@ -65,7 +68,8 @@ $(document).ready(function () {
   </div>
   <div class="menu-contents">
     <div id="contents-header">
-      <h2>회원 탈퇴</h2>
+
+      <h2>관리자 권한 부여</h2>
       <hr style="border-top: 1px solid black; margin: 10px;">
     </div>
     <div id="contents-search">
@@ -102,7 +106,7 @@ $(document).ready(function () {
 	<tr>
 <!--     <div class="text-center"></div> -->
 		<td colspan="10" align="center">
-		<%= pageNavi %>		
+		<%= upageNavi %>		
 		</td>
 	</tr>
 <!--       <ul class="pagination"> -->
