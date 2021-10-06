@@ -67,7 +67,6 @@ $(document).ready(function () {
     font-weight: nomal;
     font-size: 15px;
 }
-<<<<<<< HEAD
 textarea {
   resize: none;
   vertical-align:text-bottom;
@@ -91,9 +90,7 @@ textarea:focus {
 #replyok:hover {
   background-color:rgba(182, 181, 181, 0.849);
 }
-=======
 .table th{text-align:center;}
->>>>>>> origin/jaeung94
 </style>
 </head>
 <body>

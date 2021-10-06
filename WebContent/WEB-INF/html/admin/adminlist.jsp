@@ -34,7 +34,6 @@ $(document).ready(function () {
 });
 </script>
 <style>
-<<<<<<< HEAD
 #menu-bar {
 	margin-top: 20px;
     width: 15%;
@@ -47,9 +46,7 @@ $(document).ready(function () {
     font-weight: nomal;
     font-size: 15px;
 }
-=======
 .table th{text-align:center;}
->>>>>>> origin/jaeung94
 </style>
 </head>
 <body>
