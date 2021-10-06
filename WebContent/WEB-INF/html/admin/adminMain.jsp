@@ -93,6 +93,7 @@ textarea:focus {
 </style>
 </head>
 <body>
+
 <div id="headerMain"></div>
   <div id="contnet" class="contents">
     <div id="menu-bar">
