@@ -12,15 +12,15 @@
   <style>
         .box li{
             width: 200px;
-            height: 400px;
+            height: 450px;
             list-style: none;
             padding: 0;
-            margin: 0 12px 40px 0;
+            margin: 30px;
             display: inline-block;
             vertical-align: top;
             position: relative;
-            border: 1px solid black;
-			
+/*             border: 1px solid black; */
+            border: solid 5px #918c0038;
         }
         
         .box-caption{
@@ -80,117 +80,122 @@
 		.update-btn:after{right:inherit; top:inherit;left:0;bottom:0;}
 		.update-btn:hover:before,.update-btn:hover:after{width:100%;transition:800ms ease all;}
     </style>
-<script>
-	$(document).ready(function (){
-		$("#headerMain").load("/html/comm/header.jsp");
-		$("#footerMain").load("/html/comm/footer.html");
-	});
-</script>
-</head>
-
-<body>
-<div id="headerMain"></div>
-  <div style="text-align: center;">
-    <h2>투표현황</h2>
- 	<div style="width: 800px;  display: inline-block; margin-top: 50px;">
-    
-     <canvas id="myChart"></canvas>
-   	</div>
-  </div>
-    <hr>
-
-    <ul class="box" style="text-align: center;" >
-        <div style="display: inline-block;">
-        <c:forEach  items="${requestScope.cList }" var="cOne" varStatus="index">
-         <li>
-            <article class="location-listing" style="float: left; margin: 10px;">
-            
-                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }" class="location-title">Click!</a>
-                <div class="location-image" id="box-thumb">
-                     <a href="" class="sendNo"><img style="width: 180px; height: 180px;"
-                        src="/upload/${cOne.fileName }"   alt="">
-                    </a>
-                </div>
-            </article>
-            <div>
-                <div style="padding:30px" >
-                    <div style="width: 150px; overflow: hidden; text-overflow: ellipsis; ">
-                    	${cOne.recipeTitle }
-                    </div>
-                </div>                              
-                <div class="box-name">
-                    <a href="/user/page?userId=${rOne.userId }">
-                        <img src="/img/myPageLogo.png" alt="">
-                        ${cOne.recipeUserId }
-                    </a>
-                </div> 
-                <div class="option" style="margin:20px;" >
-                    <form action="">
-                       <button type="submit" class="update-btn" style="border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표하기</button>
-                       <button type="submit" class="update-btn" style="border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표취소</button>
-                     </form>
-            </div>
-            </div>
-          </li>
-        </c:forEach>
-    	</div>
-    </ul>
-
-
-
-      <script>
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [
-                	 'Red',
-                     'Blue',
-                     'Yellow',
-                     'Yellow',
-                     'Yellow',
-                     'Yellow',
-                     'Yellow',
-                     'Yellow',
-                     'Yellow',
-                     'Yellow'
-                ],
-                datasets: [{
-                    label: 'Voting status.',
-                    data: [65, 59, 80, 81, 56, 55, 40, 50, 60, 20],
-                    backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)',
-                    'rgb(201, 203, 207)',
-                    'rgb(75, 192, 192)',
-                    'rgb(255, 159, 64)'
-
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
-        </script>
-         
-
-<div id="footerMain"></div>
-
-</body>
+	<script>
+		$(document).ready(function (){
+			$("#headerMain").load("/html/comm/header.jsp");
+			$("#footerMain").load("/html/comm/footer.html");
+		});
+	</script>
+	</head>
+	
+	<body>
+	<div id="headerMain"></div>
+	  <div style="text-align: center; margin-bottom: 50px; text-align: center;">
+	  <div style=" text-align: center; ">
+	  	<div style="display: inline-block;"><h1>투표현황 </h1></div> 
+	   	<div style="display: inline-block;"><img alt="" src="/img/crown.png" style="width: 45px; vertical-align: text-bottom;"></div> 
+	   </div>
+	 	<div style="width: 900px; display: inline-block; margin-top: 10px;">
+	    
+	     <canvas id="myChart"></canvas>
+	   	</div>
+	  </div>
+	  	
+	    <hr>
+	
+	    <ul class="box" style="text-align: center;" >
+	        <div style="display: inline-block;">
+	        <c:forEach  items="${requestScope.cList }" var="cOne" varStatus="index">
+	         <li>
+	            <article class="location-listing" style="float: left; margin: 10px;">
+	            
+	                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }" class="location-title">Click!</a>
+	                <div class="location-image" id="box-thumb">
+	                     <a href="" class="sendNo"><img style="width: 180px; height: 180px;"
+	                        src="/upload/${cOne.fileName }"   alt="">
+	                    </a>
+	                </div>
+	            </article>
+	            <hr style="border: dotted 5px #918c0038;">
+	            <div>
+	                <div style="padding:30px" >
+	                    <div style="width: 150px; overflow: hidden; text-overflow: ellipsis; ">
+	                    	${cOne.recipeTitle }
+	                    </div>
+	                </div>                              
+	                <div class="box-name">
+	                    <a href="/user/page?userId=${rOne.userId }">
+	                        <img src="/img/myPageLogo.png" alt="">
+	                        ${cOne.recipeUserId }
+	                    </a>
+	                </div> 
+	                <div class="option" style="margin:20px;" >
+	                    <form action="">
+	                       <button type="submit" class="update-btn" style="border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표하기</button>
+	                       <button type="submit" class="update-btn" style="border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표취소</button>
+	                     </form>
+	            </div>
+	            </div>
+	          </li>
+	        </c:forEach>
+	    	</div>
+	    </ul>
+	
+	
+	
+	      <script>
+	        var ctx = document.getElementById('myChart');
+	        var myChart = new Chart(ctx, {
+	            type: 'bar',
+	            data: {
+	                labels: [
+	                	 'Red',
+	                     'Blue',
+	                     'Yellow',
+	                     'Yellow',
+	                     'Yellow',
+	                     'Yellow',
+	                     'Yellow',
+	                     'Yellow',
+	                     'Yellow',
+	                     'Yellow'
+	                ],
+	                datasets: [{
+	                    label: 'Voting status.',
+	                    data: [65, 59, 80, 81, 56, 55, 40, 50, 60, 20],
+	                    backgroundColor: [
+	                    'rgba(255, 99, 132, 0.2)',
+	                    'rgba(255, 159, 64, 0.2)',
+	                    'rgba(255, 205, 86, 0.2)',
+	                    'rgba(75, 192, 192, 0.2)',
+	                    'rgba(54, 162, 235, 0.2)',
+	                    'rgba(153, 102, 255, 0.2)',
+	                    'rgba(201, 203, 207, 0.2)',
+	                    'rgba(201, 203, 207, 0.2)',
+	                    'rgba(75, 192, 192, 0.2)',
+	                    'rgba(255, 159, 64, 0.2)'
+	                    ],
+	                    borderColor: [
+	                    'rgb(255, 99, 132)',
+	                    'rgb(255, 159, 64)',
+	                    'rgb(255, 205, 86)',
+	                    'rgb(75, 192, 192)',
+	                    'rgb(54, 162, 235)',
+	                    'rgb(153, 102, 255)',
+	                    'rgb(201, 203, 207)',
+	                    'rgb(201, 203, 207)',
+	                    'rgb(75, 192, 192)',
+	                    'rgb(255, 159, 64)'
+	
+	                    ],
+	                    borderWidth: 1
+	                }]
+	            }
+	        });
+	        </script>
+	         
+	
+	<div id="footerMain"></div>
+	
+	</body>
 </html>
