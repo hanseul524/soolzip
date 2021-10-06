@@ -191,20 +191,19 @@ $(document).ready(function() {
 
 <body>
 	<div id="headerMain"></div>
-		<div
-			style="text-align: center; margin-bottom: 50px; text-align: center;">
-			<div style="text-align: center;">
-				<div style="display: inline-block;">
-					<h1>투표현황</h1>
-				</div>
-				<div style="display: inline-block;">
-					<img alt="" src="/img/crown.png"
-						style="width: 45px; vertical-align: text-bottom;">
-				</div>
+	<div
+		style="text-align: center; margin-bottom: 50px; text-align: center;">
+		<div style="text-align: center;">
+			<div style="display: inline-block;">
+				<h1>투표현황</h1>
 			</div>
-			<div style="width: 900px; display: inline-block; margin-top: 10px;">
-				
-					
+			<div style="display: inline-block;">
+				<img alt="" src="/img/crown.png"
+					style="width: 45px; vertical-align: text-bottom;">
+			</div>
+		</div>
+		<div style="width: 900px; display: inline-block; margin-top: 10px;">
+
 	<c:if test="${votingState eq 'Y' }">
 				<canvas id="myChart"></canvas>
 		</div>
@@ -267,15 +266,14 @@ $(document).ready(function() {
 			투표기간이 아닙니다.
 		</c:if>
 
-	<script>
 
 	<script language="javaScript">
 		var ctx = document.getElementById('myChart');
 		var arr = new Array();
 		var rCount = new Array();
-		  <c:forEach items="${cList}" var="rOne">
-			arr.push("${rOne.recipeTitle }");
-			rCount.push("${rOne.voteCount }")
+		  <c:forEach items="${cList}" var="cOne">
+			arr.push("${cOne.recipeTitle }");
+			rCount.push("${cOne.voteCount }")
 		  </c:forEach>
 		
 		var myChart = new Chart(ctx, {
@@ -307,6 +305,7 @@ $(document).ready(function() {
 			}
 		});
 	</script>
+
 
 	<div id="footerMain"></div>
 
