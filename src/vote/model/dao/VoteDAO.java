@@ -17,7 +17,7 @@ public class VoteDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<RecipeCandidate> cList = null;
-		String query = "select A.candidate_no, recipe_title, recipe_no,file_name,user_id, (select count(*) from vote where candidate_no = A.candidate_no) as vote_ct, nvl((select candidate_no from vote where user_id = ?), 0) as vote_at from recipe_candidate a join (select * from recipe join recipe_file using(file_no)) using(recipe_no)";
+		String query = "select A.candidate_no, recipe_title, recipe_no,file_name,user_id, (select count(*) from vote where candidate_no = A.candidate_no and vote_state='Y') as vote_ct, nvl((select candidate_no from vote where user_id = ? and vote_state='Y'), 0) as vote_at from recipe_candidate a join (select * from recipe join recipe_file using(file_no)) using(recipe_no)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
