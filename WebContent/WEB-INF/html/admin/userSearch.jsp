@@ -35,6 +35,9 @@ $(document).ready(function () {
 	});
 });
 </script>
+<style>
+table th{text-align:center;}
+</style>
 </head>
 <body>
 <div id="headerMain"></div>
