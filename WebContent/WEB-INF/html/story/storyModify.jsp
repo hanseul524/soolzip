@@ -70,6 +70,8 @@
 
 <body>
         <div id="headerMain"></div>
+         <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
     <div class="container">
         <div class="contents">
             <form action="/story/modify" method="post" id="test" style="margin: 0 auto; width: 1000px;"enctype="multipart/form-data">

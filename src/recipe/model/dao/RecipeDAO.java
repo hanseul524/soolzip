@@ -217,7 +217,7 @@ public class RecipeDAO {
 			if (i == currentPage) {
 				sb.append(i);
 			} else {
-				sb.append("<a href='/recipe/list?currentPage=" + i + "'>" + i + "</a>");
+				sb.append("<a href='/recipe/list?currentPage=" + i + "'>" +" "+ i +" "+ "</a>");
 			}
 		}
 		if (needNext) {

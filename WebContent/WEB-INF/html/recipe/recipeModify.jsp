@@ -229,6 +229,8 @@ table td input {
 </head>
 <body>
 	<div id="headerMain"></div>
+	 <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
 	<form action="/recipe/modify" method="post" id="test" style="margin: 0 auto; width: 1000px;" enctype="multipart/form-data">
 		<input type="hidden" name ="rmMakeId" />
 		<input type="hidden" name="rmIngredientId" />

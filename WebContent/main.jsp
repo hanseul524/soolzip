@@ -60,7 +60,7 @@
   <div id="content" class="contents"style="background-color:beige;">
     <div class="row" style="background-color: #918c00; margin: 30px 0px 50px 0px;">
       <div class="video-con">
-        <video autoplay controls loop>
+        <video autoplay controls loop style="pointer-events: none;">
           <source src="/img/main.mp4" type="video/mp4">
         </video>
       </div>

@@ -10,6 +10,9 @@
     <title>스토리 조회</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../css/story/storyList.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
 </head>
 <style>
     a{  /* 밑줄 해제 */
@@ -30,7 +33,12 @@
 </script>
 <body>
     <div id="headerMain"></div>
-    <h1 class="h1text" style="text-align: center;">스토리</h1>
+     <br>
+      <hr style="border: 0.2px solid rgb(236, 236, 236);">
+    <div style="text-align:center;">
+    <span class="h1text" style="font-family:'Sunflower', sans-serif;font-size:3rem;font-weight:bold;margin:50px;">스토리</span>
+    </div>
+    
     <div class="wrap">
         <div class="container">
             <div class="contents">

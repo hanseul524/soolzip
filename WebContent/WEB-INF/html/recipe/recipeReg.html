@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>레시피 등록</title>
 <link rel="stylesheet" href="../../css/comm.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .filebox label {
@@ -211,7 +214,9 @@ table td input {
 		<input type="hidden" name="ingredientName" />
 		<input type="hidden" name="ingredientGram" />
 		<input type="hidden" name="recipeSaveState" value="0"/>
-		<h1 align="center" style="margin-top: 2em;">레시피 등록</h1>
+		<div style="text-align:center; margin:50px;">
+	    <span class="h1text" style="font-family:'Sunflower', sans-serif;font-size:3rem;font-weight:bold;">레시피 등록</span>
+	    </div>
 		<table>
 
 			<thead></thead>
@@ -244,7 +249,7 @@ table td input {
 							<option value="럼">럼</option>
 							<option value="진">진</option>
 							<option value="데킬라">데킬라</option>
-							<option value="위스키">위스키</option>s
+							<option value="위스키">위스키</option>
 							<option value="브랜디">브랜디</option>
 							<option value="전통주">전통주</option>
 							<option value="기타">기타</option>
