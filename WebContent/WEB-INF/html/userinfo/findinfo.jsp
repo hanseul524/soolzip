@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>findinfo</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/findinfo.css"/>
+<link rel="stylesheet" type="text/css" href="/css/findinfo.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function(){
@@ -32,7 +32,7 @@
 <div id="headerMain"></div>
   <div id="content" class="contents">
     <div class="loginbox" style="text-align: center;">
-      <div class="login" >
+      <div class="login" style="width:450px; height: 600px;">
         <h2 id="find-id">아이디 찾기</h2><h2 id="find-pwd" style="display: none;">비밀번호 찾기</h2>
         <ul class="tabs">
           <li class="tab-link current" data-tab="tab-1">아이디 찾기</li>
@@ -51,9 +51,10 @@
             </div>
           </form>
           <div>
-            <span id="searchid">회원 가입시 입력한 이름과 이메일을 입력해주세요.</span>
+            <span id="searchid">회원 가입시 입력한 이름과 이메일을 입력해주세요.</span><br>
             <c:if test="${not empty userOne }">
-            <span id="findid">회원님의 아이디는 ${userOne.userId}입니다.</span>
+            <span id="findid">회원님의 아이디는 
+            <b style="font-weight: nomal;">${userOne.userId}</b>입니다.</span>
             </c:if>
           </div>
           </div>
