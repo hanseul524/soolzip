@@ -48,8 +48,8 @@ table th {
 }
 
 table td input {
-	width: 250px;
-	height: 35px;
+  width: 230px;
+  height: 35px;
   margin: 3px;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 5px;
@@ -117,6 +117,10 @@ button:hover {
 #buttonArea input:hover {
   background-color: #c2be5c;
 }
+span {
+  font-size: 12px;
+  font-weight: nomal;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -167,11 +171,11 @@ button:hover {
 		var size = $("#process").find('div').length +1;
 		
 		//추가할 html 태그 만들기
-		var addHtml = "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
-		addHtml += "<b>step" + size +"</b>&nbsp;";
+		var addHtml = "<span>STEP" + size +"</span>&nbsp;";
+		addHtml += "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
 		addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\" style=\"resize:none;vertical-align: middle; width: 500px; height: 150px;\"></textarea>&nbsp;";	
 		addHtml += "<input style=\"display: none;\" type=\"file\" name=\"processFile"+size+"\" accept=\"image/*\" onchange=\"readURL(this, 'processImg"+size+"')\" />&nbsp;";
-		addHtml += "<img id=\"processImg"+size+"\" style=\"width: 200px; height: 150px; vertical-align: middle;\" src=\"/img/photoImg.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
+		addHtml += "<img id=\"processImg"+size+"\" style=\"width: 150px; height: 150px; margin-left: 30px; vertical-align: middle;\" src=\"/img/recipephoto.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
 		addHtml += "<button type=\"button\" onclick=\"rmRow2(this)\" >삭제</button>";
 		addHtml += "</div>";
 		$("#process").append(addHtml);

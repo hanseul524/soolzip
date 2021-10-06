@@ -16,6 +16,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script>
@@ -53,6 +54,20 @@ $(document).ready(function () {
 	});
 });
 </script>
+<style>
+#menu-bar {
+	margin-top: 20px;
+    width: 15%;
+    height: 700px;
+    float: left;
+    background-color: rgb(145, 140, 0);
+    color: white;
+    padding: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: nomal;
+    font-size: 15px;
+}
+</style>
 </head>
 <body>
 <div id="headerMain"></div>

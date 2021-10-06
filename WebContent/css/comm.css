@@ -146,6 +146,21 @@ body {
 .mypage>li a:hover {
 	color: #c5c141fb;
 }
+.recipe-i {
+	position: relative;
+}
+.recipe-i span {
+	position: absolute;
+}
+.recipe-i a:hover {
+	display: block;
+}
+#regblock {
+  display: block;
+  background: #ececec;
+  border-radius: 5px;
+  width: 72px;
+}
 .video-con {
   width: 100%;
   height: 720px;

@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스토리 등록</title>
-    <link rel="stylesheet" href="../../css/story/storyRegister.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스토리 등록</title>
+<link rel="stylesheet" href="/css/story/storyRegister.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
        <style>
+       body {
+       font-family: 'Noto Sans KR', sans-serif;
+       }
+       .back-con {
+       	background-color: rgb(251, 246, 225);
+       	width: 100%;
+		height: 1400px;
+       }
+       .contents {
+       		width: 800px;
+       		min-height: 600px;
+       		float: left;
+       		margin-left: 200px;
+       		border: 1px solid lightgrey;
+            border-radius: 30px;
+  			padding: 20px;
+       }
         img:hover {
             cursor: pointer;
         }
@@ -19,13 +37,64 @@
         table th {
             font-size: 20px;
             text-align: left;
-            margin-right: 30px;
+
         }
 
         table td input {
             width: 170px;
             height: 30px;
         }
+        .img_title {
+			border: 1px solid rgb(219, 219, 219);
+			border-radius: 20px;
+			margin-right: 20px;
+			height: 600px;
+		}
+		.preview {
+			width:450px;
+			height:450px;
+			margin: 20px;
+			margin-left: 35px;
+		}
+		p {
+			font-weight: normal;
+			font-size: 20px;
+			padding-top: 10px;
+		}
+		textarea {
+  			resize: none;
+  			vertical-align:text-bottom;
+  			width: 570px;
+  			height: 130px;
+  			border: 1px solid rgb(219, 219, 219);
+  			border-radius: 5px;
+  			background-color: rgb(246, 246, 246);
+			}
+		textarea:focus {
+  			outline: none;	
+			}
+		#taginput {
+			width: 500px;
+  			height: 35px;
+  			margin: 3px;
+  			border: 1px solid rgb(219, 219, 219);
+  			border-radius: 5px;
+  			background-color: rgb(246, 246, 246);
+		}
+		.btn_color {
+			border: 1px solid rgba(182, 181, 181, 0.849);
+    		cursor: pointer;
+    		color: black;
+    		display: inline-block;
+    		width: 130px;
+    		height: 40px;
+    		border-radius: 5px;
+    		font-size: 14px;
+    		background-color:transparent;
+		}	
+		.btn_color:hover {
+			background-color: #c2be5c;
+		}
     </style>
     <script>
         //선택 input:file 태그 연결
@@ -68,31 +137,31 @@
         <div id="headerMain"></div>
          <br>
       <hr style="border: 0.2px solid rgb(236, 236, 236);">
+    <div class="back-con">  
     <div class="container">
+        <h1 align="center" style="margin-top: 2em; margin-bottom: 1em;">스토리 등록</h1>
         <div class="contents">
             <form action="/story/register" method="post" id="test" style="margin: 0 auto; width: 1000px;"enctype="multipart/form-data">
                 <input type="hidden" name="StorySave" value="0" />
-                <h1 class="h1text" align="center" style="margin-top: 2em;">스토리 등록</h1>
                 <table style="margin-left: 250px;">
                     <thead></thead>
                     <tbody>
                         <tr>
-
                             <div>
-                                <td width="200px" align="center">
+                                <td width="150px" align="center" class="imgtd">
                                     <div class="img_title">
                                         <input id="storyFile" name="storyFile" type="file" style="display: none;"onchange="readURL(this, 'mainImg')">
-                                        <img class="preview" id="mainImg" src="/img/photoImg.png"onclick="javascript: $('#storyFile').click();">
+                                        <img class="preview" id="mainImg" src="/img/recipephoto.png"onclick="javascript: $('#storyFile').click();">
                                     </div>
-                                    <center><b>POTO</b></center>
+                                    <center><span>PHOTO</span></center>
                                 </td>
                             </div>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 <div id="process">
+                           <p>내용</p>    
                                     <div id="process1" style="height: 150px; margin-bottom: 1em;">
-                                        <b>내용</b>
                                         <textarea placeholder="내용을 입력해주세요." name="story-Contents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;"></textarea>
                                     </div>
                                 </div>
@@ -102,8 +171,8 @@
                 </table>
 
                 <div class="tag">
-                    <h4>태그</h4>
-                    <input type="text" name="story-Tag" placeholder="태그를 입력해주세요.(#ㅈㅈ)"style="width: 300px; height: 40px;" />
+                    <p>태그</p>
+                    <input type="text" name="story-Tag" id="taginput" placeholder="태그를 입력해주세요.(#ㅈㅈ)"/>
                 </div>
                 <div id="buttonArea" align="center">
                     <!-- <input type="button" value="삭제"> -->
@@ -112,6 +181,7 @@
                 </div>
             </form>
         </div>
+    </div>
     </div>
     <div id="footerMain"></div>
 </body>

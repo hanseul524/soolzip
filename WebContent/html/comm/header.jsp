@@ -70,17 +70,16 @@ $(document).ready(function () {
 	<!-- 사용자 nav -->
 	<div class="user-area">
 		<ul class="user-area-menu">
-			
 			<c:if test="${user.userAdmin eq 'Y' }">
 			<li class="menu-li"><a href="/admin/qnalist"><img style="width: 45px; margin: 5px;"
 					src="/img/adminLogo.png" alt="">
 			</a></li>
 			</c:if>
-			<li>
+			<li class="menu-li" id="recipe-i">
 				<a href="/recipe/register" id="regicon"> 
 					<img style="width: 45px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
-				<div id="regblock" style="display:none;margin-left:-25px;width:100px;height:30px;position:absolute; background-color:rgb(140,136,41);text-align:center;color:white;"><span style="font-weight:bold;line-height:25px;">레시피 등록</span></div>
+				<span style="display: none;">레시피 등록</span>
 			</li>
 			
 			<c:if test ="${user.userId eq null}">

@@ -48,8 +48,77 @@ table th {
 }
 
 table td input {
-	width: 170px;
-	height: 30px;
+  width: 230px;
+  height: 35px;
+  margin: 3px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+}
+table td input:focus {
+  outline: none;
+  background-color: rgba(246, 246, 246, 0.856);
+}
+p {
+  font-weight: normal;
+  padding-right: 20px;
+  width: 155px;
+}
+table {
+  border: 1px solid lightgrey;
+  border-radius: 30px;
+  padding: 20px;
+}
+textarea {
+  resize: none;
+  vertical-align:text-bottom;
+  width: 500px;
+  height: 130px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+}
+textarea:focus {
+  outline: none;
+}
+select {
+  width: 80px;
+  height: 35px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  background-color: rgb(246, 246, 246);
+}
+select:focus {
+  outline: none;
+}
+button {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  background-color:transparent;
+}
+button:hover {
+  background-color: #c2be5c;
+}
+#buttonArea input {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  margin-top: 10px;
+  background-color:transparent;
+}
+#buttonArea input:hover {
+  background-color: #c2be5c;
+}
+span {
+  font-size: 12px;
+  font-weight: nomal;
 }
 </style>
 <script>
@@ -113,13 +182,13 @@ table td input {
 		var size = $("#process").find('div').length +1;
 		
 		//추가할 html 태그 만들기
-		var addHtml = "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
+		var addHtml = "<span>STEP" + size +"</span>&nbsp;";
 		addHtml += "<input type=\"hidden\" name=\"fileNo" + size + "\" />";
 		addHtml += "<input type=\"hidden\" name=\"makeNo" + size + "\" />";
-		addHtml += "<b>step" + size +"</b>&nbsp;";
+		addHtml += "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
 		addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\" style=\"resize:none;vertical-align: middle; width: 500px; height: 150px;\"></textarea>&nbsp;";	
 		addHtml += "<input style=\"display: none;\" type=\"file\" name=\"processFile"+size+"\" accept=\"image/*\" onchange=\"readURL(this, 'processImg"+size+"')\" />&nbsp;";
-		addHtml += "<img id=\"processImg"+size+"\" style=\"width: 200px; height: 150px; vertical-align: middle;\" src=\"/img/photoImg.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
+		addHtml += "<img id=\"processImg"+size+"\" style=\"width: 150px; height: 150px; vertical-align: middle; margin-left: 30px;\" src=\"/img/recipephoto.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
 		addHtml += "<button type=\"button\" onclick=\"rmRow2(this)\" >삭제</button>";
 		addHtml += "</div>";
 		$("#process").append(addHtml);
@@ -238,31 +307,31 @@ table td input {
 		<input type="hidden" name="ingredientName" />
 		<input type="hidden" name="ingredientGram" />
 		<input type="hidden" name="recipeSaveState" value="0"/>
-		<h1 align="center" style="margin-top: 2em;">레시피 수정</h1>
+		<h1 align="center" style="margin-top: 2em; margin-bottom: 1em;">레시피 수정</h1>
 		<table>
 
 			<thead></thead>
 			<tbody>
 				<tr>
-					<th>주류명</th>
+					<th><p>주류명</p></th>
 					<td><input type="text" placeholder="예) 고진감래주" name="recipe-title" value="${recipeOne.recipeTitle }" /></td>
 					<td rowspan="3" width="200px">
 						<input id="mainFile" name="mainFile" type="file" style="display: none;" onchange="readURL(this, 'mainImg')">
-						<img id="mainImg" style="width: 200px; height: 150px;"
-						src="<c:if test="${empty recipeOne.fileName }">/img/photoImg.png</c:if><c:if test="${not empty recipeOne.fileName }">/upload/${recipeOne.fileName }</c:if>"
+						<img id="mainImg" style="width: 150px; height: 150px;"
+						src="<c:if test="${empty recipeOne.fileName }">/img/recipephoto.png</c:if><c:if test="${not empty recipeOne.fileName }">/upload/${recipeOne.fileName }</c:if>"
 						onclick="javascript: $('#mainFile').click();">
 						<br/>
-						<center><b>대표사진</b></center>
+						<center><p>대표사진</p></center>
 					</td>
 					
 				</tr>
 				<tr>
-					<th>레시피 한줄설명</th>
+					<th><p> 레시피 한줄설명</p></th>
 					<td><input type="text" placeholder="내용을 입력하세요." name="recipe-contents" value="${recipeOne.recipeContents }"/></td>
 				</tr>
 
 				<tr>
-					<th>메인 주류 정보</th>
+					<th><p>메인 주류 정보</p></th>
 					<td>
 						<select name="recipe-mainDrink" id="" value="${recipeOne.recipeMainDrink }">
 							<option value="소주">소주</option>
@@ -288,7 +357,7 @@ table td input {
 				</tr>
 				
 				<tr>
-					<th>재료</th>
+					<th><p>재료</p></th>
 					<td>
 						<div id="ingredient">
 							<!-- if iList 사이즈가 0이다 -->
@@ -327,17 +396,17 @@ table td input {
 					</td>
 				</tr>
 				<tr>
-					<th>제조과정</th>	
+					<th><p>제조과정</p></th>	
 					<td colspan="2">
 						<div id="process">
 							<c:forEach items="${mList }" var="mkProcess" varStatus="index">
+									<span>STEP${index.count }</span>
 								<div id="process${index.count }" style="height: 150px; margin-bottom: 1em;">
 									<input type="hidden" name="fileNo${index.count }" value="${mkProcess.fileNo }">
 									<input type="hidden" name="makeNo${index.count }" value="${mkProcess.makeNo }">
-									<b>step${index.count }</b>
 									<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;">${mkProcess.makeContents }</textarea>
 									<input style="display:none;" type="file" name="processFile${index.count }" accept="image/*" onchange="readURL(this, 'processImg${index.count }')" />
-									<img id="processImg${index.count }" style="width: 200px; height: 150px; vertical-align: middle;" 
+									<img id="processImg${index.count }" style="width: 150px; height: 150px; vertical-align: middle; margin-left: 30px;" 
 									src="<c:if test="${empty mkProcess.fileNo }">/img/photoImg.png</c:if><c:if test="${not empty mkProcess.fileNo }">/upload/${mkProcess.fileName }</c:if>"
 									onclick="fnFileChange(this);">
 									<c:if test="${index.count>2 }">
@@ -350,7 +419,7 @@ table td input {
 					</td>
 				</tr>
 				<tr>
-					<th>태그 추가</th>
+					<th><p>태그 추가</p></th>
 					<td><input type="text" name="recipe-tag" placeholder="태그를 추가해주세요." style="width: 400px;" value="${recipeOne.recipeTag }"/></td>
 				</tr>
 			</tbody>

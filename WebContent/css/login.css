@@ -75,6 +75,9 @@ h2 {
   margin: 0 auto;
   padding: 20px;
 }
+.submit input:hover {
+  background-color: #c2be5c;
+}
 .submit input {
   width: 100%;
   height: 50px;
@@ -109,6 +112,9 @@ h2 {
   font-size: 1.2em;
   font-weight: lighter;
   letter-spacing: 2px;
+}
+.signup:hover {
+  background-color: #c2be5c;
 }
 .icon {
   width: 90%;
