@@ -20,7 +20,7 @@
   	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
-<script>
+<script> 
 	$(document).ready(function (){
 		$("#headerMain").load("/html/comm/header.jsp");
 		$("#footerMain").load("/html/comm/footer.html");
