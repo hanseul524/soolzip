@@ -244,6 +244,47 @@ public class UserDAO {
 		}
 		return sb.toString();
 	}
+	//회원 권한변경 페이징처리
+	public String getUPageNavi(Connection conn, int currentPage) {
+		int pageCountPerView = 5;
+		int viewTotalCount = totalCount(conn);
+		int viewCountPerPage = 10;
+		int pageTotalCount = 0;
+		int pageTotalCountMod = viewTotalCount % viewCountPerPage;
+		if(pageTotalCountMod > 0) {
+			pageTotalCount = viewTotalCount / viewCountPerPage + 1;
+		}else {
+			pageTotalCount = viewTotalCount / viewCountPerPage;
+		}
+		int startNavi = ((currentPage-1)/pageCountPerView) * pageCountPerView + 1;
+		int endNavi = startNavi + pageCountPerView - 1;
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		boolean needPrev = true;
+		boolean needNext = true;
+		if(startNavi == 1) {
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		StringBuilder sb = new StringBuilder();
+		if(needPrev) {
+			sb.append("<a href='/user/changeList?currentPage=" + (startNavi-1) + "'> [이전] </a>");
+		}
+		for(int i=startNavi; i<=endNavi; i++) {
+			if(i == currentPage) {
+				sb.append(i + " ");
+			}else {
+				sb.append("<a href='/user/changeList?currentPage=" + i + "'>" + i + "</a>");
+			}
+		}
+		if(needNext) {
+			sb.append("<a href='/user/changeList?currentPage=" + (endNavi+1) + "'> [다음] </a>");
+		}
+		return sb.toString();
+	}
 	//관리자 페이지 패이징처리
 	public String getAPageNavi(Connection conn, int currentPage) {
 		int pageCountPerView = 5;
@@ -285,6 +326,7 @@ public class UserDAO {
 		}
 		return sb.toString();
 	}
+	
 	// 전체 회원 숫자를 세줄 메소드
 	private int totalCount(Connection conn) {
 		int totalValue = 0;
@@ -311,7 +353,7 @@ public class UserDAO {
 		int totalValue = 0;
 		Statement stmt = null;
 		ResultSet rset = null;
-		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM USERS where user_admin_yn = 'y' ";
+		String query = "SELECT COUNT(*) AS TOTALCOUNT FROM USERS WHERE USER_ADMIN_YN = 'Y'";
 		
 		try {
 			stmt = conn.createStatement();
@@ -408,6 +450,7 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(query);
 			for(int i=0; i<userArr.length; i++) {
 				pstmt.setString(1, userArr[i]);
+				System.out.println(userArr[i]);
 				result = pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {

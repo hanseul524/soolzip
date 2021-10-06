@@ -101,6 +101,11 @@ public class QnaService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = new QnaDAO().updateReply(conn, qnaNO, replyContent, userId);
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -108,5 +113,4 @@ public class QnaService {
 		}
 		return result;
 	}
-	
 }

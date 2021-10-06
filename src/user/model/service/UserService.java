@@ -92,6 +92,11 @@ public class UserService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = new UserDAO().updateUserPwd(userId, authenticationKey, conn);
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -118,6 +123,26 @@ public class UserService {
 		}
 		return pd;
 	}
+	//회원 권한변경 리스트 보기
+	public PageData printAllUsers(int currentPage) {
+		PageData pd = new PageData();
+		Connection conn = null;
+		UserDAO uDAO = new UserDAO();
+		
+		try {
+			conn = jdbcTemplate.createConnection();
+			List<User> uList = uDAO.selectAllUser(conn, currentPage);
+			String upageNavi = uDAO.getUPageNavi(conn, currentPage);
+			pd.setUserList(uList);
+			pd.setUpageNavi(upageNavi);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
+		}
+		return pd;
+	}
+	
 	//관리자 리스트 보기
 	public PageData printAllAdmin(int currentPage) {
 		PageData pd = new PageData();
@@ -145,6 +170,11 @@ public class UserService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = new UserDAO().deleteUser(conn, users);
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -160,6 +190,11 @@ public class UserService {
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = new UserDAO().deleteAdmin(conn, admins);
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -185,12 +220,18 @@ public class UserService {
 	public int changeUser(String users) {
 		int result = 0;
 		Connection conn = null;
-		
 		try {
 			conn = jdbcTemplate.createConnection();
 			result = new UserDAO().updateUser(conn, users);
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			}else {
+				JDBCTemplate.rollback(conn);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(conn);
 		}
 		return result;
 	}

@@ -32,12 +32,29 @@
 				$(this).addClass('active');
 			}
 		});
-		var delchk = [];
-		$('.chk:checked').each(function() {
-			console.log($(this).val());
+		$('#chkall').click(function() {
+			if($("input:checkbox[id='chkall']").prop("checked")) {
+				$("input[type=checkbox]").prop("checked", true);
+			}else {
+				$("input[type=checkbox]").prop("checked", false);
+			}
 		});
 	});
 </script>
+<style>
+#menu-bar {
+	margin-top: 20px;
+    width: 15%;
+    height: 700px;
+    float: left;
+    background-color: rgb(145, 140, 0);
+    color: white;
+    padding: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: nomal;
+    font-size: 15px;
+}
+</style>
 </head>
 <body>
 	<div id="headerMain"></div>
@@ -47,6 +64,7 @@
 			<p style="text-align: center;">
 				관리자님, <br> 안녕하세요.
 			</p>
+			<hr>
 			<br>
 			<ul>
 				<li><i class="fas fa-list"></i><a href="/admin/qnalist">문의사항
@@ -58,7 +76,7 @@
 					</ul></li>
 				<li><i class="fas fa-user-circle"></i><a href="/admin/list">관리자
 						관리</a></li>
-				<li><i class="fas fa-poll"></i><a href="#">투표 관리</a></li>
+				<li><i class="fas fa-poll"></i><a href="/adminVote/list">투표 관리</a></li>
 			</ul>
 		</div>
 	</div>
@@ -87,7 +105,7 @@
 						<th>조회수</th>
 						<th>아이디</th>
 						<th>작성일</th>
-						<th>선택</th>
+						<th><input type="checkbox" name="chkall" id="chkall"></th>
 					</tr>
 					<c:forEach items="${requestScope.rList }" var="rOne"
 						varStatus="index">
@@ -113,6 +131,7 @@
 					</center>
 					</c:if>
 			</form>
+			<br><br>
 			<form action="/vote/start" method="post">
 			<table class="table table-hover">
 				<span><i class="fas fa-chevron-right"></i>&nbsp;&nbsp;명예의전당

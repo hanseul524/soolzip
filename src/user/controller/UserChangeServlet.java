@@ -47,7 +47,5 @@ public class UserChangeServlet extends HttpServlet {
 		}else {
 			System.out.println("변경실패");
 		}
-	
 	}
-
 }
