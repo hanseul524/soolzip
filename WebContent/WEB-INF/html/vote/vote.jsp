@@ -176,6 +176,17 @@
 		$("#footerMain").load("/html/comm/footer.html");
 	});
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".update-btn").on("click",function(){
+		<c:if test ="${user.userId eq null}">
+		alert("로그인이 필요한 서비스입니다");
+		location.href="/index.jsp";
+		return false;
+		</c:if>
+	});
+});
+</script>
 </head>
 
 <body>
@@ -193,7 +204,7 @@
 		</div>
 		<div style="width: 900px; display: inline-block; margin-top: 10px;">
 
-			<c:if test="${votingState eq 'Y' }">
+	<c:if test="${votingState eq 'Y' }">
 				<canvas id="myChart"></canvas>
 		</div>
 	</div>
@@ -204,6 +215,7 @@
 		<div style="display: inline-block;">
 			<c:forEach items="${requestScope.cList }" var="cOne"
 				varStatus="index">
+				<input type="hidden" name="recipe-title" value="${cOne.recipeTitle }">
 				<li>
 					<article class="location-listing"
 						style="float: left; margin: 10px;">
@@ -232,6 +244,7 @@
 							<form action="/vote/action" method="post">
 							<input type="hidden" name="candidateNo" value="${cOne.candidateNo }">
 							<input type="hidden" name="voteAt" value="${cOne.voteAt }">
+							
 								<c:if test="${cOne.voteAt eq 0 }">
 									<button type="submit" class="update-btn"
 										style="border-top: 1px solid #e6e7e8; border-bottom: 1px solid #e6e7e8;">투표하기</button>
@@ -254,16 +267,22 @@
 		</c:if>
 
 
-	<script>
+	<script language="javaScript">
 		var ctx = document.getElementById('myChart');
+		var arr = new Array();
+		var rCount = new Array();
+		  <c:forEach items="${cList}" var="rOne">
+			arr.push("${rOne.recipeTitle }");
+			rCount.push("${rOne.voteCount }")
+		  </c:forEach>
+		
 		var myChart = new Chart(ctx, {
 			type : 'bar',
 			data : {
-				labels : [ 'Red', 'Blue', 'Yellow', 'Yellow', 'Yellow',
-						'Yellow', 'Yellow', 'Yellow', 'Yellow', 'Yellow' ],
+				labels : [arr[0],arr[1],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7],arr[8],arr[9]],
 				datasets : [ {
 					label : 'Voting status.',
-					data : [ 65, 59, 80, 81, 56, 55, 40, 50, 60, 20 ],
+					data : [ rCount[0],rCount[1],rCount[2],rCount[3],rCount[4],rCount[5],rCount[6],rCount[7],rCount[8],rCount[9] ],
 					backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
 							'rgba(255, 159, 64, 0.2)',
 							'rgba(255, 205, 86, 0.2)',
