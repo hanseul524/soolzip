@@ -46,9 +46,7 @@ public class QnaWriteServlet extends HttpServlet {
 		String title = request.getParameter("qnaTitle");
 		String content = request.getParameter("qnaContent");
 		
-		//HttpSession session = request.getSession();
-		//String userId = (String)session.getAttribute("userId");
-		//String userId = "임진영";
+		
 		HttpSession session = request.getSession();
 	      User user = new User();
 	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
@@ -58,9 +56,7 @@ public class QnaWriteServlet extends HttpServlet {
 		qna.setQnaContent(content);
 		qna.setUserId(userId);
 
-		System.out.println(title);
-		System.out.println(content);
-
+	
 		int result = new QnaService().insertQna(qna);
 		if(result>0) {
 			PrintWriter writer = response.getWriter(); 
@@ -71,7 +67,6 @@ public class QnaWriteServlet extends HttpServlet {
 			writer.print("</script>");
 			writer.close();
 			
-			//response.sendRedirect("/service/center");
 			
 		}else {
 			PrintWriter writer = response.getWriter(); 
@@ -82,7 +77,6 @@ public class QnaWriteServlet extends HttpServlet {
 			writer.print("</script>");
 			writer.close();
 			
-			//request.getRequestDispatcher("/WEB-INF/html/qna/serviceFailed.html").forward(request, response);
 		}
 
 	}

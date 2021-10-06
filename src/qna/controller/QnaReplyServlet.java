@@ -50,10 +50,9 @@ public class QnaReplyServlet extends HttpServlet {
 		int result = new QnaService().registerReply(qnaNo, replyContent, userId);
 		// 문의사항 등록 -> userId / 댓글작성 -> userId 똑같은 컬럼이라 오류남
 		if(result > 0) {
-			System.out.println("등록성공");
 			response.sendRedirect("/admin/qnalist");
 		}else {
-			System.out.println("등록실패");
+			
 		}
 	}
 
