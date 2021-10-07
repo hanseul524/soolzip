@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import recipe.model.vo.Recipe;
 import story.model.service.StoryService;
 import story.model.vo.PageData;
 import story.model.vo.Story;
@@ -44,6 +45,10 @@ public class StoryListServlet extends HttpServlet {
 		
 		PageData pageData = new StoryService().printAllStory(currentPage);
 		List<Story> storyList = pageData.getStoryList();
+		
+		for(Story story : storyList) {
+			System.out.println(story.toString());
+		}
 		
 		if(!storyList.isEmpty()) {
 			request.setAttribute("storyList", storyList);
