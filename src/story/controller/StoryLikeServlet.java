@@ -50,11 +50,9 @@ public class StoryLikeServlet extends HttpServlet {
 		int result = 0;
 		
 		
-		System.out.println("@@@"+likeCheck);
 		if(likeCheck == 1) {
 			result=new StoryService().removeStoryLike(storyNo,userId);
 			if(result>0) {
-				System.out.println("취소");
 				response.sendRedirect("/story/detail?storyNo="+storyNo);
 			}else {
 				request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
@@ -62,7 +60,6 @@ public class StoryLikeServlet extends HttpServlet {
 		}else {
 			result = new StoryService().insertStoryLike(storyNo,userId);
 			if(result>0) {
-				System.out.println("좋아요");
 				response.sendRedirect("/story/detail?storyNo="+storyNo);
 			}else {
 				request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request, response);

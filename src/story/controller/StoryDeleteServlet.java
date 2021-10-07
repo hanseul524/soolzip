@@ -38,11 +38,6 @@ public class StoryDeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		int result = new StoryService().removeStoryOne(storyNo);
-		if(result>0) {
-			System.out.println("스토리 삭제 성공");
-		}else {
-			System.out.println("스토리 삭제 실패 ");
-		}
 	}
 
 }

@@ -49,9 +49,6 @@ public class StoryModifyServlet extends HttpServlet {
 			request.setAttribute("storyOne", storyOne);
 			request.getRequestDispatcher("/WEB-INF/html/story/storyModify.jsp").forward(request,response);
 		}
-//		}else {
-//			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
-//		}
 	}
 
 	/**

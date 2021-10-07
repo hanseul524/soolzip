@@ -55,7 +55,6 @@ public class StorReplyRegisterServlet extends HttpServlet {
 		int result = new StoryService().registerStoryReply(userId,storyNo,replyContents,uploadTime);
 				
 		if(result > 0) {
-			System.out.println("등록성공"); //디버깅 위함
 			response.sendRedirect("/story/detail?storyNo="+storyNo);
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html");

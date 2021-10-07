@@ -82,7 +82,6 @@ public class storyRegisterServlet extends HttpServlet {
 			storyFile.setFileName(multi.getFile("storyFile").getName());
 			storyFile.setFilePath(multi.getFile("storyFile").getPath());
 			storyFile.setFileSize(multi.getFile("storyFile").length());
-//			storyFile.setFileName(userId); 파일 이름을 유저 아이디로 받는거
 		}
 		Story story = new Story(storyContents, storyTag);
 		story.setStoryFile(storyFile);
@@ -91,7 +90,6 @@ public class storyRegisterServlet extends HttpServlet {
 		
 		int result = new StoryService().registerStory(story, storyFile);
 		if(result>Integer.MIN_VALUE) {
-			System.out.println("등록성공");
 			response.sendRedirect("/story/list");
 		}else {
 			response.sendRedirect("/WEB-INF/html/story/storyError.html");

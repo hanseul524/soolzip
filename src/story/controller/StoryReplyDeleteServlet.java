@@ -34,7 +34,6 @@ public class StoryReplyDeleteServlet extends HttpServlet {
 		
 		if(result > 0) {
 			response.sendRedirect("/story/detail?storyNo="+storyNo);
-			System.out.println("삭제성공");
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/story/storyError.html").forward(request,response);
 		}
