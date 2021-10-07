@@ -49,7 +49,7 @@
 <style>
 .swiper {width: 90%; height:40%}
 .swiper-slide {text-align:center;display:flex;align-items:center;justify-content:center;}
-.swiper-slide img {width: 200px;height: 200px;object-fit: cover;}
+.swiper-slide img {width: 200px;height: 200px;object-fit: cover; border-radius:20px; border:1px solid #0704041a;}
 .swiper-slide:hover{}
 .update-btn{width: 250px;height: 50px; background:#fff; border:none; position:relative; transition:800ms ease all;}
 .update-btn:hover{background:#fff; color:#1AAB8A;}
@@ -74,10 +74,10 @@
         <input style="color: #fff;" type="text" name="" id="" placeholder="레시피 검색하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
       </div>
     </div>
-	<div style="width:1200px; height: 700px; margin: 0 auto;">
+	<div style="width:1300px; height: 700px; margin: 0 auto;">
      	<span style="margin-left:30px;font-size:2rem; font-weight:bold;">명예의 전당 레시피</span>
      	<p style="margin-left: 30px; font-weight: nomal; color:#918c00;">술집에서 가장 인기있는 레시피를 소개합니다.</p>
-     	<button class="update-btn" style="float:right;border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표하러 가기</button>
+     	<a href="/vote/list"><button class="update-btn" style="float:right;border-top:1px solid #e6e7e8;border-bottom:1px solid #e6e7e8;">투표하러 가기</button></a>
      	<span style="float:right; margin-right: 30px; line-height:50px; font-size:20px; font-weight: nomal">내손으로 직접뽑는 레시피
      	<i class="fas fa-chevron-right"></i>
      	</span>
@@ -90,7 +90,7 @@
 		            <div class="swiper-slide">
 		                <a href="/recipe/detail?recipeNo=${rList.recipeNo }" style="position: absolute; text-decoration: none;">
 		                <img src="/upload/${rList.fileName }"><br>
-		                <span style="font-size:1rem;font-weight:bold">${rList.recipeTitle }</span>
+		                <span style="font-size:1rem;font-weight:400">${rList.recipeTitle }</span>
 	                    </a>
 		            </div>
 		            </c:forEach>
