@@ -99,7 +99,6 @@ public class RecipeRegisterServlet extends HttpServlet {
 		recipe.setRecipeSaveState(recipeSaveState);
 		
 		
-		
 		//재료항목 리스트 저장
 		String[] ingredientNames = multi.getParameter("ingredientName").split(",");
 		String[] ingredientGrams = multi.getParameter("ingredientGram").split(",");

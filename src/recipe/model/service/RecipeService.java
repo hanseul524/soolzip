@@ -309,13 +309,9 @@ public class RecipeService {
 		RecipeDAO rDao = new RecipeDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
-			System.out.println("step0");
 			result = rDao.deleteRecipeOne(conn, recipeNo);
-			System.out.println("step1");
 			rDao.deleteRecipeMkProcess(conn,recipeNo);
-			System.out.println("step2");
 			rDao.deleteRecipeIngredient(conn, recipeNo);
-			System.out.println("step3");
 			rDao.deleteRecipeReplyOne(conn, recipeNo);
 			JDBCTemplate.commit(conn);
 		} catch (SQLException e) {
@@ -335,6 +331,10 @@ public class RecipeService {
 		
 		try {
 			conn = jdbcTemplate.createConnection();
+			if(recipe.getFileNo()!=""&& !"".equals(recipe.getRecipeFile().getFilePath())) {
+				recipe.getRecipeFile().setFileNo(Integer.parseInt(recipe.getFileNo()));
+				recipeDAO.updateRecipeFile(conn, recipe.getRecipeFile());
+			}
 			//1. recipe 테이블에 데이터들을 받아와 수정한다.
 			result = recipeDAO.updateRecipe(conn, recipe);
 			if (result > 0) {

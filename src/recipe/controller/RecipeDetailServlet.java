@@ -55,7 +55,6 @@ public class RecipeDetailServlet extends HttpServlet {
 		List<RecipeMakeProcess> mList = new RecipeService().printOneRecipeMkProcess(recipeNo); 
 		
 		
-		
 		if(recipeOne !=null) {	
 			request.setAttribute("iList", iList);
 			request.setAttribute("mList", mList);

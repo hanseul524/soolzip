@@ -72,7 +72,7 @@ table {
 textarea {
   resize: none;
   vertical-align:text-bottom;
-  width: 500px;
+  width: 400px;
   height: 130px;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 5px;
@@ -182,11 +182,12 @@ span {
 		var size = $("#process").find('div').length +1;
 		
 		//추가할 html 태그 만들기
-		var addHtml = "<span>STEP" + size +"</span>&nbsp;";
+		
+		var addHtml = "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
 		addHtml += "<input type=\"hidden\" name=\"fileNo" + size + "\" />";
 		addHtml += "<input type=\"hidden\" name=\"makeNo" + size + "\" />";
-		addHtml += "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
-		addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\" style=\"resize:none;vertical-align: middle; width: 500px; height: 150px;\"></textarea>&nbsp;";	
+		addHtml += "<b> STEP" + size +"</b>&nbsp;";
+		addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\" style=\"resize:none;vertical-align: middle;\"></textarea>&nbsp;";	
 		addHtml += "<input style=\"display: none;\" type=\"file\" name=\"processFile"+size+"\" accept=\"image/*\" onchange=\"readURL(this, 'processImg"+size+"')\" />&nbsp;";
 		addHtml += "<img id=\"processImg"+size+"\" style=\"width: 150px; height: 150px; vertical-align: middle; margin-left: 30px;\" src=\"/img/recipephoto.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
 		addHtml += "<button type=\"button\" onclick=\"rmRow2(this)\" >삭제</button>";
@@ -208,7 +209,7 @@ span {
 		//현재 제조과정 개수만큼 반목문을 돌려서 step명 재조정
 		$("#process").find('div').find('b').each(function(i, v){ //i = index, v = value
 			var stepLevel = i + 1;
-			$(this).html("step" + stepLevel);
+			$(this).html("STEP" + stepLevel);
 		});
 		
 		$("#process").find('input:file').each(function(i, v){
@@ -304,6 +305,7 @@ span {
 		<input type="hidden" name ="rmMakeId" />
 		<input type="hidden" name="rmIngredientId" />
 		<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
+		<input type="hidden" name="mainFileNo" value="${recipeOne.fileNo }">
 		<input type="hidden" name="ingredientName" />
 		<input type="hidden" name="ingredientGram" />
 		<input type="hidden" name="recipeSaveState" value="0"/>
@@ -400,11 +402,11 @@ span {
 					<td colspan="2">
 						<div id="process">
 							<c:forEach items="${mList }" var="mkProcess" varStatus="index">
-									<span>STEP${index.count }</span>
 								<div id="process${index.count }" style="height: 150px; margin-bottom: 1em;">
+									<b>STEP${index.count }</b>
 									<input type="hidden" name="fileNo${index.count }" value="${mkProcess.fileNo }">
 									<input type="hidden" name="makeNo${index.count }" value="${mkProcess.makeNo }">
-									<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle; width: 500px; height: 150px;">${mkProcess.makeContents }</textarea>
+									<textarea placeholder="내용을 입력해주세요." name="fileContents" style="resize:none;vertical-align: middle;">${mkProcess.makeContents }</textarea>
 									<input style="display:none;" type="file" name="processFile${index.count }" accept="image/*" onchange="readURL(this, 'processImg${index.count }')" />
 									<img id="processImg${index.count }" style="width: 150px; height: 150px; vertical-align: middle; margin-left: 30px;" 
 									src="<c:if test="${empty mkProcess.fileNo }">/img/recipephoto.png</c:if><c:if test="${not empty mkProcess.fileNo }">/upload/${mkProcess.fileName }</c:if>"

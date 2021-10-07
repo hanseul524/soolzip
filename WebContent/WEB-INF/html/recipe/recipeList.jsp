@@ -223,11 +223,11 @@
     	<c:forEach items="${requestScope.rList }" var="rOne" varStatus="index">
        	<c:if test="${rOne.recipeLegendState eq '0' }">
 	        <li class="public-re">
-	        <div class="glory"style="width:30px;height:30px;">
+	        <div class="glory"style="width:30px;">
 	            </div>
 	            <div class="box-thumb">
 	                <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
-	                    <img style="width:250px; height:200px;" src="/upload/${rOne.fileName }" alt="" >
+	                    <img style="width:250px; height:230px;" src="/upload/${rOne.fileName }" alt="" >
 	                </a>
 	            </div>
 	            <div class="box-caption">
