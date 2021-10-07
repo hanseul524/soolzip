@@ -273,7 +273,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<StoryReply> srList = null;
-		String query = "select s.story_no,s.story_contents, sr.REPLY_CONTENTS, sr.reply_enrolldate from story s, story_reply sr where s.story_no = sr.story_no and s.user_Id=?";
+		String query = "select s.story_no,s.story_contents, REPLY_CONTENTS, reply_enrolldate from story s, story_reply sr where s.story_no = sr.story_no and sr.reply_nickname=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
