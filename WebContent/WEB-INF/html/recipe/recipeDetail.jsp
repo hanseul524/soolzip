@@ -114,6 +114,27 @@ textarea:focus {
   margin-left: 5px;
   background-color:transparent;
 }
+.scrapbtn{
+	background-color:#adadad;
+    border-radius:8px;
+    display:block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:13px;
+    padding:6px 20px;
+    text-decoration:none;
+    border: none;
+    margin: 0 auto;
+  }
+   .scrapbtn:hover {
+    background-color:rgb(182, 178, 79);
+  }
+  .scrapbtn:active {
+    position:relative;
+    top:1px;
+  }
+scrapbtn
 </style>
 <script>
 	$(document).ready(function() {
@@ -282,11 +303,11 @@ textarea:focus {
  					<c:if test="${user.userId ne null and userId ne '' and user.userId ne recipeOne.userId }">	
 	 					<!-- 스크랩 아닌 상태 체크 -->
 	 					<c:if test="${recipeOne.scrapCheck eq null or recipeOne.scrapCheck eq 0 }">
-		 					<input type="submit" value="스크랩">		
+		 					<input class="scrapbtn" type="submit" value="스크랩">		
 		 				</c:if>
 						<!-- 스크랩 상태 체크 -->
 	 					<c:if test="${recipeOne.scrapCheck ne null and recipeOne.scrapCheck ne 0 }">
-	 						<input type="submit"  value="스크랩 취소">	
+	 						<input  class="scrapbtn" type="submit"  value="스크랩 취소">	
 	 					</c:if>
  					</c:if>
  				</form>
