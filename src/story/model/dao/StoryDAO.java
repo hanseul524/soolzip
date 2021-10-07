@@ -82,12 +82,7 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Story> sList = null;
-		String sql="SELECT * FROM(SELECT ROW_NUMBER()\r\n" + 
-				"OVER(ORDER BY STORY_NO DESC)AS NUM,STORY_NO,USER_ID,\r\n" + 
-				"(SELECT COUNT(*) FROM STORY_LIKE L WHERE L.STORY_NO = S.STORY_NO) AS LIKE_CNT,\r\n" + 
-				"(SELECT COUNT(*) FROM STORY_REPLY SR WHERE SR.STORY_NO = S.STORY_NO) AS REPLY_CNT,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,STORY_VIEWCOUNT\r\n" + 
-				"FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO) \r\n" + 
-				"WHERE NUM BETWEEN ? AND ?";
+		String sql="SELECT * FROM(SELECT ROW_NUMBER() OVER(ORDER BY STORY_NO DESC)AS NUM,STORY_NO,USER_ID, (SELECT COUNT(*) FROM STORY_LIKE L WHERE L.STORY_NO = S.STORY_NO) AS LIKE_CNT, (SELECT COUNT(*) FROM STORY_REPLY SR WHERE SR.STORY_NO = S.STORY_NO) AS REPLY_CNT,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,STORY_VIEWCOUNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO) WHERE NUM BETWEEN ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			int viewCountPage = 12; //페이지 당 보여줄 게시글 갯수
@@ -156,7 +151,7 @@ public class StoryDAO {
 			if(i==currentPage) {
 				sb.append(i);
 			}else {
-				sb.append("<a href='/story/list?currentPage=" + i + "'>" + i + "</a>");
+				sb.append("<a href='/story/list?currentPage=" + i + "'>" +" "+ i +" " + "</a>");
 			}
 		}
 		if(needNext) {

@@ -281,9 +281,9 @@ $(document).ready(function() {
 	</ul>
 	</c:if>
 
-	<c:if test="${votingState eq 'N' }">
-			투표기간이 아닙니다.
-		</c:if>
+	<c:if test="${votingState ne 'Y' }">
+			
+	</c:if>
 
 
 	<script language="javaScript">
