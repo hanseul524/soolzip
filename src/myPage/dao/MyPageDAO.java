@@ -215,14 +215,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> scList = null;
-		String query = "select recipe_no, recipe_title, File_name, Recipe_enrollDate, nvl(\"like_cnt\",0)as like_count, nvl(\"reply_cnt\",0)as reply_count\r\n" + 
-				"from\r\n" + 
-				"(select\r\n" + 
-				"recipe_no,recipe_title ,file_name,recipe_enrollDate,recipe_LikeCount\r\n" + 
-				"from ((select Recipe_no from recipe_scrap where user_id =?)left outer join \r\n" + 
-				"(recipe join recipe_file using(file_no)) using(recipe_no))) left outer join \r\n" + 
-				"(select count(*)as \"reply_cnt\",recipe_no from recipe_reply group by recipe_no) using(recipe_no)\r\n" + 
-				"left outer join (select count(*)as \"like_cnt\", recipe_no from recipe_like group by recipe_no) using(recipe_no)";
+		String query = "select recipe_no, recipe_title, File_name, Recipe_enrollDate, nvl(\"like_cnt\",0)as like_count, nvl(\"reply_cnt\",0)as reply_count from (select recipe_no,recipe_title ,file_name,recipe_enrollDate,recipe_LikeCount from ((select Recipe_no from recipe_scrap where user_id =?)left outer join (recipe join recipe_file using(file_no)) using(recipe_no))) left outer join (select count(*)as \"reply_cnt\",recipe_no from recipe_reply group by recipe_no) using(recipe_no) left outer join (select count(*)as \"like_cnt\", recipe_no from recipe_like group by recipe_no) using(recipe_no)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
