@@ -282,7 +282,10 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${votingState ne 'Y' }">
-			
+	<div style="height: 500px;
+    margin: 46px 0 0 0;">
+			<img style="height: 500px;"src="/img/voteEnd.png" style="">
+	</div>
 	</c:if>
 
 
