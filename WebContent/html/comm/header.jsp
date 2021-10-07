@@ -45,6 +45,7 @@ ul.myMenu>li ul.submenu>li:hover {
 	background: #fff;
 }
 input:focus{outline:none;}
+#asd{width:100px; height:25px; position:absolute; margin-left:-20px; background-color:rgb(145, 140, 0);text-align:center;color:#fff;font-weight:bold;display:none;}
 </style>
 <script>
 $(document).ready(function () {
@@ -58,9 +59,9 @@ $(document).ready(function () {
 		}
 	});
 	$("#regicon").hover(function(){
-		$("#regblock").css("display","block");
+		$("#asd").css("display","block");
 	},function(){
-		$("#regblock").css("display","none");
+		$("#asd").css("display","none");
 	});
 });
 </script>
@@ -79,6 +80,7 @@ $(document).ready(function () {
 				<a href="/recipe/register" id="regicon"> 
 					<img style="width: 45px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
+				<div id="asd">레시피 등록</div>
 			</li>
 			
 			<c:if test ="${user.userId eq null}">
