@@ -120,7 +120,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, (select count(*) from recipe_reply where recipe_no=r.recipe_no)as RECIPE_REPLYCOUNT, recipe_LikeCount from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='1' order by recipe_enrolldate desc";
+		String query = "select recipe_no, user_id, recipe_title, F.file_name,recipe_enrollDate, (select count(*) from recipe_reply where recipe_no=r.recipe_no)as RECIPE_REPLYCOUNT, (select count(*) from recipe_like where recipe_no = r.recipe_no)as \"RECIPE_LIKECOUNT\" from recipe R,recipe_file F where  R.file_no = F.file_no and r.file_no is not null and USER_ID=? and recipe_savestate='1' order by recipe_enrolldate desc";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -183,7 +183,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Story> sList = null;
-		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as SCNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=? order by story_enrolldate desc";
+		String query = "SELECT story_enrolldate, STORY_NO,STORY_CONTENTS,STORYFILE_NAME,STORY_TAG,USER_ID,(select count(*) from STORY_REPLY r where r.story_no=s.story_no)as SCNT, (select count(*) from story_like where story_no = s.story_no)as LCNT FROM STORY S, STORY_FILE F WHERE S.FILE_NO = F.STORYFILE_NO and user_Id=? order by story_enrolldate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -199,6 +199,7 @@ public class MyPageDAO {
 				story.setStoryTag(rset.getString("STORY_TAG"));
 				story.setUserId(rset.getString("USER_ID"));
 				story.setStoryReplyCount(rset.getInt("SCNT"));
+				story.setStoryLikeCount(rset.getInt("LCNT"));
 				sList.add(story);
 			}
 		} catch (SQLException e) {
@@ -214,7 +215,14 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> scList = null;
-		String query = "select recipe_no,recipe_title ,file_name,recipe_enrollDate,recipe_replycount,recipe_LikeCount from (select Recipe_no from recipe_scrap where user_id =?)left outer join (recipe join recipe_file using(file_no)) using(recipe_no)";
+		String query = "select recipe_no, recipe_title, File_name, Recipe_enrollDate, nvl(\"like_cnt\",0)as like_count, nvl(\"reply_cnt\",0)as reply_count\r\n" + 
+				"from\r\n" + 
+				"(select\r\n" + 
+				"recipe_no,recipe_title ,file_name,recipe_enrollDate,recipe_LikeCount\r\n" + 
+				"from ((select Recipe_no from recipe_scrap where user_id =?)left outer join \r\n" + 
+				"(recipe join recipe_file using(file_no)) using(recipe_no))) left outer join \r\n" + 
+				"(select count(*)as \"reply_cnt\",recipe_no from recipe_reply group by recipe_no) using(recipe_no)\r\n" + 
+				"left outer join (select count(*)as \"like_cnt\", recipe_no from recipe_like group by recipe_no) using(recipe_no)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -227,8 +235,8 @@ public class MyPageDAO {
 				recipe.setRecipeTitle(rset.getString("RECIPE_TITLE"));
 				recipe.setFileName(rset.getString("FILE_NAME"));
 				recipe.setRecipeEnrollDate(rset.getDate("RECIPE_ENROLLDATE"));
-				recipe.setRecipeReplyCount(rset.getInt("RECIPE_REPLYCOUNT"));
-				recipe.setRecipeLikeCount(rset.getInt("RECIPE_LIKECOUNT"));
+				recipe.setRecipeReplyCount(rset.getInt("REPLY_COUNT"));
+				recipe.setRecipeLikeCount(rset.getInt("LIKE_COUNT"));
 				scList.add(recipe);
 			}
 		} catch (SQLException e) {
