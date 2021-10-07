@@ -50,14 +50,25 @@ textarea:focus {outline: none;}
         }
         //등록
         function fnSave(type) {
-            //제출일 경우 필수값 체크필요
-            if (type == 'A') {
-                $("input[name='StorySave']").val("1");
-                if (fnValidate()) return;
-            }
-            $("#test").submit();
-        }
-    </script>
+        				if ($('#storyFile').val() == "") {
+							alert("사진을 추가하세요.");
+							$("#storyFile").focus();
+							return;
+						}
+    					  else if ($("#story-Contents").val() == '') {
+							alert("내용을 입력해주세요.");
+							$("#story-Contents").focus();
+							return;
+						}
+						//제출일 경우 필수값 체크필요
+						if (type == 'A') {
+							$("input[name='StorySave']").val("1");
+							if (fnValidate())
+								return;
+						}
+						$("#test").submit();
+					}
+				</script>
     <script>
         $(document).ready(function () {
         	$("#headerMain").load("/html/comm/header.jsp");
@@ -96,7 +107,7 @@ textarea:focus {outline: none;}
 	                                <div id="process">
 	                           <p>내용</p>    
 	                                    <div id="process1" style="height: 150px; margin-bottom: 1em;">
-	                                        <textarea placeholder="내용을 입력해주세요." name="story-Contents" style="resize:none;vertical-align: middle; width: 600px; height: 150px;"></textarea>
+	                                        <textarea id="story-Contents" placeholder="내용을 입력해주세요." name="story-Contents" style="resize:none;vertical-align: middle; width: 600px; height: 150px;"></textarea>
 	                                    </div>
 	                                </div>
 	                            </td>

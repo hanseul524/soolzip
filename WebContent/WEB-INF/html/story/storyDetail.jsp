@@ -125,12 +125,12 @@
 <!-- 									스토리 수정 -->
                                 </a>
                                 </c:if>
-                                <form action="/story/remove" method="post">
+                                <form id="recipeS" action="/story/remove" method="post">
                                 <c:if test="${user.userId eq storyOne.userId }">
-                                <a href="/WEB-INF/html/story/storylist.jsp">
                                 	<input type="hidden" name="storyNo" value="${storyOne.storyNo }">
-                                	<input type="submit" value="삭제">
-                                </a>
+                                	<a href="javascript:recipeS.submit();" onclick="return confirm('삭제를 하시겠습니까?');">
+                                		<input type="button" value="삭제">
+                                	</a>
                                 </c:if>
                                 </form>
                         </div>
