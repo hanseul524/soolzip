@@ -78,7 +78,8 @@
                         <div class="story_num1">
                             <div class="thumbnail">
                                 <a href="/story/detail?storyNo=${sOne.storyNo }">
-                                	<div class="story_List_thumb" style="background: url(/story-upload/${sOne.fileName }) center no-repeat; background-size: cover;"></div>
+                                	<div class="story_List_thumb" style="background: url(/story-upload/${sOne.fileName }) center no-repeat; background-size: cover;">
+                                	</div>
                                 </a>
                                 <!-- 스토리 내용 틀-->
                                 <div class="story_List_contents">
