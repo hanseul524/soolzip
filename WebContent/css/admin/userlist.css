@@ -95,7 +95,7 @@ span {
     position:relative;
     top:1px;
   }
-  .stBtn {
+  .stBtn1,.stBtn2 {
     background-color:#adadad;
     border-radius:8px;
     display:block;
@@ -109,7 +109,7 @@ span {
     margin: 0 auto;
     margin-bottom: 5px;
   }
-  .stBtn:hover {
+  .stBtn1:hover,.stBtn2:hover {
     background-color:rgb(182, 178, 79);
   }
   .stBtn:active {
