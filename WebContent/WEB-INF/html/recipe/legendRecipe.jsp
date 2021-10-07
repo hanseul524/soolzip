@@ -77,7 +77,6 @@
             border-radius: 4px;
             overflow: hidden;
             text-align: center;
-            margin: 15px 0 15px 0;
         }
         .box-title{
             overflow: hidden;
@@ -200,7 +199,7 @@
             </div>
             <div class="box-thumb">
                 <a href="/recipe/detail?recipeNo=${rOne.recipeNo }">
-                    <img style="width:250px; height:200px;object-fit:cover;" src="/upload/${rOne.fileName }" alt="" >
+                    <img style="width:250px; height:230px;object-fit:cover;" src="/upload/${rOne.fileName }" alt="" >
                 </a>
             </div>
             <div class="box-caption">
