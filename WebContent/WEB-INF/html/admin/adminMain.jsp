@@ -170,9 +170,10 @@ textarea:focus {
 <%--     </c:forEach> --%>
     </table>
     <tr>
-    	<td colspan="10" align="center">
+    	<td colspan="10" align="center" style="font-size:1.2rem;">
     	<%= pageNavi %>
     	</td>
+    	
     </tr>
 <!--     </form> -->
     <hr>

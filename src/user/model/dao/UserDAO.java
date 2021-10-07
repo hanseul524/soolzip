@@ -101,6 +101,8 @@ public class UserDAO {
 			if (rset.next()) {
 				userOne = new User();
 				userOne.setUserPwd(rset.getString("USER_PWD"));
+				userOne.setUserId(userId);
+				userOne.setUserEmail(userEmail);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -236,7 +238,7 @@ public class UserDAO {
 			if(i == currentPage) {
 				sb.append(i + " ");
 			}else {
-				sb.append("<a href='/user/list?currentPage=" + i + "'>" + i + "</a>");
+				sb.append("<a href='/user/list?currentPage=" + i + "'>" + " " + i + " " + "</a>");
 			}
 		}
 		if(needNext) {

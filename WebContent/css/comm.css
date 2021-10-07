@@ -146,15 +146,6 @@ body {
 .mypage>li a:hover {
 	color: #c5c141fb;
 }
-.recipe-i {
-	position: relative;
-}
-.recipe-i span {
-	position: absolute;
-}
-.recipe-i a:hover {
-	display: block;
-}
 #regblock {
   display: block;
   background: #ececec;

@@ -121,9 +121,9 @@ $(document).ready(function () {
     <hr>
 	<tr>
 <!--     <div class="text-center"></div> -->
-		<td colspan="10" align="center">
-		<%= pageNavi %>		
-		</td>
+			<td colspan="10" align="center" style="font-size:1.2rem;">
+				${requestScope.pageNavi}
+			</td>
 	</tr>
 <!--       <ul class="pagination"> -->
 <!--         <li><a href="#">1</a></li> -->

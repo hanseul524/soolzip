@@ -115,8 +115,8 @@ $(document).ready(function () {
     </table>
     <hr>
     <tr>
-		<td colspan="10" align="center">
-		<%= apageNavi %>
+   		<td colspan="10" align="center" style="font-size:1.2rem;">
+			<%= apageNavi %>
 		</td>
 	</tr>
 	</form>
