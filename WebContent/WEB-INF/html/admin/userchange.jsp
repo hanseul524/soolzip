@@ -105,7 +105,7 @@ $(document).ready(function () {
     <hr>
 	<tr>
 <!--     <div class="text-center"></div> -->
-		<td colspan="10" align="center">
+		<td colspan="10" align="center" style="font-size:1.2rem;">
 		<%= upageNavi %>		
 		</td>
 	</tr>

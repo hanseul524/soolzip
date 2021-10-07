@@ -79,7 +79,6 @@ $(document).ready(function () {
 				<a href="/recipe/register" id="regicon"> 
 					<img style="width: 45px; margin: 5px;" src="/img/enrollRecipe.png" alt="">
 				</a>
-				<span style="display: none;">레시피 등록</span>
 			</li>
 			
 			<c:if test ="${user.userId eq null}">

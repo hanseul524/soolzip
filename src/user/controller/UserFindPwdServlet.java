@@ -94,10 +94,9 @@ public class UserFindPwdServlet extends HttpServlet {
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
 				
 				msg.setSubject("안녕하세요 SOOLZIP 인증 메일입니다.");
-				msg.setText("회원님의 임시 비밀번호는  '" + temp + "' 입니다.");
+				msg.setText("회원님의 임시 비밀번호는  '" + temp + "' 입니다. 로그인 후 비밀번호를 수정해주세요.");
 				
 				Transport.send(msg);
-				System.out.println("이메일 전송");
 				
 			} catch (UnsupportedEncodingException e) {
 
@@ -109,29 +108,26 @@ public class UserFindPwdServlet extends HttpServlet {
 			saveKey.setAttribute("AuthenticationKey", AuthenticationKey); //세션에 랜덤키 저장해주기
 			int result = new UserService().changePwd(userId, AuthenticationKey);
 			if (result > 0) {
-				System.out.println("비밀번호 변경 성공");
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("alert('비밀번호가 변경되었습니다. 수정해주세요.')");
+				out.print("window.location = '/index.jsp';");
+				out.print("self.close();");
 				out.println("</script>");
-				response.sendRedirect("/index.jsp");
 			}else {
-				System.out.println("비밀번호 변경 실패");
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('입력하신 정보가 일치하지 않습니다.')");
-				out.println("history.go(-1);");
-				out.println("</script>");
 			}
-			
 		//정보가 일치하지 않으면 실패 메세지 출력 후 다시 입력창으로
 		}else {
-			response.sendRedirect("/WEB-INF/html/userinfo/findinfo.jsp");
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('입력하신 정보가 일치하지 않습니다.')");
+			out.println("history.go(-1);");
+			out.print("self.close();");
+			out.println("</script>");
 		}
 	}
-	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
