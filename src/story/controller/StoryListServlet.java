@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import recipe.model.vo.Recipe;
 import story.model.service.StoryService;
 import story.model.vo.PageData;
 import story.model.vo.Story;

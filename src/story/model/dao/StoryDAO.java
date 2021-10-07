@@ -105,7 +105,6 @@ public class StoryDAO {
 				sList.add(story);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			JDBCTemplate.close(pstmt);
@@ -155,7 +154,7 @@ public class StoryDAO {
 			}
 		}
 		if(needNext) {
-			sb.append("<a href='/recipe/list?currentPage=" + (endNavi + 1) + "'>[다음]</a>");
+			sb.append("<a href='/story/list?currentPage=" + (endNavi + 1) + "'>[다음]</a>");
 		}
 		return sb.toString();
 	}

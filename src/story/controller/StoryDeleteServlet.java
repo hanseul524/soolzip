@@ -39,9 +39,9 @@ public class StoryDeleteServlet extends HttpServlet {
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		int result = new StoryService().removeStoryOne(storyNo);
 		if(result>0) {
-			System.out.println("스토리 삭제 성공");
+			response.sendRedirect("/story/list");
 		}else {
-			System.out.println("스토리 삭제 실패 ");
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request, response);
 		}
 	}
 

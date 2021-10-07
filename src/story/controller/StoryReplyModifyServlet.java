@@ -40,7 +40,6 @@ public class StoryReplyModifyServlet extends HttpServlet {
 		int replyNo = Integer.parseInt(request.getParameter("replyNo"));
 		int storyNo = Integer.parseInt(request.getParameter("storyNo"));
 		String replyContents = request.getParameter("replyContents");
-		System.out.println("@@@@@@@"+replyContents);
 		int result =new StoryService().modifyStoryReplyOne(replyNo,replyContents);
 		if(result > 0) {
 			response.sendRedirect("/story/detail?storyNo="+storyNo);

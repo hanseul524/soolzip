@@ -234,11 +234,8 @@ public class StoryService {
 		StoryDAO storyDAO = new StoryDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
-			
-			System.out.println("step1");
 			result = storyDAO.updateStory(conn,story);
 			storyDAO.updateStoryFile(conn,story.getStoryFile());
-			System.out.println("step2");
 			if(result>0) {
 				JDBCTemplate.commit(conn);
 			}else {
