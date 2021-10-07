@@ -76,8 +76,10 @@ public class VoteService {
 		VoteDAO vDao = new VoteDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
+			//투표 진행 테이블에 투표진행 상태값 변경
 			result = vDao.updateVoteState(conn ,votingState);
 			if(result>0) {
+				//투표 테이블에 투표 상태 값을 Y로 변경
 				vDao.updateUserVoteState(conn);
 				
 				JDBCTemplate.commit(conn);

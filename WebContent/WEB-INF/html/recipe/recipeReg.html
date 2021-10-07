@@ -73,7 +73,7 @@ table {
 textarea {
   resize: none;
   vertical-align:text-bottom;
-  width: 500px;
+  width: 400px;
   height: 130px;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 5px;
@@ -171,11 +171,11 @@ span {
       var size = $("#process").find('div').length +1;
       
       //추가할 html 태그 만들기
-      var addHtml = "<span>STEP" + size +"</span>&nbsp;";
-      addHtml += "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
-      addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\" style=\"resize:none;vertical-align: middle; width: 500px; height: 150px;\"></textarea>&nbsp;";   
+      var addHtml = "<div id=\"process" + size + "\" style=\"height: 150px; margin-bottom: 1em;\">";
+      addHtml += "<b> STEP" + size +"</b>&nbsp;";
+      addHtml += "<textarea placeholder=\"내용을 입력해주세요.\" name=\"fileContents\"></textarea>&nbsp;";   
       addHtml += "<input style=\"display: none;\" type=\"file\" name=\"processFile"+size+"\" accept=\"image/*\" onchange=\"readURL(this, 'processImg"+size+"')\" />&nbsp;";
-      addHtml += "<img id=\"processImg"+size+"\" style=\"width: 150px; height: 150px; margin-left: 30px; vertical-align: middle;\" src=\"/img/recipephoto.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
+      addHtml += "<img id=\"processImg"+size+"\" style=\"width: 150px; height: 150px; margin-left: 30px; vertical-align: bottom;\" src=\"/img/recipephoto.png\" onclick=\"fnFileChange(this);\" > &nbsp;";
       addHtml += "<button type=\"button\" onclick=\"rmRow2(this)\" >삭제</button>";
       addHtml += "</div>";
       $("#process").append(addHtml);
@@ -186,9 +186,9 @@ span {
       //삭제버튼 클릭 시 영역의 부모태그 삭제
       $(id).closest('div').remove();
       //현재 제조과정 개수만큼 반목문을 돌려서 step명 재조정
-      $("#process").find('div').find('span').each(function(i, v){ //i = index, v = value
+      $("#process").find('div').find('b').each(function(i, v){ //i = index, v = value
          var stepLevel = i + 1;
-         $(this).html("step" + stepLevel);
+         $(this).html("STEP" + stepLevel);
       });
       
       $("#process").find('input:file').each(function(i, v){
@@ -312,7 +312,7 @@ span {
                   <select name="recipe-mainDrink" id="">
                      <option value="소주">소주</option>
                      <option value="맥주">맥주</option>
-                     <option value="먹걸리">막걸리</option>
+                     <option value="막걸리">막걸리</option>
                      <option value="와인">와인</option>
                      <option value="보드카">보드카</option>
                      <option value="럼">럼</option>
@@ -356,14 +356,14 @@ span {
                <th><p>제조과정</p></th>   
                <td colspan="2">
                   <div id="process">
-              <span style="font-size: 12px; margin: 0; padding: 0;">STEP1</span>
-                     <div id="process1" style="height: 150px;">
+                     <div id="process1" style="height: 150px; margin-bottom:1em;">
+              			<b>STEP1</b>
                         <textarea placeholder="내용을 입력해주세요." name="fileContents"></textarea>
                         <input style="display: none;" type="file" name="processFile1" accept="image/*" onchange="readURL(this, 'processImg1')" />
                         <img id="processImg1" style="width: 150px; height: 150px; vertical-align: text-bottom; margin-left: 30px;" src="/img/recipephoto.png" onclick="fnFileChange(this);">
                      </div>
-              <span style="font-size: 12px; margin: 0; padding-top: 5px;">STEP2</span>
-                     <div id="process2" style="height: 150px;">
+                     <div id="process2" style="height: 150px; margin-bottom:1em;">
+						<b>STEP2</b>
                         <textarea placeholder="내용을 입력해주세요." name="fileContents"></textarea>
                         <input style="display: none;" type="file" name="processFile2" accept="image/*" onchange="readURL(this, 'processImg2')" />   
                         <img id="processImg2" style="width: 150px; height: 150px;vertical-align: text-bottom; margin-left: 30px;" src="/img/recipephoto.png" onclick="fnFileChange(this);" >

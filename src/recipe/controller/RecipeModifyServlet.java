@@ -53,9 +53,6 @@ public class RecipeModifyServlet extends HttpServlet {
 		List<RecipeIngredient> iList = new RecipeService().printOneRecipeIngr(recipeNo);
 		// 레시피2에 대한 제조과정 여러개 
 		List<RecipeMakeProcess> mList = new RecipeService().printOneRecipeMkProcess(recipeNo); 
-		for(RecipeMakeProcess s : mList) {
-			System.out.println(s.toString());
-		}
 		
 		if(recipeOne !=null) {	
 			request.setAttribute("iList", iList);
@@ -83,11 +80,17 @@ public class RecipeModifyServlet extends HttpServlet {
 		int uploadFileLimit = 5*1024*1024;//5MB , M -> 10^6
 		String encType = "UTF-8";
 		MultipartRequest multi = new MultipartRequest(request, uploadFilePath, uploadFileLimit, encType, new DefaultFileRenamePolicy());
-	
+		String mainFileNo = multi.getParameter("mainFileNo");
+		
+		RecipeFile mainFile = new RecipeFile();
+		if(multi.getFile("mainFile") != null) {
+			mainFile.setFileName(multi.getFile("mainFile").getName());
+			mainFile.setFilePath(multi.getFile("mainFile").getPath());
+			mainFile.setFileSize(multi.getFile("mainFile").length());
+			mainFile.setRegName(userId);
+		}
 		//어떤 레시피 인지 확인하기위한 변수 [recipeNo]
 		int recipeNo = Integer.parseInt(multi.getParameter("recipeNo"));
-		
-		
 		// 레시피 테이블에 수정사항 업데이트 하기위한 변수
 		int recipeSaveState = Integer.parseInt(multi.getParameter("recipeSaveState"));
 		String recipeTitle = multi.getParameter("recipe-title");
@@ -98,6 +101,8 @@ public class RecipeModifyServlet extends HttpServlet {
 		
 		//레시피 정보 넣기
 		Recipe recipe = new Recipe(recipeContents,recipeTitle,recipeMainDrink,recipeAlcohol,recipeTag);
+		recipe.setFileNo(mainFileNo);
+		recipe.setRecipeFile(mainFile);
 		recipe.setRecipeNo(recipeNo);
 		recipe.setUserId(userId);
 		recipe.setRecipeSaveState(recipeSaveState);
@@ -110,11 +115,8 @@ public class RecipeModifyServlet extends HttpServlet {
 		
 		List<RecipeIngredient> ingredList = new ArrayList();
 		
-		System.out.println("legnth : " + ingredientNames.length);
-		
 		for(int i = 0; i < ingredientNames.length; i++) {
 			RecipeIngredient ingred = new RecipeIngredient();
-			System.out.println("@@@@@@@@@@@@@@ : "+ multi.getParameter("ingrNo"+(i+1)));
 			if(!"".equals(multi.getParameter("ingrNo"+(i+1)))){
 				ingred.setIngredientNo(Integer.parseInt(multi.getParameter("ingrNo"+(i+1))));
 			}
@@ -152,7 +154,8 @@ public class RecipeModifyServlet extends HttpServlet {
 			makeProcess.setMakeContents(fileContents[i]);
 			makeList.add(makeProcess);
  		}
-
+		
+		
 		int result = new RecipeService().modifyRecipe(recipe,ingredList,makeList, rmIngredientIds, rmMakeIds);
 		
 		if(result>0) {

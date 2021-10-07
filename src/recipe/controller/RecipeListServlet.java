@@ -45,10 +45,6 @@ public class RecipeListServlet extends HttpServlet {
 		PageData pageData = new RecipeService().printAllRecipe(currentPage);
 		List<Recipe> rList = pageData.getRecipeList();
 		
-		for(Recipe recipe : rList) {
-			System.out.println(recipe.toString());
-		}
-		
 		if(!rList.isEmpty()) {
 			request.setAttribute("rList", rList);
 			request.setAttribute("pageNavi", pageData.getPageNavi());

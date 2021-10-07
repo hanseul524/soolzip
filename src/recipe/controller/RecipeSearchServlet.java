@@ -44,7 +44,6 @@ public class RecipeSearchServlet extends HttpServlet {
 		int currentPage = 0;
 		String getCurrentPage = request.getParameter("currentPage");
 		String searchInput = request.getParameter("searchInput");
-		System.out.println("~~~~~~~~~~~~~~"+searchInput);
 		if(getCurrentPage == null) {
 			currentPage = 1;
 		}else {

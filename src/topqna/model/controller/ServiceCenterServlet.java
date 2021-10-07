@@ -41,19 +41,14 @@ public class ServiceCenterServlet extends HttpServlet {
 		
 		
 		List<TopQna> tqList = new TopQnaService().selectTopQna();
-		//HttpSession session = request.getSession();
-		//String userId = request.getSession().getAttribute("userId").toString();
-		//String userId = "임진영";
-		//String userId = (String)session.getAttribute("userId");
+	
 		HttpSession session = request.getSession();
 	      User user = new User();
 	      if(session.getAttribute("user") != null) user= (User)session.getAttribute("user");
 	      String userId = user.getUserId();
 		List<Qna> qList = new QnaService().selectQna(userId);
-		for(Qna a : qList) {
-			System.out.println("@@@@@@@@@@@@@@@@@: "+a.toString());
-		}
-		//System.out.println("tqList===> " + tqList.size());
+		
+		
 		if (!tqList.isEmpty()) {
 			request.setAttribute("tqList", tqList);
 			request.setAttribute("qList", qList);

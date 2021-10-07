@@ -46,7 +46,6 @@ public class AdminListServlet extends HttpServlet {
 			request.setAttribute("apageNavi", pageData.getApageNavi());
 			request.getRequestDispatcher("/WEB-INF/html/admin/adminlist.jsp").forward(request, response);
 		}else {
-			System.out.println("조회 실패");
 		}
 	}
 

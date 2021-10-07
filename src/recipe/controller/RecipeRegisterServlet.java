@@ -99,7 +99,6 @@ public class RecipeRegisterServlet extends HttpServlet {
 		recipe.setRecipeSaveState(recipeSaveState);
 		
 		
-		
 		//재료항목 리스트 저장
 		String[] ingredientNames = multi.getParameter("ingredientName").split(",");
 		String[] ingredientGrams = multi.getParameter("ingredientGram").split(",");
@@ -133,7 +132,6 @@ public class RecipeRegisterServlet extends HttpServlet {
 		int result = new RecipeService().registerRecipe(recipe,ingredList,makeList);
 		
 		if(result > Integer.MIN_VALUE) {
-			System.out.println("등록성공");
 			response.sendRedirect("/recipe/list");
 		}else {
 			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);

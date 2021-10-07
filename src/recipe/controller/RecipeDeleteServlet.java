@@ -40,10 +40,9 @@ public class RecipeDeleteServlet extends HttpServlet {
 		
 		int result = new RecipeService().removeRecipeOne(recipeNo);
 		if(result>0) {
-			System.out.println("레시피 삭제 성공");
 			response.sendRedirect("/recipe/list");
 		}else {
-			System.out.println("레시피 삭제 실패 ");
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);
 		}
 	}
 

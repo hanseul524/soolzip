@@ -36,10 +36,8 @@ public class AdminDeleteServlet extends HttpServlet {
 		}
 		int result = new UserService().removeAdmin(admins);
 		if(result > 0) {
-			System.out.println("삭제성공");
 			response.sendRedirect("/admin/list");
 		}else {
-			System.out.println("삭제실패");
 		}
 	}
 

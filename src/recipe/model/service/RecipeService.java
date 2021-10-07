@@ -309,13 +309,9 @@ public class RecipeService {
 		RecipeDAO rDao = new RecipeDAO();
 		try {
 			conn = jdbcTemplate.createConnection();
-			System.out.println("step0");
 			result = rDao.deleteRecipeOne(conn, recipeNo);
-			System.out.println("step1");
 			rDao.deleteRecipeMkProcess(conn,recipeNo);
-			System.out.println("step2");
 			rDao.deleteRecipeIngredient(conn, recipeNo);
-			System.out.println("step3");
 			rDao.deleteRecipeReplyOne(conn, recipeNo);
 			JDBCTemplate.commit(conn);
 		} catch (SQLException e) {
@@ -335,41 +331,51 @@ public class RecipeService {
 		
 		try {
 			conn = jdbcTemplate.createConnection();
+			if(recipe.getFileNo()!=""&& !"".equals(recipe.getRecipeFile().getFilePath())) {
+				recipe.getRecipeFile().setFileNo(Integer.parseInt(recipe.getFileNo()));
+				recipeDAO.updateRecipeFile(conn, recipe.getRecipeFile());
+			}
+			//1. recipe 테이블에 데이터들을 받아와 수정한다.
 			result = recipeDAO.updateRecipe(conn, recipe);
 			if (result > 0) {
-				//레시피 재료 삭제
+				//2. 레시피 재료 삭제
 				for(String str : rmIngredientIds) {
 					recipeDAO.deleteRecipeIngredientId(conn, str);
 				}
 				//레시피 재료 수정
 				for (RecipeIngredient tmp : ingredList) {
+					// 기존에 재료 번호가 존재하지 않으면 수정될 재료는 insert
 					if(tmp.getIngredientNo()!=0) {
 						if (recipeDAO.updateRecipeIngred(conn, tmp) <= 0)
 							throw new SQLException("error");						
 					}else {
+					// 기존에 재료 번호가 존재하면 수정될 재료는 
 						if (recipeDAO.insertRecipeIngred(conn, tmp, tmp.getRecipeNo()) <= 0)
 							throw new SQLException("error");
 					}
 				}
-				
+				//기존에 있던 제조과정은 delete한다.
 				for(RecipeMakeProcess tmp :makeList) {
 					for(String str : rmMakeIds) {
 						recipeDAO.deleteRecipeMkProcess(conn, str);
 					}
-					
 					int fileNo = tmp.getRecipeFile().getFileNo();
 					tmp.setRecipeNo(recipe.getRecipeNo());
+					// 수정할 파일의 번호가 존재하면 update
 					if(tmp.getRecipeFile().getFileNo()!=0 && !"".equals(tmp.getRecipeFile().getFilePath())) {
 						fileNo= recipeDAO.updateRecipeFile(conn,tmp.getRecipeFile());
 						if(fileNo<=0) throw new SQLException("error");
+					//수정할 파일번호가 존재하지 않으면 insert
 					}else if(tmp.getRecipeFile().getFileNo() ==0 && !"".equals(tmp.getRecipeFile().getFilePath())){
 						fileNo = recipeDAO.inserRecipeFile(conn,tmp.getRecipeFile());	
 						if(fileNo<=0) throw new SQLException("error");
 					}
 					
+					//수정할 제조과정 번호가 존재하면 update
 					if(tmp.getMakeNo() != 0) {
 						if(recipeDAO.updateRecipeMakeProcess(conn, tmp, fileNo)<=0)
 							throw new SQLException("error");
+					//수정할 제조과정 번호가 존재하지 않으면 insert
 					}else {
 						if(recipeDAO.insertRecipeMakeProcess1(conn, tmp, fileNo)<=0)
 							throw new SQLException("error");

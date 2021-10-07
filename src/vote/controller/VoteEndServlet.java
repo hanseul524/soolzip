@@ -37,9 +37,10 @@ public class VoteEndServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//기존에 있던 레시피 후보 리스트 삭제
 		int delete = new VoteService().removeVoteCandidate();
-		
 		String votingState = request.getParameter("voting-state");
+		//투표 상태 마감
 		int result = new VoteService().voteStateModify(votingState);
 		if(result>0) {
 			response.sendRedirect("/adminVote/list");

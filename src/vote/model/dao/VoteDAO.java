@@ -154,6 +154,7 @@ public class VoteDAO {
 		return result;
 	}
 
+	//투표 진행 상태를 받아오기위한 메소드
 	public String selectVotingState(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;

@@ -81,8 +81,6 @@ public class UserFindPwdServlet extends HttpServlet {
 				}
 			}
 			String AuthenticationKey = temp.toString();
-			System.out.println(AuthenticationKey);
-			
 			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(user, password);
@@ -130,7 +128,6 @@ public class UserFindPwdServlet extends HttpServlet {
 			
 		//정보가 일치하지 않으면 실패 메세지 출력 후 다시 입력창으로
 		}else {
-			System.out.println("실패");
 			response.sendRedirect("/WEB-INF/html/userinfo/findinfo.jsp");
 		}
 	}

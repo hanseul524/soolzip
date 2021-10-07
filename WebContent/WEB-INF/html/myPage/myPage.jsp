@@ -183,10 +183,10 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 .bar,#bar2,#bar3,#bar4,#bar5,#bar6,#bar7,#bar8 {width: 100%;height: 0%;background-color: rgba(145, 140, 0,0.4);transition: height 0.3s ease;}
 .active {display: block;}
 
-.location-image img{width: 100%;height: auto;}
+.location-image img{width: 100%;}
 .grid-container{display: grid; grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));grid-gap:1em}
 .location-listing{position: relative;}
-.location-image{line-height: 0;overflow: hidden;}
+.location-image{line-height: 0;overflow: hidden; height:70%;}
 .location-image img{filter:blur(0px);transition: filter 0.3s ease-in;transform: scale(1.1);}
 .location-title{font-size: 1.5em; font-weight: bold; text-decoration: none; z-index:1;position: absolute;width: 100%;height: 100%;top: 0;left: 0;opacity: 0;transition: opacity .5s; background: rgba(145, 140, 0, 0.4);color: white; display: flex;align-items: center;justify-content: center;}
 .location-listing:hover .location-title{opacity: 1; color: white;}
@@ -356,7 +356,7 @@ body:before{content:'';height:100%;display:inline-block;vertical-align:middle;}
 						 	<a href="/story/detail?storyNo=${sList.storyNo }" class="location-title">Click!</a>
 								<div class="location-image">
 									<a href="/story/detail?storyNo=${sList.storyNo }"> <img style="width: 100%; height: 100%;"
-										src="/upload/${sList.fileName }" alt="">
+										src="/story-upload/${sList.fileName }" alt="">
 									</a>
 								</div>
 								<div class="box-caption" style="margin: 10px;">

@@ -450,7 +450,6 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(query);
 			for(int i=0; i<userArr.length; i++) {
 				pstmt.setString(1, userArr[i]);
-				System.out.println(userArr[i]);
 				result = pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {

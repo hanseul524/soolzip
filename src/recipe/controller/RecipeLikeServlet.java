@@ -50,7 +50,6 @@ public class RecipeLikeServlet extends HttpServlet {
 		if(likeCheck==1) {
 			result = new RecipeService().removeRecipeLike(recipeNo,userId);
 			if(result>0) {
-				System.out.println("좋아요 취소");
 				response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 			}else {
 				request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request, response);
@@ -58,7 +57,6 @@ public class RecipeLikeServlet extends HttpServlet {
 		}else {
 			result = new RecipeService().insertRecipeLike(recipeNo,userId);
 			if(result>0) {
-				System.out.println("좋아요");
 				response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 			}else {
 				request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request, response);

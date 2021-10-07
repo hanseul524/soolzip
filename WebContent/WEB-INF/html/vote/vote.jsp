@@ -6,9 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/comm.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="/css/comm.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+
 <style>
 .box li {
 	width: 200px;
@@ -169,6 +173,21 @@
 	width: 100%;
 	transition: 800ms ease all;
 }
+        .location-image img{width: 100%;height: auto;}
+		.grid-container{display: grid; grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));grid-gap:1em}
+		.location-listing{position: relative;}
+		.location-image{line-height: 0;overflow: hidden;}
+		.location-image img{filter:blur(0px);transition: filter 0.3s ease-in;transform: scale(1.1);}
+		.location-title{font-size: 1.5em; font-weight: bold; text-decoration: none; z-index:1;position: absolute;width: 180px;height: 180px;top: 0;left: 0;opacity: 0;transition: opacity .5s; background: rgba(145, 140, 0, 0.4);color: white; display: flex;align-items: center;justify-content: center;}
+		.location-listing:hover .location-title{opacity: 1; color: white;}
+		.location-listing:hover .location-image img{filter:blur(2px)}
+		.content-size img{width:15px;height:15px;margin:-2px 3px 0 0; border-bottom:0!important}
+		.update-btn{width: 90px;height: 40px; background:#fff; border:none; position:relative; transition:800ms ease all;}
+		.update-btn:hover{background:#fff; color:#1AAB8A;}
+		.update-btn:before,.update-btn:after{content:'';position:absolute;top:0;right:0;height:2px;width:0;background:#1AAB8A;transition:400ms ease all;}
+		.update-btn:after{right:inherit; top:inherit;left:0;bottom:0;}
+		.update-btn:hover:before,.update-btn:hover:after{width:100%;transition:800ms ease all;}
+  
 </style>
 <script>
 	$(document).ready(function() {
@@ -191,16 +210,15 @@ $(document).ready(function() {
 
 <body>
 	<div id="headerMain"></div>
-	<div
-		style="text-align: center; margin-bottom: 50px; text-align: center;">
-		<div style="text-align: center;">
-			<div style="display: inline-block;">
-				<h1>투표현황</h1>
-			</div>
-			<div style="display: inline-block;">
-				<img alt="" src="/img/crown.png"
-					style="width: 45px; vertical-align: text-bottom;">
-			</div>
+	<br>
+	<hr style="border: 0.2px solid rgb(236, 236, 236);">
+	<div style="text-align: center;">
+	<div  style= margin-bottom: 50px; display: inline-block; width: 1500px;">
+	  <div style=" text-align: center; margin-top: 20px ">
+	   
+			<div style="display: inline-block; "><span style="font-family:'Sunflower', sans-serif;font-size:2rem;font-weight:bold;">투표현황</span></div> 
+			<div style="display: inline-block;"><img alt="" src="/img/crown.png" style="width: 45px; vertical-align: text-bottom;"></div> 
+		
 		</div>
 		<div style="width: 900px; display: inline-block; margin-top: 10px;">
 
@@ -208,11 +226,11 @@ $(document).ready(function() {
 				<canvas id="myChart"></canvas>
 		</div>
 	</div>
+	
+	    <hr style="border: 0.2px solid rgb(236, 236, 236);">
 
-	<hr>
-
-	<ul class="box" style="text-align: center;">
-		<div style="display: inline-block;">
+	<ul class="box" style="text-align: center; ">
+		<div style="display: inline-block; width: 1500px;">
 			<c:forEach items="${requestScope.cList }" var="cOne"
 				varStatus="index">
 				<input type="hidden" name="recipe-title" value="${cOne.recipeTitle }">
@@ -259,12 +277,13 @@ $(document).ready(function() {
 				</li>
 			</c:forEach>
 		</div>
+	</div>	
 	</ul>
 	</c:if>
 
-	<c:if test="${votingState eq 'N' }">
-			투표기간이 아닙니다.
-		</c:if>
+	<c:if test="${votingState ne 'Y' }">
+			
+	</c:if>
 
 
 	<script language="javaScript">

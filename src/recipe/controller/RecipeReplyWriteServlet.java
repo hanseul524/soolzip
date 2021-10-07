@@ -53,10 +53,9 @@ public class RecipeReplyWriteServlet extends HttpServlet {
 		Timestamp uploadTime = Timestamp.valueOf(formatter.format(Calendar.getInstance().getTimeInMillis()));
 		int result = new RecipeService().registerRecipeReply(userId,recipeNo,replyContents,uploadTime);
 		if(result>0) {
-			System.out.println("등록 성공");
 			response.sendRedirect("/recipe/detail?recipeNo="+recipeNo);
 		}else {
-			request.getRequestDispatcher("/html/recipe/recipeError.html");
+			request.getRequestDispatcher("/WEB-INF/html/recipe/recipeError.html").forward(request,response);
 		}
 		
 		
