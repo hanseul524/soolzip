@@ -182,14 +182,14 @@ $(document).ready(function() {
 				</c:forEach>
 				<hr>
 			</table>
-			<div class="btnarea">
+			<div class="btnarea" style="margin:0 auto; width:200px;">
 				<input type="hidden" name="voting-state" value="Y">
-				<button type="submit" class="stBtn1" value="">start</button>
+				<button style="float:left; margin-left:30px;" type="submit" class="stBtn1" value="">start</button>
 			</form>
 
 				<form action="/vote/end" method="post">
 					<input type="hidden" name="voting-state" value="N">
-					<button type="submit" class="stBtn2" value="">end</button>
+					<button style="" type="submit" class="stBtn2" value="">end</button>
 				</form>
 			</div>
 
