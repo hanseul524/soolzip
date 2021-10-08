@@ -245,7 +245,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<RecipeReply> reList = null;
-		String query = "select R.recipe_no, P.contents ,P.enrollDate, R.recipe_title from recipe R,recipe_reply P where  R.recipe_no = P.recipe_no and P.REPLY_NAME=?";
+		String query = "select R.recipe_no, P.contents ,P.enrollDate, R.recipe_title from recipe R,recipe_reply P where  R.recipe_no = P.recipe_no and P.REPLY_NAME=? order by reply_no desc";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -273,7 +273,7 @@ public class MyPageDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<StoryReply> srList = null;
-		String query = "select s.story_no,s.story_contents, REPLY_CONTENTS, reply_enrolldate from story s, story_reply sr where s.story_no = sr.story_no and sr.reply_nickname=?";
+		String query = "select s.story_no,s.story_contents, REPLY_CONTENTS, reply_enrolldate from story s, story_reply sr where s.story_no = sr.story_no and sr.reply_nickname=? order by reply_no desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
