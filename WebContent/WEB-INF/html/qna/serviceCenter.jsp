@@ -65,13 +65,14 @@
 .amount>li {
 	flex: 1;
 	text-align: center;
-	height: 90px;
+	height: 80px;
 	margin: 10px;
 	border: none;
 	padding: 10px;
 	overflow: hidden;
 	background-color: #918c0038;
 	border-radius: 15px;
+	
 }
 
 .liactive1:hover {
