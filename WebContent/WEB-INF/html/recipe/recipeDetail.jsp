@@ -260,20 +260,19 @@ textarea:focus {
 					<!--로그인 체크 -->
 					<c:if test="${user.userId ne null and userId ne ''and user.userId ne recipeOne.userId}">	
 						<!--좋아요 아닌 상태 체크 -->
+		 				<br><br>
 		 				<c:if test="${recipeOne.likeCheck eq null or recipeOne.likeCheck eq 0  }">
 		 					<input id="likebtn" type="submit" value="좋아요" style="display:none">
-		 					<img src="/img/빈하트.png" style="height:25px; width:25px; cursor:pointer" onclick="javascript: $('#likebtn').click();">
+		 					<img src="/img/빈하트.png" class="btn" style="height:50px; width:50px; position: relative; float: left;  left: 88px; top: -13px; cursor:pointer" onclick="javascript: $('#likebtn').click();">
 		 						
 		 				</c:if>
 						<!--좋아요 상태 체크 -->
 	 					<c:if test="${recipeOne.likeCheck ne null and recipeOne.likeCheck ne 0 }">
 	 						<input id="likebtn" type="submit" value="좋아요취소" style="display:none">
-		 					<img src="/img/찬하트.png" style="height:25px; width:25px; cursor:pointer" onclick="javascript: $('#likebtn').click();">
-		 						
+		 					<img src="/img/찬하트.png" class="btn" style="height:50px; width:50px; position: relative; float: left; left: 88px; top: -13px; cursor:pointer" onclick="javascript: $('#likebtn').click();">
 	 					</c:if>
 					</c:if>
  				</form>
- 				
 		<!-- 스크랩 폼 -->
  				<form action="/recipe/scrap" method="post" id="">
  					<input type="hidden" name="recipeNo" value="${recipeOne.recipeNo }">
@@ -282,14 +281,15 @@ textarea:focus {
  					<c:if test="${user.userId ne null and userId ne '' and user.userId ne recipeOne.userId }">	
 	 					<!-- 스크랩 아닌 상태 체크 -->
 	 					<c:if test="${recipeOne.scrapCheck eq null or recipeOne.scrapCheck eq 0 }">
-		 					<input type="submit" value="스크랩">		
+		 					<input type="submit" class="btn green rounded" style="margin-left:30px; margin-top:-2px; height: 50px;" value="스크랩">		
 		 				</c:if>
 						<!-- 스크랩 상태 체크 -->
 	 					<c:if test="${recipeOne.scrapCheck ne null and recipeOne.scrapCheck ne 0 }">
-	 						<input type="submit"  value="스크랩 취소">	
+	 						<input type="submit" class="btn green rounded" style="margin-left:30px; margin-top:-2px;height: 50px;"  value="스크랩 취소">	
 	 					</c:if>
  					</c:if>
  				</form>
+ 				<br><br>
  		<!-- 레시피 삭제 -->
  				<form id="recipeRM"action="/recipe/remove" method="post">
  				<c:if test="${user.userId eq recipeOne.userId}">	
@@ -302,33 +302,8 @@ textarea:focus {
  			<c:if test="${user.userId eq recipeOne.userId}">
  				<a href="/recipe/modify?recipeNo=${recipeOne.recipeNo }" class="btn green rounded" style="margin-left:-30px;">레시피 수정</a>
  			</c:if>
- 				<!-- 재료 리스트 -->
- 				<style>
-/*  				table.type11 { */
-/* 				  border-collapse: separate; */
-/* 				  border-spacing: 1px; */
-/* 				  text-align: center; */
-/* 				  line-height: 1.5; */
-/* 				  margin: 20px 10px; */
-/* 				} */
-/* 				table.type11 th { */
-/* 				  width: 155px; */
-/* 				  padding: 10px; */
-/* 				  font-weight: bold; */
-/* 				  vertical-align: top; */
-/* 				  color: #fff; */
-/* 				  background: #9abf7f ; */
-/* 				} */
-/* 				table.type11 td { */
-/* 				  width: 155px; */
-/* 				  padding: 10px; */
-/* 				  vertical-align: top; */
-/* 				  border-bottom: 1px solid #ccc; */
-/* 				  background: #eee; */
-				}
- 				</style>
- 				
-<!--  				<div style="border-top:10px solid #f1f1f2; padding: 20px; position: fixed; right: 390px; bottom:100px;"> -->
+ 			
+ 			<!-- 재료리스트 -->
 			<div style="width:500px; height:2800px;">
 			<div style="border-top:10px solid #f1f1f2; padding: 20px; position: sticky; top:10px; width:320px; float:left;">
  				<br>
