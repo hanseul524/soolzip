@@ -114,6 +114,27 @@ textarea:focus {
   margin-left: 5px;
   background-color:transparent;
 }
+.scrapbtn{
+	background-color:#adadad;
+    border-radius:8px;
+    display:block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:13px;
+    padding:6px 20px;
+    text-decoration:none;
+    border: none;
+    margin: 0 auto;
+  }
+   .scrapbtn:hover {
+    background-color:rgb(182, 178, 79);
+  }
+  .scrapbtn:active {
+    position:relative;
+    top:1px;
+  }
+scrapbtn
 </style>
 <script>
 	$(document).ready(function() {

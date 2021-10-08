@@ -47,6 +47,45 @@
   .error {
     color: red;
   }
+  .userbtn{
+    background-color:#adadad;
+    border-radius:8px;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:13px;
+    padding:6px 20px;
+    text-decoration:none;
+    border: none;
+    margin: 0 auto;
+  }
+   .userbtn:hover {
+    background-color:rgb(182, 178, 79);
+  }
+  .userbtn:active {
+    position:relative;
+    top:1px;
+  }
+    .userbtn2{
+     background-color:#adadad;
+    border-radius:8px;
+    display:block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:13px;
+    padding:6px 20px;
+    text-decoration:none;
+    border: none;
+    margin: 0 auto;
+  }
+   .userbtn2:hover {
+    background-color:rgb(182, 178, 79);
+  }
+  .userbtn2:active {
+    position:relative;
+    top:1px;
+  }
 </style>
 <script>
 var idCheckFlag = "N";
@@ -206,7 +245,7 @@ function fnIdCheck() {
           <td class="check">아이디&nbsp;<img src="./img/ico_required_blue.gif" alt="필수"></td>
           <td><input class="input" type="text" id="user_id" name="user-id"></td>
           <td>
-            <div>(영문소문자/숫자, 4~16자) <button type="button" onclick="fnIdCheck();">중복확인</button></div>
+            <div>(영문소문자/숫자, 4~16자) <button class="userbtn" type="button" onclick="fnIdCheck();">중복확인</button></div>
             <div class="error" id="user_id_error">아이디 중복확인이 필요합니다.</div>
             <div id="user_id_succ" style="display: none; color: blue;">중복확인 완료되었습니다.</div>
           </td>
@@ -252,7 +291,7 @@ function fnIdCheck() {
         </tr>
       </tbody>
     </table>
-	<input type="button" onclick="fnCheck();" value="회원가입"> 
+	<input class="userbtn2" type="button" onclick="fnCheck();" value="회원가입"> 
   </form>
   </div>
 <div id="footerMain"></div> 
