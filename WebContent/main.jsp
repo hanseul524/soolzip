@@ -110,7 +110,7 @@
   	<div class="story-go">
   		<img src="/img/storyimg.png" class="imgback">
   		<img src="/img/storytext.png" class="imgtext">
-  		<button type="button" class="Btn"><a href="/story/list">바로가기</a></button>
+  		<button type="button" class="Btn2"><a href="/story/list">바로가기</a></button>
   	</div>
   </div>
 	<!-- 명예의전당 후보 -->
