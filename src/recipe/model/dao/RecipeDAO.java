@@ -667,7 +667,7 @@ public class RecipeDAO {
 			JDBCTemplate.close(pstmt);
 		}
 
-		return result;
+		return recipeFile.getFileNo();
 	}
 
 	public int updateRecipeMakeProcess(Connection conn, RecipeMakeProcess tmp, int fileNo) {
@@ -732,7 +732,7 @@ public class RecipeDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Recipe> rList = null;
-		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_contents like '%'||?||'%' or recipe_tag like'%'||?||'%' or R.recipe_maindrink like '%'||?||'%') where NUM BETWEEN ? AND ?";
+		String query = "select * from(SELECT ROW_NUMBER() OVER(ORDER BY recipe_NO DESC)AS NUM, recipe_no, user_id,(select Count(*) from recipe_like l where l.recipe_no=r.recipe_no) as like_cnt,(select Count(*) from recipe_reply rr where rr.recipe_no=r.recipe_no) as reply_cnt, recipe_title, file_name, recipe_contents ,recipe_viewCount,recipe_savestate FROM recipe r join recipe_file f using(file_no) where RECIPE_savestate = 1 and recipe_contents like '%'||?||'%' or recipe_title like '%'||?||'%' or recipe_tag like'%'||?||'%' or R.recipe_maindrink like '%'||?||'%') where NUM BETWEEN ? AND ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			int viewCountPerPage = 12;// 한페이지당 보여줄게시글 갯수
@@ -741,8 +741,9 @@ public class RecipeDAO {
 			pstmt.setString(1, searchInput);
 			pstmt.setString(2, searchInput);
 			pstmt.setString(3, searchInput);
-			pstmt.setInt(4, start);
-			pstmt.setInt(5, end);
+			pstmt.setString(4, searchInput);
+			pstmt.setInt(5, start);
+			pstmt.setInt(6, end);
 			rset = pstmt.executeQuery();
 			rList = new ArrayList<Recipe>();
 			while (rset.next()) {

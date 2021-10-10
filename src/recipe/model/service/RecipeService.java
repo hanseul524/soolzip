@@ -355,14 +355,15 @@ public class RecipeService {
 					}
 				}
 				//기존에 있던 제조과정은 delete한다.
+				for(String str : rmMakeIds) {
+					recipeDAO.deleteRecipeMkProcess(conn, str);
+				}
 				for(RecipeMakeProcess tmp :makeList) {
-					for(String str : rmMakeIds) {
-						recipeDAO.deleteRecipeMkProcess(conn, str);
-					}
 					int fileNo = tmp.getRecipeFile().getFileNo();
 					tmp.setRecipeNo(recipe.getRecipeNo());
 					// 수정할 파일의 번호가 존재하면 update
 					if(tmp.getRecipeFile().getFileNo()!=0 && !"".equals(tmp.getRecipeFile().getFilePath())) {
+						System.out.println("@@@@@@@@:"+tmp.getRecipeFile().getFileNo());
 						fileNo= recipeDAO.updateRecipeFile(conn,tmp.getRecipeFile());
 						if(fileNo<=0) throw new SQLException("error");
 					//수정할 파일번호가 존재하지 않으면 insert
