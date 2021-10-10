@@ -13,7 +13,7 @@
   $(document).ready(function(){
 	$("#headerMain").load("/html/comm/header.jsp");
 	$("#footerMain").load("/html/comm/footer.html");
-	  
+	
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
 		$('ul.tabs li').removeClass('current');
@@ -33,7 +33,7 @@
   <div id="content" class="contents">
     <div class="loginbox" style="text-align: center;">
       <div class="login" >
-        <h2 id="find-id">아이디 찾기</h2><h2 id="find-pwd" style="display: none;">비밀번호 찾기</h2>
+        <h2 id="find-id">계정 찾기</h2>
         <ul class="tabs">
           <li class="tab-link current" data-tab="tab-1">아이디 찾기</li>
           <li class="tab-link" data-tab="tab-2">비밀번호 찾기</li>
@@ -51,9 +51,9 @@
             </div>
           </form>
           <div>
-            <span id="searchid">회원 가입시 입력한 이름과 이메일을 입력해주세요.</span>
+            <span id="searchid">회원 가입시 입력한 이름과 이메일을 입력해주세요.</span><br>
             <c:if test="${not empty userOne }">
-            <span id="findid">회원님의 아이디는 ${userOne.userId}입니다.</span>
+            <span id="findid">회원님의 아이디는&nbsp;&nbsp;<b>${userOne.userId}</b>&nbsp;&nbsp;입니다.</span>
             </c:if>
           </div>
           </div>
