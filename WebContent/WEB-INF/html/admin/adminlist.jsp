@@ -47,6 +47,19 @@ $(document).ready(function () {
     font-size: 15px;
 }
 .table th{text-align:center;}
+#removebtn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid rgba(182, 181, 181, 0.849);
+  padding: 5px 17px;
+  margin-left: 5px;
+  margin-top: 10px;
+  background-color:transparent;
+}
+#removebtn:hover {
+  background-color: #c2be5c;
+  }
 </style>
 </head>
 <body>
@@ -129,7 +142,7 @@ $(document).ready(function () {
 <!--         <li><a href="#">5</a></li> -->
 <!--       </ul> -->
       <div class="removeCk">
-        <input type="submit" value="선택삭제">
+        <input type="submit" value="선택삭제" id="removebtn">
       </div>
     </div>
   </div>
